@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<project name="NativeCode" default="release">
+
+  <!--
+  # Define properties
+  -->
+  <property name="CurrentPath" value="${path::get-directory-name(project::get-buildfile-path())}" />
+  <property name="Solution" value="src\NativeCode.sln" />
+  <property name="ToolsPath" value="${path::get-full-path(path::combine(CurrentPath, '.build'))}" />
+  <property name="PackageVersion" value="1.0" />
+
+  <fileset id="nuget.projects">
+    <include name="src\NativeCode.Core\NativeCode.Core.csproj" />
+    <include name="src\NativeCode.Web.AspNet.Mvc\NativeCode.Web.AspNet.Mvc.csproj" />
+    <include name="src\NativeCode.Web.AspNet.WebApi\NativeCode.Web.AspNet.WebApi.csproj" />
+  </fileset>
+
+  <!--
+  # Include common build tasks.
+  -->
+  <include buildfile="${path::combine(ToolsPath, 'common.build')}"  />
+
+  <!--
+  # Define targets
+  -->
+  <target name="manual" depends="clean nuget_restore build" />
+  <target name="release" depends="clean nuget_restore build" />
+  <target name="publish" depends="clean nuget_restore nuget_publish" />
+
+</project>
