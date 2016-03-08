@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    internal enum EFileAttributes : uint
+    public enum EFileAttributes : uint
     {
         Readonly = 0x00000001,
 

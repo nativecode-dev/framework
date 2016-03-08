@@ -1,6 +1,7 @@
 ﻿namespace Console
 {
     using System;
+    using System.Diagnostics;
 
     using NativeCode.Core.DotNet.Console;
 
@@ -8,10 +9,14 @@
     {
         public static void Main(string[] args)
         {
-            using (var console = new StdOutputConsoleHandle())
-            {
-                Console.ReadKey(true);
-            }
+            Trace.Listeners.Add(new ConsoleTraceListener());
+
+            Console.SetWindowSize(150, 50);
+            Console.SetBufferSize(150, 50);
+
+            var screen = new Screen();
+            screen.ActiveBuffer.Write("abc");
+            Console.ReadKey(true);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.DotNet.Console.Win32
 {
-    internal enum EFileMode : uint
+    public enum EFileMode : uint
     {
         /// <summary>
         /// Creates a new file. The function fails if a specified file exists.

@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    internal enum EFileAccess : uint
+    public enum EFileAccess : uint
     {
         AccessSystemSecurity = 0x1000000, // AccessSystemAcl access type
 
@@ -67,7 +67,7 @@
 
         GenericAll = 0x10000000,
 
-        SpecificRigtsAll = 0x00FFFF,
+        FileRightsAll = 0x00FFFF,
 
         FileAllAccess = StandardRightsRequired | Synchronize | 0x1FF,
 

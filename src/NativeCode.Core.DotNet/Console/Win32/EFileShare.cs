@@ -3,7 +3,7 @@ namespace NativeCode.Core.DotNet.Console.Win32
     using System;
 
     [Flags]
-    internal enum EFileShare : uint
+    public enum EFileShare : uint
     {
         None = 0x00000000,
 

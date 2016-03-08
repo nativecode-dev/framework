@@ -11,6 +11,8 @@
 
         public short Attributes { get; set; }
 
+        public SmallRect Window { get; set; }
+
         public Coord DwMaximumWindowSize { get; set; }
     }
 }

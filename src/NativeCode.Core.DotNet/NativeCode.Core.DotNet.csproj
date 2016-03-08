@@ -34,13 +34,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console\ConsoleHandle.cs" />
-    <Compile Include="Console\ConsoleScreenBuffer.cs" />
-    <Compile Include="Console\StdConsoleHandle.cs" />
-    <Compile Include="Console\StdErrorConsoleHandle.cs" />
-    <Compile Include="Console\StdInputConsoleHandle.cs" />
-    <Compile Include="Console\StdOutputConsoleHandle.cs" />
+    <Compile Include="Console\BufferCell.cs" />
+    <Compile Include="Console\BufferHandle.cs" />
+    <Compile Include="Console\BufferMap.cs" />
+    <Compile Include="Console\Screen.cs" />
     <Compile Include="Console\Win32\CharInfo.cs" />
+    <Compile Include="Console\Win32\ConsoleAttachState.cs" />
+    <Compile Include="Console\Win32\ConsoleCursorInfo.cs" />
     <Compile Include="Console\Win32\ConsoleScreenBufferInfo.cs" />
     <Compile Include="Console\Win32\Coord.cs" />
     <Compile Include="Console\Win32\EFileMode.cs" />
@@ -48,9 +48,16 @@
     <Compile Include="Console\Win32\EFileAttributes.cs" />
     <Compile Include="Console\Win32\EFileShare.cs" />
     <Compile Include="Console\Win32\NativeMethods.cs" />
+    <Compile Include="Console\Win32\SecurityAttributes.cs" />
     <Compile Include="Console\Win32\SmallRect.cs" />
-    <Compile Include="Console\Win32\StdHandleHandle.cs" />
+    <Compile Include="Console\Win32\StdHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
+      <Project>{2BA5C42A-32EC-43DB-9AEC-A9323D354951}</Project>
+      <Name>NativeCode.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

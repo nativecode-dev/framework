@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.DotNet.Console.Win32
 {
-    public class StdHandleHandle
+    public class StdHandle
     {
         public const int StdInputHandle = -10;
 
