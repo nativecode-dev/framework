@@ -34,8 +34,17 @@
 
         public void Initialize(IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
-            this.RegisterAssemblies(assemblies);
-            this.RegisterModules(modules);
+            try
+            {
+                this.PostInitialization();
+                this.RegisterAssemblies(assemblies);
+                this.RegisterModules(modules);
+                this.PostInitialization();
+            }
+            catch (Exception ex)
+            {
+                this.FailInitialization(ex);
+            }
         }
 
         protected virtual void Dispose(bool disposing)
@@ -50,6 +59,18 @@
                     this.Container = null;
                 }
             }
+        }
+
+        protected virtual void FailInitialization(Exception ex)
+        {
+        }
+
+        protected virtual void PostInitialization()
+        {
+        }
+
+        protected virtual void PreInitialization()
+        {
         }
 
         protected virtual void RegisterAssemblies(IEnumerable<Assembly> assemblies)

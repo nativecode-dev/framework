@@ -3,7 +3,8 @@
     using System;
     using System.Collections.Generic;
 
-    using NativeCode.Core.DotNet.Console.Win32;
+    using NativeCode.Core.DotNet.Win32;
+    using NativeCode.Core.DotNet.Win32.Enums;
 
     public class Screen
     {
@@ -11,7 +12,7 @@
 
         public Screen()
         {
-            var handle = NativeMethods.GetStdHandle(StdHandle.StdOutputHandle);
+            var handle = NativeMethods.GetStdHandle(StandardHandles.OutputHandle);
 
             this.ActiveBuffer = this.CreateBuffer(handle);
             this.BackBuffer = this.CreateBuffer();

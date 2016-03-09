@@ -31,27 +31,43 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DotNetDependencies.cs" />
+    <Compile Include="Providers\ConnectionStringProvider.cs" />
     <Compile Include="Console\BufferCell.cs" />
     <Compile Include="Console\BufferHandle.cs" />
     <Compile Include="Console\BufferMap.cs" />
     <Compile Include="Console\Screen.cs" />
-    <Compile Include="Console\Win32\CharInfo.cs" />
-    <Compile Include="Console\Win32\ConsoleAttachState.cs" />
-    <Compile Include="Console\Win32\ConsoleCursorInfo.cs" />
-    <Compile Include="Console\Win32\ConsoleScreenBufferInfo.cs" />
-    <Compile Include="Console\Win32\Coord.cs" />
-    <Compile Include="Console\Win32\EFileMode.cs" />
-    <Compile Include="Console\Win32\EFileAccess.cs" />
-    <Compile Include="Console\Win32\EFileAttributes.cs" />
-    <Compile Include="Console\Win32\EFileShare.cs" />
-    <Compile Include="Console\Win32\NativeMethods.cs" />
-    <Compile Include="Console\Win32\SecurityAttributes.cs" />
-    <Compile Include="Console\Win32\SmallRect.cs" />
-    <Compile Include="Console\Win32\StdHandle.cs" />
+    <Compile Include="Win32\Enums\EFileMode.cs" />
+    <Compile Include="Win32\Enums\EFileAccess.cs" />
+    <Compile Include="Win32\Enums\EFileAttributes.cs" />
+    <Compile Include="Win32\Enums\EFileShare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32\Enums\Event.cs" />
+    <Compile Include="Win32\Enums\SystemPropertyFlags.cs" />
+    <Compile Include="Win32\Enums\SystemProperty.cs" />
+    <Compile Include="Win32\Enums\WinEvent.cs" />
+    <Compile Include="Win32\Extensions\RectExtensions.cs" />
+    <Compile Include="Win32\HookEvent.cs" />
+    <Compile Include="Win32\NativeMethods.cs" />
+    <Compile Include="Win32\NativeMethods.Kernel.cs">
+      <DependentUpon>NativeMethods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Win32\NativeMethods.User.cs">
+      <DependentUpon>NativeMethods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Win32\StandardHandles.cs" />
+    <Compile Include="Win32\Structs\CharInfo.cs" />
+    <Compile Include="Win32\Structs\ConsoleCursorInfo.cs" />
+    <Compile Include="Win32\Structs\ConsoleScreenBufferInfo.cs" />
+    <Compile Include="Win32\Structs\Coord.cs" />
+    <Compile Include="Win32\Structs\Point.cs" />
+    <Compile Include="Win32\Structs\Rect.cs" />
+    <Compile Include="Win32\ForegroundChangeHook.cs" />
+    <Compile Include="Win32\WindowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
@@ -59,6 +75,7 @@
       <Name>NativeCode.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

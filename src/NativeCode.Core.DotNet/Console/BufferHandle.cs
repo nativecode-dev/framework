@@ -2,8 +2,11 @@ namespace NativeCode.Core.DotNet.Console
 {
     using System;
 
-    using NativeCode.Core.DotNet.Console.Win32;
+    using NativeCode.Core.DotNet.Win32;
+    using NativeCode.Core.DotNet.Win32.Structs;
     using NativeCode.Core.Types.Structs;
+
+    using Rect = NativeCode.Core.DotNet.Win32.Structs.Rect;
 
     public class BufferHandle
     {
@@ -40,7 +43,7 @@ namespace NativeCode.Core.DotNet.Console
 
         public bool SetCursorPosition(int left, int top)
         {
-            return NativeMethods.SetConsoleCursorPosition(this.Handle, left, top);
+            return NativeMethods.SetConsoleCursorPosition(this.Handle, new Coord(left, top));
         }
 
         public bool ShowCursor()
@@ -88,10 +91,13 @@ namespace NativeCode.Core.DotNet.Console
 
         public bool WriteAt(int left, int top, char data, ConsoleColor background, ConsoleColor foreground)
         {
-            var rect = new SmallRect(left, top, 1, 1);
+            var buffer = new CharInfo[1, 1];
+            var rect = new Rect(left, top, 1, 1);
             var size = new Coord(1, 1);
 
-            return NativeMethods.WriteConsoleOutput(this.Handle, data, size, new Coord(left, top), background, foreground, ref rect);
+            buffer[0, 0] = new CharInfo(data, (uint)foreground);
+
+            return NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, new Coord(left, top), ref rect);
         }
 
         public bool WriteAt(int left, int top, string data, ConsoleColor background, ConsoleColor foreground)
@@ -103,7 +109,7 @@ namespace NativeCode.Core.DotNet.Console
 
             var buffer = this.Map.GetBuffer(left, top, left + data.Length, 1);
 
-            var rect = new SmallRect(left, top, data.Length, 1);
+            var rect = new Rect(left, top, data.Length, 1);
             var size = new Coord(data.Length, 1);
 
             return NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, new Coord(left, top), ref rect);

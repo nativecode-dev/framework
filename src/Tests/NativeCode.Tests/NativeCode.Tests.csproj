@@ -73,6 +73,7 @@
     <Compile Include="Core\Extensions\WhenUsingStringExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingStructExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingTypeExtensions.cs" />
+    <Compile Include="Core\Types\WhenUsingDisposableAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
