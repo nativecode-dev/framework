@@ -4,6 +4,7 @@
     using System.Reflection;
 
     using NativeCode.Core.Dependencies.Attributes;
+    using NativeCode.Core.Dependencies.Enums;
 
     public abstract class DependencyRegistrar : IDependencyRegistrar
     {

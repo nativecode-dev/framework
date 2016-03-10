@@ -2,19 +2,33 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
 
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Dependencies.Enums;
+    using NativeCode.Core.Dependencies.Exceptions;
 
     public class UnityDependencyContainer : DependencyContainer
     {
+        private static int counter;
+
         private IUnityContainer container;
 
-        public UnityDependencyContainer() : this(new UnityContainer())
+        public UnityDependencyContainer()
+            : this(new UnityContainer())
         {
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(this.container));
+            if (Interlocked.CompareExchange(ref counter, 1, 0) == 0)
+            {
+                ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(this.container));
+                DependencyLocator.SetRootContainer(this);
+            }
+            else
+            {
+                throw new InvalidOperationException("Cannot construct more than one instance per AppDomain.");
+            }
         }
 
         private UnityDependencyContainer(IUnityContainer container)
@@ -114,12 +128,26 @@
 
             public override object Resolve(Type type, string key = null)
             {
-                return this.container.Resolve(type, key);
+                try
+                {
+                    return this.container.Resolve(type, key);
+                }
+                catch (ResolutionFailedException rfe)
+                {
+                    throw new DependencyResolveException(type, rfe);
+                }
             }
 
             public override IEnumerable<object> ResolveAll(Type type)
             {
-                return this.container.ResolveAll(type);
+                try
+                {
+                    return this.container.ResolveAll(type);
+                }
+                catch (ResolutionFailedException rfe)
+                {
+                    throw new DependencyResolveException(type, rfe);
+                }
             }
         }
     }

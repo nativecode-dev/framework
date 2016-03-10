@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="125" Width="250" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Title="MainWindow" Height="150
+        " Width="250" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Grid >
         <Button x:Name="button" Content="Center" Margin="15,10,10,0" VerticalAlignment="Top" Click="ClickCenter"/>
         <Button x:Name="button1" Content="Center Vertically" Margin="15,35,10,0" VerticalAlignment="Top" Click="ClickVertically"/>
         <Button x:Name="button2" Content="Center Horizontally" Margin="15,60,10,0" VerticalAlignment="Top" Click="ClickHorizontally"/>
+        <Button x:Name="button2_Copy" Content="Center Bottom" Margin="15,85,10,0" VerticalAlignment="Top" Click="ClickBottom"/>
     </Grid>
 </Window>

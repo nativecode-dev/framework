@@ -5,7 +5,7 @@
 
     using JetBrains.Annotations;
 
-    public interface IEntityAuditor
+    internal interface IEntityAuditor
     {
         void SetDateCreated(DateTimeOffset value);
 

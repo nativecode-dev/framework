@@ -5,7 +5,7 @@
 
     using JetBrains.Annotations;
 
-    public interface IDependencyResolver
+    public interface IDependencyResolver : IServiceProvider
     {
         object Resolve(Type type, string key = default(string));
 

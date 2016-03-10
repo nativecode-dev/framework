@@ -10,8 +10,17 @@
 
     public abstract class DbDataContext : DbContext, IDataContext
     {
-        protected DbDataContext(IConnectionStringProvider provider) : base(provider.GetDefaultConnectionString().ToString())
+        protected DbDataContext(IConnectionStringProvider provider)
+            : base(provider.GetDefaultConnectionString().ToString())
         {
+        }
+
+        public virtual async Task<T> FindAsync<T, TKey>(TKey key, CancellationToken cancellationToken) where T : class, IEntity where TKey : struct
+        {
+            var dbset = this.Set(typeof(T));
+            var record = await dbset.FindAsync(cancellationToken, key);
+
+            return (T)record;
         }
 
         public bool Save()

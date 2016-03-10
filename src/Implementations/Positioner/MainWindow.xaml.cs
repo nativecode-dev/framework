@@ -101,5 +101,13 @@
                 WindowHelper.CenterVertically(this.ForegroundHandle.Value);
             }
         }
+
+        private void ClickBottom(object sender, RoutedEventArgs e)
+        {
+            if (this.ForegroundHandle.HasValue)
+            {
+                WindowHelper.CenterBottom(this.ForegroundHandle.Value);
+            }
+        }
     }
 }

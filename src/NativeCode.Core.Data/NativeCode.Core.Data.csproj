@@ -35,10 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Entity.cs" />
+    <Compile Include="Repository.cs">
+      <DependentUpon>IRepository.cs</DependentUpon>
+    </Compile>
     <Compile Include="IDataContext.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IEntityAuditor.cs" />
     <Compile Include="IEntityKeySetter.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
+      <Project>{2BA5C42A-32EC-43DB-9AEC-A9323D354951}</Project>
+      <Name>NativeCode.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

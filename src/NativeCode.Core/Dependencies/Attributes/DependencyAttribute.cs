@@ -2,6 +2,8 @@
 {
     using System;
 
+    using NativeCode.Core.Dependencies.Enums;
+
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class DependencyAttribute : Attribute
     {

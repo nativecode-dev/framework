@@ -5,6 +5,8 @@
 
     using JetBrains.Annotations;
 
+    using NativeCode.Core.Dependencies.Enums;
+
     public interface IDependencyRegistrar
     {
         IDependencyRegistrar RegisterAssembly([NotNull] Assembly assembly);

@@ -2,8 +2,6 @@
 {
     using System.Management;
 
-    using WMI.Win32;
-
     public class ProcessWatcher : ManagementEventWatcher
     {
         private const string QueryProcesses = @"SELECT * FROM __InstanceOperationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_Process'";

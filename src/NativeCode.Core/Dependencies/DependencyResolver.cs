@@ -19,5 +19,10 @@
         public abstract object Resolve(Type type, string key = null);
 
         public abstract IEnumerable<object> ResolveAll(Type type);
+
+        object IServiceProvider.GetService(Type serviceType)
+        {
+            return this.Resolve(serviceType);
+        }
     }
 }

@@ -36,7 +36,9 @@
         {
             try
             {
-                this.PostInitialization();
+                this.Container.Registrar.RegisterInstance<IApplication>(this);
+
+                this.PreInitialization();
                 this.RegisterAssemblies(assemblies);
                 this.RegisterModules(modules);
                 this.PostInitialization();

@@ -2,7 +2,7 @@
 {
     using System.Globalization;
 
-    public class DefaultTranslationProvider : ITranslationProvider
+    public class TranslationProvider : ITranslationProvider
     {
         public string GetString(string key, CultureInfo culture)
         {

@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Dependencies
+﻿namespace NativeCode.Core.Dependencies.Enums
 {
     public enum DependencyKey
     {

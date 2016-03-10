@@ -14,33 +14,34 @@
 
         public string UserModified { get; protected set; }
 
-        public void SetDateCreated(DateTimeOffset value)
+        void IEntityAuditor.SetDateCreated(DateTimeOffset value)
         {
             this.DateCreated = value;
         }
 
-        public void SetDateModified(DateTimeOffset value)
+        void IEntityAuditor.SetDateModified(DateTimeOffset value)
         {
             this.DateModified = value;
         }
 
-        public void SetUserCreated(IIdentity identity)
+        void IEntityAuditor.SetUserCreated(IIdentity identity)
         {
             this.UserCreated = identity.Name;
         }
 
-        public void SetUserModified(IIdentity identity)
+        void IEntityAuditor.SetUserModified(IIdentity identity)
         {
             this.UserModified = identity.Name;
         }
     }
 
-    public abstract class Entity<TKey> : Entity, IEntityKeySetter<TKey> where TKey : struct
+    public abstract class Entity<TKey> : Entity, IEntityKeySetter<TKey>
+        where TKey : struct
     {
         [Key]
         public TKey Key { get; protected set; }
 
-        public void SetKey(TKey key)
+        void IEntityKeySetter<TKey>.SetKey(TKey key)
         {
             this.Key = key;
         }

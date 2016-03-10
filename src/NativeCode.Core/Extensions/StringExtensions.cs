@@ -1,5 +1,8 @@
 ﻿namespace NativeCode.Core.Extensions
 {
+    using System;
+    using System.Text;
+
     using JetBrains.Annotations;
 
     public static class StringExtensions
@@ -12,6 +15,18 @@
             }
 
             return value;
+        }
+
+        public static string FromBase64String(this string value, Encoding encoding = null)
+        {
+            if (encoding == null)
+            {
+                encoding = Encoding.UTF8;
+            }
+
+            var bytes = Convert.FromBase64String(value);
+
+            return encoding.GetString(bytes, 0, bytes.Length);
         }
 
         public static bool IsDoubleQuoted([NotNull] this string value)
@@ -47,6 +62,18 @@
             }
 
             return "'" + value + "'";
+        }
+
+        public static string ToBase64String(this string value, Encoding encoding = null)
+        {
+            if (encoding == null)
+            {
+                encoding = Encoding.UTF8;
+            }
+
+            var bytes = encoding.GetBytes(value);
+
+            return Convert.ToBase64String(bytes);
         }
     }
 }

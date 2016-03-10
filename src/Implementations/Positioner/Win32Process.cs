@@ -1,4 +1,4 @@
-﻿namespace WMI.Win32
+﻿namespace Positioner
 {
     using System;
     using System.Collections;

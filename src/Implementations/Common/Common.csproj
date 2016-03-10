@@ -41,11 +41,30 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\IActivityExecutor.cs" />
     <Compile Include="CommonDependencies.cs" />
+    <Compile Include="DataServices\AccountService.cs">
+      <DependentUpon>IAccountService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataServices\DataService.cs" />
+    <Compile Include="DataServices\IDataService.cs" />
+    <Compile Include="DataServices\IDownloadService.cs" />
+    <Compile Include="Data\Entities\AccountProperty.cs" />
+    <Compile Include="DataServices\IAccountService.cs" />
+    <Compile Include="DataServices\ITokenService.cs" />
+    <Compile Include="Data\Entities\Property.cs" />
+    <Compile Include="DataServices\TokenService.cs">
+      <DependentUpon>ITokenService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\CoreDataContext.cs" />
+    <Compile Include="Data\Entities\Account.cs" />
+    <Compile Include="Data\Entities\Download.cs" />
+    <Compile Include="Data\Entities\Enums\DownloadState.cs" />
     <Compile Include="Data\Entities\Token.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +89,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
