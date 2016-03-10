@@ -1,6 +1,7 @@
 ﻿namespace Positioner
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Windows;
 
@@ -11,46 +12,54 @@
     /// <summary>
     /// Interaction logic for MainWindow.
     /// </summary>
-    public partial class MainWindow : Window, IDisposable
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             this.Process = Process.GetCurrentProcess();
 
             this.InitializeComponent();
-            this.ForegroundChangeHook = new ForegroundChangeHook(this.Process.MainWindowHandle, this.HandleForegroundChange);
         }
 
         protected ForegroundChangeHook ForegroundChangeHook { get; private set; }
 
         protected IntPtr? ForegroundHandle { get; private set; }
 
-        protected bool Disposed { get; private set; }
-
         protected Process Process { get; }
 
-        public void Dispose()
+        protected override void OnActivated(EventArgs e)
         {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            if (this.ForegroundChangeHook == null)
+            {
+                this.ForegroundChangeHook = new ForegroundChangeHook(this.Process.MainWindowHandle, this.HandleForegroundChange);
+                Trace.WriteLine("Created hook.");
+            }
+
+            base.OnActivated(e);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            if (disposing && !this.Disposed)
+            if (this.ForegroundChangeHook != null)
             {
-                this.Disposed = true;
-
-                if (this.ForegroundChangeHook != null)
-                {
-                    this.ForegroundChangeHook.Dispose();
-                    this.ForegroundChangeHook = null;
-                }
+                this.ForegroundChangeHook.Dispose();
+                this.ForegroundChangeHook = null;
+                Trace.WriteLine("Removed hook.");
             }
+
+            this.Visibility = Visibility.Hidden;
+            e.Cancel = true;
+
+            base.OnClosing(e);
         }
 
         private void HandleForegroundChange(IntPtr hwnd)
         {
+            if (this.Visibility != Visibility.Visible)
+            {
+                return;
+            }
+
             try
             {
                 uint id;
@@ -86,28 +95,30 @@
             }
         }
 
-        private void ClickHorizontally(object sender, RoutedEventArgs e)
-        {
-            if (this.ForegroundHandle.HasValue)
-            {
-                WindowHelper.CenterHorizontal(this.ForegroundHandle.Value);
-            }
-        }
-
-        private void ClickVertically(object sender, RoutedEventArgs e)
-        {
-            if (this.ForegroundHandle.HasValue)
-            {
-                WindowHelper.CenterVertically(this.ForegroundHandle.Value);
-            }
-        }
-
         private void ClickBottom(object sender, RoutedEventArgs e)
         {
             if (this.ForegroundHandle.HasValue)
             {
                 WindowHelper.CenterBottom(this.ForegroundHandle.Value);
             }
+        }
+
+        private void ClickTop(object sender, RoutedEventArgs e)
+        {
+            if (this.ForegroundHandle.HasValue)
+            {
+                WindowHelper.CenterTop(this.ForegroundHandle.Value);
+            }
+        }
+
+        private void ClickQuit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(0);
+        }
+
+        private void ClickShow(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Visible;
         }
     }
 }

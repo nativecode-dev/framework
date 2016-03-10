@@ -50,6 +50,9 @@
       <DependentUpon>IAccountService.cs</DependentUpon>
     </Compile>
     <Compile Include="DataServices\DataService.cs" />
+    <Compile Include="DataServices\DownloadService.cs">
+      <DependentUpon>IDownloadService.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataServices\IDataService.cs" />
     <Compile Include="DataServices\IDownloadService.cs" />
     <Compile Include="Data\Entities\AccountProperty.cs" />

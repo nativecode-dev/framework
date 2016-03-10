@@ -93,6 +93,22 @@
             return false;
         }
 
+        public static bool CenterTop(IntPtr hwnd)
+        {
+            Rect window;
+
+            if (NativeMethods.GetWindowRect(hwnd, out window))
+            {
+                var desktop = GetDisplayBounds();
+
+                var left = (desktop.Right - window.Width()) / 2;
+
+                return NativeMethods.SetWindowPos(hwnd, IntPtr.Zero, left, 0, window.Width(), window.Height(), 0);
+            }
+
+            return false;
+        }
+
         public static bool CenterHorizontal(IntPtr hwnd)
         {
             Rect window;
