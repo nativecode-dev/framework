@@ -47,11 +47,43 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonWebDependencies.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Handlers\TokenMessageHandler.cs" />
+    <Compile Include="Models\Downloads\QueueDownloadRequest.cs" />
+    <Compile Include="Models\Downloads\QueueDownloadResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
+      <Project>{a872f951-9c26-4380-bd6d-ecbcb03e699d}</Project>
+      <Name>NativeCode.Core.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj">
+      <Project>{ec619b91-b1da-4893-8ad6-2d8a2d54b853}</Project>
+      <Name>NativeCode.Core.DotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NativeCode.Core\NativeCode.Core.csproj">
+      <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
+      <Name>NativeCode.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NativeCode.Web.AspNet.WebApi\NativeCode.Web.AspNet.WebApi.csproj">
+      <Project>{64a34c62-c4d5-479a-9bef-f360d24ce1b5}</Project>
+      <Name>NativeCode.Web.AspNet.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NativeCode.Web\NativeCode.Web.csproj">
+      <Project>{ddad0473-9c03-41c1-9be5-54f94ef9d324}</Project>
+      <Name>NativeCode.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{878B4D5D-36B3-4E22-BFA8-44F3168E4C47}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

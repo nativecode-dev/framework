@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="89" Width="132" ResizeMode="NoResize" ShowInTaskbar="False"
-        Topmost="True">
+        Height="89" Width="132" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Window.Resources>
         <ResourceDictionary>
             <Image x:Key="Center" Source="Content/Icons/center.ico" Height="24" Width="24"></Image>
@@ -18,7 +17,7 @@
         <Button Content="{StaticResource Center}" Click="ClickCenter" Height="32" Width="32" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" />
         <Button Content="{StaticResource CenterTop}" Click="ClickTop" Height="32" Width="32" Margin="84,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <Button Content="{StaticResource CenterBottom}" Click="ClickBottom" Height="32" Width="32" Margin="47,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <tb:TaskbarIcon IconSource="/Content/Icons/app.ico" ToolTipText="Positioner" Visibility="Visible">
+        <tb:TaskbarIcon IconSource="/Content/Icons/app.ico" ToolTipText="Positioner" Visibility="Visible" MenuActivation="LeftOrRightClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Show" Click="ClickShow" />

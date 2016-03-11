@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.Data
 {
-    internal interface IEntityKeySetter<in TKey>
+    public interface IEntityKeySetter<TKey> : IEntity<TKey>
         where TKey : struct
     {
         void SetKey(TKey key);

@@ -9,6 +9,7 @@
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Platform;
+    using NativeCode.Core.Settings;
 
     public abstract class WebApplication : HttpApplication, IWebApplication
     {
@@ -26,6 +27,8 @@
         }
 
         public IDependencyContainer Container => this.ApplicationCore?.Container;
+
+        public ISettingsProvider Settings => this.ApplicationCore?.Settings;
 
         public virtual void Initialize(params IDependencyModule[] modules)
         {

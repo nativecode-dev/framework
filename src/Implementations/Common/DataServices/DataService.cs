@@ -1,5 +1,7 @@
 ﻿namespace Common.DataServices
 {
+    using System.Transactions;
+
     using Common.Data;
 
     using NativeCode.Core.Data;
@@ -16,6 +18,11 @@
         protected CoreDataContext Context => this.Repository.DataContext;
 
         protected IRepository<TEntity, CoreDataContext> Repository { get; private set; }
+
+        protected TransactionScope CreateTransactionScope()
+        {
+            return new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -4,11 +4,13 @@
     {
         Default = 0,
 
-        Completed = 1,
+        Claimed = 1,
 
-        Downloading = 2,
+        Completed = 2,
 
-        Failed = 3,
+        Downloading = 3,
+
+        Failed = 4,
 
         Queued = Default
     }

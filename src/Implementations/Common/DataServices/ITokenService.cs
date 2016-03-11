@@ -6,7 +6,7 @@
 
     using Common.Data.Entities;
 
-    public interface ITokenService
+    public interface ITokenService : IDataService<Token>
     {
         Task<Token> GetTokenAsync(Guid key, CancellationToken cancellationToken);
 

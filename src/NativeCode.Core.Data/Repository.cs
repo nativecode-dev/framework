@@ -8,7 +8,7 @@
     public class Repository<TEntity, TContext> : Disposable, IRepository<TEntity, TContext>
         where TEntity : class, IEntity where TContext : class, IDataContext
     {
-        protected Repository(TContext context)
+        public Repository(TContext context)
         {
             this.DataContext = context;
         }

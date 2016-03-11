@@ -6,6 +6,7 @@
     using System.Reflection;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Settings;
 
     public class ApplicationCore : IApplication
     {
@@ -26,6 +27,8 @@
         }
 
         public IDependencyContainer Container { get; private set; }
+
+        public ISettingsProvider Settings { get; } = new SettingsProvider();
 
         public void Initialize(params IDependencyModule[] modules)
         {

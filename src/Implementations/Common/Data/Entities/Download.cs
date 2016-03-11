@@ -15,6 +15,9 @@
         [MaxLength(64)]
         public string Filename { get; set; }
 
+        [MaxLength(64)]
+        public string MachineName { get; set; }
+
         [Required]
         [MaxLength(1024)]
         public string Path { get; set; }

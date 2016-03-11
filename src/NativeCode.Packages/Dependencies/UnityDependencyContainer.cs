@@ -128,6 +128,7 @@
 
             public override object Resolve(Type type, string key = null)
             {
+                var typename = type.Name;
                 try
                 {
                     return this.container.Resolve(type, key);

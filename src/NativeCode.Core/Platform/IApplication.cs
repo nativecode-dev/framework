@@ -5,10 +5,13 @@
     using System.Reflection;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Settings;
 
     public interface IApplication : IDisposable
     {
         IDependencyContainer Container { get; }
+
+        ISettingsProvider Settings { get; }
 
         void Initialize(params IDependencyModule[] modules);
 

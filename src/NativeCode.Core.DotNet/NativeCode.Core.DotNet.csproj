@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DotNetDependencies.cs" />
-    <Compile Include="Platform\DotNetPrincipalProvider.cs" />
+    <Compile Include="Logging\TraceLogWriter.cs" />
+    <Compile Include="Platform\DotNetPlatform.cs" />
     <Compile Include="Platform\WindowsPrincipalInflater.cs" />
     <Compile Include="Providers\ConnectionStringProvider.cs" />
     <Compile Include="Console\BufferCell.cs" />

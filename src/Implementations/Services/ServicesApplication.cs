@@ -3,6 +3,7 @@
     using System.Web.Http;
 
     using Common;
+    using Common.Web;
 
     using NativeCode.Core;
     using NativeCode.Core.DotNet;
@@ -18,16 +19,23 @@
         public ServicesApplication()
             : base(new UnityDependencyContainer(), true)
         {
-            this.Initialize(CoreDependencies.Instance, DotNetDependencies.Instance, CommonDependencies.Instance, WebDependencies.Instance);
         }
 
         public void Configuration(IAppBuilder builder)
         {
             var configuration = new HttpConfiguration { DependencyResolver = new WebApiDependencyResolver(this.Container) };
+            configuration.EnableSystemDiagnosticsTracing();
             configuration.Filters.Add(new AuthorizeAttribute());
             configuration.MapHttpAttributeRoutes();
 
             builder.UseWebApi(configuration);
+
+            this.Initialize(
+                CoreDependencies.Instance,
+                DotNetDependencies.Instance,
+                WebDependencies.Instance,
+                CommonDependencies.Instance,
+                CommonWebDependencies.Instance);
         }
     }
 }

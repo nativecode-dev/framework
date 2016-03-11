@@ -1,4 +1,4 @@
-﻿namespace Services.Models.Downloads
+﻿namespace Common.Web.Models.Downloads
 {
     using NativeCode.Web.Models;
 

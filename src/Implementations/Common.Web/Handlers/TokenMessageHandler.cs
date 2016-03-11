@@ -1,4 +1,4 @@
-﻿namespace Services.Handlers
+﻿namespace Common.Web.Handlers
 {
     using System;
     using System.Net.Http;
@@ -16,14 +16,14 @@
     {
         private readonly IAccountService accounts;
 
-        private readonly IPrincipalProvider principals;
+        private readonly IPlatform platform;
 
         private readonly ITokenService tokens;
 
-        public TokenMessageHandler(IAccountService accounts, IPrincipalProvider principals, ITokenService tokens)
+        public TokenMessageHandler(IAccountService accounts, IPlatform platform, ITokenService tokens)
         {
             this.accounts = accounts;
-            this.principals = principals;
+            this.platform = platform;
             this.tokens = tokens;
         }
 
@@ -40,7 +40,7 @@
                     var token = await this.tokens.GetTokenAsync(key, cancellationToken);
                     var principal = await this.accounts.CreatePrincipalAsync(token.Account, cancellationToken);
 
-                    this.principals.SetCurrentPrincipal(principal);
+                    this.platform.SetCurrentPrincipal(principal);
                 }
             }
 

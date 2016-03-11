@@ -1,6 +1,7 @@
 ﻿namespace NativeCode.Core.Data
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     public interface IEntity
     {
@@ -11,5 +12,12 @@
         string UserCreated { get; }
 
         string UserModified { get; }
+    }
+
+    public interface IEntity<out TKey>
+        where TKey : struct
+    {
+        [Key]
+        TKey Key { get; }
     }
 }

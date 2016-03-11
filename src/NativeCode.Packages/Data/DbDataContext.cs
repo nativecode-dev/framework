@@ -1,18 +1,57 @@
 ﻿namespace NativeCode.Packages.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
     using System.Threading;
     using System.Threading.Tasks;
 
     using NativeCode.Core.Data;
+    using NativeCode.Core.Platform;
     using NativeCode.Core.Providers;
 
     public abstract class DbDataContext : DbContext, IDataContext
     {
-        protected DbDataContext(IConnectionStringProvider provider)
+        private readonly List<Action<DbEntityEntry>> interceptors = new List<Action<DbEntityEntry>>();
+
+        private readonly IPlatform platform;
+
+        protected DbDataContext(IConnectionStringProvider provider, IPlatform platform)
             : base(provider.GetDefaultConnectionString().ToString())
         {
+            this.interceptors.Add(this.UpdateAuditProperties);
+            this.interceptors.Add(this.UpdateKeyProperties);
+            this.platform = platform;
+        }
+
+        private void UpdateAuditProperties(DbEntityEntry entry)
+        {
+            var auditor = entry.Entity as IEntityAuditor;
+
+            if (auditor != null)
+            {
+                var principal = this.platform.GetCurrentPrincipal();
+
+                if (entry.State == EntityState.Added)
+                {
+                    auditor.SetDateCreated(DateTimeOffset.UtcNow);
+                    auditor.SetUserCreated(principal.Identity);
+                }
+
+                auditor.SetDateModified(DateTimeOffset.UtcNow);
+                auditor.SetUserModified(principal.Identity);
+            }
+        }
+
+        private void UpdateKeyProperties(DbEntityEntry entry)
+        {
+            var setter = entry.Entity as IEntityKeySetter<Guid>;
+
+            if (setter != null && entry.State == EntityState.Added)
+            {
+                setter.SetKey(Guid.NewGuid());
+            }
         }
 
         public virtual async Task<T> FindAsync<T, TKey>(TKey key, CancellationToken cancellationToken) where T : class, IEntity where TKey : struct
@@ -25,6 +64,8 @@
 
         public bool Save()
         {
+            this.ProcessEntityChanges();
+
             return this.SaveChanges() > 0;
         }
 
@@ -47,6 +88,8 @@
 
         public async Task<bool> SaveAsync(CancellationToken cancellationToken)
         {
+            this.ProcessEntityChanges();
+
             return await this.SaveChangesAsync(cancellationToken) > 0;
         }
 
@@ -71,6 +114,17 @@
         {
             var dbset = this.Set<T>();
             dbset.Add(entity);
+        }
+
+        private void ProcessEntityChanges()
+        {
+            foreach (var entry in this.ChangeTracker.Entries())
+            {
+                foreach (var interceptor in this.interceptors)
+                {
+                    interceptor(entry);
+                }
+            }
         }
     }
 }

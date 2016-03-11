@@ -42,9 +42,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activities\IActivityExecutor.cs" />
+    <Compile Include="Workers\DownloadWorkProvider.cs" />
+    <Compile Include="Workers\IWorkManager.cs" />
+    <Compile Include="Workers\IWorkProvider.cs" />
     <Compile Include="CommonDependencies.cs" />
     <Compile Include="DataServices\AccountService.cs">
       <DependentUpon>IAccountService.cs</DependentUpon>
@@ -69,6 +72,10 @@
     <Compile Include="Data\Entities\Token.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Workers\WorkManager.cs" />
+    <Compile Include="Workers\WorkProvider.cs">
+      <DependentUpon>IWorkProvider.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NativeCode.Core.Data\NativeCode.Core.Data.csproj">

@@ -10,7 +10,7 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            registrar.Register<IPrincipalProvider, WebPrincipalProvider>();
+            registrar.Register<IPlatform, WebPlatform>();
         }
     }
 }

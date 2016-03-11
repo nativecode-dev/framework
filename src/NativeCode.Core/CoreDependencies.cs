@@ -30,14 +30,15 @@
         private static void RegisterLogging(IDependencyRegistrar registrar)
         {
             registrar.Register<ILogger, Logger>();
-            registrar.Register<ILogWriter, InMemoryLogWriter>();
+            registrar.Register<ILogWriter, InMemoryLogWriter>(DependencyKey.QualifiedName);
             registrar.RegisterFactory(x => x.ResolveAll<ILogWriter>());
         }
 
         private static void RegisterPlatform(IDependencyRegistrar registrar)
         {
             registrar.Register<IPrincipalInflater, PrincipalInflater>(PrincipalSource.Generic.ToString());
-            registrar.Register<IPrincipalProvider, PrincipalProvider>(lifetime: DependencyLifetime.PerApplication);
+            registrar.Register<IPrincipalFactory, PrincipalFactory>();
+            registrar.RegisterFactory(x => x.ResolveAll<IPrincipalInflater>());
         }
 
         private static void RegisterSerialization(IDependencyRegistrar registrar)

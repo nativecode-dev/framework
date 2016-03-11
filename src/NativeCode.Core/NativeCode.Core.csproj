@@ -91,18 +91,17 @@
     <Compile Include="Logging\InMemoryLogWriter.cs" />
     <Compile Include="Logging\LogMessageType.cs" />
     <Compile Include="Platform\Identity.cs" />
+    <Compile Include="Platform\IPlatform.cs" />
     <Compile Include="Platform\IPrincipalFactory.cs" />
     <Compile Include="Platform\IPrincipalInflater.cs" />
-    <Compile Include="Platform\IPrincipalProvider.cs" />
     <Compile Include="Platform\Principal.cs" />
-    <Compile Include="Platform\PrincipalFactory.cs" />
+    <Compile Include="Platform\PrincipalFactory.cs">
+      <DependentUpon>IPrincipalFactory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Platform\PrincipalInflater.cs">
       <DependentUpon>IPrincipalInflater.cs</DependentUpon>
     </Compile>
     <Compile Include="Platform\PrincipalSource.cs" />
-    <Compile Include="Platform\PrincipalProvider.cs">
-      <DependentUpon>IPrincipalProvider.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\IConnectionStringProvider.cs" />
     <Compile Include="Serialization\IStringSerializer.cs" />
@@ -135,8 +134,8 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Polly, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Polly.4.0.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
+    <Reference Include="Polly, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Polly.4.1.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

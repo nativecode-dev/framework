@@ -6,7 +6,7 @@
 
     using Common.Data.Entities;
 
-    public interface IAccountService
+    public interface IAccountService : IDataService<Account>
     {
         Task<IPrincipal> CreatePrincipalAsync(Account account, CancellationToken cancellationToken);
 

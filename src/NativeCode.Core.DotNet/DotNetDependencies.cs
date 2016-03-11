@@ -1,8 +1,11 @@
 ﻿namespace NativeCode.Core.DotNet
 {
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Dependencies.Enums;
+    using NativeCode.Core.DotNet.Logging;
     using NativeCode.Core.DotNet.Platform;
     using NativeCode.Core.DotNet.Providers;
+    using NativeCode.Core.Logging;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Providers;
 
@@ -13,7 +16,8 @@
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
             registrar.Register<IConnectionStringProvider, ConnectionStringProvider>();
-            registrar.Register<IPrincipalProvider, DotNetPrincipalProvider>();
+            registrar.Register<ILogWriter, TraceLogWriter>(DependencyKey.QualifiedName);
+            registrar.Register<IPlatform, DotNetPlatform>();
             registrar.Register<IPrincipalInflater, WindowsPrincipalInflater>(PrincipalSource.Windows.ToString());
         }
     }
