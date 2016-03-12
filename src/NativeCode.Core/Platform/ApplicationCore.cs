@@ -4,12 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Settings;
 
     public class ApplicationCore : IApplication
     {
+        private static int counter;
+
         public ApplicationCore(IDependencyContainer container, bool owner = true)
         {
             this.Container = container;
@@ -28,27 +31,35 @@
 
         public IDependencyContainer Container { get; private set; }
 
-        public ISettingsProvider Settings { get; } = new SettingsProvider();
+        public Settings Settings { get; } = new JsonSettings();
 
-        public void Initialize(params IDependencyModule[] modules)
+        protected bool Initialized { get; private set; }
+
+        public void Initialize(string name, params IDependencyModule[] modules)
         {
-            this.Initialize(Enumerable.Empty<Assembly>(), modules);
+            this.Initialize(name, Enumerable.Empty<Assembly>(), modules);
         }
 
-        public void Initialize(IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
+        public void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
-            try
+            if (Interlocked.CompareExchange(ref counter, 1, 0) == 0)
             {
-                this.Container.Registrar.RegisterInstance<IApplication>(this);
+                try
+                {
+                    this.Container.Registrar.RegisterInstance<IApplication>(this);
 
-                this.PreInitialization();
-                this.RegisterAssemblies(assemblies);
-                this.RegisterModules(modules);
-                this.PostInitialization();
-            }
-            catch (Exception ex)
-            {
-                this.FailInitialization(ex);
+                    this.PreInitialization();
+                    this.RegisterAssemblies(assemblies);
+                    this.RegisterModules(modules);
+                    this.PostInitialization();
+
+                    this.Initialized = true;
+                }
+                catch (Exception ex)
+                {
+                    this.Initialized = false;
+                    this.FailInitialization(ex);
+                }
             }
         }
 
@@ -63,6 +74,14 @@
                     this.Container.Dispose();
                     this.Container = null;
                 }
+            }
+        }
+
+        protected void EnsureInitialized()
+        {
+            if (!this.Initialized)
+            {
+                throw new InvalidOperationException("Application was not initialized.");
             }
         }
 

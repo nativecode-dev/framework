@@ -14,6 +14,10 @@
 
         Task<IEnumerable<Download>> ClaimAsync(int count, CancellationToken cancellationToken);
 
-        Task<Download> QueueAsync(string path, string filename, string url, CancellationToken cancellationToken);
+        Task<Download> EnqueueAsync(string path, string filename, string url, string source, CancellationToken cancellationToken);
+
+        Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken);
+
+        Task<IEnumerable<Download>> GetRetryableWorkForMachineAsync(CancellationToken cancellationToken);
     }
 }

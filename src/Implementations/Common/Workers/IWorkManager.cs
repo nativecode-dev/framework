@@ -8,6 +8,8 @@
     public interface IWorkManager<TEntity> : IDisposable
         where TEntity : class, IEntity
     {
+        int MaxConcurrency { get; set; }
+
         Task StartAsync();
 
         void Stop();

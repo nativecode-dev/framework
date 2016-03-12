@@ -7,6 +7,13 @@
 
     public static class StringExtensions
     {
+        public static string[] Split(this string value, string separator)
+        {
+            return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        #region Quotations
+
         public static string Dequote([NotNull] this string value)
         {
             if (value.IsQuoted())
@@ -75,5 +82,7 @@
 
             return Convert.ToBase64String(bytes);
         }
+
+        #endregion
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -46,7 +47,8 @@
 
             using (var transaction = this.CreateTransactionScope())
             {
-                var downloads = await this.Context.Downloads.Where(x => x.State == DownloadState.Queued).Take(count).ToListAsync(cancellationToken);
+                var downloads =
+                    await this.Context.Downloads.Where(x => x.State == DownloadState.Queued && x.MachineName == null).Take(count).ToListAsync(cancellationToken);
 
                 foreach (var download in downloads)
                 {
@@ -64,7 +66,7 @@
             return results;
         }
 
-        public async Task<Download> QueueAsync(string path, string filename, string url, CancellationToken cancellationToken)
+        public async Task<Download> EnqueueAsync(string path, string filename, string url, string source, CancellationToken cancellationToken)
         {
             var principal = this.platform.GetCurrentPrincipal();
 
@@ -74,7 +76,13 @@
             }
 
             var account = await this.accounts.FromPrincipalAsync(principal, cancellationToken);
-            var download = new Download { Account = account, Filename = filename, Path = path, Title = filename, Url = url };
+
+            if (account == null)
+            {
+                account = new Account { AccountSource = PrincipalSource.Default, Login = principal.Identity.Name, Password = "12345@abcde[]" };
+            }
+
+            var download = new Download { Account = account, Filename = filename, Path = path, Source = source, Title = filename, Url = url };
 
             if (await this.Context.SaveAsync(download, cancellationToken))
             {
@@ -82,6 +90,26 @@
             }
 
             throw new InvalidOperationException("Failed to save download entity.");
+        }
+
+        public Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken)
+        {
+            return
+                this.QueryByMachineName(x => x.State == DownloadState.Claimed || x.State == DownloadState.Downloading)
+                    .ToListAsync(cancellationToken)
+                    .ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
+        }
+
+        public Task<IEnumerable<Download>> GetRetryableWorkForMachineAsync(CancellationToken cancellationToken)
+        {
+            return this.QueryByMachineName(x => x.State == DownloadState.Retry)
+                .ToListAsync(cancellationToken)
+                .ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
+        }
+
+        private IQueryable<Download> QueryByMachineName(Expression<Func<Download, bool>> filter)
+        {
+            return this.Context.Downloads.Where(filter).Where(x => x.MachineName == this.platform.MachineName);
         }
     }
 }

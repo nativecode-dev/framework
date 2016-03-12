@@ -2,15 +2,25 @@
 {
     using System;
 
-    using Microsoft.Owin.Hosting;
-
     internal class Program
     {
         public static void Main(string[] args)
         {
-            using (WebApp.Start<ServicesApplication>("http://localhost:9000/"))
+            using (var app = new ServicesApplication())
             {
-                Console.ReadKey(true);
+                var url = new Uri("http://localhost:9000");
+
+                using (app.Start<ServicesStartup>(url))
+                {
+                    Console.WriteLine($"Started host at {url}.");
+                    ConsoleKeyInfo key;
+
+                    do
+                    {
+                        key = Console.ReadKey(true);
+                    }
+                    while (key.KeyChar != 'q');
+                }
             }
         }
     }

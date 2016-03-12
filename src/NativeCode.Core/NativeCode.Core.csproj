@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dependencies\Attributes\IgnoreDependencyAttribute.cs" />
     <Compile Include="Dependencies\DependencyContainer.cs">
       <DependentUpon>IDependencyContainer.cs</DependentUpon>
     </Compile>
@@ -51,7 +52,10 @@
     <Compile Include="Dependencies\Exceptions\DependencyResolveException.cs" />
     <Compile Include="Dependencies\Fluent\DependencyBuilder.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StructExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="Helpers\Retry.cs" />
     <Compile Include="Localization\TranslationProvider.cs">
       <DependentUpon>ITranslationProvider.cs</DependentUpon>
@@ -106,13 +110,13 @@
     <Compile Include="Providers\IConnectionStringProvider.cs" />
     <Compile Include="Serialization\IStringSerializer.cs" />
     <Compile Include="Serialization\JsonNetStringSerializer.cs" />
-    <Compile Include="Settings\ISettingsProvider.cs" />
-    <Compile Include="Settings\SettingsProvider.cs">
-      <DependentUpon>ISettingsProvider.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Settings\JsonSettings.cs" />
+    <Compile Include="Settings\Settings.cs" />
     <Compile Include="Types\ConnectionString.cs" />
     <Compile Include="Types\Disposable.cs" />
     <Compile Include="Types\DisposableAction.cs" />
+    <Compile Include="Types\StreamMonitor.cs" />
+    <Compile Include="Types\StreamMonitorEventArgs.cs" />
     <Compile Include="Types\Structs\Position.cs" />
     <Compile Include="Types\Structs\Bounds.cs" />
     <Compile Include="Types\Structs\Size.cs" />

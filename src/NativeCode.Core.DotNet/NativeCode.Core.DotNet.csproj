@@ -50,7 +50,6 @@
     <Compile Include="Console\BufferHandle.cs" />
     <Compile Include="Console\BufferMap.cs" />
     <Compile Include="Console\Screen.cs" />
-    <Compile Include="Settings\ConfigurationSettingsProvider.cs" />
     <Compile Include="Types\ActiveDirectoryName.cs" />
     <Compile Include="Types\ActiveDirectoryNameFormat.cs" />
     <Compile Include="Win32\CenteringPosition.cs" />

@@ -7,9 +7,10 @@
 
     internal class ConsoleApplication : Application
     {
-        public ConsoleApplication(IDependencyContainer container, bool owner = true) : base(container, owner)
+        public ConsoleApplication(IDependencyContainer container, bool owner = true)
+            : base(container, owner)
         {
-            this.Initialize(CoreDependencies.Instance, DotNetDependencies.Instance);
+            this.Initialize("Console Application", CoreDependencies.Instance, DotNetDependencies.Instance);
         }
     }
 }

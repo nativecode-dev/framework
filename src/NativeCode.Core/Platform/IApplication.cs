@@ -11,10 +11,10 @@
     {
         IDependencyContainer Container { get; }
 
-        ISettingsProvider Settings { get; }
+        Settings Settings { get; }
 
-        void Initialize(params IDependencyModule[] modules);
+        void Initialize(string name, params IDependencyModule[] modules);
 
-        void Initialize(IEnumerable<Assembly> assemblies, params IDependencyModule[] modules);
+        void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules);
     }
 }

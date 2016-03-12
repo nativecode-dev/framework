@@ -28,17 +28,17 @@
 
         public IDependencyContainer Container => this.ApplicationCore?.Container;
 
-        public ISettingsProvider Settings => this.ApplicationCore?.Settings;
+        public Settings Settings => this.ApplicationCore?.Settings;
 
-        public virtual void Initialize(params IDependencyModule[] modules)
+        public virtual void Initialize(string name, params IDependencyModule[] modules)
         {
-            this.Initialize(BuildManager.GetReferencedAssemblies().Cast<Assembly>(), modules);
+            this.Initialize(name, BuildManager.GetReferencedAssemblies().Cast<Assembly>(), modules);
         }
 
-        public virtual void Initialize(IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
+        public virtual void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
             this.ApplicationCore = new ApplicationCore(this.CreateDependencyContainer());
-            this.ApplicationCore.Initialize(assemblies.Where(this.CanIncludeAssembly), modules);
+            this.ApplicationCore.Initialize(name, assemblies.Where(this.CanIncludeAssembly), modules);
         }
 
         protected virtual bool CanIncludeAssembly(Assembly assembly)

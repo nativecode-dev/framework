@@ -5,11 +5,11 @@
 
     using NativeCode.Core.Extensions;
 
-    public class Logger : ILogger
+    internal class Logger : ILogger
     {
         private readonly IEnumerable<ILogWriter> writers;
 
-        internal Logger(IEnumerable<ILogWriter> writers)
+        public Logger(IEnumerable<ILogWriter> writers)
         {
             this.writers = writers;
         }

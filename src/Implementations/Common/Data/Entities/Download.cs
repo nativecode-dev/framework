@@ -22,6 +22,11 @@
         [MaxLength(1024)]
         public string Path { get; set; }
 
+        [Required]
+        [DataType(DataType.Url)]
+        [MaxLength(1024)]
+        public string Source { get; set; }
+
         public DownloadState State { get; set; }
 
         [Required]
@@ -29,6 +34,7 @@
         public string Title { get; set; }
 
         [Required]
+        [DataType(DataType.Url)]
         [MaxLength(1024)]
         public string Url { get; set; }
     }

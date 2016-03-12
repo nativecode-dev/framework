@@ -146,7 +146,10 @@
 
         private void InternalRegister(Type type, Type implementation, string key = null, DependencyLifetime lifetime = DependencyLifetime.Default)
         {
-            this.Register(type, implementation, GetKeyOverride(implementation, key), GetLifetimeOverride(implementation, lifetime));
+            if (IgnoreDependencyAttribute.ValidateType(type) && IgnoreDependencyAttribute.ValidateType(implementation))
+            {
+                this.Register(type, implementation, GetKeyOverride(implementation, key), GetLifetimeOverride(implementation, lifetime));
+            }
         }
 
         private void InternalRegisterFactory(
@@ -155,12 +158,18 @@
             string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
-            this.RegisterFactory(type, factory, GetKeyOverride(type, key), GetLifetimeOverride(type, lifetime));
+            if (IgnoreDependencyAttribute.ValidateType(type))
+            {
+                this.RegisterFactory(type, factory, GetKeyOverride(type, key), GetLifetimeOverride(type, lifetime));
+            }
         }
 
         private void InternalRegisterInstance(Type type, object instance)
         {
-            this.RegisterInstance(type, instance);
+            if (IgnoreDependencyAttribute.ValidateType(type))
+            {
+                this.RegisterInstance(type, instance);
+            }
         }
     }
 }

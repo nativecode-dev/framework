@@ -33,7 +33,7 @@
         [Route("")]
         public async Task<QueueDownloadResponse> Post(QueueDownloadRequest request)
         {
-            var download = await this.downloads.QueueAsync(request.Path, request.Filename, request.Url, CancellationToken.None);
+            var download = await this.downloads.EnqueueAsync(request.Path, request.Filename, request.Url, request.Source, CancellationToken.None);
 
             return Response.Succeed<QueueDownloadResponse>(x => x.Id = download.Key);
         }

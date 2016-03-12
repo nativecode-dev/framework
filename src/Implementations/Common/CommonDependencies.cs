@@ -3,6 +3,7 @@
     using Common.Data;
     using Common.Data.Entities;
     using Common.DataServices;
+    using Common.Workers;
 
     using NativeCode.Core.Data;
     using NativeCode.Core.Dependencies;
@@ -22,6 +23,9 @@
             registrar.Register<IRepository<Account, CoreDataContext>, Repository<Account, CoreDataContext>>(lifetime: this.PerContainer);
             registrar.Register<IRepository<Download, CoreDataContext>, Repository<Download, CoreDataContext>>(lifetime: this.PerContainer);
             registrar.Register<IRepository<Token, CoreDataContext>, Repository<Token, CoreDataContext>>(lifetime: this.PerContainer);
+
+            registrar.Register<IWorkManager<Download>, DownloadWorkManager>(lifetime: this.PerApplication);
+            registrar.Register<IWorkProvider<Download>, DownloadWorkProvider>();
         }
     }
 }
