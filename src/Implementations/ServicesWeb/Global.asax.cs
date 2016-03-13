@@ -25,6 +25,12 @@
                 CommonDependencies.Instance,
                 CommonWebDependencies.Instance);
 
+            // TODO: Hack until areas that aren't per-request can live.
+            using (var child = this.Container.CreateChildContainer())
+            {
+                Database.Configure(child.Resolver);
+            }
+
             MvcApp.Configure(this.Container);
             WebApiApp.Configure(this.Container);
 

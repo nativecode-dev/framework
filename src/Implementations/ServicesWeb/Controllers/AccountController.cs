@@ -37,6 +37,7 @@
         [AllowAnonymous]
         [Route("")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginPanelModel model)
         {
             var principal = await this.platform.AuthenticateAsync(model.Login, model.Password, CancellationToken.None);

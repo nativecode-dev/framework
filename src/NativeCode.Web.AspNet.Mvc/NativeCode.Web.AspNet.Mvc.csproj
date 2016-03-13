@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies\MvcDependencyResolver.cs" />
+    <Compile Include="Extensions\ActionExecutingContextExtensions.cs" />
     <Compile Include="Extensions\WebPageRenderingBaseExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

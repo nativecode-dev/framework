@@ -3,6 +3,8 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
+    using Common.Web.Filters;
+
     using NativeCode.Core.Dependencies;
     using NativeCode.Web.AspNet.Mvc.Dependencies;
 
@@ -24,6 +26,7 @@
         {
             filters.Add(new AuthorizeAttribute());
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new InstallRedirectAttribute());
         }
 
         private static void ConfigureRoutes(RouteCollection routes)

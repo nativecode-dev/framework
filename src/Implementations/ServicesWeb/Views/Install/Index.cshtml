@@ -1,0 +1,21 @@
+﻿@model ServicesWeb.Models.InstallationModel
+
+@{
+    Layout = "../Layouts/Default.cshtml";
+}
+
+<div>
+    @if (Model.DatabaseUpgradeAvailable)
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <p>
+                A database upgrade is available. Make sure you have a database backup before
+                proceeding with the upgrade.
+            </p>
+            <button type="submit" class="btn btn-danger">Upgrade</button>
+        }
+    }
+</div>

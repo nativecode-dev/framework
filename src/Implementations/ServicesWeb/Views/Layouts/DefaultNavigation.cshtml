@@ -14,9 +14,12 @@
 </head>
 
 <body>
-<div id="content" class="container-fluid">
-    @RenderBody()
-</div>
+    <header class="header">
+        @Html.Partial("~/Views/Shared/Navigation.cshtml")
+    </header>
+    <div id="content" class="container-fluid">
+        @RenderBody()
+    </div>
 </body>
 
 </html>
