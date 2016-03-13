@@ -1,5 +1,7 @@
 ﻿namespace Services
 {
+    using System;
+    using System.IO;
     using System.Web.Http;
 
     using Common;
@@ -58,6 +60,33 @@
             }
 
             base.Dispose(disposing);
+        }
+
+        protected override void PersistSettings()
+        {
+            base.PersistSettings();
+
+            var filename = Path.Combine(Environment.CurrentDirectory, "settings.json");
+
+            using (var filestream = File.Open(filename, FileMode.Create, FileAccess.Write, FileShare.Read))
+            {
+                this.Settings.Save(filestream);
+            }
+        }
+
+        protected override void RestoreSettings()
+        {
+            base.RestoreSettings();
+
+            var filename = Path.Combine(Environment.CurrentDirectory, "settings.json");
+
+            if (File.Exists(filename))
+            {
+                using (var filestream = File.OpenRead(filename))
+                {
+                    this.Settings.Load(filestream);
+                }
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿namespace NativeCode.Tests.Core.Settings
 {
     using System;
+    using System.Linq;
     using System.Text;
 
     using NativeCode.Core.Settings;
@@ -9,7 +10,7 @@
 
     public class WhenUsingJsonSettingsReader
     {
-        private const string JsonSample = "{ \"Simple\": \"string\", \"Array\": [0], \"Object\": { \"Number\": 20 } }";
+        private const string JsonSample = "{ \"Simple\": \"string\", \"Array\": [0], \"Object\": { \"Number\": 20, \"Child\": { \"Decimal\": 1.20 } } }";
 
         [Fact]
         public void ShouldReadJsonFile()
@@ -26,6 +27,10 @@
             Assert.Equal(Guid.Empty, sut.GetValue<Guid>("NotExist"));
             sut.SetValue("Settings.Test", "test");
             Assert.Equal("test", sut.GetValue<string>("Settings.Test"));
+            var keys = sut.Keys.ToList();
+            Assert.Contains("Simple", keys);
+            Assert.Contains("Object.Child.Decimal", keys);
+            Assert.Contains("Object.Number", keys);
         }
     }
 }

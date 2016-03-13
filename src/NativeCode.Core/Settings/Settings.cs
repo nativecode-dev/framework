@@ -1,6 +1,7 @@
 ﻿namespace NativeCode.Core.Settings
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
 
@@ -9,11 +10,9 @@
     using NativeCode.Core.Dependencies.Attributes;
     using NativeCode.Core.Extensions;
 
-    [IgnoreDependency("Settings readers must always be manually constructed for parameter variance.")]
+    [IgnoreDependency("Settings must always be manually constructed for parameter variance.")]
     public abstract class Settings
     {
-        protected string PathSeparator { get; set; } = ".";
-
         public object this[string key]
         {
             get
@@ -26,6 +25,10 @@
                 this.WriteValue(key, value);
             }
         }
+
+        public IEnumerable<string> Keys => this.GetKeys();
+
+        protected string PathSeparator { get; set; } = ".";
 
         public T GetValue<T>([NotNull] string name, T defaultValue = default(T))
         {
@@ -50,6 +53,10 @@
         public abstract void Load([NotNull] string content, Encoding encoding);
 
         public abstract void Load([NotNull] Stream stream);
+
+        public abstract void Save([NotNull] Stream stream);
+
+        protected abstract IEnumerable<string> GetKeys();
 
         protected abstract T ReadValue<T>([NotNull] string name, T defaultValue = default(T));
 

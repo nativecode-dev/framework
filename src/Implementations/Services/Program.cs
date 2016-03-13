@@ -8,7 +8,7 @@
         {
             using (var app = new ServicesApplication())
             {
-                var url = new Uri("http://localhost:9000");
+                var url = new Uri(app.Settings.GetValue("application.services.base_url", "http://localhost:9000"));
 
                 using (app.Start<ServicesStartup>(url))
                 {

@@ -1,7 +1,8 @@
 namespace NativeCode.Core.Settings
 {
+    using System;
+    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Text;
 
     using Newtonsoft.Json;
@@ -22,11 +23,29 @@ namespace NativeCode.Core.Settings
 
         public override void Load(Stream stream)
         {
-            var serializer = new JsonSerializer();
             using (var reader = new JsonTextReader(new StreamReader(stream)))
             {
+                var serializer = new JsonSerializer();
                 this.ObjectInstance = (JObject)serializer.Deserialize(reader);
             }
+        }
+
+        public override void Save(Stream stream)
+        {
+            using (var writer = new JsonTextWriter(new StreamWriter(stream)))
+            {
+                var serializer = new JsonSerializer();
+                serializer.Serialize(writer, this.ObjectInstance);
+            }
+        }
+
+        protected override IEnumerable<string> GetKeys()
+        {
+            var keys = new List<string>();
+
+            this.FlattenKeys(this.ObjectInstance, keys);
+
+            return keys;
         }
 
         protected override T ReadValue<T>(string name, T defaultValue = default(T))
@@ -87,6 +106,25 @@ namespace NativeCode.Core.Settings
             }
 
             return token.ToObject<T>();
+        }
+
+        private void FlattenKeys(JObject container, ICollection<string> keys, string path = default(string))
+        {
+            Func<string, string, string> build = (p, k) => p == null ? k : string.Join(this.PathSeparator, p, k);
+
+            foreach (var child in container)
+            {
+                var key = child.Key;
+                var value = child.Value;
+
+                var name = build(path, key);
+                keys.Add(name);
+
+                if (value.Type == JTokenType.Object)
+                {
+                    this.FlattenKeys((JObject)value, keys, name);
+                }
+            }
         }
     }
 }

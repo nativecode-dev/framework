@@ -48,6 +48,7 @@
                 {
                     this.Container.Registrar.RegisterInstance<IApplication>(this);
 
+                    this.RestoreSettings();
                     this.PreInitialization();
                     this.RegisterAssemblies(assemblies);
                     this.RegisterModules(modules);
@@ -69,6 +70,8 @@
             {
                 this.Disposed = true;
 
+                this.PersistSettings();
+
                 if (this.Container != null && this.ContainerOwner)
                 {
                     this.Container.Dispose();
@@ -86,6 +89,10 @@
         }
 
         protected virtual void FailInitialization(Exception ex)
+        {
+        }
+
+        protected virtual void PersistSettings()
         {
         }
 
@@ -111,6 +118,10 @@
             {
                 module.RegisterDependencies(this.Container.Registrar);
             }
+        }
+
+        protected virtual void RestoreSettings()
+        {
         }
     }
 }
