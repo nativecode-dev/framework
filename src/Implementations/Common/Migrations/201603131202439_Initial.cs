@@ -70,16 +70,34 @@ namespace Common.Migrations
                         UserModified = c.String(),
                         Account_Key = c.Long()
                     }).PrimaryKey(t => t.Key).ForeignKey("dbo.Accounts", t => t.Account_Key).Index(t => t.Account_Key);
+
+            this.CreateTable(
+                "dbo.TokenProperties",
+                c =>
+                new
+                    {
+                        Key = c.Long(false, true),
+                        Name = c.String(false, 64),
+                        Value = c.String(),
+                        DateCreated = c.DateTimeOffset(precision: 7),
+                        DateModified = c.DateTimeOffset(precision: 7),
+                        UserCreated = c.String(),
+                        UserModified = c.String(),
+                        Token_Key = c.Guid()
+                    }).PrimaryKey(t => t.Key).ForeignKey("dbo.Tokens", t => t.Token_Key).Index(t => t.Token_Key);
         }
 
         public override void Down()
         {
+            this.DropForeignKey("dbo.TokenProperties", "Token_Key", "dbo.Tokens");
             this.DropForeignKey("dbo.Tokens", "Account_Key", "dbo.Accounts");
             this.DropForeignKey("dbo.Downloads", "Account_Key", "dbo.Accounts");
             this.DropForeignKey("dbo.AccountProperties", "Account_Key", "dbo.Accounts");
+            this.DropIndex("dbo.TokenProperties", new[] { "Token_Key" });
             this.DropIndex("dbo.Tokens", new[] { "Account_Key" });
             this.DropIndex("dbo.Downloads", new[] { "Account_Key" });
             this.DropIndex("dbo.AccountProperties", new[] { "Account_Key" });
+            this.DropTable("dbo.TokenProperties");
             this.DropTable("dbo.Tokens");
             this.DropTable("dbo.Downloads");
             this.DropTable("dbo.AccountProperties");
