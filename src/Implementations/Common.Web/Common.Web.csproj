@@ -97,6 +97,7 @@
     <Compile Include="CommonWebDependencies.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Filters\AccountAuthorizeAttribute.cs" />
     <Compile Include="Filters\IgnoreInstallRedirectAttribute.cs" />
     <Compile Include="Filters\InstallRedirectAttribute.cs" />
     <Compile Include="Handlers\AccountAuthDelegatingHandler.cs" />

@@ -9,6 +9,7 @@
     using NativeCode.Web.AspNet.Mvc.Dependencies;
 
     using DependencyResolver = System.Web.Mvc.DependencyResolver;
+    using IDependencyResolver = NativeCode.Core.Dependencies.IDependencyResolver;
 
     public static class MvcApp
     {
@@ -18,15 +19,15 @@
 
             AreaRegistration.RegisterAllAreas();
 
-            ConfigureFilters(GlobalFilters.Filters);
+            ConfigureFilters(container.Resolver, GlobalFilters.Filters);
             ConfigureRoutes(RouteTable.Routes);
         }
 
-        private static void ConfigureFilters(GlobalFilterCollection filters)
+        private static void ConfigureFilters(IDependencyResolver resolver, GlobalFilterCollection filters)
         {
-            filters.Add(new AuthorizeAttribute());
-            filters.Add(new HandleErrorAttribute());
-            filters.Add(new InstallRedirectAttribute());
+            filters.Add(resolver.Resolve<AccountAuthorizeAttribute>());
+            filters.Add(resolver.Resolve<HandleErrorAttribute>());
+            filters.Add(resolver.Resolve<InstallRedirectAttribute>());
         }
 
         private static void ConfigureRoutes(RouteCollection routes)

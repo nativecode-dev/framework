@@ -7,7 +7,7 @@
 <div>
     @if (Model.DatabaseUpgradeAvailable)
     {
-        using (Html.BeginForm())
+        using (Html.BeginForm("Index", "Install"))
         {
             @Html.AntiForgeryToken()
 

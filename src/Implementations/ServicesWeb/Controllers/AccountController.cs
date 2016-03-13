@@ -1,14 +1,14 @@
 ﻿namespace ServicesWeb.Controllers
 {
-    using System.Threading;
-    using System.Threading.Tasks;
     using System.Web.Mvc;
+    using System.Web.Security;
 
+    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
 
     using ServicesWeb.Models;
 
-    [RoutePrefix("accounts")]
+    [RoutePrefix("account")]
     public class AccountController : Controller
     {
         private readonly IPlatform platform;
@@ -38,21 +38,21 @@
         [Route("")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginPanelModel model)
+        public ActionResult Login(LoginPanelModel model)
         {
-            var principal = await this.platform.AuthenticateAsync(model.Login, model.Password, CancellationToken.None);
-
-            if (principal != null)
+            if (Membership.ValidateUser(model.Login, model.Password))
             {
-                this.platform.SetCurrentPrincipal(principal);
-            }
+                FormsAuthentication.SetAuthCookie(model.Login, true);
 
-            if (string.IsNullOrWhiteSpace(model.RedirectUrl))
-            {
+                if (string.IsNullOrWhiteSpace(model.RedirectUrl).Not())
+                {
+                    return this.Redirect(model.RedirectUrl);
+                }
+
                 return this.RedirectToAction("Index", "Home");
             }
 
-            return this.Redirect(model.RedirectUrl);
+            return this.RedirectToAction("Index", "Account");
         }
     }
 }
