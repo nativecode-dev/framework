@@ -1,6 +1,8 @@
 ﻿namespace NativeCode.Packages.Platform
 {
     using System;
+    using System.Security.Principal;
+    using System.Threading;
 
     using Microsoft.Owin.Hosting;
 
@@ -29,6 +31,18 @@
             this.EnsureInitialized();
 
             return WebApp.Start<T>(options);
+        }
+
+        protected override void PreInitialization()
+        {
+            var identity = WindowsIdentity.GetCurrent();
+
+            if (identity != null)
+            {
+                Thread.CurrentPrincipal = new WindowsPrincipal(identity);
+            }
+
+            base.PreInitialization();
         }
     }
 }

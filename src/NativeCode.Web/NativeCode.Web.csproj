@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\ResponseCollection.cs" />
     <Compile Include="Platform\IWebApplication.cs" />
     <Compile Include="Platform\WebPlatform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

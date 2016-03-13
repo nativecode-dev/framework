@@ -7,7 +7,8 @@
     using NativeCode.Core.DotNet.Providers;
     using NativeCode.Core.Logging;
     using NativeCode.Core.Platform;
-    using NativeCode.Core.Providers;
+    using NativeCode.Core.Platform.Connections;
+    using NativeCode.Core.Platform.Security;
 
     public class DotNetDependencies : DependencyModule
     {
@@ -15,10 +16,10 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
+            registrar.Register<IAuthenticationProvider, WindowsAuthenticationProvider>(DependencyKey.QualifiedName);
             registrar.Register<IConnectionStringProvider, ConnectionStringProvider>();
             registrar.Register<ILogWriter, TraceLogWriter>(DependencyKey.QualifiedName);
-            registrar.Register<IPlatform, DotNetPlatform>();
-            registrar.Register<IPrincipalInflater, WindowsPrincipalInflater>(PrincipalSource.Windows.ToString());
+            registrar.Register<IPlatform, DotNetPlatform>(lifetime: DependencyLifetime.PerApplication);
         }
     }
 }

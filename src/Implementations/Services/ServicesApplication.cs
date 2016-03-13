@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using System.Web.Http;
 
     using Common;
     using Common.Data.Entities;
@@ -17,16 +16,16 @@
     using NativeCode.Packages.Dependencies;
     using NativeCode.Packages.Platform;
     using NativeCode.Web;
-    using NativeCode.Web.AspNet.WebApi.Dependencies;
-
-    using Owin;
 
     public class ServicesApplication : OwinApplication
     {
+        private const string DefaultSettingsFile = "settings.json";
+
         public ServicesApplication()
             : base(new UnityDependencyContainer(), true)
         {
             Current = this;
+
             this.Initialize(
                 this.GetType().Name.Humanize(),
                 CoreDependencies.Instance,
@@ -66,7 +65,7 @@
         {
             base.PersistSettings();
 
-            var filename = Path.Combine(Environment.CurrentDirectory, "settings.json");
+            var filename = Path.Combine(Environment.CurrentDirectory, DefaultSettingsFile);
 
             using (var filestream = File.Open(filename, FileMode.Create, FileAccess.Write, FileShare.Read))
             {
@@ -78,7 +77,7 @@
         {
             base.RestoreSettings();
 
-            var filename = Path.Combine(Environment.CurrentDirectory, "settings.json");
+            var filename = Path.Combine(Environment.CurrentDirectory, DefaultSettingsFile);
 
             if (File.Exists(filename))
             {
@@ -87,19 +86,6 @@
                     this.Settings.Load(filestream);
                 }
             }
-        }
-    }
-
-    public class ServicesStartup : OwinStartup
-    {
-        public override void Configuration(IAppBuilder builder)
-        {
-            var configuration = new HttpConfiguration { DependencyResolver = new WebApiDependencyResolver(ServicesApplication.Current.Container) };
-            configuration.EnableSystemDiagnosticsTracing();
-            configuration.Filters.Add(new AuthorizeAttribute());
-            configuration.MapHttpAttributeRoutes();
-
-            builder.UseWebApi(configuration);
         }
     }
 }

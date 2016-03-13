@@ -9,7 +9,7 @@
 
     using NativeCode.Core.Data;
     using NativeCode.Core.Platform;
-    using NativeCode.Core.Providers;
+    using NativeCode.Core.Platform.Connections;
 
     public abstract class DbDataContext : DbContext, IDataContext
     {

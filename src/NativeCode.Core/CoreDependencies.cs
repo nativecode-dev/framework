@@ -4,7 +4,7 @@
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Localization;
     using NativeCode.Core.Logging;
-    using NativeCode.Core.Platform;
+    using NativeCode.Core.Platform.Security;
     using NativeCode.Core.Serialization;
     using NativeCode.Core.Validation;
 
@@ -31,14 +31,12 @@
         {
             registrar.Register<ILogger, Logger>();
             registrar.Register<ILogWriter, InMemoryLogWriter>(DependencyKey.QualifiedName);
-            registrar.RegisterFactory(x => x.ResolveAll<ILogWriter>());
+            registrar.RegisterFactory(x => x.ResolveAll<ILogWriter>(), lifetime: DependencyLifetime.PerResolve);
         }
 
         private static void RegisterPlatform(IDependencyRegistrar registrar)
         {
-            registrar.Register<IPrincipalInflater, PrincipalInflater>(PrincipalSource.Generic.ToString());
-            registrar.Register<IPrincipalFactory, PrincipalFactory>();
-            registrar.RegisterFactory(x => x.ResolveAll<IPrincipalInflater>());
+            registrar.RegisterFactory(x => x.ResolveAll<IAuthenticationProvider>(), lifetime: DependencyLifetime.PerResolve);
         }
 
         private static void RegisterSerialization(IDependencyRegistrar registrar)

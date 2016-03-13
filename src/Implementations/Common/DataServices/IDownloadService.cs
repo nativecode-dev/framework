@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -14,10 +15,14 @@
 
         Task<IEnumerable<Download>> ClaimAsync(int count, CancellationToken cancellationToken);
 
-        Task<Download> EnqueueAsync(string path, string filename, string url, string source, CancellationToken cancellationToken);
+        Task<Download> EnqueueAsync(Download download, CancellationToken cancellationToken);
+
+        Task<IEnumerable<Download>> GetDownloadsAsync(CancellationToken cancellationToken);
 
         Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken);
 
         Task<IEnumerable<Download>> GetRetryableWorkForMachineAsync(CancellationToken cancellationToken);
+
+        Task<IEnumerable<Download>> GetUserDownloadsAsync(IPrincipal principal, CancellationToken cancellationToken);
     }
 }

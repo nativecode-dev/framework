@@ -1,38 +1,44 @@
 ﻿namespace NativeCode.Web.Platform
 {
     using System;
+    using System.Collections.Generic;
     using System.Security.Principal;
-    using System.Threading;
     using System.Web;
 
-    using NativeCode.Core.Platform;
+    using NativeCode.Core.DotNet.Platform;
+    using NativeCode.Core.Platform.Security;
 
-    public class WebPlatform : IPlatform
+    public class WebPlatform : DotNetPlatform
     {
-        public string ApplicationPath => HttpRuntime.AppDomainAppPath;
+        public WebPlatform(IEnumerable<IAuthenticationProvider> authenticators)
+            : base(authenticators)
+        {
+        }
 
-        public string DataPath => HttpRuntime.BinDirectory;
+        public override string ApplicationPath => HttpRuntime.AppDomainAppPath;
 
-        public string MachineName => Environment.MachineName;
+        public override string DataPath => HttpRuntime.BinDirectory;
 
-        public IPrincipal GetCurrentPrincipal()
+        public override string MachineName => Environment.MachineName;
+
+        public override IPrincipal GetCurrentPrincipal()
         {
             if (HttpContext.Current != null)
             {
                 return HttpContext.Current.User;
             }
 
-            return Principal.Anonymous;
+            return base.GetCurrentPrincipal();
         }
 
-        public void SetCurrentPrincipal(IPrincipal principal)
+        public override void SetCurrentPrincipal(IPrincipal principal)
         {
             if (HttpContext.Current != null)
             {
                 HttpContext.Current.User = principal;
             }
 
-            Thread.CurrentPrincipal = principal;
+            base.SetCurrentPrincipal(principal);
         }
     }
 }

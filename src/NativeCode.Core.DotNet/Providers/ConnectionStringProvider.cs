@@ -3,7 +3,7 @@
     using System;
     using System.Configuration;
 
-    using NativeCode.Core.Providers;
+    using NativeCode.Core.Platform.Connections;
     using NativeCode.Core.Types;
 
     public class ConnectionStringProvider : IConnectionStringProvider

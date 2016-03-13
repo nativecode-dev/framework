@@ -20,7 +20,7 @@
         {
             if (value == null)
             {
-                return new ValidationResult("Failed to pass any complexity rules.");
+                return null;
             }
 
             var validator = DependencyLocator.Resolver.Resolve<StringComplexityValidator>();
@@ -30,7 +30,7 @@
                 return validator.Validate(value, validationContext);
             }
 
-            return base.IsValid(value, validationContext);
+            return null;
         }
     }
 }

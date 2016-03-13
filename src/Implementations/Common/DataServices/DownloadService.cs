@@ -5,6 +5,7 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -66,23 +67,17 @@
             return results;
         }
 
-        public async Task<Download> EnqueueAsync(string path, string filename, string url, string source, CancellationToken cancellationToken)
+        public async Task<Download> EnqueueAsync(Download download, CancellationToken cancellationToken)
         {
             var principal = this.platform.GetCurrentPrincipal();
-
-            if (string.IsNullOrWhiteSpace(principal.Identity.Name))
-            {
-                principal = Principal.Anonymous;
-            }
-
             var account = await this.accounts.FromPrincipalAsync(principal, cancellationToken);
 
             if (account == null)
             {
-                account = new Account { AccountSource = PrincipalSource.Default, Login = principal.Identity.Name, Password = "12345@abcde[]" };
+                throw new InvalidOperationException($"Account does not exist for the current user, {principal.Identity.Name}");
             }
 
-            var download = new Download { Account = account, Filename = filename, Path = path, Source = source, Title = filename, Url = url };
+            download.Account = account;
 
             if (await this.Context.SaveAsync(download, cancellationToken))
             {
@@ -90,6 +85,11 @@
             }
 
             throw new InvalidOperationException("Failed to save download entity.");
+        }
+
+        public Task<IEnumerable<Download>> GetDownloadsAsync(CancellationToken cancellationToken)
+        {
+            return this.Context.Downloads.ToListAsync(cancellationToken).ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
         }
 
         public Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken)
@@ -105,6 +105,11 @@
             return this.QueryByMachineName(x => x.State == DownloadState.Retry)
                 .ToListAsync(cancellationToken)
                 .ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Download>> GetUserDownloadsAsync(IPrincipal principal, CancellationToken cancellationToken)
+        {
+            return await this.Context.Downloads.Where(x => x.Account.Login == principal.Identity.Name).ToListAsync(cancellationToken);
         }
 
         private IQueryable<Download> QueryByMachineName(Expression<Func<Download, bool>> filter)

@@ -4,14 +4,9 @@
 
     public class Identity : IIdentity
     {
-        public Identity(string name)
-            : this(name, PrincipalSource.Generic)
+        public Identity(string name, string type)
         {
-        }
-
-        public Identity(string name, PrincipalSource source)
-        {
-            this.AuthenticationType = source.ToString();
+            this.AuthenticationType = type;
             this.Name = name;
         }
 

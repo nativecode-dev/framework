@@ -1,6 +1,8 @@
 ﻿namespace NativeCode.Core.Platform
 {
     using System.Security.Principal;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     using JetBrains.Annotations;
 
@@ -14,6 +16,10 @@
 
         [NotNull]
         string MachineName { get; }
+
+        Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken);
+
+        IPrincipal CreatePrincipal(string login);
 
         IPrincipal GetCurrentPrincipal();
 

@@ -1,12 +1,18 @@
 ﻿namespace NativeCode.Core.Extensions
 {
     using System;
+    using System.Linq;
     using System.Text;
 
     using JetBrains.Annotations;
 
     public static class StringExtensions
     {
+        public static bool IsEmpty(params string[] values)
+        {
+            return values.Any(string.IsNullOrWhiteSpace);
+        }
+
         public static string[] Split(this string value, string separator)
         {
             return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);

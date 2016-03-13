@@ -1,0 +1,25 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap/scripts")
+
+    @Styles.Render("~/bundles/bootstrap/styles")
+    @Styles.Render("~/bundles/site/styles")
+</head>
+
+<body>
+    <header class="header">
+        @Html.Partial("~/Views/Shared/Navigation.cshtml")
+    </header>
+    <div id="content" class="container-fluid">
+        @RenderBody()
+    </div>
+</body>
+
+</html>

@@ -19,6 +19,21 @@
 
         public ActiveDirectoryNameFormat Format { get; }
 
+        public static bool IsDnsName([NotNull] string login)
+        {
+            return login.Contains("@");
+        }
+
+        public static bool IsNtName([NotNull] string login)
+        {
+            return login.Contains("\\");
+        }
+
+        public static bool IsValid([NotNull] string login)
+        {
+            return IsDnsName(login) || IsNtName(login);
+        }
+
         public static ActiveDirectoryName Parse([NotNull] string login)
         {
             var account = Create(login);

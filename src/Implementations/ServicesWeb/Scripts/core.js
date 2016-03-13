@@ -1,0 +1,7 @@
+﻿(function($) {
+
+    $(function() {
+
+    });
+
+}(window.jQuery));

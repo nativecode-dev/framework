@@ -44,12 +44,12 @@
     <Compile Include="DotNetDependencies.cs" />
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="Platform\DotNetPlatform.cs" />
-    <Compile Include="Platform\WindowsPrincipalInflater.cs" />
     <Compile Include="Providers\ConnectionStringProvider.cs" />
     <Compile Include="Console\BufferCell.cs" />
     <Compile Include="Console\BufferHandle.cs" />
     <Compile Include="Console\BufferMap.cs" />
     <Compile Include="Console\Screen.cs" />
+    <Compile Include="Providers\WindowsAuthenticationProvider.cs" />
     <Compile Include="Types\ActiveDirectoryName.cs" />
     <Compile Include="Types\ActiveDirectoryNameFormat.cs" />
     <Compile Include="Win32\CenteringPosition.cs" />
