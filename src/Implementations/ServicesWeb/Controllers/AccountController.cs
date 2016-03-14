@@ -3,6 +3,8 @@
     using System.Web.Mvc;
     using System.Web.Security;
 
+    using Common.Web.Filters;
+
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
 
@@ -27,18 +29,11 @@
         }
 
         [AllowAnonymous]
-        [Route("partials/login")]
-        [HttpGet]
-        public ActionResult LoginPanel()
-        {
-            return this.PartialView(new LoginPanelModel());
-        }
-
-        [AllowAnonymous]
-        [Route("")]
+        [Route("login")]
         [HttpPost]
+        [IgnoreSiteMaintenance]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginPanelModel model)
+        public ActionResult Login(LoginModel model)
         {
             if (Membership.ValidateUser(model.Login, model.Password))
             {
@@ -48,11 +43,22 @@
                 {
                     return this.Redirect(model.RedirectUrl);
                 }
-
-                return this.RedirectToAction("Index", "Home");
             }
 
-            return this.RedirectToAction("Index", "Account");
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        [Route("logout")]
+        [IgnoreSiteMaintenance]
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            if (this.User != null && this.User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SignOut();
+            }
+
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class LoginPanelModel
+    public class LoginModel
     {
         [Required]
         [MaxLength(256)]

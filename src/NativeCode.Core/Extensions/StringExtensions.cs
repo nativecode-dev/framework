@@ -13,6 +13,11 @@
             return values.Any(string.IsNullOrWhiteSpace);
         }
 
+        public static string Replace(this string value, string replacement, params string[] characters)
+        {
+            return characters.Aggregate(value, (current, character) => current.Replace(character, replacement));
+        }
+
         public static string[] Split(this string value, string separator)
         {
             return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);

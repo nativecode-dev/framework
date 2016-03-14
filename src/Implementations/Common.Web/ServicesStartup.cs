@@ -1,8 +1,6 @@
-﻿namespace Services
+﻿namespace Common.Web
 {
     using System.Web.Http;
-
-    using Common.Web;
 
     using NativeCode.Packages.Platform;
 
@@ -13,10 +11,9 @@
         public override void Configuration(IAppBuilder builder)
         {
             var container = ServicesApplication.Current.Container;
+
             var configuration = new HttpConfiguration();
-
             WebApiApp.Configure(container, configuration);
-
             builder.UseWebApi(configuration);
         }
     }

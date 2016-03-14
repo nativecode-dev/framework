@@ -1,0 +1,34 @@
+﻿@using Common
+@model ServicesWeb.Areas.Admin.Models.DatabaseUpgradeModel
+
+@{
+    ViewBag.Title = "Database";
+}
+
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Database Upgrade Available</h3>
+        </div>
+        <div class="panel-body">
+            @if (Database.UpgradeRequired)
+            {
+                using (Html.BeginForm("UpgradeDatabase", "Database"))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <p class="text-danger">
+                        A database upgrade is available. Make sure you have a database backup before
+                        proceeding with the upgrade.
+                    </p>
+
+                    <div class="form-group">
+                        @Html.EditorFor(x => x.VerificationToken, new { htmlAttributes = new { @class = "form-control", Placeholder = "Verification token" } })
+                    </div>
+
+                    <button type="submit" class="btn btn-danger">Upgrade</button>
+                }
+            }
+        </div>
+    </div>
+</div>

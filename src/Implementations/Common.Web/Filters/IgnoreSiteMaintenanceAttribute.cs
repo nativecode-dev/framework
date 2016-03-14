@@ -3,7 +3,7 @@
     using System;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public sealed class IgnoreInstallRedirectAttribute : Attribute
+    public sealed class IgnoreSiteMaintenanceAttribute : Attribute
     {
     }
 }

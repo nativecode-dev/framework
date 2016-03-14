@@ -1,7 +1,53 @@
-﻿.btn:focus {
-    outline: none;
-}
+﻿body {
+    padding-top: 50px;
 
-#content {
-    margin-top: 75px;
+    #debug-panel {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+
+        #assemblies {
+            height: 300px;
+            margin: 10px 0 0 10px;
+            overflow-y: auto;
+            padding: 0;
+            list-style: none;
+
+            li.assembly {
+                margin: 0 10px 0 0;
+                padding: 0;
+
+                a {
+                    border-left: 1px solid black;
+                    font-weight: bolder;
+                    padding-left: 10px;
+                }
+
+                a.collapsed {
+                    border-left: 1px solid transparent;
+                    font-weight: normal;
+                    padding-left: 0;
+                }
+
+                ul.assembly-attributes {
+                    border: 1px solid #cbcbcb;
+                    height: 150px;
+                    margin: 10px 0 10px 0;
+                    overflow-y: auto;
+                    padding: 10px;
+                    list-style: none;
+                    width: 40%;
+
+                    li.assembly-attribute {
+                        margin: 0;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .btn:focus {
+        outline: none !important;
+    }
 }

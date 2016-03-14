@@ -1,6 +1,7 @@
 ﻿namespace Common.Data.Entities
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Common.Data.Entities.Enums;
@@ -21,6 +22,8 @@
         [Required]
         [MaxLength(1024)]
         public string Path { get; set; }
+
+        public List<DownloadProperty> Properties { get; set; }
 
         [Required]
         [DataType(DataType.Url)]

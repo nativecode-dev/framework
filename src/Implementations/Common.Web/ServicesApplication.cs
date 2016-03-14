@@ -1,12 +1,7 @@
-﻿namespace Services
+﻿namespace Common.Web
 {
     using System;
     using System.IO;
-
-    using Common;
-    using Common.Data.Entities;
-    using Common.Web;
-    using Common.Workers;
 
     using Humanizer;
 
@@ -36,30 +31,6 @@
         }
 
         public static IApplication Current { get; private set; }
-
-        protected IWorkManager<Download> Downloads { get; private set; }
-
-        protected override void PostInitialization()
-        {
-            this.Downloads = this.Container.Resolver.Resolve<IWorkManager<Download>>();
-            this.Downloads.StartAsync();
-
-            base.PostInitialization();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && !this.Disposed)
-            {
-                if (this.Downloads != null)
-                {
-                    this.Downloads.Dispose();
-                    this.Downloads = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
 
         protected override void PersistSettings()
         {

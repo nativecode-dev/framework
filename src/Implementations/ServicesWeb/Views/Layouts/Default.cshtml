@@ -1,4 +1,6 @@
 ﻿@using System.Web.Optimization
+@using ServicesWeb
+@using ServicesWeb.Models
 <!DOCTYPE html>
 
 <html lang="en">
@@ -14,9 +16,13 @@
 </head>
 
 <body>
-<div id="content" class="container-fluid">
-    @RenderBody()
-</div>
+    <div id="content" class="container-fluid">
+        @RenderBody()
+    </div>
+    @if (Startup.IsDebug && this.User != null && this.User.Identity.IsAuthenticated)
+    {
+        @Html.Partial("DebugInfo", new ApplicationInfo())
+    }
 </body>
 
 </html>

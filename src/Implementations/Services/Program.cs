@@ -2,6 +2,10 @@
 {
     using System;
 
+    using Common.Data.Entities;
+    using Common.Web;
+    using Common.Workers;
+
     using PowerArgs;
 
     internal class Program
@@ -22,13 +26,20 @@
                 using (app.Start<ServicesStartup>(url))
                 {
                     Console.WriteLine($"Started host at {url}.");
-                    ConsoleKeyInfo key;
 
-                    do
+                    using (var downloads = app.Container.Resolver.Resolve<IWorkManager<Download>>())
                     {
-                        key = Console.ReadKey(true);
+                        downloads.StartAsync();
+                        Console.WriteLine($"Started download watcher.");
+
+                        ConsoleKeyInfo key;
+
+                        do
+                        {
+                            key = Console.ReadKey(true);
+                        }
+                        while (key.KeyChar != 'q');
                     }
-                    while (key.KeyChar != 'q');
                 }
             }
         }
