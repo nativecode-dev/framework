@@ -14,6 +14,8 @@
         [MaxLength(128)]
         public string DomainName { get; set; }
 
+        public List<Download> Downloads { get; set; } = new List<Download>(200);
+
         [MaxLength(256)]
         public string Login { get; set; }
 

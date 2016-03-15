@@ -32,6 +32,16 @@
 
         public static IApplication Current { get; private set; }
 
+        protected override void PostInitialization()
+        {
+            using (var container = this.Container.CreateChildContainer())
+            {
+                Database.Configure(container.Resolver);
+            }
+
+            base.PostInitialization();
+        }
+
         protected override void PersistSettings()
         {
             base.PersistSettings();

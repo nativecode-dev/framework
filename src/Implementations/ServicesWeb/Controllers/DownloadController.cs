@@ -1,9 +1,9 @@
-﻿namespace ServicesWeb.Areas.Admin.Controllers
+﻿namespace ServicesWeb.Controllers
 {
     using System.Web.Mvc;
 
-    [RoutePrefix("")]
-    public class HomeController : ControllerBase
+    [RoutePrefix("downloads")]
+    public class DownloadController : Controller
     {
         [Route("")]
         [HttpGet]

@@ -1,9 +1,13 @@
 ﻿namespace ServicesWeb.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
+    using System.Web;
     using System.Web.Compilation;
+    using System.Web.Security;
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Platform.Connections;
@@ -12,8 +16,16 @@
     {
         public IEnumerable<AssemblyInfo> Assemblies = GetAssemblyNames();
 
+        [DisplayName("Current user roles")]
+        public IEnumerable<string> CurrentUserRoles => GetCurrentUserRoles();
+
+        [DisplayName("Current user")]
+        public string CurrentUsername => GetCurrentUsername();
+
+        [DisplayName("Default connection string")]
         public string DefaultConnectionString => GetDefaultConnectionString();
 
+        [DisplayName("Version")]
         public string Version => GetAssemblyVersion();
 
         private static IEnumerable<AssemblyInfo> GetAssemblyNames()
@@ -35,6 +47,21 @@
             }
 
             return "0.0.0.0";
+        }
+
+        private static IEnumerable<string> GetCurrentUserRoles()
+        {
+            return Roles.GetRolesForUser(GetCurrentUsername());
+        }
+
+        private static string GetCurrentUsername()
+        {
+            if (HttpContext.Current != null)
+            {
+                return HttpContext.Current.User.Identity.Name;
+            }
+
+            return Thread.CurrentPrincipal.Identity.Name;
         }
 
         private static string GetDefaultConnectionString()

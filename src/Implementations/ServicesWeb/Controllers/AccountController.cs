@@ -30,6 +30,15 @@
 
         [AllowAnonymous]
         [Route("login")]
+        [IgnoreSiteMaintenance]
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return this.View(new LoginModel());
+        }
+
+        [AllowAnonymous]
+        [Route("login")]
         [HttpPost]
         [IgnoreSiteMaintenance]
         [ValidateAntiForgeryToken]

@@ -1,12 +1,12 @@
 ﻿@using NativeCode.Core.Extensions
 @model ServicesWeb.Models.ApplicationInfo
 
-<div id="debug-panel" class="panel panel-default">
+<div id="debug-panel" class="panel panel-info hidden">
     <div class="panel-heading">
         <h3 class="panel-title">Debug Information</h3>
     </div>
     <div class="panel-body">
-        <div id="debug-info">
+        <div id="debug-info" class="collapsed in">
             <!-- Assemblies -->
             <div class="panel panel-default">
                 <div class="panel-body debug-section">
@@ -37,6 +37,22 @@
                 </div>
             </div>
 
+            <!-- Current Username -->
+            <div class="panel panel-default">
+                <div class="panel-body debug-section">
+                    @Html.LabelFor(x => x.CurrentUsername)
+                    @Html.DisplayFor(x => x.CurrentUsername)
+                </div>
+            </div>
+
+            <!-- Current User Roles -->
+            <div class="panel panel-default">
+                <div class="panel-body debug-section">
+                    @Html.LabelFor(x => x.CurrentUserRoles)
+                    @string.Join(", ", this.Model.CurrentUserRoles)
+                </div>
+            </div>
+
             <!-- Default Connection String -->
             <div class="panel panel-default">
                 <div class="panel-body debug-section">
@@ -55,3 +71,17 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        var $panel = $("#debug-panel");
+        var docHeight = $(window).height();
+        var footerHeight = $panel.height();
+        var footerTop = $panel.position().top + footerHeight;
+
+        if (footerTop < docHeight) {
+            $panel.css("margin-top", 10 + (docHeight - footerTop) + "px");
+        }
+    });
+</script>

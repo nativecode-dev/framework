@@ -8,6 +8,8 @@
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Web.AspNet.Mvc.Dependencies;
+    using NativeCode.Web.AspNet.Mvc.Filters;
+    using NativeCode.Web.AspNet.Mvc.ModelBinders;
 
     using DependencyResolver = System.Web.Mvc.DependencyResolver;
     using IDependencyResolver = NativeCode.Core.Dependencies.IDependencyResolver;
@@ -23,6 +25,8 @@
             ConfigureBundles(BundleTable.Bundles);
             ConfigureFilters(container.Resolver, GlobalFilters.Filters);
             ConfigureRoutes(RouteTable.Routes);
+
+            ModelBinders.Binders.DefaultBinder = new ExtendedModelBinder();
         }
 
         private static void ConfigureFilters(IDependencyResolver resolver, GlobalFilterCollection filters)
@@ -30,6 +34,7 @@
             filters.Add(resolver.Resolve<AccountAuthorizeAttribute>());
             filters.Add(resolver.Resolve<HandleErrorAttribute>());
             filters.Add(resolver.Resolve<SiteMaintenanceAttribute>());
+            filters.Add(resolver.Resolve<ValidateModelStateAttribute>());
         }
 
         private static void ConfigureRoutes(RouteCollection routes)
@@ -55,7 +60,10 @@
 
         private static void CreateJqueryBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
+            bundles.Add(
+                new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js")
+                    .Include("~/Scripts/jquery.validate.js")
+                    .Include("~/Scripts/jquery.validate.unobtrusive.js"));
         }
 
         private static void CreateSiteBundles(BundleCollection bundles)

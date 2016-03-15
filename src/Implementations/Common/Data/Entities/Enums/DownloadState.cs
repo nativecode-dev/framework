@@ -12,8 +12,8 @@
 
         Failed = 4,
 
-        Retry = 5,
+        Queued = Default,
 
-        Queued = Default
+        Retry = 5
     }
 }

@@ -16,15 +16,15 @@
 </head>
 
 <body>
-    <header class="header">
-        @Html.Partial("Navigation")
-    </header>
-    <div id="content" class="container-fluid">
+    <div id="content" class="container-fluid navigable">
+        <header class="header">
+            @Html.Partial("NavigationBar")
+        </header>
         @RenderBody()
     </div>
     @if (Startup.IsDebug && this.User != null && this.User.Identity.IsAuthenticated)
     {
-        @Html.Partial("DebugInfo", new ApplicationInfo())
+        @Html.Partial("DebugPanel", new ApplicationInfo())
     }
 </body>
 

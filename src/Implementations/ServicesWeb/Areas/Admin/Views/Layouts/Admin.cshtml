@@ -1,0 +1,36 @@
+﻿@using System.Web.Optimization
+@using ServicesWeb.Models
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap/scripts")
+
+    @Styles.Render("~/bundles/bootstrap/styles")
+    @Styles.Render("~/bundles/site/styles")
+</head>
+
+<body>
+    <div id="wrapper">
+        @Html.Partial("AdminBar")
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            @if (Startup.IsDebug && User != null && User.Identity.IsAuthenticated)
+            {
+                @Html.Partial("DebugPanel", new ApplicationInfo())
+            }
+        </div>
+    </div>
+</body>
+
+</html>

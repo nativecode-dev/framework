@@ -62,7 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="DataServices\DownloadStats.cs" />
     <Compile Include="Data\Entities\DownloadProperty.cs" />
+    <Compile Include="Data\Entities\Navigation\MenuAction.cs" />
+    <Compile Include="Data\Entities\Navigation\MenuActionType.cs" />
     <Compile Include="Data\Entities\TokenProperty.cs" />
     <Compile Include="Migrations\201603131202439_Initial.cs" />
     <Compile Include="Migrations\201603131202439_Initial.Designer.cs">

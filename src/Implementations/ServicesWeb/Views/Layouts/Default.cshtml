@@ -19,9 +19,9 @@
     <div id="content" class="container-fluid">
         @RenderBody()
     </div>
-    @if (Startup.IsDebug && this.User != null && this.User.Identity.IsAuthenticated)
+    @if (Startup.IsDebug && User != null && User.Identity.IsAuthenticated)
     {
-        @Html.Partial("DebugInfo", new ApplicationInfo())
+        @Html.Partial("DebugPanel", new ApplicationInfo())
     }
 </body>
 

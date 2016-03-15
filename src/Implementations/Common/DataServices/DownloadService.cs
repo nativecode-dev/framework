@@ -92,6 +92,20 @@
             return this.Context.Downloads.ToListAsync(cancellationToken).ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
         }
 
+        public async Task<DownloadStats> GetDownloadStatsAsync(CancellationToken cancellationToken)
+        {
+            return new DownloadStats
+                       {
+                           Claimed = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Claimed, cancellationToken),
+                           Completed = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Completed, cancellationToken),
+                           Downloading = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Downloading, cancellationToken),
+                           Failed = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Failed, cancellationToken),
+                           Queued = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Queued, cancellationToken),
+                           Retrying = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Retry, cancellationToken),
+                           Total = await this.Context.Downloads.CountAsync(cancellationToken)
+                       };
+        }
+
         public Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken)
         {
             return
@@ -110,6 +124,27 @@
         public async Task<IEnumerable<Download>> GetUserDownloadsAsync(IPrincipal principal, CancellationToken cancellationToken)
         {
             return await this.Context.Downloads.Where(x => x.Account.Login == principal.Identity.Name).ToListAsync(cancellationToken);
+        }
+
+        public async Task<DownloadStats> GetUserDownloadStatsAsync(IPrincipal principal, CancellationToken cancellationToken)
+        {
+            var account = await this.Context.Accounts.SingleOrDefaultAsync(x => x.Login == principal.Identity.Name, cancellationToken);
+
+            if (account == null)
+            {
+                return new DownloadStats();
+            }
+
+            return new DownloadStats
+                       {
+                           Claimed = account.Downloads.Count(x => x.State == DownloadState.Claimed),
+                           Completed = account.Downloads.Count(x => x.State == DownloadState.Completed),
+                           Downloading = account.Downloads.Count(x => x.State == DownloadState.Downloading),
+                           Failed = account.Downloads.Count(x => x.State == DownloadState.Failed),
+                           Queued = account.Downloads.Count(x => x.State == DownloadState.Queued),
+                           Retrying = account.Downloads.Count(x => x.State == DownloadState.Retry),
+                           Total = account.Downloads.Count()
+                       };
         }
 
         private IQueryable<Download> QueryByMachineName(Expression<Func<Download, bool>> filter)

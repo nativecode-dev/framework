@@ -1,0 +1,29 @@
+﻿@using System.Web.DynamicData
+@model ServicesWeb.Models.ErrorModel
+
+@{
+    ViewBag.Title = $"{this.Model.Message} ({this.Model.ErrorList.Length} error)";
+    Layout = "../Layouts/Default.cshtml";
+}
+
+<div id="error-site-panel" class="panel panel-default">
+    <div class="panel-heading">
+        @this.Model.Message
+    </div>
+    <div class="panel-body">
+        <div>
+            @foreach (var error in this.Model.ErrorList)
+            {
+                try
+                {
+                    var url = $"~/Views/Shared/Errors/{error}.cshtml";
+                    @Html.Partial(url)
+                }
+                catch
+                {
+                    // Do nothing
+                }
+            }
+        </div>
+    </div>
+</div>

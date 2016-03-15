@@ -1,0 +1,37 @@
+﻿@using NativeCode.Web.AspNet.Mvc.Extensions
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            <a href="@Url.Action("Index", "Dashboard")">Administration</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "Dashboard")">
+                <span class="glyphicon glyphicon-dashboard icon"></span>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("UpgradeDatabase", "Database")">
+                <span class="glyphicon glyphicon-th icon"></span>
+                <span>Database</span>
+            </a>
+        </li>
+        <li role="separator" class="divider"></li>
+        <li>
+            <a href="@Url.ActionRoot("Index", "Home")">
+                <span class="glyphicon glyphicon-triangle-left icon"></span>
+                <span>Home</span>
+            </a>
+        </li>
+        <li role="separator" class="divider"></li>
+        @if (User != null && User.Identity.IsAuthenticated)
+        {
+            <li>
+                <a href="@Url.ActionRoot("Logout", "Account")">
+                    <span class="glyphicon glyphicon-log-out icon"></span>
+                    <span>Logout</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

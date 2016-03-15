@@ -7,6 +7,7 @@
     using System.Threading;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Settings;
 
     public class ApplicationCore : IApplication
@@ -46,7 +47,7 @@
             {
                 try
                 {
-                    this.Container.Registrar.RegisterInstance<IApplication>(this);
+                    this.Container.Registrar.RegisterInstance<IApplication>(this, DependencyLifetime.PerApplication);
 
                     this.RestoreSettings();
                     this.PreInitialization();
@@ -112,11 +113,16 @@
             }
         }
 
+        protected virtual void RegisterModule(IDependencyModule module)
+        {
+            module.RegisterDependencies(this.Container.Registrar);
+        }
+
         protected virtual void RegisterModules(IEnumerable<IDependencyModule> modules)
         {
             foreach (var module in modules)
             {
-                module.RegisterDependencies(this.Container.Registrar);
+                this.RegisterModule(module);
             }
         }
 

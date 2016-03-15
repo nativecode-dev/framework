@@ -11,6 +11,7 @@
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Extensions;
+    using NativeCode.Core.Platform;
 
     public static class Database
     {
@@ -26,6 +27,10 @@
                 {
                     if (Interlocked.CompareExchange(ref upgradable, 1, 0) == 0)
                     {
+                        var application = resolver.Resolve<IApplication>();
+                        var token = Guid.NewGuid().ToBase64String();
+                        application.Settings.SetValue("Settings.DatabaseVerificationToken", token);
+
                         return;
                     }
                 }
@@ -46,7 +51,8 @@
                         if (context.Database.Exists())
                         {
                             var configuration = new Configuration();
-                            configuration.TargetDatabase = new DbConnectionInfo(context.Database.Connection.ConnectionString, "System.Data.SqlClient");
+                            var connection = new DbConnectionInfo(context.Database.Connection.ConnectionString, "System.Data.SqlClient");
+                            configuration.TargetDatabase = connection;
 
                             var migrator = new DbMigrator(configuration);
                             migrator.Update();

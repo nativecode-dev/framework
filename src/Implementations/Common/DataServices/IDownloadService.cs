@@ -19,10 +19,14 @@
 
         Task<IEnumerable<Download>> GetDownloadsAsync(CancellationToken cancellationToken);
 
+        Task<DownloadStats> GetDownloadStatsAsync(CancellationToken cancellationToken);
+
         Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken);
 
         Task<IEnumerable<Download>> GetRetryableWorkForMachineAsync(CancellationToken cancellationToken);
 
         Task<IEnumerable<Download>> GetUserDownloadsAsync(IPrincipal principal, CancellationToken cancellationToken);
+
+        Task<DownloadStats> GetUserDownloadStatsAsync(IPrincipal principal, CancellationToken cancellationToken);
     }
 }

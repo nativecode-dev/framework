@@ -6,7 +6,7 @@
 
     public static class ActionExecutingContextExtensions
     {
-        public static bool ContainsAttribute<T>(this ActionExecutingContext context, bool inherit = false) where T : Attribute
+        public static bool ContainsAttribute<T>(this ActionExecutingContext context, bool inherit = true) where T : Attribute
         {
             return
                 context.ActionDescriptor.GetCustomAttributes(inherit)

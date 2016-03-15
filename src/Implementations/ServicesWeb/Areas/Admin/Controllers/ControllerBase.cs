@@ -4,7 +4,7 @@
 
     using Common.Web.Filters;
 
-    [Authorize(Roles = "NATIVECODE\\Domain Admins")]
+    [Authorize(Roles = "Application Admins")]
     [RouteArea("admin")]
     [IgnoreSiteMaintenance]
     public abstract class ControllerBase : Controller

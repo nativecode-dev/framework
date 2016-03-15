@@ -4,6 +4,7 @@
     using System.Linq;
 
     using Common.Data.Entities;
+    using Common.Data.Entities.Navigation;
 
     using NativeCode.Core.DotNet.Platform;
     using NativeCode.Core.DotNet.Providers;
@@ -27,6 +28,8 @@
         public IDbSet<Account> Accounts { get; set; }
 
         public IDbSet<Download> Downloads { get; set; }
+
+        public IDbSet<MenuAction> MenuActions { get; set; }
 
         public IDbSet<Token> Tokens { get; set; }
     }

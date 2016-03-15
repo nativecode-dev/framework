@@ -48,9 +48,9 @@
             return this;
         }
 
-        public virtual IDependencyRegistrar RegisterInstance<T>(T instance)
+        public virtual IDependencyRegistrar RegisterInstance<T>(T instance, DependencyLifetime lifetime = default(DependencyLifetime))
         {
-            this.InternalRegisterInstance(instance.GetType(), instance);
+            this.InternalRegisterInstance(typeof(T), instance, lifetime);
 
             return this;
         }
@@ -82,7 +82,7 @@
             string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default);
 
-        public abstract IDependencyRegistrar RegisterInstance(Type type, object instance);
+        public abstract IDependencyRegistrar RegisterInstance(Type type, object instance, DependencyLifetime lifetime = default(DependencyLifetime));
 
         private static string GetKey(DependencyKey key, Type type)
         {
@@ -164,11 +164,11 @@
             }
         }
 
-        private void InternalRegisterInstance(Type type, object instance)
+        private void InternalRegisterInstance(Type type, object instance, DependencyLifetime lifetime = default(DependencyLifetime))
         {
             if (IgnoreDependencyAttribute.ValidateType(type))
             {
-                this.RegisterInstance(type, instance);
+                this.RegisterInstance(type, instance, lifetime);
             }
         }
     }
