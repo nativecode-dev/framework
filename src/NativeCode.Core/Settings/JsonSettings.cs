@@ -84,7 +84,11 @@ namespace NativeCode.Core.Settings
             {
                 if (name == last)
                 {
-                    current.Add(name, new JValue(value));
+                    if (current[name] == null)
+                    {
+                        current.Add(name, new JValue(value));
+                    }
+
                     return;
                 }
 

@@ -238,7 +238,7 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Layouts\Admin.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\AdminBar.cshtml" />
-    <None Include="Content\Core.Admin.less" />
+    <None Include="Properties\PublishProfiles\Default.pubxml" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -291,6 +291,7 @@
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Models\ApplicationInfo.cs" />
     <Compile Include="Models\AssemblyInfo.cs" />
+    <Compile Include="Models\DownloadModel.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -128,7 +128,7 @@
 
         public async Task<DownloadStats> GetUserDownloadStatsAsync(IPrincipal principal, CancellationToken cancellationToken)
         {
-            var account = await this.Context.Accounts.SingleOrDefaultAsync(x => x.Login == principal.Identity.Name, cancellationToken);
+            var account = await this.Context.Accounts.Include(x => x.Downloads).SingleOrDefaultAsync(x => x.Login == principal.Identity.Name, cancellationToken);
 
             if (account == null)
             {

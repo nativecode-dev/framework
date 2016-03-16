@@ -36,6 +36,7 @@
                 }
 
                 context.Database.CreateIfNotExists();
+                RunMigrations(resolver);
             }
         }
 
@@ -44,25 +45,30 @@
             // Ensure that no one else is going to try to upgrade.
             if (Interlocked.CompareExchange(ref upgradable, 0, 1) == 1)
             {
-                using (var context = resolver.Resolve<CoreDataContext>())
-                {
-                    try
-                    {
-                        if (context.Database.Exists())
-                        {
-                            var configuration = new Configuration();
-                            var connection = new DbConnectionInfo(context.Database.Connection.ConnectionString, "System.Data.SqlClient");
-                            configuration.TargetDatabase = connection;
+                RunMigrations(resolver);
+            }
+        }
 
-                            var migrator = new DbMigrator(configuration);
-                            migrator.Update();
-                        }
-                    }
-                    catch (Exception ex)
+        private static void RunMigrations(IDependencyResolver resolver)
+        {
+            using (var context = resolver.Resolve<CoreDataContext>())
+            {
+                try
+                {
+                    if (context.Database.Exists())
                     {
-                        Interlocked.CompareExchange(ref upgradable, 1, 0);
-                        Trace.WriteLine(ex);
+                        var configuration = new Configuration();
+                        var connection = new DbConnectionInfo(context.Database.Connection.ConnectionString, "System.Data.SqlClient");
+                        configuration.TargetDatabase = connection;
+
+                        var migrator = new DbMigrator(configuration);
+                        migrator.Update();
                     }
+                }
+                catch (Exception ex)
+                {
+                    Interlocked.CompareExchange(ref upgradable, 1, 0);
+                    Trace.WriteLine(ex);
                 }
             }
         }

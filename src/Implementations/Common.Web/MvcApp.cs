@@ -54,21 +54,21 @@
 
         private static void CreateBootstrapBundles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/bundles/bootstrap/styles").Include("~/Content/bootstrap.css").Include("~/Content/bootstrap-theme.css"));
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap/scripts").Include("~/Scripts/bootstrap.js"));
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-styles").Include("~/Content/bootstrap.css").Include("~/Content/bootstrap-theme.css"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-scripts").Include("~/Scripts/bootstrap.js"));
         }
 
         private static void CreateJqueryBundles(BundleCollection bundles)
         {
             bundles.Add(
-                new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js")
+                new ScriptBundle("~/bundles/jquery-scripts").Include("~/Scripts/jquery-{version}.js")
                     .Include("~/Scripts/jquery.validate.js")
                     .Include("~/Scripts/jquery.validate.unobtrusive.js"));
         }
 
         private static void CreateSiteBundles(BundleCollection bundles)
         {
-            bundles.Add(new LessBundle("~/bundles/site/styles").Include("~/Content/*.less"));
+            bundles.Add(new LessBundle("~/bundles/site-styles").Include("~/Content/Core.less"));
         }
     }
 }
