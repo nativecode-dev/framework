@@ -1,10 +1,14 @@
 ﻿namespace Services
 {
     using System;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
 
     using Common.Data.Entities;
     using Common.Web;
     using Common.Workers;
+
+    using Nito.AsyncEx;
 
     using PowerArgs;
 
@@ -13,35 +17,28 @@
         public static void Main(string[] args)
         {
             var options = Args.Parse<CommandOptions>(args);
+            AsyncContext.Run(async () => await MainAsync(options));
+        }
+
+        private static Task MainAsync(CommandOptions options)
+        {
+            Trace.Listeners.Add(new ConsoleTraceListener());
 
             using (var app = new ServicesApplication())
             {
                 if (options.CreateSettings)
                 {
-                    return;
+                    return Task.FromResult(0);
                 }
 
-                var url = new Uri(app.Settings.GetValue("application.services.base_url", "http://localhost:9000"));
-
-                using (app.Start<ServicesStartup>(url))
+                using (var workers = app.Container.Resolver.Resolve<IWorkManager<Download>>())
                 {
-                    Console.WriteLine($"Started host at {url}.");
-
-                    using (var downloads = app.Container.Resolver.Resolve<IWorkManager<Download>>())
-                    {
-                        downloads.StartAsync();
-                        Console.WriteLine($"Started download watcher.");
-
-                        ConsoleKeyInfo key;
-
-                        do
-                        {
-                            key = Console.ReadKey(true);
-                        }
-                        while (key.KeyChar != 'q');
-                    }
+                    workers.StartAsync();
+                    Console.ReadKey(true);
                 }
             }
+
+            return Task.FromResult(0);
         }
 
         public class CommandOptions

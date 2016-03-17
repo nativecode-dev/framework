@@ -13,6 +13,7 @@
 
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Logging;
+    using NativeCode.Core.Platform;
     using NativeCode.Core.Types;
 
     using Newtonsoft.Json;
@@ -21,8 +22,8 @@
     {
         private static readonly Regex RegexFlashvars = new Regex(@"var flashvars = (.*);", RegexOptions.Compiled | RegexOptions.Multiline);
 
-        public DownloadWorkManager(ILogger logger, IWorkProvider<Download> work)
-            : base(logger, work)
+        public DownloadWorkManager(IApplication application, ILogger logger, IWorkProvider<Download> work)
+            : base(application, logger, work)
         {
         }
 
@@ -49,7 +50,7 @@
                                 filename = entity.Filename;
                             }
 
-                            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), filename);
+                            var path = Path.Combine(entity.Path, filename);
                             this.Logger.Debug(path);
 
                             using (var filestream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Write))

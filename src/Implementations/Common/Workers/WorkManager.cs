@@ -10,6 +10,7 @@ namespace Common.Workers
     using NativeCode.Core.Data;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Logging;
+    using NativeCode.Core.Platform;
     using NativeCode.Core.Types;
 
     public abstract class WorkManager<TEntity> : Disposable, IWorkManager<TEntity>
@@ -17,8 +18,12 @@ namespace Common.Workers
     {
         private const string GlobalKeyMaxConcurrency = "global.settings.work_manager.max_concurrency";
 
-        protected WorkManager(ILogger logger, IWorkProvider<TEntity> work)
+        private readonly IApplication application;
+
+        protected WorkManager(IApplication application, ILogger logger, IWorkProvider<TEntity> work)
         {
+            this.application = application;
+
             this.Logger = logger;
             this.WorkProvider = work;
         }
@@ -71,41 +76,54 @@ namespace Common.Workers
 
         protected async Task RunLoopAsync()
         {
-            var tasks = new List<TaskMapping>();
-            var token = this.CancellationTokenSource.Token;
-            var resumables = (await this.WorkProvider.GetResumableWorkAsync(token)).ToList();
-
-            do
+            using (this.application.Container.CreateChildContainer())
             {
-                // If we have reached max concurrency, we'll wait until another slot opens up.
-                if (tasks.Count == this.MaxConcurrency)
+                var tasks = new List<TaskMapping>();
+                var token = this.CancellationTokenSource.Token;
+                var resumables = (await this.WorkProvider.GetResumableWorkAsync(token)).ToList();
+
+                do
                 {
-                    await this.WaitForAvailableTaskAsync(tasks, token);
+                    try
+                    {
+                        using (this.application.Container.CreateChildContainer())
+                        {
+                            // If we have reached max concurrency, we'll wait until another slot opens up.
+                            if (tasks.Count == this.MaxConcurrency)
+                            {
+                                await this.WaitForAvailableTaskAsync(tasks, token);
+                            }
+
+                            // Check for any work left from last run.
+                            if (await this.EnqueueResumableTaskAsync(resumables, tasks, token))
+                            {
+                                continue;
+                            }
+
+                            var retryables = (await this.WorkProvider.GetRetryableWorkAsync(token)).ToList();
+
+                            if (await this.EnqueueRetryableTaskAsync(retryables, tasks, token))
+                            {
+                                continue;
+                            }
+
+                            // Enqueue waiting work.
+                            if (!await this.EnqueueQueuedTasksAsync(tasks, token))
+                            {
+                                await this.RemoveCompletedTasksAsync(tasks, token);
+                            }
+                        }
+
+                        // Tiny cooldown so we don't eat up 100% of the CPU in a non-resting loop.
+                        await Task.Delay(TimeSpan.FromSeconds(1), token);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Logger.Exception(ex);
+                    }
                 }
-
-                // Check for any work left from last run.
-                if (await this.EnqueueResumableTaskAsync(resumables, tasks, token))
-                {
-                    continue;
-                }
-
-                var retryables = (await this.WorkProvider.GetRetryableWorkAsync(token)).ToList();
-
-                if (await this.EnqueueRetryableTaskAsync(retryables, tasks, token))
-                {
-                    continue;
-                }
-
-                // Enqueue waiting work.
-                if (!await this.EnqueueQueuedTasksAsync(tasks, token))
-                {
-                    await this.RemoveCompletedTasksAsync(tasks, token);
-                }
-
-                // Tiny cooldown so we don't eat up 100% of the CPU in a non-resting loop.
-                await Task.Delay(TimeSpan.FromSeconds(1), token);
+                while (!this.CancellationTokenSource.IsCancellationRequested);
             }
-            while (!this.CancellationTokenSource.IsCancellationRequested);
         }
 
         protected abstract Task ExecuteWorkAsync(TEntity entity, CancellationToken cancellationToken);
@@ -124,7 +142,14 @@ namespace Common.Workers
                 tasks.Add(this.UpdateMappingState(mapping, cancellationToken));
             }
 
-            return Task.WhenAll(tasks);
+            if (tasks.Any())
+            {
+                this.Logger.Debug($"Removing {tasks.Count} completed tasks.");
+
+                return Task.WhenAll(tasks);
+            }
+
+            return Task.FromResult(0);
         }
 
         private async Task<bool> EnqueueResumableTaskAsync(ICollection<TEntity> resumables, ICollection<TaskMapping> tasks, CancellationToken cancellationToken)
