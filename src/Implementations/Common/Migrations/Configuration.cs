@@ -29,6 +29,19 @@ namespace Common.Migrations
 
         protected override void Seed(CoreDataContext context)
         {
+            ConfigureBaseData(context);
+
+            context.Save();
+        }
+
+        private static void ConfigureBaseData(CoreDataContext context)
+        {
+            SetupActiveDirectoryAccounts(context);
+            SetupStorage(context);
+        }
+
+        private static void SetupActiveDirectoryAccounts(CoreDataContext context)
+        {
             var identity = WindowsIdentity.GetCurrent();
             var previous = Thread.CurrentPrincipal;
 
@@ -65,9 +78,14 @@ namespace Common.Migrations
                         }
                     }
                 }
-
-                context.Save();
             }
+        }
+
+        private static void SetupStorage(CoreDataContext context)
+        {
+            context.Storage.AddOrUpdate(
+                x => x.Name,
+                new Storage { Name = "Porn", MachineName = "STORAGE", Path = @"\\storage.nativecode.local\Download\Automatic" });
         }
 
         private static string[] ParseDistinguishedName(string distinguishedName)

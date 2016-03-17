@@ -26,7 +26,7 @@
         {
             var token = new Token { Account = account };
 
-            if (await this.Context.SaveAsync(token, cancellationToken))
+            if (await this.Context.SaveAsync(token, cancellationToken).ConfigureAwait(false))
             {
                 return token;
             }

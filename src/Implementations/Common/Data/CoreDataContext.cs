@@ -31,6 +31,8 @@
 
         public IDbSet<MenuAction> MenuActions { get; set; }
 
+        public IDbSet<Storage> Storage { get; set; }
+
         public IDbSet<Token> Tokens { get; set; }
     }
 }

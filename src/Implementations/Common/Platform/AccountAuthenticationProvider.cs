@@ -33,8 +33,7 @@
         {
             IPrincipal principal = null;
             var result = AuthenticationResultType.Failed;
-
-            var account = await this.accounts.FindAsync(login, cancellationToken);
+            var account = await this.accounts.FindAsync(login, cancellationToken).ConfigureAwait(false);
 
             if (account != null && (StringExtensions.IsEmpty(account.DomainHost, account.DomainName) && account.Password == password))
             {

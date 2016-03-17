@@ -80,7 +80,7 @@ namespace Common.Workers
             {
                 var tasks = new List<TaskMapping>();
                 var token = this.CancellationTokenSource.Token;
-                var resumables = (await this.WorkProvider.GetResumableWorkAsync(token)).ToList();
+                var resumables = (await this.WorkProvider.GetResumableWorkAsync(token).ConfigureAwait(false)).ToList();
 
                 do
                 {
@@ -91,31 +91,31 @@ namespace Common.Workers
                             // If we have reached max concurrency, we'll wait until another slot opens up.
                             if (tasks.Count == this.MaxConcurrency)
                             {
-                                await this.WaitForAvailableTaskAsync(tasks, token);
+                                await this.WaitForAvailableTaskAsync(tasks, token).ConfigureAwait(false);
                             }
 
                             // Check for any work left from last run.
-                            if (await this.EnqueueResumableTaskAsync(resumables, tasks, token))
+                            if (await this.EnqueueResumableTaskAsync(resumables, tasks, token).ConfigureAwait(false))
                             {
                                 continue;
                             }
 
-                            var retryables = (await this.WorkProvider.GetRetryableWorkAsync(token)).ToList();
+                            var retryables = (await this.WorkProvider.GetRetryableWorkAsync(token).ConfigureAwait(false)).ToList();
 
-                            if (await this.EnqueueRetryableTaskAsync(retryables, tasks, token))
+                            if (await this.EnqueueRetryableTaskAsync(retryables, tasks, token).ConfigureAwait(false))
                             {
                                 continue;
                             }
 
                             // Enqueue waiting work.
-                            if (!await this.EnqueueQueuedTasksAsync(tasks, token))
+                            if (!await this.EnqueueQueuedTasksAsync(tasks, token).ConfigureAwait(false))
                             {
-                                await this.RemoveCompletedTasksAsync(tasks, token);
+                                await this.RemoveCompletedTasksAsync(tasks, token).ConfigureAwait(false);
                             }
                         }
 
                         // Tiny cooldown so we don't eat up 100% of the CPU in a non-resting loop.
-                        await Task.Delay(TimeSpan.FromSeconds(1), token);
+                        await Task.Delay(TimeSpan.FromSeconds(1), token).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -139,7 +139,7 @@ namespace Common.Workers
             foreach (var mapping in mappings.Where(x => x.Task.IsDone()).ToList())
             {
                 mappings.Remove(mapping);
-                tasks.Add(this.UpdateMappingState(mapping, cancellationToken));
+                tasks.Add(this.UpdateMappingStateAsync(mapping, cancellationToken));
             }
 
             if (tasks.Any())
@@ -156,7 +156,7 @@ namespace Common.Workers
         {
             var entity = resumables.FirstOrDefault();
 
-            if (entity != null && await this.WorkProvider.BeginWorkAsync(entity, cancellationToken))
+            if (entity != null && await this.WorkProvider.BeginWorkAsync(entity, cancellationToken).ConfigureAwait(false))
             {
                 var task = Task.Run(() => this.ResumeWorkAsync(entity, cancellationToken), cancellationToken);
                 var mapping = new TaskMapping(entity, task);
@@ -173,7 +173,7 @@ namespace Common.Workers
         {
             var entity = retryables.FirstOrDefault();
 
-            if (entity != null && await this.WorkProvider.BeginWorkAsync(entity, cancellationToken))
+            if (entity != null && await this.WorkProvider.BeginWorkAsync(entity, cancellationToken).ConfigureAwait(false))
             {
                 var task = Task.Run(() => this.RetryWorkAsync(entity, cancellationToken), cancellationToken);
                 var mapping = new TaskMapping(entity, task);
@@ -189,13 +189,13 @@ namespace Common.Workers
         private async Task<bool> EnqueueQueuedTasksAsync(ICollection<TaskMapping> tasks, CancellationToken cancellationToken)
         {
             var count = this.MaxConcurrency - tasks.Count;
-            var entities = (await this.WorkProvider.GetWorkAsync(count, cancellationToken)).ToList();
+            var entities = (await this.WorkProvider.GetWorkAsync(count, cancellationToken).ConfigureAwait(false)).ToList();
 
             if (entities.Any())
             {
                 foreach (var entity in entities)
                 {
-                    if (await this.WorkProvider.BeginWorkAsync(entity, cancellationToken))
+                    if (await this.WorkProvider.BeginWorkAsync(entity, cancellationToken).ConfigureAwait(false))
                     {
                         var task = Task.Run(() => this.ExecuteWorkAsync(entity, cancellationToken), cancellationToken);
                         var mapping = new TaskMapping(entity, task);
@@ -215,20 +215,20 @@ namespace Common.Workers
         {
             this.Logger.Debug($"Max concurrency {this.MaxConcurrency} reached, waiting for a task to complete...");
 
-            var completed = await Task.WhenAny(tasks.Select(x => x.Task));
+            var completed = await Task.WhenAny(tasks.Select(x => x.Task)).ConfigureAwait(false);
 
             if (completed != null)
             {
                 var mapping = tasks.Single(x => x.Task == completed);
 
-                if (await this.UpdateMappingState(mapping, cancellationToken))
+                if (await this.UpdateMappingStateAsync(mapping, cancellationToken).ConfigureAwait(false))
                 {
                     tasks.Remove(mapping);
                 }
             }
         }
 
-        private Task<bool> UpdateMappingState(TaskMapping mapping, CancellationToken cancellationToken)
+        private Task<bool> UpdateMappingStateAsync(TaskMapping mapping, CancellationToken cancellationToken)
         {
             if (mapping.Task.IsErrorState())
             {

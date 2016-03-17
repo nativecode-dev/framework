@@ -33,11 +33,14 @@
             {
                 try
                 {
-                    var response = await client.GetAsync(entity.Url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+                    var response = await client.GetAsync(entity.Url, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
 
                     response.EnsureSuccessStatusCode();
 
-                    using (var stream = (await response.Content.ReadAsStreamAsync()).Monitor(response.Content.Headers.ContentLength.GetValueOrDefault()))
+                    var content = response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    var length = response.Content.Headers.ContentLength.GetValueOrDefault();
+
+                    using (var stream = (await content).Monitor(length))
                     {
                         stream.StreamRead += HandleStreamRead;
 
@@ -50,12 +53,12 @@
                                 filename = entity.Filename;
                             }
 
-                            var path = Path.Combine(entity.Path, filename);
+                            var path = Path.Combine(entity.Storage.Path, filename);
                             this.Logger.Debug(path);
 
                             using (var filestream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Write))
                             {
-                                await stream.CopyToAsync(filestream, 4096, cancellationToken);
+                                await stream.CopyToAsync(filestream, 4096, cancellationToken).ConfigureAwait(false);
                             }
                         }
                         finally
@@ -86,11 +89,11 @@
                 {
                     try
                     {
-                        var response = await client.GetAsync(entity.Source, cancellationToken);
+                        var response = await client.GetAsync(entity.Source, cancellationToken).ConfigureAwait(false);
 
                         response.EnsureSuccessStatusCode();
 
-                        var content = await response.Content.ReadAsStringAsync();
+                        var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                         var document = new HtmlDocument();
                         document.LoadHtml(content);
@@ -116,7 +119,7 @@
                 }
             }
 
-            await this.ExecuteWorkAsync(entity, cancellationToken);
+            await this.ExecuteWorkAsync(entity, cancellationToken).ConfigureAwait(false);
         }
 
         private static string GetBestQuality(Flashvars flashvars)

@@ -28,7 +28,7 @@
 
         protected virtual async Task AuthenticateAsync(HttpRequestMessage request, string login, string password, CancellationToken cancellationToken)
         {
-            var principal = await this.platform.AuthenticateAsync(login, password, cancellationToken);
+            var principal = await this.platform.AuthenticateAsync(login, password, cancellationToken).ConfigureAwait(false);
 
             if (principal == null)
             {
@@ -52,10 +52,10 @@
                 var login = parts[0];
                 var password = parts[1];
 
-                await this.AuthenticateAsync(request, login, password, cancellationToken);
+                await this.AuthenticateAsync(request, login, password, cancellationToken).ConfigureAwait(false);
             }
 
-            return await base.SendAsync(request, cancellationToken);
+            return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         private static string[] GetParameterParts(AuthenticationHeaderValue authorization)

@@ -57,7 +57,7 @@
         public virtual async Task<T> FindAsync<T, TKey>(TKey key, CancellationToken cancellationToken) where T : class, IEntity where TKey : struct
         {
             var dbset = this.Set(typeof(T));
-            var record = await dbset.FindAsync(cancellationToken, key);
+            var record = await dbset.FindAsync(cancellationToken, key).ConfigureAwait(false);
 
             return (T)record;
         }
@@ -89,8 +89,9 @@
         public async Task<bool> SaveAsync(CancellationToken cancellationToken)
         {
             this.ProcessEntityChanges();
+            var changed = await this.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-            return await this.SaveChangesAsync(cancellationToken) > 0;
+            return changed > 0;
         }
 
         public Task<bool> SaveAsync<T>(T entity, CancellationToken cancellationToken) where T : class, IEntity

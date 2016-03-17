@@ -17,11 +17,7 @@
         public string Filename { get; set; }
 
         [MaxLength(64)]
-        public string MachineName { get; set; }
-
-        [Required]
-        [MaxLength(1024)]
-        public string Path { get; set; }
+        public string ClaimMachineName { get; set; }
 
         public List<DownloadProperty> Properties { get; set; }
 
@@ -31,6 +27,8 @@
         public string Source { get; set; }
 
         public DownloadState State { get; set; }
+
+        public Storage Storage { get; set; }
 
         [Required]
         [MaxLength(512)]

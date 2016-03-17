@@ -16,16 +16,14 @@
 
         public static DownloadInfo From(Download download)
         {
-            return new DownloadInfo { Filename = download.Filename, Path = download.Path, Source = download.Source, Title = download.Title, Url = download.Url };
-        }
-
-        public void To(Download download)
-        {
-            download.Filename = this.Filename;
-            download.Path = this.Path;
-            download.Source = this.Source;
-            download.Title = this.Title;
-            download.Url = this.Url;
+            return new DownloadInfo
+                       {
+                           Filename = download.Filename,
+                           Path = download.Storage.Path,
+                           Source = download.Source,
+                           Title = download.Title,
+                           Url = download.Url
+                       };
         }
     }
 }

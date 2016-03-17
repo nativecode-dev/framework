@@ -10,7 +10,7 @@
         public string Filename { get; set; }
 
         [Required]
-        public string Path { get; set; }
+        public string Storage { get; set; }
 
         [Required]
         public string Source { get; set; }

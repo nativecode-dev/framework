@@ -24,7 +24,7 @@
         {
             if (ActiveDirectoryName.IsValid(login).Not())
             {
-                var account = await this.accounts.FindAsync(login, cancellationToken);
+                var account = await this.accounts.FindAsync(login, cancellationToken).ConfigureAwait(false);
                 var property = account?.Properties.SingleOrDefault(x => x.Name == "UserPrincipalName");
 
                 if (property != null)
@@ -33,7 +33,7 @@
                 }
             }
 
-            await base.AuthenticateAsync(request, login, password, cancellationToken);
+            await base.AuthenticateAsync(request, login, password, cancellationToken).ConfigureAwait(false);
         }
     }
 }

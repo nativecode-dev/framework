@@ -20,7 +20,7 @@
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var stats = await this.Downloads.GetDownloadStatsAsync(CancellationToken.None);
+            var stats = await this.Downloads.GetDownloadStatsAsync(CancellationToken.None).ConfigureAwait(false);
 
             return this.View(stats);
         }

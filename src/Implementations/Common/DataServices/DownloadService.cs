@@ -14,6 +14,7 @@
     using Common.Data.Entities.Enums;
 
     using NativeCode.Core.Data;
+    using NativeCode.Core.DotNet.Types;
     using NativeCode.Core.Platform;
 
     public class DownloadService : DataService<Download>, IDownloadService
@@ -49,16 +50,20 @@
             using (var transaction = this.CreateTransactionScope())
             {
                 var downloads =
-                    await this.Context.Downloads.Where(x => x.State == DownloadState.Queued && x.MachineName == null).Take(count).ToListAsync(cancellationToken);
+                    await
+                    this.Context.Downloads.Where(x => x.State == DownloadState.Queued && x.ClaimMachineName == null)
+                        .Take(count)
+                        .ToListAsync(cancellationToken)
+                        .ConfigureAwait(false);
 
                 foreach (var download in downloads)
                 {
-                    download.MachineName = this.platform.MachineName;
+                    download.ClaimMachineName = this.platform.MachineName;
                     download.State = DownloadState.Claimed;
                     results.Add(download);
                 }
 
-                if (await this.Context.SaveAsync(cancellationToken))
+                if (await this.Context.SaveAsync(cancellationToken).ConfigureAwait(false))
                 {
                     transaction.Complete();
                 }
@@ -70,7 +75,7 @@
         public async Task<Download> EnqueueAsync(Download download, CancellationToken cancellationToken)
         {
             var principal = this.platform.GetCurrentPrincipal();
-            var account = await this.accounts.FromPrincipalAsync(principal, cancellationToken);
+            var account = await this.accounts.FromPrincipalAsync(principal, cancellationToken).ConfigureAwait(false);
 
             if (account == null)
             {
@@ -79,7 +84,7 @@
 
             download.Account = account;
 
-            if (await this.Context.SaveAsync(download, cancellationToken))
+            if (await this.Context.SaveAsync(download, cancellationToken).ConfigureAwait(false))
             {
                 return download;
             }
@@ -89,20 +94,25 @@
 
         public Task<IEnumerable<Download>> GetDownloadsAsync(CancellationToken cancellationToken)
         {
-            return this.Context.Downloads.ToListAsync(cancellationToken).ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
+            return this.Context.Downloads.Include(x => x.Storage)
+                .ToListAsync(cancellationToken)
+                .ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
         }
 
         public async Task<DownloadStats> GetDownloadStatsAsync(CancellationToken cancellationToken)
         {
+            var downloads = this.Context.Downloads;
+
             return new DownloadStats
                        {
-                           Claimed = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Claimed, cancellationToken),
-                           Completed = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Completed, cancellationToken),
-                           Downloading = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Downloading, cancellationToken),
-                           Failed = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Failed, cancellationToken),
-                           Queued = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Queued, cancellationToken),
-                           Retrying = await this.Context.Downloads.CountAsync(x => x.State == DownloadState.Retry, cancellationToken),
-                           Total = await this.Context.Downloads.CountAsync(cancellationToken)
+                           Claimed = await downloads.CountAsync(x => x.State == DownloadState.Claimed, cancellationToken).ConfigureAwait(false),
+                           Completed = await downloads.CountAsync(x => x.State == DownloadState.Completed, cancellationToken).ConfigureAwait(false),
+                           Downloading =
+                               await downloads.CountAsync(x => x.State == DownloadState.Downloading, cancellationToken).ConfigureAwait(false),
+                           Failed = await downloads.CountAsync(x => x.State == DownloadState.Failed, cancellationToken).ConfigureAwait(false),
+                           Queued = await downloads.CountAsync(x => x.State == DownloadState.Queued, cancellationToken).ConfigureAwait(false),
+                           Retrying = await downloads.CountAsync(x => x.State == DownloadState.Retry, cancellationToken).ConfigureAwait(false),
+                           Total = await downloads.CountAsync(cancellationToken).ConfigureAwait(false)
                        };
         }
 
@@ -123,12 +133,29 @@
 
         public async Task<IEnumerable<Download>> GetUserDownloadsAsync(IPrincipal principal, CancellationToken cancellationToken)
         {
-            return await this.Context.Downloads.Where(x => x.Account.Login == principal.Identity.Name).ToListAsync(cancellationToken);
+            var login = principal.Identity.Name;
+
+            if (ActiveDirectoryName.IsValid(principal))
+            {
+                login = ActiveDirectoryName.Parse(principal.Identity.Name).Account;
+            }
+
+            return
+                await
+                this.Context.Downloads.Include(x => x.Storage)
+                    .Where(x => x.Account.Login == login)
+                    .ToListAsync(cancellationToken)
+                    .ConfigureAwait(false);
         }
 
         public async Task<DownloadStats> GetUserDownloadStatsAsync(IPrincipal principal, CancellationToken cancellationToken)
         {
-            var account = await this.Context.Accounts.Include(x => x.Downloads).SingleOrDefaultAsync(x => x.Login == principal.Identity.Name, cancellationToken);
+            var account =
+                await
+                this.Context.Accounts.Include(x => x.Downloads)
+                    .Include(x => x.Downloads.Select(d => d.Storage))
+                    .SingleOrDefaultAsync(x => x.Login == principal.Identity.Name, cancellationToken)
+                    .ConfigureAwait(false);
 
             if (account == null)
             {
@@ -149,7 +176,7 @@
 
         private IQueryable<Download> QueryByMachineName(Expression<Func<Download, bool>> filter)
         {
-            return this.Context.Downloads.Where(filter).Where(x => x.MachineName == this.platform.MachineName);
+            return this.Context.Downloads.Where(filter).Where(x => x.ClaimMachineName == this.platform.MachineName);
         }
     }
 }

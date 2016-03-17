@@ -30,7 +30,7 @@
             {
                 if (authenticator.CanHandle(login))
                 {
-                    var response = await authenticator.AuthenticateAsync(login, password, cancellationToken);
+                    var response = await authenticator.AuthenticateAsync(login, password, cancellationToken).ConfigureAwait(false);
 
                     if (response.Result == AuthenticationResultType.Authenticated)
                     {

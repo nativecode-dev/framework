@@ -1,6 +1,7 @@
 ﻿namespace NativeCode.Core.DotNet.Types
 {
     using System;
+    using System.Security.Principal;
 
     using JetBrains.Annotations;
 
@@ -19,14 +20,48 @@
 
         public ActiveDirectoryNameFormat Format { get; }
 
+        public static string GetDomain(IPrincipal principal)
+        {
+            return GetDomain(principal.Identity);
+        }
+
+        public static string GetDomain(IIdentity identity)
+        {
+            var adn = Parse(identity.Name);
+
+            return adn.Domain;
+        }
+
         public static bool IsDnsName([NotNull] string login)
         {
             return login.Contains("@");
         }
 
+        public static string GetLogin(IPrincipal principal)
+        {
+            return GetDomain(principal.Identity);
+        }
+
+        public static string GetLogin(IIdentity identity)
+        {
+            var adn = Parse(identity.Name);
+
+            return adn.Account;
+        }
+
         public static bool IsNtName([NotNull] string login)
         {
             return login.Contains("\\");
+        }
+
+        public static bool IsValid([NotNull] IPrincipal principal)
+        {
+            return IsValid(principal.Identity);
+        }
+
+        public static bool IsValid([NotNull] IIdentity identity)
+        {
+            return IsValid(identity.Name);
         }
 
         public static bool IsValid([NotNull] string login)

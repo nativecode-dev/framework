@@ -19,9 +19,12 @@
     {
         private readonly IDownloadService downloads;
 
-        public DownloadController(IDownloadService downloads)
+        private readonly IStorageService storage;
+
+        public DownloadController(IDownloadService downloads, IStorageService storage)
         {
             this.downloads = downloads;
+            this.storage = storage;
         }
 
         [Route("{id:guid}")]
@@ -35,7 +38,7 @@
         {
             try
             {
-                var items = await this.downloads.GetDownloadsAsync(CancellationToken.None);
+                var items = await this.downloads.GetDownloadsAsync(CancellationToken.None).ConfigureAwait(false);
 
                 return Response.Succeed<ResponseCollection<Download>>(x => x.Items = items);
             }
@@ -50,21 +53,22 @@
         {
             try
             {
-                var username = this.User.Identity.Name;
-
-                if (string.Equals(username, login, StringComparison.CurrentCultureIgnoreCase))
+                if (this.User.Identity.Name.EndsWith(login))
                 {
-                    var items = await this.downloads.GetUserDownloadsAsync(this.User, CancellationToken.None);
+                    var items = await this.downloads.GetUserDownloadsAsync(this.User, CancellationToken.None).ConfigureAwait(false);
 
-                    return Response.Succeed<ResponseCollection<DownloadInfo>>(x => x.Items = items.Select(DownloadInfo.From));
+                    if (items != null)
+                    {
+                        return Response.Succeed<ResponseCollection<DownloadInfo>>(x => x.Items = items.Select(DownloadInfo.From));
+                    }
                 }
+
+                return Response.Fail<ResponseCollection<DownloadInfo>>($"Failed to find account {login}.");
             }
             catch (Exception ex)
             {
                 return Response.Fail<ResponseCollection<DownloadInfo>>(ex);
             }
-
-            return Response.Fail<ResponseCollection<DownloadInfo>>($"Failed to find account {login}.");
         }
 
         [Route("")]
@@ -72,18 +76,21 @@
         {
             try
             {
+                var token = CancellationToken.None;
+                var share = await this.storage.GetByNameAsync(request.Storage, token).ConfigureAwait(false);
+
                 var download =
                     await
                     this.downloads.EnqueueAsync(
                         new Download
                             {
                                 Filename = request.Filename,
-                                Path = request.Path,
                                 Source = request.Source,
                                 Url = request.Url,
+                                Storage = share,
                                 Title = request.Title ?? request.Filename
                             },
-                        CancellationToken.None);
+                        token).ConfigureAwait(false);
 
                 return Response.Succeed<QueueDownloadResponse>(x => x.Id = download.Key);
             }
