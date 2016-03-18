@@ -12,6 +12,9 @@
 
   <fileset id="nuget.projects">
     <include name="src\NativeCode.Core\NativeCode.Core.csproj" />
+    <include name="src\NativeCode.Core.Data\NativeCode.Core.Data.csproj" />
+    <include name="src\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj" />
+    <include name="src\NativeCode.Core.Web\NativeCode.Core.Web.csproj" />
     <include name="src\NativeCode.Web.AspNet.Mvc\NativeCode.Web.AspNet.Mvc.csproj" />
     <include name="src\NativeCode.Web.AspNet.WebApi\NativeCode.Web.AspNet.WebApi.csproj" />
   </fileset>

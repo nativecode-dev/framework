@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CoreConstants.cs" />
     <Compile Include="Dependencies\Attributes\IgnoreDependencyAttribute.cs" />
     <Compile Include="Dependencies\DependencyContainer.cs">
       <DependentUpon>IDependencyContainer.cs</DependentUpon>
