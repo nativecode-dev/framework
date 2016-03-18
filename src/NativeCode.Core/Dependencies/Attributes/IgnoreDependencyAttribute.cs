@@ -9,11 +9,14 @@
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public sealed class IgnoreDependencyAttribute : Attribute
     {
-        public IgnoreDependencyAttribute(string reason, bool throwOnError = true)
+        public IgnoreDependencyAttribute(string reason, bool inheritable = true, bool throwOnError = true)
         {
+            this.Inheritable = inheritable;
             this.Reason = reason;
             this.ThrowOnError = throwOnError;
         }
+
+        public bool Inheritable { get; }
 
         public string Reason { get; }
 
@@ -27,7 +30,7 @@
             {
                 Debug.WriteLine(attribute.Reason);
 
-                if (attribute.ThrowOnError)
+                if (attribute.Inheritable && attribute.ThrowOnError)
                 {
                     throw new InvalidOperationException($"Registration for {type.Name} not allowed due to {attribute.Reason}.");
                 }

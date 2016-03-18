@@ -6,6 +6,7 @@ using ServicesWeb;
 
 namespace ServicesWeb
 {
+    using System;
     using System.Web.Http;
     using System.Web.Optimization;
 
@@ -37,27 +38,29 @@ namespace ServicesWeb
             this.Application = new WebServicesApplication();
 
             // Set settings and their default values.
-            ConfigureSettings(ServicesApplication.Current.Settings);
+            ConfigureSettings(this.Application.Settings);
 
             // Configure services
-            this.ConfigureWebApi(builder);
             this.ConfigureMvc();
+            this.ConfigureWebApi(builder);
 
             // Register custom handlers.
-            builder.UseOwinCookieRequestScope();
-            builder.UseOwinDependencyRequestScope(this.Application.Container);
+            // TODO Options should come from settings.
+            var options = new CookieOptions { Path = "/", HttpOnly = false, Expires = DateTime.Now.AddMinutes(10), Secure = false };
+            builder.UseOwinCookieRequestScope(".services", options);
+            builder.UseOwinDependencyRequestScope(this.Application.Platform);
         }
 
         private void ConfigureMvc()
         {
-            MvcConfig.Configure(this.Application.Container);
+            MvcConfig.Configure(this.Application.Platform);
             ConfigureBundles(BundleTable.Bundles);
         }
 
         private void ConfigureWebApi(IAppBuilder builder)
         {
             var configuration = new HttpConfiguration();
-            WebApiConfig.Configure(this.Application.Container, configuration);
+            WebApiConfig.Configure(this.Application.Platform, configuration);
             builder.UseWebApi(configuration);
         }
 

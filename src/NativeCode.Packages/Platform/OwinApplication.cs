@@ -6,13 +6,12 @@
 
     using Microsoft.Owin.Hosting;
 
-    using NativeCode.Core.Dependencies;
     using NativeCode.Core.Platform;
 
     public class OwinApplication : Application
     {
-        public OwinApplication(IDependencyContainer container, bool owner = true)
-            : base(container, owner)
+        public OwinApplication(IPlatform platform)
+            : base(platform)
         {
         }
 

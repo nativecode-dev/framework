@@ -26,9 +26,17 @@
 
         protected virtual void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                if (this.Platform != null)
+                {
+                    this.Platform.Dispose();
+                    this.Platform = null;
+                }
+            }
         }
 
-        public IDependencyContainer Container => this.ApplicationCore?.Container;
+        public IPlatform Platform { get; private set; }
 
         public Settings Settings => this.ApplicationCore?.Settings;
 
@@ -49,7 +57,7 @@
 
         public virtual void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
-            this.ApplicationCore = new ApplicationCore(this.CreateDependencyContainer());
+            this.ApplicationCore = new ApplicationCore(this.CreatePlatform());
             this.ApplicationCore.Initialize(name, assemblies.Where(this.CanIncludeAssembly), modules);
         }
 
@@ -58,6 +66,6 @@
             return false;
         }
 
-        protected abstract IDependencyContainer CreateDependencyContainer();
+        protected abstract IPlatform CreatePlatform();
     }
 }

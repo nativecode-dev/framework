@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Web.Handlers.Owin
+﻿namespace NativeCode.Core.Web.Owin.Middleware
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;

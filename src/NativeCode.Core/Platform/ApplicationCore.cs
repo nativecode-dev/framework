@@ -16,15 +16,12 @@
     {
         private static int counter;
 
-        public ApplicationCore(IDependencyContainer container, bool owner = true)
+        public ApplicationCore(IPlatform platform)
         {
-            this.Container = container;
-            this.ContainerOwner = owner;
+            this.Platform = platform;
         }
 
         protected bool Disposed { get; private set; }
-
-        protected bool ContainerOwner { get; }
 
         public void Dispose()
         {
@@ -32,7 +29,7 @@
             GC.SuppressFinalize(this);
         }
 
-        public IDependencyContainer Container { get; private set; }
+        public IPlatform Platform { get; private set; }
 
         public Settings Settings { get; } = new JsonSettings();
 
@@ -59,7 +56,7 @@
             {
                 try
                 {
-                    this.Container.Registrar.RegisterInstance<IApplication>(this, DependencyLifetime.PerApplication);
+                    this.Platform.Registrar.RegisterInstance<IApplication>(this, DependencyLifetime.PerApplication);
 
                     this.RestoreSettings();
                     this.PreInitialization();
@@ -85,10 +82,10 @@
 
                 this.PersistSettings();
 
-                if (this.Container != null && this.ContainerOwner)
+                if (this.Platform != null)
                 {
-                    this.Container.Dispose();
-                    this.Container = null;
+                    this.Platform.Dispose();
+                    this.Platform = null;
                 }
             }
         }
@@ -121,13 +118,13 @@
         {
             foreach (var assembly in assemblies)
             {
-                this.Container.Registrar.RegisterAssembly(assembly);
+                this.Platform.Registrar.RegisterAssembly(assembly);
             }
         }
 
         protected virtual void RegisterModule(IDependencyModule module)
         {
-            module.RegisterDependencies(this.Container.Registrar);
+            module.RegisterDependencies(this.Platform.Registrar);
         }
 
         protected virtual void RegisterModules(IEnumerable<IDependencyModule> modules)

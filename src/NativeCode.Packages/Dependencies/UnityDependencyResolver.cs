@@ -15,6 +15,7 @@
         public UnityDependencyResolver(IUnityContainer container)
         {
             this.container = container;
+            this.container.RegisterInstance<IDependencyResolver>(this);
         }
 
         public override object Resolve(Type type, string key = null)

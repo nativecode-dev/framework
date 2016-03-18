@@ -31,7 +31,7 @@
                     return Task.FromResult(0);
                 }
 
-                using (var workers = app.Container.Resolver.Resolve<IWorkManager<Download>>())
+                using (var workers = app.Platform.Resolver.Resolve<IWorkManager<Download>>())
                 {
                     workers.StartAsync();
                     Console.ReadKey(true);

@@ -10,17 +10,13 @@
     using Common.Data.Entities;
 
     using NativeCode.Core.Data;
-    using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Security;
 
     public class AccountService : DataService<Account>, IAccountService
     {
-        private readonly IPlatform platform;
-
-        public AccountService(IRepository<Account, CoreDataContext> repository, IPlatform platform)
+        public AccountService(IRepository<Account, CoreDataContext> repository)
             : base(repository)
         {
-            this.platform = platform;
         }
 
         public Task<Account> FindAsync(string login, CancellationToken cancellationToken)

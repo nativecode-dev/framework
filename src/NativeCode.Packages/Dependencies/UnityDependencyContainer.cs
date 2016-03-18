@@ -1,6 +1,5 @@
 ﻿namespace NativeCode.Packages.Dependencies
 {
-    using System;
     using System.Threading;
 
     using Microsoft.Practices.ServiceLocation;
@@ -21,10 +20,6 @@
             {
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(this.container));
                 DependencyLocator.SetRootContainer(this);
-            }
-            else
-            {
-                throw new InvalidOperationException("Cannot construct more than one instance per AppDomain.");
             }
         }
 

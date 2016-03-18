@@ -76,7 +76,7 @@ namespace Common.Workers
 
         protected async Task RunLoopAsync()
         {
-            using (this.application.Container.CreateChildContainer())
+            using (var root = this.application.Platform.CreateDependencyScope())
             {
                 var tasks = new List<TaskMapping>();
                 var token = this.CancellationTokenSource.Token;
@@ -86,7 +86,7 @@ namespace Common.Workers
                 {
                     try
                     {
-                        using (this.application.Container.CreateChildContainer())
+                        using (root.CreateChildContainer())
                         {
                             // If we have reached max concurrency, we'll wait until another slot opens up.
                             if (tasks.Count == this.MaxConcurrency)

@@ -3,25 +3,24 @@
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Platform;
     using NativeCode.Web.AspNet.Mvc.Dependencies;
     using NativeCode.Web.AspNet.Mvc.Filters;
     using NativeCode.Web.AspNet.Mvc.ModelBinders;
 
     using ServicesWeb.Filters;
 
-    using DependencyResolver = System.Web.Mvc.DependencyResolver;
     using IDependencyResolver = NativeCode.Core.Dependencies.IDependencyResolver;
 
     internal static class MvcConfig
     {
-        public static void Configure(IDependencyContainer container)
+        public static void Configure(IPlatform platform)
         {
-            DependencyResolver.SetResolver(new MvcDependencyResolver(container));
+            DependencyResolver.SetResolver(new MvcDependencyResolver(platform.CreateDependencyScope()));
 
             AreaRegistration.RegisterAllAreas();
 
-            ConfigureFilters(container.Resolver, GlobalFilters.Filters);
+            ConfigureFilters(platform.Resolver, GlobalFilters.Filters);
             ConfigureRoutes(RouteTable.Routes);
 
             ModelBinders.Binders.DefaultBinder = new ExtendedModelBinder();

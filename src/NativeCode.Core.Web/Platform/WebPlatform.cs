@@ -8,13 +8,13 @@
     using System.Web;
     using System.Web.Compilation;
 
+    using NativeCode.Core.Dependencies;
     using NativeCode.Core.DotNet.Platform;
-    using NativeCode.Core.Platform.Security;
 
     public class WebPlatform : DotNetPlatform
     {
-        public WebPlatform(IEnumerable<IAuthenticationProvider> authenticators)
-            : base(authenticators)
+        public WebPlatform(IDependencyContainer container)
+            : base(container)
         {
         }
 

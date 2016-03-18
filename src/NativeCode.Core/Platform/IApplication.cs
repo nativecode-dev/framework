@@ -9,7 +9,7 @@
 
     public interface IApplication : IDisposable
     {
-        IDependencyContainer Container { get; }
+        IPlatform Platform { get; }
 
         Settings Settings { get; }
 

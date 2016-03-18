@@ -1,19 +1,20 @@
-namespace NativeCode.Core.Web.Handlers.Owin
+namespace NativeCode.Core.Web.Owin.Middleware
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Platform;
 
     public class OwinDependencyMiddleware : OwinMiddleware
     {
         private readonly IDependencyContainer container;
 
-        public OwinDependencyMiddleware(Func<IDictionary<string, object>, Task> next, IDependencyContainer container)
+        public OwinDependencyMiddleware(Func<IDictionary<string, object>, Task> next, IPlatform platform)
             : this(next)
         {
-            this.container = container.CreateChildContainer();
+            this.container = platform.CreateDependencyScope();
         }
 
         private OwinDependencyMiddleware(Func<IDictionary<string, object>, Task> next)

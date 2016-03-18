@@ -3,27 +3,22 @@
     using System;
     using System.IO;
 
-    using Common;
-
     using Humanizer;
 
     using NativeCode.Core;
     using NativeCode.Core.DotNet;
-    using NativeCode.Core.Platform;
     using NativeCode.Core.Web;
+    using NativeCode.Core.Web.Owin;
     using NativeCode.Packages.Dependencies;
     using NativeCode.Packages.Platform;
-    using NativeCode.Web;
 
     public class ServicesApplication : OwinApplication
     {
         private const string DefaultSettingsFile = "settings.json";
 
         public ServicesApplication()
-            : base(new UnityDependencyContainer(), true)
+            : base(new OwinPlatform(new UnityDependencyContainer()))
         {
-            Current = this;
-
             this.Initialize(
                 this.GetType().Name.Humanize(),
                 CoreDependencies.Instance,
@@ -33,11 +28,9 @@
                 CommonWebDependencies.Instance);
         }
 
-        public static IApplication Current { get; private set; }
-
         protected override void PostInitialization()
         {
-            using (var container = this.Container.CreateChildContainer())
+            using (var container = this.Platform.CreateDependencyScope())
             {
                 Database.Configure(container.Resolver);
             }

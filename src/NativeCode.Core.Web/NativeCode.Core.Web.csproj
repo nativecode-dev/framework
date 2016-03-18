@@ -59,11 +59,11 @@
     <Compile Include="Authentication\CookieAuthenticationData.cs" />
     <Compile Include="Authentication\CookieAuthentication.cs" />
     <Compile Include="Extensions\AppBuilderExtensions.cs" />
-    <Compile Include="Handlers\Owin\OwinCookieMiddleware.cs" />
-    <Compile Include="Handlers\Owin\OwinDependencyMiddleware.cs" />
-    <Compile Include="Handlers\Owin\OwinHmacMiddleware.cs" />
-    <Compile Include="Handlers\Owin\OwinMiddleware.cs" />
-    <Compile Include="Handlers\Owin\OwinSettingsMiddleware.cs" />
+    <Compile Include="Owin\Middleware\OwinCookieMiddleware.cs" />
+    <Compile Include="Owin\Middleware\OwinDependencyMiddleware.cs" />
+    <Compile Include="Owin\Middleware\OwinHmacMiddleware.cs" />
+    <Compile Include="Owin\Middleware\OwinMiddleware.cs" />
+    <Compile Include="Owin\Middleware\OwinSettingsMiddleware.cs" />
     <Compile Include="Hmac\CanonicalMessage.cs" />
     <Compile Include="Hmac\HmacSignatureAlgorithm.cs" />
     <Compile Include="HttpHeaders.cs" />
@@ -71,7 +71,9 @@
     <Compile Include="Membership\WindowsMembershipProvider.cs" />
     <Compile Include="Membership\WindowsMembershipRoleProvider.cs" />
     <Compile Include="Membership\BaseMembershipRoleProvider.cs" />
+    <Compile Include="Owin\OwinPlatform.cs" />
     <Compile Include="Platform\IWebApplication.cs" />
+    <Compile Include="Owin\OwinCookie.cs" />
     <Compile Include="Platform\WebPlatform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Platform\WebApplication.cs" />

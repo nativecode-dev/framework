@@ -2,7 +2,7 @@
 {
     using System.Web.Http;
 
-    using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Platform;
     using NativeCode.Web.AspNet.WebApi.Dependencies;
     using NativeCode.Web.AspNet.WebApi.Filters;
     using NativeCode.Web.AspNet.WebApi.Formatters;
@@ -11,24 +11,24 @@
 
     internal static class WebApiConfig
     {
-        public static void Configure(IDependencyContainer container)
+        public static void Configure(IPlatform platform)
         {
-            GlobalConfiguration.Configure(configuration => Configure(container, configuration));
+            GlobalConfiguration.Configure(configuration => Configure(platform, configuration));
         }
 
-        public static void Configure(IDependencyContainer container, HttpConfiguration configuration)
+        public static void Configure(IPlatform platform, HttpConfiguration configuration)
         {
-            configuration.DependencyResolver = new WebApiDependencyResolver(container);
+            configuration.DependencyResolver = new WebApiDependencyResolver(platform.CreateDependencyScope());
 
             // Filters
-            configuration.Filters.Add(container.Resolver.Resolve<AuthorizeAttribute>());
-            configuration.Filters.Add(container.Resolver.Resolve<ValidateModelAttribute>());
+            configuration.Filters.Add(platform.Resolver.Resolve<AuthorizeAttribute>());
+            configuration.Filters.Add(platform.Resolver.Resolve<ValidateModelAttribute>());
 
             // Formatters
-            configuration.Formatters.Add(container.Resolver.Resolve<JsonBrowserMediaTypeFormatter>());
+            configuration.Formatters.Add(platform.Resolver.Resolve<JsonBrowserMediaTypeFormatter>());
 
             // Handlers
-            configuration.MessageHandlers.Add(container.Resolver.Resolve<AccountAuthDelegatingHandler>());
+            configuration.MessageHandlers.Add(platform.Resolver.Resolve<AccountAuthDelegatingHandler>());
 
             // Extensions
             configuration.EnableSystemDiagnosticsTracing();

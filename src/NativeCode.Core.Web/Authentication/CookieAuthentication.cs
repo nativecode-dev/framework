@@ -13,6 +13,7 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Serialization;
+    using NativeCode.Core.Web.Owin;
 
     public static class CookieAuthentication
     {
@@ -37,23 +38,23 @@
                 return new HttpCookie(FormsAuthentication.FormsCookieName, cookie);
             }
 
-            throw new InvalidOperationException($"Failed to create cookie with {cookie}.");
+            return null;
         }
 
         [SuppressMessage("ReSharper", "LoopCanBeConvertedToQuery")]
-        public static HttpCookie GetCookie([NotNull] this IOwinRequest request)
+        public static OwinCookie GetCookie([NotNull] this IOwinRequest request, string name)
         {
             foreach (var kvp in request.Cookies)
             {
                 var key = kvp.Key;
 
-                if (key == FormsAuthentication.FormsCookieName)
+                if (key == name)
                 {
-                    return new HttpCookie(key, kvp.Value);
+                    return new OwinCookie(kvp);
                 }
             }
 
-            throw new InvalidOperationException($"Failed to find cookie for {FormsAuthentication.FormsCookieName}.");
+            return null;
         }
 
         public static CookieAuthenticationData GetCookieData([NotNull] this HttpCookie cookie)
@@ -69,24 +70,14 @@
             return null;
         }
 
-        public static void SetCookie([NotNull] this HttpResponseMessage response, [NotNull] HttpCookie cookie)
+        public static void SetCookie([NotNull] this HttpResponseMessage response, [NotNull] OwinCookie cookie)
         {
             response.Headers.TryAddWithoutValidation("Set-Cookie", cookie.ToString());
         }
 
-        public static void SetCookie([NotNull] this IOwinResponse response, [NotNull] HttpCookie cookie)
+        public static void SetCookie([NotNull] this IOwinResponse response, [NotNull] OwinCookie cookie)
         {
-            response.Cookies.Append(
-                cookie.Name,
-                cookie.Value,
-                new CookieOptions
-                    {
-                        Path = FormsAuthentication.FormsCookiePath,
-                        Domain = FormsAuthentication.CookieDomain,
-                        HttpOnly = true,
-                        Expires = cookie.Expires,
-                        Secure = cookie.Secure
-                    });
+            response.Cookies.Append(cookie.Name, cookie.Value, cookie.Options);
         }
     }
 }

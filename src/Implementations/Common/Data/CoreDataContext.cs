@@ -1,7 +1,6 @@
 ﻿namespace Common.Data
 {
     using System.Data.Entity;
-    using System.Linq;
 
     using Common.Data.Entities;
     using Common.Data.Entities.Navigation;
@@ -10,13 +9,13 @@
     using NativeCode.Core.DotNet.Providers;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Connections;
-    using NativeCode.Core.Platform.Security;
     using NativeCode.Packages.Data;
+    using NativeCode.Packages.Dependencies;
 
     public class CoreDataContext : DbDataContext
     {
         public CoreDataContext()
-            : base(new ConnectionStringProvider(), new DotNetPlatform(Enumerable.Empty<IAuthenticationProvider>()))
+            : base(new ConnectionStringProvider(), new DotNetPlatform(new UnityDependencyContainer()))
         {
         }
 

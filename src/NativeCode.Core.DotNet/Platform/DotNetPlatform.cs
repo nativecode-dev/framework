@@ -18,20 +18,18 @@
 
     using Principal = NativeCode.Core.Platform.Principal;
 
-    public class DotNetPlatform : IPlatform
+    public class DotNetPlatform : Platform
     {
-        private readonly IEnumerable<IAuthenticationProvider> authenticators;
-
-        public DotNetPlatform(IEnumerable<IAuthenticationProvider> authenticators)
+        public DotNetPlatform(IDependencyContainer container)
+            : base(container)
         {
-            this.authenticators = authenticators;
         }
 
-        public virtual string ApplicationPath => AppDomain.CurrentDomain.BaseDirectory;
+        public override string ApplicationPath => AppDomain.CurrentDomain.BaseDirectory;
 
-        public virtual string DataPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public override string DataPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        public virtual string MachineName => Environment.MachineName;
+        public override string MachineName => Environment.MachineName;
 
         public static IEnumerable<string> GetActiveDirectoryGroups([NotNull] IPrincipal principal)
         {
@@ -72,19 +70,22 @@
             return result;
         }
 
-        public virtual IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
+        public override IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
         {
             return filter == null ? AppDomain.CurrentDomain.GetAssemblies() : AppDomain.CurrentDomain.GetAssemblies().Where(filter);
         }
 
-        public virtual IEnumerable<Assembly> GetAssemblies(params string[] prefixes)
+        public override IEnumerable<Assembly> GetAssemblies(params string[] prefixes)
         {
             return this.GetAssemblies(x => prefixes.Any(p => x.FullName.Contains(p)));
         }
 
-        public async Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
+        public override async Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
         {
-            foreach (var authenticator in this.authenticators)
+            // TODO: Service location, kinda ugly...can we do better?
+            var authenticators = this.Resolver.ResolveAll<IAuthenticationProvider>();
+
+            foreach (var authenticator in authenticators)
             {
                 if (!authenticator.CanHandle(login))
                 {
@@ -102,7 +103,7 @@
             return null;
         }
 
-        public virtual IPrincipal GetCurrentPrincipal()
+        public override IPrincipal GetCurrentPrincipal()
         {
             if (string.IsNullOrWhiteSpace(Thread.CurrentPrincipal.Identity.Name))
             {
@@ -119,7 +120,7 @@
             return Thread.CurrentPrincipal;
         }
 
-        public IEnumerable<string> GetCurrentRoles()
+        public override IEnumerable<string> GetCurrentRoles()
         {
             var principal = this.GetCurrentPrincipal();
 
@@ -131,7 +132,7 @@
             return Enumerable.Empty<string>();
         }
 
-        public virtual void SetCurrentPrincipal(IPrincipal principal)
+        public override void SetCurrentPrincipal(IPrincipal principal)
         {
             Thread.CurrentPrincipal = principal;
         }

@@ -99,6 +99,7 @@
     <Compile Include="Logging\LogMessageType.cs" />
     <Compile Include="Platform\Identity.cs" />
     <Compile Include="Platform\IPlatform.cs" />
+    <Compile Include="Platform\Platform.cs" />
     <Compile Include="Platform\Principal.cs" />
     <Compile Include="Platform\Security\IHmacSettingsProvider.cs" />
     <Compile Include="Platform\Security\UserLoginName.cs" />
@@ -152,7 +153,9 @@
     <None Include="NativeCode.Core.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Attributes\CodeAnalysis\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
