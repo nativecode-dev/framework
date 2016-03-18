@@ -1,9 +1,9 @@
-﻿namespace NativeCode.Web
+﻿namespace NativeCode.Core.Web
 {
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Platform;
-    using NativeCode.Web.Platform;
+    using NativeCode.Core.Web.Platform;
 
     public class WebDependencies : DependencyModule
     {

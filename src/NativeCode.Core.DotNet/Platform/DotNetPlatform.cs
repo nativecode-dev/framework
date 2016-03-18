@@ -2,12 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.DirectoryServices.AccountManagement;
+    using System.Linq;
+    using System.Reflection;
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
 
+    using JetBrains.Annotations;
+
+    using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Security;
+
+    using Principal = NativeCode.Core.Platform.Principal;
 
     public class DotNetPlatform : IPlatform
     {
@@ -24,35 +33,73 @@
 
         public virtual string MachineName => Environment.MachineName;
 
-        public async Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
+        public static IEnumerable<string> GetActiveDirectoryGroups([NotNull] IPrincipal principal)
         {
-            foreach (var authenticator in this.authenticators)
-            {
-                if (authenticator.CanHandle(login))
-                {
-                    var response = await authenticator.AuthenticateAsync(login, password, cancellationToken).ConfigureAwait(false);
+            var result = new List<string>();
 
-                    if (response.Result == AuthenticationResultType.Authenticated)
+            if (principal.IsAuthenticated(true))
+            {
+                UserLoginName userLoginName;
+
+                if (UserLoginName.TryParse(principal.Identity.Name, out userLoginName))
+                {
+                    var domain = userLoginName.Domain;
+
+                    if (string.IsNullOrWhiteSpace(domain))
                     {
-                        return response.Principal;
+                        var application = DependencyLocator.Resolver.Resolve<IApplication>();
+                        domain = application.Settings.GetValue("Global.DefaultDomain", ".");
+                    }
+
+                    using (var context = new PrincipalContext(ContextType.Domain, domain))
+                    {
+                        using (var user = UserPrincipal.FindByIdentity(context, userLoginName.Login))
+                        {
+                            if (user == null)
+                            {
+                                return result;
+                            }
+
+                            using (var groups = user.GetAuthorizationGroups())
+                            {
+                                result.AddRange(groups.OfType<GroupPrincipal>().Select(item => item.Name));
+                            }
+                        }
                     }
                 }
             }
 
-            return null;
+            return result;
         }
 
-        public virtual IPrincipal CreatePrincipal(string login)
+        public virtual IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
+        {
+            return filter == null ? AppDomain.CurrentDomain.GetAssemblies() : AppDomain.CurrentDomain.GetAssemblies().Where(filter);
+        }
+
+        public virtual IEnumerable<Assembly> GetAssemblies(params string[] prefixes)
+        {
+            return this.GetAssemblies(x => prefixes.Any(p => x.FullName.Contains(p)));
+        }
+
+        public async Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
         {
             foreach (var authenticator in this.authenticators)
             {
-                if (authenticator.CanHandle(login))
+                if (!authenticator.CanHandle(login))
                 {
-                    return authenticator.CreatePrincipal(login);
+                    continue;
+                }
+
+                var response = await authenticator.AuthenticateAsync(login, password, cancellationToken).ConfigureAwait(false);
+
+                if (response.Result == AuthenticationResultType.Authenticated)
+                {
+                    return response.Principal;
                 }
             }
 
-            return Principal.Anonymous;
+            return null;
         }
 
         public virtual IPrincipal GetCurrentPrincipal()
@@ -70,6 +117,18 @@
             }
 
             return Thread.CurrentPrincipal;
+        }
+
+        public IEnumerable<string> GetCurrentRoles()
+        {
+            var principal = this.GetCurrentPrincipal();
+
+            if (principal != null)
+            {
+                return GetActiveDirectoryGroups(principal);
+            }
+
+            return Enumerable.Empty<string>();
         }
 
         public virtual void SetCurrentPrincipal(IPrincipal principal)

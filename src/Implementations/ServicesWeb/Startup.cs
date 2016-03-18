@@ -6,19 +6,20 @@ using ServicesWeb;
 
 namespace ServicesWeb
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Optimization;
 
     using Common.Web;
 
-    using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Settings;
+    using NativeCode.Core.Web.Extensions;
+    using NativeCode.Packages.Platform;
 
     using Owin;
 
-    using OwinHandler = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
+    using ServicesWeb.Config;
 
-    public class Startup : ServicesStartup
+    public class Startup : OwinStartup
     {
         // Avoiding constants so R# doesn't complain in Razor.
 #if DEBUG
@@ -35,40 +36,61 @@ namespace ServicesWeb
             // application, the construction logic is reversed since there's no need to call WebApp.Start.
             this.Application = new WebServicesApplication();
 
-            base.Configuration(builder);
+            // Set settings and their default values.
+            ConfigureSettings(ServicesApplication.Current.Settings);
 
-            MvcApp.Configure(this.Application.Container);
+            // Configure services
+            this.ConfigureWebApi(builder);
+            this.ConfigureMvc();
 
-            builder.Use<DependencyRequestScope>(this.Application.Container);
+            // Register custom handlers.
+            builder.UseOwinCookieRequestScope();
+            builder.UseOwinDependencyRequestScope(this.Application.Container);
         }
 
-        [SuppressMessage("ReSharper", "ClassNeverInstantiated.Local")]
-        private class DependencyRequestScope
+        private void ConfigureMvc()
         {
-            private readonly IDependencyContainer container;
+            MvcConfig.Configure(this.Application.Container);
+            ConfigureBundles(BundleTable.Bundles);
+        }
 
-            private readonly OwinHandler next;
+        private void ConfigureWebApi(IAppBuilder builder)
+        {
+            var configuration = new HttpConfiguration();
+            WebApiConfig.Configure(this.Application.Container, configuration);
+            builder.UseWebApi(configuration);
+        }
 
-            [SuppressMessage("ReSharper", "UnusedMember.Local")]
-            public DependencyRequestScope(OwinHandler next, IDependencyContainer container)
-                : this(next)
-            {
-                this.container = container;
-            }
+        private static void ConfigureBundles(BundleCollection bundles)
+        {
+#if DEBUG
+            BundleTable.EnableOptimizations = false;
+#else
+            BundleTable.EnableOptimizations = true;
+#endif
+            ConfigureScripts(bundles);
+            ConfigureStyles(bundles);
+        }
 
-            private DependencyRequestScope(OwinHandler next)
-            {
-                this.next = next;
-            }
+        private static void ConfigureScripts(BundleCollection bundles)
+        {
+            bundles.Add(
+                new ScriptBundle("~/bundles/scripts").Include("~/Scripts/jquery-{version}.js")
+                    .Include("~/Scripts/jquery.validate.js")
+                    .Include("~/Scripts/jquery.validate.unobtrusive.js")
+                    .Include("~/Scripts/bootstrap.js"));
+        }
 
-            [SuppressMessage("ReSharper", "UnusedMember.Local")]
-            public async Task Invoke(IDictionary<string, object> environment)
-            {
-                using (this.container.CreateChildContainer())
-                {
-                    await this.next(environment);
-                }
-            }
+        private static void ConfigureStyles(BundleCollection bundles)
+        {
+            bundles.Add(
+                new StyleBundle("~/bundles/styles").Include("~/Content/bootstrap.css").Include("~/Content/bootstrap-theme.css").Include("~/Content/Core.less"));
+        }
+
+        private static void ConfigureSettings(Settings settings)
+        {
+            settings.SetValue("Global.DefaultDomain", "NATIVECODE", false);
+            settings.SetValue("Global.DefaultDomainDns", "nativecode.local", false);
         }
 
         private class WebServicesApplication : ServicesApplication

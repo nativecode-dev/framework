@@ -11,11 +11,11 @@
 
     using Common.Data;
     using Common.Data.Entities;
-    using Common.Data.Entities.Enums;
+    using Common.Models.Models.Enums;
 
     using NativeCode.Core.Data;
-    using NativeCode.Core.DotNet.Types;
     using NativeCode.Core.Platform;
+    using NativeCode.Core.Platform.Security;
 
     public class DownloadService : DataService<Download>, IDownloadService
     {
@@ -135,17 +135,13 @@
         {
             var login = principal.Identity.Name;
 
-            if (ActiveDirectoryName.IsValid(principal))
+            if (UserLoginName.IsValid(principal))
             {
-                login = ActiveDirectoryName.Parse(principal.Identity.Name).Account;
+                login = UserLoginName.Parse(principal.Identity.Name).Login;
             }
 
             return
-                await
-                this.Context.Downloads.Include(x => x.Storage)
-                    .Where(x => x.Account.Login == login)
-                    .ToListAsync(cancellationToken)
-                    .ConfigureAwait(false);
+                await this.Context.Downloads.Include(x => x.Storage).Where(x => x.Account.Login == login).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<DownloadStats> GetUserDownloadStatsAsync(IPrincipal principal, CancellationToken cancellationToken)

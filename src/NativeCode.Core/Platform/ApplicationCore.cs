@@ -6,6 +6,8 @@
     using System.Reflection;
     using System.Threading;
 
+    using Humanizer;
+
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Settings;
@@ -33,6 +35,16 @@
         public IDependencyContainer Container { get; private set; }
 
         public Settings Settings { get; } = new JsonSettings();
+
+        public virtual string GetApplicationName()
+        {
+            return this.GetType().Name.Replace("Application", string.Empty).Humanize(LetterCasing.Title);
+        }
+
+        public virtual string GetApplicationVersion()
+        {
+            return null;
+        }
 
         protected bool Initialized { get; private set; }
 

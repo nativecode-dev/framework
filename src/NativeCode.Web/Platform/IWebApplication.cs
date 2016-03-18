@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Web.Platform
+﻿namespace NativeCode.Core.Web.Platform
 {
     using NativeCode.Core.Platform;
 

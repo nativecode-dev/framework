@@ -43,15 +43,15 @@
   <ItemGroup>
     <Compile Include="DotNetDependencies.cs" />
     <Compile Include="Logging\TraceLogWriter.cs" />
+    <Compile Include="Platform\DotNetApplication.cs" />
     <Compile Include="Platform\DotNetPlatform.cs" />
+    <Compile Include="Platform\Security\HmacSettingsProvider.cs" />
     <Compile Include="Providers\ConnectionStringProvider.cs" />
     <Compile Include="Console\BufferCell.cs" />
     <Compile Include="Console\BufferHandle.cs" />
     <Compile Include="Console\BufferMap.cs" />
     <Compile Include="Console\Screen.cs" />
     <Compile Include="Providers\WindowsAuthenticationProvider.cs" />
-    <Compile Include="Types\ActiveDirectoryName.cs" />
-    <Compile Include="Types\ActiveDirectoryNameFormat.cs" />
     <Compile Include="Win32\CenteringPosition.cs" />
     <Compile Include="Win32\Enums\EFileMode.cs" />
     <Compile Include="Win32\Enums\EFileAccess.cs" />
@@ -88,6 +88,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="NativeCode.Core.DotNet.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

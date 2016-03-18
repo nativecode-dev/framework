@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Web.Platform
+﻿namespace NativeCode.Core.Web.Platform
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +6,8 @@
     using System.Reflection;
     using System.Web;
     using System.Web.Compilation;
+
+    using Humanizer;
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Platform;
@@ -29,6 +31,16 @@
         public IDependencyContainer Container => this.ApplicationCore?.Container;
 
         public Settings Settings => this.ApplicationCore?.Settings;
+
+        public virtual string GetApplicationName()
+        {
+            return this.GetType().Name.Replace("Application", string.Empty).Humanize(LetterCasing.Title);
+        }
+
+        public virtual string GetApplicationVersion()
+        {
+            return null;
+        }
 
         public virtual void Initialize(string name, params IDependencyModule[] modules)
         {

@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using NativeCode.Web.Validation;
+    using NativeCode.Core.Web.Validation;
 
     public class DatabaseUpgradeModel
     {

@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Web.Membership
+﻿namespace NativeCode.Core.Web.Membership
 {
     using System;
     using System.Web.Security;

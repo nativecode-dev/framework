@@ -3,9 +3,9 @@
     using System.Web.Http;
     using System.Web.Mvc;
 
-    using Common.Web.Filters;
+    using Common.Models.Models;
 
-    using ServicesWeb.Models;
+    using ServicesWeb.Filters;
 
     [System.Web.Mvc.RoutePrefix("")]
     public class HomeController : Controller

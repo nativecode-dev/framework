@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Web.Membership
+﻿namespace NativeCode.Core.Web.Membership
 {
     using System;
     using System.Collections.Generic;
@@ -8,8 +8,8 @@
     using System.Web.Configuration;
     using System.Web.Security;
 
-    using NativeCode.Core.DotNet.Types;
     using NativeCode.Core.Extensions;
+    using NativeCode.Core.Platform.Security;
 
     public class WindowsMembershipRoleProvider : WindowsTokenRoleProvider
     {
@@ -33,7 +33,7 @@
         {
             var domain = GetDomainFromSettings();
 
-            if (ActiveDirectoryName.IsValid(username).Not())
+            if (UserLoginName.IsValid(username, UserLoginNameFormat.UserPrincipalName).Not())
             {
                 return GetGroupsForUser(domain, username).ToArray();
             }

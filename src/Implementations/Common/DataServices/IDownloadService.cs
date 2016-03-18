@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
 
     using Common.Data.Entities;
-    using Common.Data.Entities.Enums;
+    using Common.Models.Models.Enums;
 
     public interface IDownloadService : IDataService<Download>
     {

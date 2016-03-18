@@ -1,5 +1,8 @@
 ﻿namespace NativeCode.Core.Platform
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
@@ -19,9 +22,13 @@
 
         Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken);
 
-        IPrincipal CreatePrincipal(string login);
+        IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null);
+
+        IEnumerable<Assembly> GetAssemblies(params string[] prefixes);
 
         IPrincipal GetCurrentPrincipal();
+
+        IEnumerable<string> GetCurrentRoles();
 
         void SetCurrentPrincipal(IPrincipal principal);
     }

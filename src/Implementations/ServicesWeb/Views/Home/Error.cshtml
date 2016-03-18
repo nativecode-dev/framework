@@ -1,18 +1,17 @@
-﻿@using System.Web.DynamicData
-@model ServicesWeb.Models.ErrorModel
+﻿@model Common.Models.Models.ErrorModel
 
 @{
-    ViewBag.Title = $"{this.Model.Message} ({this.Model.ErrorList.Length} error)";
+    ViewBag.Title = $"{Model.Message} ({Model.ErrorList.Length} error)";
     Layout = "../Layouts/Default.cshtml";
 }
 
 <div id="error-site-panel" class="panel panel-default">
     <div class="panel-heading">
-        @this.Model.Message
+        @Model.Message
     </div>
     <div class="panel-body">
         <div>
-            @foreach (var error in this.Model.ErrorList)
+            @foreach (var error in Model.ErrorList)
             {
                 try
                 {

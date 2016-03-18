@@ -3,23 +3,15 @@
     using System.Web.Mvc;
     using System.Web.Security;
 
-    using Common.Web.Filters;
+    using Common.Models.Models;
 
     using NativeCode.Core.Extensions;
-    using NativeCode.Core.Platform;
 
-    using ServicesWeb.Models;
+    using ServicesWeb.Filters;
 
     [RoutePrefix("account")]
     public class AccountController : Controller
     {
-        private readonly IPlatform platform;
-
-        public AccountController(IPlatform platform)
-        {
-            this.platform = platform;
-        }
-
         [AllowAnonymous]
         [Route("")]
         [HttpGet]

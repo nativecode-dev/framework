@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
 
-    using Common.Web.Filters;
+    using ServicesWeb.Filters;
 
     [Authorize(Roles = "Application Admins")]
     [RouteArea("admin")]

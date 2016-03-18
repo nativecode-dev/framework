@@ -5,12 +5,21 @@ namespace NativeCode.Core.Settings
     using System.IO;
     using System.Text;
 
+    using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Serialization;
+
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     public class JsonSettings : Settings
     {
         protected JObject ObjectInstance { get; private set; } = new JObject();
+
+        public void Deserialize(string content)
+        {
+            var serializer = DependencyLocator.Resolver.Resolve<IStringSerializer>();
+            this.ObjectInstance = serializer.Deserialize<JObject>(content);
+        }
 
         public override void Load(string content, Encoding encoding)
         {
@@ -37,6 +46,12 @@ namespace NativeCode.Core.Settings
                 var serializer = new JsonSerializer();
                 serializer.Serialize(writer, this.ObjectInstance);
             }
+        }
+
+        public string Serialize()
+        {
+            var serializer = DependencyLocator.Resolver.Resolve<IStringSerializer>();
+            return serializer.Serialize(this.ObjectInstance);
         }
 
         protected override IEnumerable<string> GetKeys()
@@ -70,23 +85,27 @@ namespace NativeCode.Core.Settings
             return ReadTokenValue(current, defaultValue);
         }
 
-        protected override void WriteValue<T>(string name, T value)
+        protected override void WriteValue<T>(string name, T value, bool overwrite)
         {
-            this.WriteValue(new string[0], value);
+            this.WriteValue(new string[0], value, overwrite);
         }
 
-        protected override void WriteValue<T>(string[] path, T value)
+        protected override void WriteValue<T>(string[] path, T value, bool overwrite)
         {
             var current = this.ObjectInstance;
-            var last = path[path.Length - 1];
+            var terminator = path[path.Length - 1];
 
             foreach (var name in path)
             {
-                if (name == last)
+                if (name == terminator)
                 {
                     if (current[name] == null)
                     {
                         current.Add(name, new JValue(value));
+                    }
+                    else if (overwrite)
+                    {
+                        current[name] = new JValue(value);
                     }
 
                     return;

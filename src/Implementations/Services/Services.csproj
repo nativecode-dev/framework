@@ -88,7 +88,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -167,9 +167,13 @@
       <Project>{64a34c62-c4d5-479a-9bef-f360d24ce1b5}</Project>
       <Name>NativeCode.Web.AspNet.WebApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NativeCode.Web\NativeCode.Web.csproj">
+    <ProjectReference Include="..\..\NativeCode.Web\NativeCode.Core.Web.csproj">
       <Project>{ddad0473-9c03-41c1-9be5-54f94ef9d324}</Project>
-      <Name>NativeCode.Web</Name>
+      <Name>NativeCode.Core.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Models\Common.Models.csproj">
+      <Project>{40150b41-9fe8-4776-8f7a-33b5df53dbb0}</Project>
+      <Name>Common.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common.Web\Common.Web.csproj">
       <Project>{017E792D-5B29-4042-AE8F-A0FC96A9B3BC}</Project>

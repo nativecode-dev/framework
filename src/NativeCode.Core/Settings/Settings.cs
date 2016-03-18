@@ -22,7 +22,7 @@
 
             set
             {
-                this.WriteValue(key, value);
+                this.WriteValue(key, value, true);
             }
         }
 
@@ -41,12 +41,12 @@
             return this.ReadValue(name, defaultValue);
         }
 
-        public void SetValue<T>([NotNull] string name, T value)
+        public void SetValue<T>([NotNull] string name, T value, bool overwrite = true)
         {
             if (this.IsPath(name))
             {
                 var path = name.Split(this.PathSeparator);
-                this.WriteValue(path, value);
+                this.WriteValue(path, value, overwrite);
             }
         }
 
@@ -62,9 +62,9 @@
 
         protected abstract T ReadValue<T>([NotNull] string[] path, T defaultValue = default(T));
 
-        protected abstract void WriteValue<T>([NotNull] string name, T value);
+        protected abstract void WriteValue<T>([NotNull] string name, T value, bool overwrite);
 
-        protected abstract void WriteValue<T>([NotNull] string[] path, T value);
+        protected abstract void WriteValue<T>([NotNull] string[] path, T value, bool overwrite);
 
         protected bool IsPath([NotNull] string value)
         {

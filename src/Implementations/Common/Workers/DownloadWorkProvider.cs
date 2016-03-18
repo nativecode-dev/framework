@@ -5,8 +5,8 @@
     using System.Threading.Tasks;
 
     using Common.Data.Entities;
-    using Common.Data.Entities.Enums;
     using Common.DataServices;
+    using Common.Models.Models.Enums;
 
     public class DownloadWorkProvider : WorkProvider<Download>
     {

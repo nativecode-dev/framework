@@ -7,7 +7,6 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using NativeCode.Core.DotNet.Types;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Security;
 
@@ -17,7 +16,7 @@
     {
         public bool CanHandle(string login)
         {
-            return ActiveDirectoryName.IsValid(login);
+            return UserLoginName.IsValid(login, UserLoginNameFormat.UserPrincipalName);
         }
 
         public IPrincipal CreatePrincipal(string login)
@@ -32,11 +31,11 @@
 
             try
             {
-                var adname = ActiveDirectoryName.Parse(login);
+                var adname = UserLoginName.Parse(login);
 
                 using (var context = new PrincipalContext(ContextType.Domain, adname.Domain))
                 {
-                    using (var user = UserPrincipal.FindByIdentity(context, adname.Account))
+                    using (var user = UserPrincipal.FindByIdentity(context, adname.Login))
                     {
                         result = AuthenticateUser(user, password);
 

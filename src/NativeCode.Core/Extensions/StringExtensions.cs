@@ -8,9 +8,14 @@
 
     public static class StringExtensions
     {
-        public static bool IsEmpty(params string[] values)
+        public static bool AllEmpty(params string[] values)
         {
             return values.Any(string.IsNullOrWhiteSpace);
+        }
+
+        public static bool NotEmpty(params string[] values)
+        {
+            return values.All(x => !string.IsNullOrWhiteSpace(x));
         }
 
         public static string Replace(this string value, string replacement, params string[] characters)

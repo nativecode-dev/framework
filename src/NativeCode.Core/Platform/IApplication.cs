@@ -13,6 +13,10 @@
 
         Settings Settings { get; }
 
+        string GetApplicationName();
+
+        string GetApplicationVersion();
+
         void Initialize(string name, params IDependencyModule[] modules);
 
         void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules);

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using Common.Data.Entities.Enums;
+    using Common.Models.Models.Enums;
 
     using NativeCode.Core.Data;
 

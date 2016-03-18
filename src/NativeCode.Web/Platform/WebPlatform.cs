@@ -1,9 +1,12 @@
-﻿namespace NativeCode.Web.Platform
+﻿namespace NativeCode.Core.Web.Platform
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using System.Security.Principal;
     using System.Web;
+    using System.Web.Compilation;
 
     using NativeCode.Core.DotNet.Platform;
     using NativeCode.Core.Platform.Security;
@@ -20,6 +23,13 @@
         public override string DataPath => HttpRuntime.BinDirectory;
 
         public override string MachineName => Environment.MachineName;
+
+        public override IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
+        {
+            var assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>();
+
+            return filter == null ? assemblies : assemblies.Where(filter);
+        }
 
         public override IPrincipal GetCurrentPrincipal()
         {

@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@using ServicesWeb.Models
+@using Common.Models.Models
 <!DOCTYPE html>
 
 <html lang="en">
@@ -7,11 +7,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title</title>
-    @Scripts.Render("~/bundles/jquery-scripts")
-    @Scripts.Render("~/bundles/bootstrap-scripts")
-
-    @Styles.Render("~/bundles/bootstrap-styles")
-    @Styles.Render("~/bundles/site-styles")
+    @Scripts.Render("~/bundles/scripts")
+    @Styles.Render("~/bundles/styles")
 </head>
 
 <body>

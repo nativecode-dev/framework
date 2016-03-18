@@ -17,7 +17,7 @@
         public static void Main(string[] args)
         {
             var options = Args.Parse<CommandOptions>(args);
-            AsyncContext.Run(async () => await MainAsync(options));
+            AsyncContext.Run(async () => await MainAsync(options).ConfigureAwait(false));
         }
 
         private static Task MainAsync(CommandOptions options)

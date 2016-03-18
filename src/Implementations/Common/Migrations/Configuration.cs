@@ -66,7 +66,7 @@ namespace Common.Migrations
                             var sam = (string)entry.Properties["sAMAccountName"].Value;
                             var upn = (string)entry.Properties["userPrincipalName"].Value;
 
-                            if (StringExtensions.IsEmpty(dn, sam, upn).Not())
+                            if (StringExtensions.AllEmpty(dn, sam, upn).Not())
                             {
                                 var parts = ParseDistinguishedName(dn);
                                 var domain = string.Join(".", parts);

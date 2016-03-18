@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Web.Validation
+﻿namespace NativeCode.Core.Web.Validation
 {
     using System;
     using System.ComponentModel.DataAnnotations;
