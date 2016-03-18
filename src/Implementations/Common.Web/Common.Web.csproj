@@ -165,7 +165,7 @@
       <Project>{64a34c62-c4d5-479a-9bef-f360d24ce1b5}</Project>
       <Name>NativeCode.Web.AspNet.WebApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NativeCode.Web\NativeCode.Core.Web.csproj">
+    <ProjectReference Include="..\..\NativeCode.Core.Web\NativeCode.Core.Web.csproj">
       <Project>{ddad0473-9c03-41c1-9be5-54f94ef9d324}</Project>
       <Name>NativeCode.Core.Web</Name>
     </ProjectReference>

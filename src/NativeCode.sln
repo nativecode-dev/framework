@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Web.AspNet.WebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Web.AspNet.Mvc", "NativeCode.Web.AspNet.Mvc\NativeCode.Web.AspNet.Mvc.csproj", "{AAD677FD-818E-484E-944D-0A3CEB8C6629}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Web", "NativeCode.Web\NativeCode.Core.Web.csproj", "{DDAD0473-9C03-41C1-9BE5-54F94EF9D324}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Web", "NativeCode.Core.Web\NativeCode.Core.Web.csproj", "{DDAD0473-9C03-41C1-9BE5-54F94EF9D324}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementations", "Implementations", "{E7B8AA72-EEA6-45F3-AC88-C0763B4CBB0E}"
 EndProject
