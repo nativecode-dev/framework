@@ -2,10 +2,10 @@
 {
     public static class StandardHandles
     {
-        public const int InputHandle = -10;
+        public const uint InputHandle = unchecked((uint)(-10));
 
-        public const int OutputHandle = -11;
+        public const uint OutputHandle = unchecked((uint)(-11));
 
-        public const int ErrorHandle = -12;
+        public const uint ErrorHandle = unchecked((uint)(-12));
     }
 }

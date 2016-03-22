@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,8 +33,24 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Attributes\EvaluateAttribute.cs" />
+    <Compile Include="Authorization\Exceptions\AuthorizationAssertionFailedException.cs" />
+    <Compile Include="Authorization\ISecurityEvaluator.cs" />
+    <Compile Include="Authorization\ISecurityEvaluatorContext.cs" />
+    <Compile Include="Authorization\ISecurityStringParser.cs" />
+    <Compile Include="Authorization\SecurityExpressionTokenizer.cs" />
+    <Compile Include="Authorization\SecurityStringParser.cs" />
+    <Compile Include="Authorization\SimpleToken.cs" />
+    <Compile Include="Authorization\SimpleTokenType.cs" />
+    <Compile Include="Authorization\Types\Feature.cs" />
+    <Compile Include="Authorization\IAuthorizationHandler.cs" />
+    <Compile Include="Authorization\IAuthorizationProvider.cs" />
+    <Compile Include="Authorization\Types\Permission.cs" />
+    <Compile Include="Authorization\Types\Role.cs" />
     <Compile Include="CoreConstants.cs" />
     <Compile Include="Dependencies\Attributes\IgnoreDependencyAttribute.cs" />
     <Compile Include="Dependencies\DependencyContainer.cs">
@@ -52,6 +69,7 @@
     <Compile Include="Dependencies\Exceptions\DependencyException.cs" />
     <Compile Include="Dependencies\Exceptions\DependencyResolveException.cs" />
     <Compile Include="Dependencies\Fluent\DependencyBuilder.cs" />
+    <Compile Include="Exceptions\FrameworkException.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\PrincipalExtensions.cs" />
@@ -59,7 +77,7 @@
     <Compile Include="Extensions\StructExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Helpers\Retry.cs" />
+    <Compile Include="Types\Retry.cs" />
     <Compile Include="Localization\TranslationProvider.cs">
       <DependentUpon>ITranslationProvider.cs</DependentUpon>
     </Compile>

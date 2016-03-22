@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,6 +42,9 @@
     <Reference Include="System.DirectoryServices.AccountManagement" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Console\ScreenKeyMapper.cs" />
+    <Compile Include="Console\ScreenMode.cs" />
+    <Compile Include="Console\ScreenSettings.cs" />
     <Compile Include="DotNetDependencies.cs" />
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="Platform\DotNetApplication.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Win32\Enums\SystemPropertyFlags.cs" />
     <Compile Include="Win32\Enums\SystemProperty.cs" />
     <Compile Include="Win32\Enums\WinEvent.cs" />
+    <Compile Include="Win32\Exceptions\NativeMethodException.cs" />
     <Compile Include="Win32\Extensions\RectExtensions.cs" />
     <Compile Include="Win32\HookEvent.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
@@ -73,11 +78,13 @@
     </Compile>
     <Compile Include="Win32\StandardHandles.cs" />
     <Compile Include="Win32\Structs\CharInfo.cs" />
+    <Compile Include="Win32\Structs\CharUnion.cs" />
     <Compile Include="Win32\Structs\ConsoleCursorInfo.cs" />
+    <Compile Include="Win32\Structs\ConsoleFontInfoEx.cs" />
     <Compile Include="Win32\Structs\ConsoleScreenBufferInfo.cs" />
     <Compile Include="Win32\Structs\Coord.cs" />
     <Compile Include="Win32\Structs\Point.cs" />
-    <Compile Include="Win32\Structs\Rect.cs" />
+    <Compile Include="Win32\Structs\SmallRect.cs" />
     <Compile Include="Win32\ForegroundChangeHook.cs" />
     <Compile Include="Win32\WindowHelper.cs" />
   </ItemGroup>

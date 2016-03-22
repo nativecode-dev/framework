@@ -5,14 +5,14 @@
     [StructLayout(LayoutKind.Sequential)]
     public struct ConsoleScreenBufferInfo
     {
-        public Coord DwSize;
+        public Coord Size;
 
-        public Coord DwCursorPosition;
+        public Coord CursorPosition;
 
         public short Attributes;
 
-        public Rect Window;
+        public SmallRect Window;
 
-        public Coord DwMaximumWindowSize;
+        public Coord MaximumWindowSize;
     }
 }

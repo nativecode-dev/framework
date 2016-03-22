@@ -6,8 +6,7 @@
     using System.Windows;
 
     using NativeCode.Core.DotNet.Win32;
-
-    using Rect = NativeCode.Core.DotNet.Win32.Structs.Rect;
+    using NativeCode.Core.DotNet.Win32.Structs;
 
     /// <summary>
     /// Interaction logic for MainWindow.
@@ -70,7 +69,7 @@
                 {
                     if (process.Id != this.Process.Id)
                     {
-                        Rect bounds;
+                        SmallRect bounds;
 
                         if (NativeMethods.GetWindowRect(hwnd, out bounds))
                         {

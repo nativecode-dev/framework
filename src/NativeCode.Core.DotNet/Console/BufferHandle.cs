@@ -1,145 +1,171 @@
 namespace NativeCode.Core.DotNet.Console
 {
     using System;
+    using System.Runtime.InteropServices;
+
+    using Microsoft.Win32.SafeHandles;
 
     using NativeCode.Core.DotNet.Win32;
+    using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
-    using NativeCode.Core.Types.Structs;
+    using NativeCode.Core.Extensions;
+    using NativeCode.Core.Types;
 
-    using Rect = NativeCode.Core.DotNet.Win32.Structs.Rect;
-
-    public class BufferHandle
+    public class BufferHandle : Disposable
     {
-        public BufferHandle(IntPtr handle)
+        public BufferHandle(ScreenSettings settings, SafeFileHandle handle, bool ownHandle = true)
         {
             this.Handle = handle;
-            this.InvalidateState();
+            this.OwnHandle = ownHandle;
+            this.Settings = settings;
+
+            this.ConfigureBufferHandle();
         }
 
-        public ConsoleColor Background => ConsoleColor.Gray;
+        public SafeFileHandle Handle { get; private set; }
 
-        public ConsoleColor Foreground => ConsoleColor.Cyan;
+        protected bool OwnHandle { get; }
 
-        public IntPtr Handle { get; }
+        protected ScreenSettings Settings { get; }
 
-        public Position Position { get; private set; }
-
-        public Size Size { get; private set; }
-
-        public Size SizeVisible { get; private set; }
-
-        public int CursorSize { get; private set; }
-
-        public bool CursorVisible { get; private set; }
-
-        protected BufferMap Map { get; private set; }
-
-        public bool HideCursor()
+        public void MoveCursorDown()
         {
-            var cursor = new ConsoleCursorInfo { DwSize = Convert.ToUInt32(this.CursorSize), Visible = false };
+            var info = this.GetScreenBufferInfo();
 
-            return NativeMethods.SetConsoleCursorInfo(this.Handle, ref cursor);
-        }
-
-        public bool SetCursorPosition(int left, int top)
-        {
-            return NativeMethods.SetConsoleCursorPosition(this.Handle, new Coord(left, top));
-        }
-
-        public bool ShowCursor()
-        {
-            var cursor = new ConsoleCursorInfo { DwSize = Convert.ToUInt32(this.CursorSize), Visible = true };
-
-            return NativeMethods.SetConsoleCursorInfo(this.Handle, ref cursor);
-        }
-
-        public bool Write(char value, ConsoleColor? background = null, ConsoleColor? foreground = null)
-        {
-            this.InvalidateState();
-
-            if (this.WriteAt(this.Position, value, background ?? this.Background, foreground ?? this.Foreground))
+            if (info.CursorPosition.Y < info.Window.Bottom)
             {
-                this.SetCursorPosition(this.Position.Y + 1, this.Position.X);
-                return true;
+                Console.CursorTop++;
+            }
+        }
+
+        public void MoveCursorLeft()
+        {
+            var info = this.GetScreenBufferInfo();
+
+            if (info.CursorPosition.X > info.Window.Left)
+            {
+                Console.CursorLeft--;
+            }
+        }
+
+        public void MoveCursorRight()
+        {
+            var info = this.GetScreenBufferInfo();
+
+            if (info.CursorPosition.X < info.Window.Right)
+            {
+                Console.CursorLeft++;
+            }
+        }
+
+        public void MoveCursorUp()
+        {
+            var info = this.GetScreenBufferInfo();
+
+            if (info.CursorPosition.Y > info.Window.Top)
+            {
+                Console.CursorTop--;
+            }
+        }
+
+        public void Write(char character, bool moveCursor = false)
+        {
+            this.Write(character.ToString(), moveCursor);
+        }
+
+        public void Write(string text, bool moveCursor = false)
+        {
+            var info = this.GetScreenBufferInfo();
+            var rect = new SmallRect(info.CursorPosition.X, info.CursorPosition.Y, info.CursorPosition.X + text.Length, info.CursorPosition.Y + 1);
+            var size = new Coord(text.Length, 1);
+            var origin = new Coord(0, 0);
+
+            var buffer = new CharInfo[text.Length];
+
+            for (var index = 0; index < buffer.Length; index++)
+            {
+                buffer[index].Attributes = 11;
+                buffer[index].Char.UnicodeChar = text[index];
             }
 
-            return false;
-        }
-
-        public bool Write(string text, ConsoleColor? background = null, ConsoleColor? foreground = null)
-        {
-            this.InvalidateState();
-
-            if (this.WriteAt(this.Position, text, background ?? this.Background, foreground ?? this.Foreground))
+            if (NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, origin, ref rect).Not())
             {
-                this.SetCursorPosition(this.Position.Y + text.Length, this.Position.X);
-                return true;
+                throw new NativeMethodException(Marshal.GetLastWin32Error());
             }
 
-            return false;
-        }
-
-        public bool WriteAt(Position position, char data, ConsoleColor background, ConsoleColor foreground)
-        {
-            return this.WriteAt(position.X, position.Y, data, background, foreground);
-        }
-
-        public bool WriteAt(Position position, string data, ConsoleColor background, ConsoleColor foreground)
-        {
-            return this.WriteAt(position.X, position.Y, data, background, foreground);
-        }
-
-        public bool WriteAt(int left, int top, char data, ConsoleColor background, ConsoleColor foreground)
-        {
-            var buffer = new CharInfo[1, 1];
-            var rect = new Rect(left, top, 1, 1);
-            var size = new Coord(1, 1);
-
-            buffer[0, 0] = new CharInfo(data, (uint)foreground);
-
-            return NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, new Coord(left, top), ref rect);
-        }
-
-        public bool WriteAt(int left, int top, string data, ConsoleColor background, ConsoleColor foreground)
-        {
-            for (var index = 0; index < data.Length; index++)
+            if (moveCursor && info.CursorPosition.X < info.Window.Right)
             {
-                this.Map[left + index, top] = new BufferCell(left + index, top, data[index], background, foreground);
+                Console.SetCursorPosition(info.CursorPosition.X + 1, info.CursorPosition.Y);
             }
-
-            var buffer = this.Map.GetBuffer(left, top, left + data.Length, 1);
-
-            var rect = new Rect(left, top, data.Length, 1);
-            var size = new Coord(data.Length, 1);
-
-            return NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, new Coord(left, top), ref rect);
         }
 
-        protected void InvalidateState()
+        protected ConsoleScreenBufferInfo GetScreenBufferInfo()
         {
             ConsoleScreenBufferInfo info;
 
-            if (NativeMethods.GetConsoleScreenBufferInfo(this.Handle, out info))
+            if (NativeMethods.GetConsoleScreenBufferInfo(this.Handle, out info).Not())
             {
-                var left = info.DwCursorPosition.X;
-                var top = info.DwCursorPosition.Y;
+                throw new NativeMethodException(Marshal.GetLastWin32Error());
+            }
 
-                this.Position = new Position(left, top);
-                this.Size = new Size(info.DwSize.Y, info.DwSize.X);
-                this.SizeVisible = new Size(info.DwMaximumWindowSize.Y, info.DwMaximumWindowSize.X);
+            return info;
+        }
 
-                if (this.Map == null)
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && !this.Disposed)
+            {
+                if (this.OwnHandle && this.Handle != null)
                 {
-                    this.Map = new BufferMap(this.Size);
+                    this.Handle.Dispose();
+                    this.Handle = null;
                 }
+            }
 
-                ConsoleCursorInfo cursor;
+            base.Dispose(disposing);
+        }
 
-                if (NativeMethods.GetConsoleCursorInfo(this.Handle, out cursor))
-                {
-                    this.CursorSize = Convert.ToInt32(cursor.DwSize);
-                    this.CursorVisible = cursor.Visible;
-                }
+        private void ConfigureBufferHandle()
+        {
+            this.ConfigureFont();
+            this.ConfigureBuffer();
+        }
+
+        private void ConfigureBuffer()
+        {
+            Console.SetBufferSize(this.Settings.ScreenWidth, this.Settings.ScreenHeight);
+
+            var boundedHeight = this.Settings.ScreenHeight <= Console.LargestWindowHeight;
+            var boundedWidth = this.Settings.ScreenWidth <= Console.LargestWindowWidth;
+
+            if (boundedHeight && boundedWidth)
+            {
+                Console.SetWindowSize(this.Settings.ScreenWidth, this.Settings.ScreenHeight);
+            }
+            else if (boundedHeight)
+            {
+                Console.SetWindowSize(Console.LargestWindowWidth, this.Settings.ScreenHeight);
+            }
+            else if (boundedWidth)
+            {
+                Console.SetWindowSize(this.Settings.ScreenWidth, Console.LargestWindowHeight);
+            }
+        }
+
+        private unsafe void ConfigureFont()
+        {
+            var current = new ConsoleFontInfoEx { Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
+            var updated = new ConsoleFontInfoEx { FontFamily = 0, FontSize = new Coord(0, 0), FontWeight = 0, Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
+
+            var pointer = new IntPtr(updated.FaceName);
+            Marshal.Copy(this.Settings.FontName.ToCharArray(), 0, pointer, this.Settings.FontName.Length);
+
+            updated.FontSize = new Coord(current.FontSize.X, current.FontSize.Y);
+            updated.FontWeight = current.FontWeight;
+
+            if (NativeMethods.SetCurrentConsoleFontEx(this.Handle, true, ref updated).Not())
+            {
+                throw new NativeMethodException(Marshal.GetLastWin32Error());
             }
         }
     }

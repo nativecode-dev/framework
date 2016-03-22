@@ -66,6 +66,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\Authorization\WhenParsingAssertions.cs" />
     <Compile Include="Core\Dependencies\WhenNestingContainers.cs" />
     <Compile Include="Core\Extensions\WhenUsingExceptionExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingEnumerableExtensions.cs" />

@@ -59,6 +59,7 @@
     <Compile Include="Authentication\CookieAuthenticationData.cs" />
     <Compile Include="Authentication\CookieAuthentication.cs" />
     <Compile Include="Extensions\AppBuilderExtensions.cs" />
+    <Compile Include="Authorization\HttpContextRedirectAuthorizationHandler.cs" />
     <Compile Include="Owin\Middleware\OwinCookieMiddleware.cs" />
     <Compile Include="Owin\Middleware\OwinDependencyMiddleware.cs" />
     <Compile Include="Owin\Middleware\OwinHmacMiddleware.cs" />

@@ -70,7 +70,15 @@ namespace Common.Migrations
                             {
                                 var parts = ParseDistinguishedName(dn);
                                 var domain = string.Join(".", parts);
-                                var account = new Account { DomainHost = domain, DomainName = Environment.UserDomainName, Login = sam };
+
+                                var account = new Account
+                                                  {
+                                                      DomainHost = domain,
+                                                      DomainName = Environment.UserDomainName,
+                                                      Login = sam,
+                                                      Source = AccountSource.ActiveDirectory
+                                                  };
+
                                 account.Properties.Add(new AccountProperty { Name = "UserPrincipalName", Value = upn });
 
                                 context.Accounts.AddOrUpdate(x => x.Login, account);

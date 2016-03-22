@@ -31,7 +31,7 @@
         public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint id);
 
         [DllImport(User32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool GetWindowRect(IntPtr hwnd, out Rect rect);
+        public static extern bool GetWindowRect(IntPtr hwnd, out SmallRect smallRect);
 
         [DllImport(User32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
@@ -64,7 +64,7 @@
         public static extern bool SetWindowPos(IntPtr hwnd, IntPtr insertAfter, int x, int y, int cx, int cy, uint flags);
 
         [DllImport(User32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool SystemParametersInfo(SystemProperty uiAction, uint uiParam, ref Rect pvParam, SystemPropertyFlags fWinIni);
+        public static extern bool SystemParametersInfo(SystemProperty uiAction, uint uiParam, ref SmallRect pvParam, SystemPropertyFlags fWinIni);
 
         [DllImport(User32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool UnhookWinEvent(IntPtr hook);

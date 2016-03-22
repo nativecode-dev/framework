@@ -4,14 +4,14 @@
 
     public static class RectExtensions
     {
-        public static int Height(this Rect rect)
+        public static int Height(this SmallRect smallRect)
         {
-            return rect.Bottom - rect.Top;
+            return smallRect.Bottom - smallRect.Top;
         }
 
-        public static int Width(this Rect rect)
+        public static int Width(this SmallRect smallRect)
         {
-            return rect.Right - rect.Left;
+            return smallRect.Right - smallRect.Left;
         }
     }
 }

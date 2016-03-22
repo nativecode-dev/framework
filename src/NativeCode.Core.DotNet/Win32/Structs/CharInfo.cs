@@ -6,19 +6,21 @@
     public struct CharInfo
     {
         [FieldOffset(0)]
-        public char Ascii;
-
-        [FieldOffset(0)]
-        public char Unicode;
+        public CharUnion Char;
 
         [FieldOffset(2)]
-        public uint Attributes;
+        public short Attributes;
 
-        public CharInfo(char value, uint attributes)
+        public CharInfo(byte ascii, short attributes)
         {
-            this.Ascii = value;
+            this.Char = new CharUnion { AsciiChar = ascii };
             this.Attributes = attributes;
-            this.Unicode = value;
+        }
+
+        public CharInfo(char unicode, short attributes)
+        {
+            this.Char = new CharUnion { UnicodeChar = unicode };
+            this.Attributes = attributes;
         }
     }
 }

@@ -38,44 +38,38 @@
 
         public int Index(int x, int y)
         {
-            return x + y * this.Width;
+            return x + this.Width * y;
         }
 
         public void Write(char data, int x, int y)
         {
-            this.cells[x + y * this.Height] = new BufferCell(x, y, data);
+            this.cells[x + this.Width * y].Data = data;
+            this.cells[x + this.Width * y].X = x;
+            this.cells[x + this.Width * y].Y = y;
         }
 
-        public CharInfo[,] GetBuffer(int left, int top, int right, int bottom)
+        public void Write(string text, int x, int y)
         {
-            var height = bottom - top;
-            var width = right - left;
-            var buffer = new CharInfo[height, width];
-
-            for (var y = 0; y < height; y++)
+            for (var index = 0; index < text.Length; index++)
             {
-                for (var x = 0; x < width; x++)
-                {
-                    var cell = this[x, y];
-                    buffer[y, x] = new CharInfo(cell.Data.GetValueOrDefault(), (uint)cell.Foreground);
-                }
+                var character = text[index];
+                this.Write(character, x + index, y);
             }
-
-            return buffer;
         }
 
-        public CharInfo[] GetPackedBuffer(int left, int top, int right, int bottom)
+        public CharInfo[] GetBuffer(int left, int top, int right, int bottom)
         {
             var height = bottom - top;
             var width = right - left;
-            var buffer = new CharInfo[height * width];
+            var buffer = new CharInfo[width * height];
 
             for (var y = 0; y < height; y++)
             {
                 for (var x = 0; x < width; x++)
                 {
-                    var cell = this[x, y];
-                    buffer[x + y * width] = new CharInfo(cell.Data.GetValueOrDefault(), (uint)cell.Foreground);
+                    var cell = this[x + +width, y];
+                    buffer[x + width * y].Char.UnicodeChar = cell.Data;
+                    buffer[x + width * y].Attributes = (short)cell.Foreground;
                 }
             }
 

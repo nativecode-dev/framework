@@ -79,6 +79,7 @@
     <Compile Include="DataServices\StorageService.cs">
       <DependentUpon>IStorageService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\Entities\AccountSource.cs" />
     <Compile Include="Data\Entities\DownloadProperty.cs" />
     <Compile Include="Data\Entities\Navigation\MenuAction.cs" />
     <Compile Include="Data\Entities\Navigation\MenuActionType.cs" />
@@ -87,6 +88,10 @@
     <Compile Include="Migrations\201603131202439_Initial.cs" />
     <Compile Include="Migrations\201603131202439_Initial.Designer.cs">
       <DependentUpon>201603131202439_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603200023397_Migration10001.cs" />
+    <Compile Include="Migrations\201603200023397_Migration10001.Designer.cs">
+      <DependentUpon>201603200023397_Migration10001.cs</DependentUpon>
     </Compile>
     <Compile Include="Platform\AccountAuthenticationProvider.cs" />
     <Compile Include="Workers\DownloadWorkManager.cs" />
@@ -152,6 +157,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201603131202439_Initial.resx">
       <DependentUpon>201603131202439_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603200023397_Migration10001.resx">
+      <DependentUpon>201603200023397_Migration10001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

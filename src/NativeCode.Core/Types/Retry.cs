@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Helpers
+﻿namespace NativeCode.Core.Types
 {
     using System;
 

@@ -9,16 +9,16 @@
 
     public static class WindowHelper
     {
-        public static Rect GetDisplayBounds()
+        public static SmallRect GetDisplayBounds()
         {
-            var rect = new Rect();
+            var rect = new SmallRect();
 
             if (NativeMethods.SystemParametersInfo(SystemProperty.GetWorkArea, 0, ref rect, SystemPropertyFlags.None))
             {
                 return rect;
             }
 
-            return default(Rect);
+            return default(SmallRect);
         }
 
         public static IntPtr GetWindowAtCursor()
@@ -61,7 +61,7 @@
 
         public static bool Center(IntPtr hwnd)
         {
-            Rect window;
+            SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
             {
@@ -78,7 +78,7 @@
 
         public static bool CenterBottom(IntPtr hwnd)
         {
-            Rect window;
+            SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
             {
@@ -95,7 +95,7 @@
 
         public static bool CenterTop(IntPtr hwnd)
         {
-            Rect window;
+            SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
             {
@@ -111,7 +111,7 @@
 
         public static bool CenterHorizontal(IntPtr hwnd)
         {
-            Rect window;
+            SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
             {
@@ -128,7 +128,7 @@
 
         public static bool CenterVertically(IntPtr hwnd)
         {
-            Rect window;
+            SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
             {
@@ -145,7 +145,7 @@
 
         public static bool Move(IntPtr hwnd, int left, int top)
         {
-            Rect window;
+            SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
             {
@@ -157,7 +157,7 @@
 
         public static bool Resize(IntPtr hwnd, int height, int width)
         {
-            Rect window;
+            SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
             {
