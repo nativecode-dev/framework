@@ -2,25 +2,24 @@
 {
     using System.Runtime.InteropServices;
 
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct CharInfo
     {
-        [FieldOffset(0)]
         public CharUnion Char;
 
-        [FieldOffset(2)]
-        public short Attributes;
+        [MarshalAs(UnmanagedType.I2)]
+        public Color Color;
 
-        public CharInfo(byte ascii, short attributes)
+        public CharInfo(byte ascii, Color color)
         {
             this.Char = new CharUnion { AsciiChar = ascii };
-            this.Attributes = attributes;
+            this.Color = color;
         }
 
-        public CharInfo(char unicode, short attributes)
+        public CharInfo(char unicode, Color color)
         {
             this.Char = new CharUnion { UnicodeChar = unicode };
-            this.Attributes = attributes;
+            this.Color = color;
         }
     }
 }

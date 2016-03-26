@@ -10,10 +10,11 @@ namespace NativeCode.Core.DotNet.Console
     using NativeCode.Core.DotNet.Win32.Structs;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Types;
+    using NativeCode.Core.Types.Structs;
 
     public class BufferHandle : Disposable
     {
-        public BufferHandle(ScreenSettings settings, SafeFileHandle handle, bool ownHandle = true)
+        public BufferHandle(RendererOptions settings, SafeFileHandle handle, bool ownHandle = true)
         {
             this.Handle = handle;
             this.OwnHandle = ownHandle;
@@ -24,9 +25,11 @@ namespace NativeCode.Core.DotNet.Console
 
         public SafeFileHandle Handle { get; private set; }
 
+        public Position Position => new Position(Console.CursorLeft, Console.CursorTop);
+
         protected bool OwnHandle { get; }
 
-        protected ScreenSettings Settings { get; }
+        protected RendererOptions Settings { get; }
 
         public void MoveCursorDown()
         {
@@ -68,12 +71,12 @@ namespace NativeCode.Core.DotNet.Console
             }
         }
 
-        public void Write(char character, bool moveCursor = false)
+        public void Write(char character, bool moveCursor = false, Color color = Color.ForegroundGreen)
         {
             this.Write(character.ToString(), moveCursor);
         }
 
-        public void Write(string text, bool moveCursor = false)
+        public void Write(string text, bool moveCursor = false, Color color = Color.ForegroundGreen)
         {
             var info = this.GetScreenBufferInfo();
             var rect = new SmallRect(info.CursorPosition.X, info.CursorPosition.Y, info.CursorPosition.X + text.Length, info.CursorPosition.Y + 1);
@@ -84,7 +87,7 @@ namespace NativeCode.Core.DotNet.Console
 
             for (var index = 0; index < buffer.Length; index++)
             {
-                buffer[index].Attributes = 11;
+                buffer[index].Color = color;
                 buffer[index].Char.UnicodeChar = text[index];
             }
 
@@ -155,7 +158,13 @@ namespace NativeCode.Core.DotNet.Console
         private unsafe void ConfigureFont()
         {
             var current = new ConsoleFontInfoEx { Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
-            var updated = new ConsoleFontInfoEx { FontFamily = 0, FontSize = new Coord(0, 0), FontWeight = 0, Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
+            var updated = new ConsoleFontInfoEx
+                              {
+                                  FontFamily = 0,
+                                  FontSize = new Coord(12, 12),
+                                  FontWeight = 0,
+                                  Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>()
+                              };
 
             var pointer = new IntPtr(updated.FaceName);
             Marshal.Copy(this.Settings.FontName.ToCharArray(), 0, pointer, this.Settings.FontName.Length);

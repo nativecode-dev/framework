@@ -2,7 +2,7 @@ namespace NativeCode.Core.DotNet.Console
 {
     using NativeCode.Core.Types.Structs;
 
-    public class ScreenSettings
+    public class RendererOptions
     {
         public int CursorSize { get; set; } = 1;
 
@@ -13,8 +13,6 @@ namespace NativeCode.Core.DotNet.Console
         public Size FontSize { get; set; } = new Size(0, 0);
 
         public int FontWidth { get; set; } = 0;
-
-        public ScreenKeyMapper KeyMapper { get; } = new ScreenKeyMapper();
 
         public int ScreenHeight { get; set; } = 25;
 

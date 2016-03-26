@@ -1,9 +1,6 @@
 ﻿namespace NativeCode.Core.Serialization
 {
-    using Humanizer;
-
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
 
     public class JsonNetStringSerializer : IStringSerializer
     {
@@ -22,14 +19,6 @@
         public string Serialize<T>(T instance)
         {
             return JsonConvert.SerializeObject(instance);
-        }
-    }
-
-    public class LowerScoreContractResolver : DefaultContractResolver
-    {
-        protected override string ResolvePropertyName(string propertyName)
-        {
-            return propertyName.Humanize(LetterCasing.LowerCase).Replace(" ", "_");
         }
     }
 }

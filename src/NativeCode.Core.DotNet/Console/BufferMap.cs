@@ -69,7 +69,7 @@
                 {
                     var cell = this[x + +width, y];
                     buffer[x + width * y].Char.UnicodeChar = cell.Data;
-                    buffer[x + width * y].Attributes = (short)cell.Foreground;
+                    buffer[x + width * y].Color = cell.Color;
                 }
             }
 

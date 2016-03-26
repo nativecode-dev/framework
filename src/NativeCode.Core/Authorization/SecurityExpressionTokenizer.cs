@@ -1,10 +1,7 @@
 ﻿namespace NativeCode.Core.Authorization
 {
     using System.IO;
-    using System.Linq;
     using System.Text;
-
-    using NativeCode.Core.Types.Structs;
 
     public class SecurityExpressionTokenizer
     {
@@ -43,46 +40,5 @@
         {
             this.BufferCount = this.Stream.Read(this.Buffer, 0, this.Buffer.Length);
         }
-    }
-
-    public class Token
-    {
-        public Position Position { get; set; }
-
-        public TokenType Type { get; set; }
-
-        public string Value { get; set; }
-    }
-
-    public enum TokenRule
-    {
-        Consume,
-
-        Ignore,
-
-        Return
-    }
-
-    public enum TokenType
-    {
-        Literal = 0,
-
-        Comment,
-
-        Constant,
-
-        Expression,
-
-        Identifier,
-
-        Keyword,
-
-        NonPrintable,
-
-        Symbol,
-
-        Terminator,
-
-        Whitespace
     }
 }

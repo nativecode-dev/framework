@@ -13,7 +13,17 @@ namespace NativeCode.Core.Settings
 
     public class JsonSettings : Settings
     {
-        protected JObject ObjectInstance { get; private set; } = new JObject();
+        public JsonSettings()
+        {
+            this.ObjectInstance = new JObject();
+        }
+
+        public JsonSettings(JsonSettings instance)
+        {
+            this.ObjectInstance = instance.ObjectInstance;
+        }
+
+        protected JObject ObjectInstance { get; private set; }
 
         public void Deserialize(string content)
         {

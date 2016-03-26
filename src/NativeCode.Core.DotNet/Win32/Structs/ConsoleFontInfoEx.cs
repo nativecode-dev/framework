@@ -17,9 +17,4 @@
 
         public fixed char FaceName [ConsoleMetrics.FontFaceSize];
     }
-
-    public static class ConsoleMetrics
-    {
-        public const int FontFaceSize = 32;
-    }
 }

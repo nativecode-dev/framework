@@ -34,18 +34,70 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Humanizer, Version=2.0.1.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Humanizer.Core.2.0.1\lib\dotnet\Humanizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Concurrent, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.Concurrent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Enlightenment, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Speech" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleApplication.cs" />
     <Compile Include="ConsoleConfiguration.cs" />
     <Compile Include="ConsoleDependencyModule.cs" />
+    <Compile Include="Engine\Collections\GameObjectCollection.cs" />
+    <Compile Include="Engine\Collections\MobileCollection.cs" />
+    <Compile Include="Engine\Collections\PlayerCollection.cs" />
+    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\EngineContext.cs" />
+    <Compile Include="Engine\Mapping\MapCellState.cs" />
+    <Compile Include="Engine\Mapping\MapLayerType.cs" />
+    <Compile Include="Engine\Objects\EngineObject.cs" />
+    <Compile Include="Engine\Objects\EngineObjectElement.cs" />
+    <Compile Include="Engine\EngineRenderContext.cs" />
+    <Compile Include="Engine\Objects\GameObject.cs" />
+    <Compile Include="Engine\Objects\GameObjectActor.cs" />
+    <Compile Include="Engine\Objects\IEngineObject.cs" />
+    <Compile Include="Engine\Objects\IEngineObjectElement.cs" />
+    <Compile Include="Engine\Objects\Behaviors\IObjectCollisionBehavior.cs" />
+    <Compile Include="Engine\Objects\Behaviors\IObjectCollisionDetector.cs" />
+    <Compile Include="Engine\Objects\Behaviors\IObjectCombatBehavior.cs" />
+    <Compile Include="Engine\Objects\Behaviors\IObjectCombatDetector.cs" />
+    <Compile Include="Engine\Mapping\MapCell.cs" />
+    <Compile Include="Engine\Mapping\MapFile.cs" />
+    <Compile Include="Engine\Mapping\MapFileHeader.cs" />
+    <Compile Include="Engine\Mapping\MapLayer.cs" />
+    <Compile Include="Engine\Mapping\MapReader.cs" />
+    <Compile Include="Engine\Objects\IObjectPlayer.cs" />
+    <Compile Include="Engine\Objects\Mobiles\Mobile.cs" />
+    <Compile Include="Engine\Objects\Mobiles\Mogwai.cs" />
+    <Compile Include="Engine\Objects\Mobiles\Player.cs" />
+    <Compile Include="Engine\EngineRenderer.cs" />
+    <Compile Include="Engine\Sounds\Effects\Effect.cs" />
+    <Compile Include="Engine\Sounds\Effects\EffectIdentifier.cs" />
+    <Compile Include="Engine\Sounds\Effects\EffectStream.cs" />
+    <Compile Include="Engine\Sounds\Effects\EffectType.cs" />
+    <Compile Include="Engine\GameFileStream.cs" />
+    <Compile Include="Engine\GameFileCollectionStream.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj">
@@ -60,6 +112,9 @@
       <Project>{e6c2adc9-cb2a-4c0c-b342-b740c637f1bc}</Project>
       <Name>NativeCode.Packages</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Sounds\Music\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

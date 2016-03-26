@@ -85,13 +85,13 @@
     <Compile Include="Data\Entities\Navigation\MenuActionType.cs" />
     <Compile Include="Data\Entities\Storage.cs" />
     <Compile Include="Data\Entities\TokenProperty.cs" />
-    <Compile Include="Migrations\201603131202439_Initial.cs" />
-    <Compile Include="Migrations\201603131202439_Initial.Designer.cs">
-      <DependentUpon>201603131202439_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\Initial.cs" />
+    <Compile Include="Migrations\Initial.Designer.cs">
+      <DependentUpon>Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603200023397_Migration10001.cs" />
-    <Compile Include="Migrations\201603200023397_Migration10001.Designer.cs">
-      <DependentUpon>201603200023397_Migration10001.cs</DependentUpon>
+    <Compile Include="Migrations\Migration10001.cs" />
+    <Compile Include="Migrations\Migration10001.Designer.cs">
+      <DependentUpon>Migration10001.cs</DependentUpon>
     </Compile>
     <Compile Include="Platform\AccountAuthenticationProvider.cs" />
     <Compile Include="Workers\DownloadWorkManager.cs" />
@@ -155,11 +155,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603131202439_Initial.resx">
-      <DependentUpon>201603131202439_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\Initial.resx">
+      <DependentUpon>Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603200023397_Migration10001.resx">
-      <DependentUpon>201603200023397_Migration10001.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\Migration10001.resx">
+      <DependentUpon>Migration10001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

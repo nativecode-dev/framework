@@ -38,14 +38,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Authorization\Attributes\EvaluateAttribute.cs" />
+    <Compile Include="Authorization\AuthorizationHandlers.cs" />
     <Compile Include="Authorization\Exceptions\AuthorizationAssertionFailedException.cs" />
     <Compile Include="Authorization\ISecurityEvaluator.cs" />
     <Compile Include="Authorization\ISecurityEvaluatorContext.cs" />
     <Compile Include="Authorization\ISecurityStringParser.cs" />
+    <Compile Include="Authorization\SecurityEvaluator.cs" />
     <Compile Include="Authorization\SecurityExpressionTokenizer.cs" />
     <Compile Include="Authorization\SecurityStringParser.cs" />
     <Compile Include="Authorization\SimpleToken.cs" />
     <Compile Include="Authorization\SimpleTokenType.cs" />
+    <Compile Include="Authorization\Token.cs" />
+    <Compile Include="Authorization\TokenRule.cs" />
+    <Compile Include="Authorization\TokenType.cs" />
     <Compile Include="Authorization\Types\Feature.cs" />
     <Compile Include="Authorization\IAuthorizationHandler.cs" />
     <Compile Include="Authorization\IAuthorizationProvider.cs" />
@@ -77,6 +82,8 @@
     <Compile Include="Extensions\StructExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Serialization\LowerScoreContractResolver.cs" />
+    <Compile Include="Types\Mappings\AutoMappingProvider.cs" />
     <Compile Include="Types\Retry.cs" />
     <Compile Include="Localization\TranslationProvider.cs">
       <DependentUpon>ITranslationProvider.cs</DependentUpon>
@@ -137,6 +144,7 @@
     <Compile Include="Types\Mappings\IMappingProvider.cs" />
     <Compile Include="Types\StreamMonitor.cs" />
     <Compile Include="Types\StreamMonitorEventArgs.cs" />
+    <Compile Include="Types\Structs\BoundsClamp.cs" />
     <Compile Include="Types\Structs\Position.cs" />
     <Compile Include="Types\Structs\Bounds.cs" />
     <Compile Include="Types\Structs\Size.cs" />

@@ -5,7 +5,7 @@
     [StructLayout(LayoutKind.Sequential)]
     public struct ConsoleCursorInfo
     {
-        public uint DwSize;
+        public uint Size;
 
         public bool Visible;
     }

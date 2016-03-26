@@ -1,33 +1,30 @@
 ﻿namespace NativeCode.Core.DotNet.Console
 {
-    using System;
+    using NativeCode.Core.DotNet.Win32.Structs;
 
     public struct BufferCell
     {
         public BufferCell(int x, int y)
-            : this(x, y, default(char), default(ConsoleColor), default(ConsoleColor))
+            : this(x, y, default(char), default(Color))
         {
         }
 
         public BufferCell(int x, int y, char data)
-            : this(x, y, data, default(ConsoleColor), default(ConsoleColor))
+            : this(x, y, data, default(Color))
         {
         }
 
-        public BufferCell(int x, int y, char data, ConsoleColor background, ConsoleColor foreground)
+        public BufferCell(int x, int y, char data, Color color)
         {
-            this.Background = background;
+            this.Color = color;
             this.Data = data;
-            this.Foreground = foreground;
             this.X = x;
             this.Y = y;
         }
 
-        public ConsoleColor Background { get; set; }
+        public Color Color { get; set; }
 
         public char Data { get; set; }
-
-        public ConsoleColor Foreground { get; set; }
 
         public int X { get; set; }
 

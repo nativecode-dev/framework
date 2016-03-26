@@ -2,7 +2,7 @@
 {
     using NativeCode.Core.DotNet.Win32.Structs;
 
-    public static class RectExtensions
+    public static class SmallRectExtensions
     {
         public static int Height(this SmallRect smallRect)
         {
