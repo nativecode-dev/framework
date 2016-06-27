@@ -15,22 +15,21 @@
     {
         public MainWindow()
         {
-            this.Process = Process.GetCurrentProcess();
-
+            this.AppProcess = Process.GetCurrentProcess();
             this.InitializeComponent();
         }
+
+        protected Process AppProcess { get; }
 
         protected ForegroundChangeHook ForegroundChangeHook { get; private set; }
 
         protected IntPtr? ForegroundHandle { get; private set; }
 
-        protected Process Process { get; }
-
         protected override void OnActivated(EventArgs e)
         {
             if (this.ForegroundChangeHook == null)
             {
-                this.ForegroundChangeHook = new ForegroundChangeHook(this.Process.MainWindowHandle, this.HandleForegroundChange);
+                this.ForegroundChangeHook = new ForegroundChangeHook(this.AppProcess.MainWindowHandle, this.HandleForegroundChange);
                 Trace.WriteLine("Created hook.");
             }
 
@@ -67,16 +66,9 @@
 
                 using (var process = Process.GetProcessById((int)id))
                 {
-                    if (process.Id != this.Process.Id)
+                    if (process.Id != this.AppProcess.Id)
                     {
-                        SmallRect bounds;
-
-                        if (NativeMethods.GetWindowRect(hwnd, out bounds))
-                        {
-                            this.ForegroundHandle = process.MainWindowHandle;
-                            this.Left = bounds.Right;
-                            this.Top = bounds.Top;
-                        }
+                        this.ForegroundHandle = process.MainWindowHandle;
                     }
                 }
             }
@@ -84,6 +76,12 @@
             {
                 Trace.WriteLine(ex.Message);
             }
+        }
+
+        private bool GetWindowThreadProcessId(IntPtr hwnd, out uint id)
+        {
+            NativeMethods.GetWindowThreadProcessId(hwnd, out id);
+            return true;
         }
 
         private void ClickCenter(object sender, RoutedEventArgs e)

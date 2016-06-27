@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Authorization\Attributes\EvaluateAttribute.cs" />
@@ -43,6 +45,9 @@
     <Compile Include="Authorization\ISecurityEvaluator.cs" />
     <Compile Include="Authorization\ISecurityEvaluatorContext.cs" />
     <Compile Include="Authorization\ISecurityStringParser.cs" />
+    <Compile Include="Authorization\Parsing\SecurityTokenizer.cs" />
+    <Compile Include="Authorization\Parsing\SecurityToken.cs" />
+    <Compile Include="Authorization\Parsing\SecurityTokenType.cs" />
     <Compile Include="Authorization\SecurityEvaluator.cs" />
     <Compile Include="Authorization\SecurityExpressionTokenizer.cs" />
     <Compile Include="Authorization\SecurityStringParser.cs" />
@@ -56,6 +61,8 @@
     <Compile Include="Authorization\IAuthorizationProvider.cs" />
     <Compile Include="Authorization\Types\Permission.cs" />
     <Compile Include="Authorization\Types\Role.cs" />
+    <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Caching\SafeCache.cs" />
     <Compile Include="CoreConstants.cs" />
     <Compile Include="Dependencies\Attributes\IgnoreDependencyAttribute.cs" />
     <Compile Include="Dependencies\DependencyContainer.cs">
@@ -76,19 +83,28 @@
     <Compile Include="Dependencies\Fluent\DependencyBuilder.cs" />
     <Compile Include="Exceptions\FrameworkException.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
+    <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\PrincipalExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StructExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Localization\Translation\Attributes\IgnoreTranslateAttribute.cs" />
+    <Compile Include="Localization\Translation\Attributes\TranslateAttribute.cs" />
+    <Compile Include="Localization\Translation\IObjectTranslator.cs" />
+    <Compile Include="Localization\Translation\ObjectTranslator.cs" />
+    <Compile Include="Patterns\DataMovement\Conveyor.cs" />
+    <Compile Include="Patterns\DataMovement\ConveyorConfiguration.cs" />
+    <Compile Include="Patterns\DataMovement\IConveyorHandler.cs" />
+    <Compile Include="Patterns\DataMovement\IConveyorPackage.cs" />
     <Compile Include="Serialization\LowerScoreContractResolver.cs" />
     <Compile Include="Types\Mappings\AutoMappingProvider.cs" />
     <Compile Include="Types\Retry.cs" />
-    <Compile Include="Localization\TranslationProvider.cs">
+    <Compile Include="Localization\Translation\TranslationProvider.cs">
       <DependentUpon>ITranslationProvider.cs</DependentUpon>
     </Compile>
-    <Compile Include="Localization\Translator.cs">
+    <Compile Include="Localization\Translation\Translator.cs">
       <DependentUpon>ITranslator.cs</DependentUpon>
     </Compile>
     <Compile Include="Logging\Logger.cs">
@@ -116,8 +132,8 @@
     </Compile>
     <Compile Include="Platform\ApplicationCore.cs" />
     <Compile Include="Platform\IApplication.cs" />
-    <Compile Include="Localization\ITranslationProvider.cs" />
-    <Compile Include="Localization\ITranslator.cs" />
+    <Compile Include="Localization\Translation\ITranslationProvider.cs" />
+    <Compile Include="Localization\Translation\ITranslator.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\ILogWriter.cs" />
     <Compile Include="Logging\InMemoryLogWriter.cs" />
@@ -162,8 +178,8 @@
       <HintPath>..\packages\Humanizer.Core.2.0.1\lib\portable-win+net45+wp8+wpa81\Humanizer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="JetBrains.Annotations.PCL328, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\JetBrains.Annotations.PCL328.dll</HintPath>
+    <Reference Include="JetBrains.Annotations.PCL328, Version=10.1.4.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.1.4\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\JetBrains.Annotations.PCL328.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -183,11 +199,4 @@
     <Folder Include="Attributes\CodeAnalysis\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

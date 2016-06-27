@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DbDataContext.cs" />
+    <Compile Include="Data\DbDataFactory.cs" />
     <Compile Include="Dependencies\UnityDependencyRegistrar.cs" />
     <Compile Include="Dependencies\UnityDependencyResolver.cs" />
     <Compile Include="Platform\OwinApplication.cs" />

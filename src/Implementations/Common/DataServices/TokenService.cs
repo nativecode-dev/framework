@@ -7,6 +7,7 @@
 
     using Common.Data;
     using Common.Data.Entities;
+    using Common.Data.Entities.Security;
 
     using NativeCode.Core.Data;
 

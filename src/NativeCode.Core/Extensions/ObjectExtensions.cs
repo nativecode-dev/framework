@@ -33,5 +33,10 @@
         {
             return !instance.Is(type);
         }
+
+        public static string ToKey(this object instance)
+        {
+            return instance.GetType().AssemblyQualifiedName;
+        }
     }
 }

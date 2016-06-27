@@ -10,6 +10,8 @@ namespace Common.Migrations
 
     using Common.Data;
     using Common.Data.Entities;
+    using Common.Data.Entities.Security;
+    using Common.Data.Entities.Storage;
 
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Types;

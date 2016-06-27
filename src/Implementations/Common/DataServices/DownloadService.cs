@@ -11,6 +11,7 @@
 
     using Common.Data;
     using Common.Data.Entities;
+    using Common.Data.Entities.Storage;
     using Common.Models.Models.Enums;
 
     using NativeCode.Core.Data;

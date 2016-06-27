@@ -2,7 +2,7 @@
 {
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
-    using NativeCode.Core.Localization;
+    using NativeCode.Core.Localization.Translation;
     using NativeCode.Core.Logging;
     using NativeCode.Core.Platform.Security;
     using NativeCode.Core.Serialization;

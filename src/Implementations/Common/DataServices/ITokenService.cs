@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Common.Data.Entities;
+    using Common.Data.Entities.Security;
 
     public interface ITokenService : IDataService<Token>
     {

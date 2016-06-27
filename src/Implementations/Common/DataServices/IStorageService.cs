@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Common.Data.Entities;
+    using Common.Data.Entities.Storage;
 
     public interface IStorageService
     {

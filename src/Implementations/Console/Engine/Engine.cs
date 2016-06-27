@@ -128,12 +128,14 @@
             return Task.FromResult(0);
         }
 
-        private async Task RunSoundLoopAsync(CancellationToken cancellationToken)
+        private Task RunSoundLoopAsync(CancellationToken cancellationToken)
         {
             while (cancellationToken.IsCancellationRequested.Not())
             {
                 // await PlayTetrisAsync(cancellationToken).ConfigureAwait(false);
             }
+
+            return Task.FromResult(0);
         }
 
         private static async Task PlayTetrisAsync(CancellationToken cancellationToken)

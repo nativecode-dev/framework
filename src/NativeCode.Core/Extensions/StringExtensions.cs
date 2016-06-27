@@ -28,6 +28,11 @@
             return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        public static string TrimNewLines(this string value, string replacement = "")
+        {
+            return value.Replace(Environment.NewLine, replacement);
+        }
+
         #region Quotations
 
         public static string Dequote([NotNull] this string value)

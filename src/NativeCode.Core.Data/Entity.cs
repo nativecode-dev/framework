@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Security.Principal;
 
-    public abstract class Entity : IEntity, IEntityAuditor
+    public abstract class Entity : IEntityAuditor
     {
         public DateTimeOffset? DateCreated { get; protected set; }
 

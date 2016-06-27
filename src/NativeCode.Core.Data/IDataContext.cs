@@ -7,6 +7,8 @@
 
     public interface IDataContext : IDisposable
     {
+        Task<int> CopyAsync<TSource>(string name, CancellationToken cancellationToken) where TSource : IEntity;
+
         Task<T> FindAsync<T, TKey>(TKey key, CancellationToken cancellationToken) where T : class, IEntity where TKey : struct;
 
         bool Save();

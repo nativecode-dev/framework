@@ -6,6 +6,7 @@
 
     using Common.Data;
     using Common.Data.Entities;
+    using Common.Data.Entities.Storage;
 
     using NativeCode.Core.Data;
 

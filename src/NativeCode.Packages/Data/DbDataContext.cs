@@ -54,6 +54,11 @@
             }
         }
 
+        public Task<int> CopyAsync<TSource>(string name, CancellationToken cancellationToken) where TSource : IEntity
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual async Task<T> FindAsync<T, TKey>(TKey key, CancellationToken cancellationToken) where T : class, IEntity where TKey : struct
         {
             var dbset = this.Set(typeof(T));

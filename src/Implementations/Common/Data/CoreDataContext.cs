@@ -2,8 +2,9 @@
 {
     using System.Data.Entity;
 
-    using Common.Data.Entities;
     using Common.Data.Entities.Navigation;
+    using Common.Data.Entities.Security;
+    using Common.Data.Entities.Storage;
 
     using NativeCode.Core.DotNet.Platform;
     using NativeCode.Core.DotNet.Providers;
@@ -24,14 +25,14 @@
         {
         }
 
-        public IDbSet<Account> Accounts { get; set; }
+        public virtual IDbSet<Account> Accounts { get; set; }
 
-        public IDbSet<Download> Downloads { get; set; }
+        public virtual IDbSet<Download> Downloads { get; set; }
 
-        public IDbSet<MenuAction> MenuActions { get; set; }
+        public virtual IDbSet<NavigationItem> NavigationItems { get; set; }
 
-        public IDbSet<Storage> Storage { get; set; }
+        public virtual IDbSet<Storage> Storage { get; set; }
 
-        public IDbSet<Token> Tokens { get; set; }
+        public virtual IDbSet<Token> Tokens { get; set; }
     }
 }

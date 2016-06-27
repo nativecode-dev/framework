@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
     using Common.Data.Entities;
+    using Common.Data.Entities.Storage;
 
     using HtmlAgilityPack;
 

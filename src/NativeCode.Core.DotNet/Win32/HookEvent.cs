@@ -1,14 +1,12 @@
 ﻿namespace NativeCode.Core.DotNet.Win32
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
     using NativeCode.Core.DotNet.Win32.Enums;
     using NativeCode.Core.Types;
 
     public abstract class HookEvent : Disposable
     {
-        [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
         private readonly NativeMethods.WinEventDelegate handler;
 
         private readonly IntPtr hook;

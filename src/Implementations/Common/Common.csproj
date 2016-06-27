@@ -42,6 +42,9 @@
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.EF6">
+      <HintPath>..\..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
@@ -79,16 +82,20 @@
     <Compile Include="DataServices\StorageService.cs">
       <DependentUpon>IStorageService.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\Entities\AccountSource.cs" />
-    <Compile Include="Data\Entities\DownloadProperty.cs" />
-    <Compile Include="Data\Entities\Navigation\MenuAction.cs" />
-    <Compile Include="Data\Entities\Navigation\MenuActionType.cs" />
-    <Compile Include="Data\Entities\Storage.cs" />
-    <Compile Include="Data\Entities\TokenProperty.cs" />
+    <Compile Include="Data\CoreAnnotations.cs" />
+    <Compile Include="Data\CoreDataFactory.cs" />
+    <Compile Include="Data\Entities\Integrations\IntegrationService.cs" />
+    <Compile Include="Data\Entities\Integrations\IntegrationServiceProperty.cs" />
+    <Compile Include="Data\Entities\Security\AccountSource.cs" />
+    <Compile Include="Data\Entities\Storage\DownloadProperty.cs" />
+    <Compile Include="Data\Entities\Navigation\NavigationItem.cs" />
+    <Compile Include="Data\Entities\Storage\Storage.cs" />
+    <Compile Include="Data\Entities\Security\TokenProperty.cs" />
     <Compile Include="Migrations\Initial.cs" />
     <Compile Include="Migrations\Initial.Designer.cs">
       <DependentUpon>Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\KnownInstances\KnownStorage.cs" />
     <Compile Include="Migrations\Migration10001.cs" />
     <Compile Include="Migrations\Migration10001.Designer.cs">
       <DependentUpon>Migration10001.cs</DependentUpon>
@@ -108,7 +115,7 @@
     </Compile>
     <Compile Include="DataServices\IDataService.cs" />
     <Compile Include="DataServices\IDownloadService.cs" />
-    <Compile Include="Data\Entities\AccountProperty.cs" />
+    <Compile Include="Data\Entities\Security\AccountProperty.cs" />
     <Compile Include="DataServices\IAccountService.cs" />
     <Compile Include="DataServices\ITokenService.cs" />
     <Compile Include="Data\Entities\Property.cs" />
@@ -116,9 +123,9 @@
       <DependentUpon>ITokenService.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\CoreDataContext.cs" />
-    <Compile Include="Data\Entities\Account.cs" />
-    <Compile Include="Data\Entities\Download.cs" />
-    <Compile Include="Data\Entities\Token.cs" />
+    <Compile Include="Data\Entities\Security\Account.cs" />
+    <Compile Include="Data\Entities\Storage\Download.cs" />
+    <Compile Include="Data\Entities\Security\Token.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workers\WorkManager.cs">
@@ -162,6 +169,7 @@
       <DependentUpon>Migration10001.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

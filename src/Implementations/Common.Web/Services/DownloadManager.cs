@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using Common.Data.Entities;
+    using Common.Data.Entities.Storage;
     using Common.DataServices;
     using Common.Models.Models;
     using Common.Models.Models.Downloads;

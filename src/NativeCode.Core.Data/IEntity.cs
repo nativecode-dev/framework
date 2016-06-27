@@ -14,7 +14,7 @@
         string UserModified { get; }
     }
 
-    public interface IEntity<out TKey>
+    public interface IEntity<out TKey> : IEntity
         where TKey : struct
     {
         [Key]
