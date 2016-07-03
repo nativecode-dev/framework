@@ -6,9 +6,11 @@
 
     public class SecurityExpressionTokenizer : Disposable
     {
+        private readonly Stream stream;
+
         public SecurityExpressionTokenizer(string source)
         {
-            this.Stream = new MemoryStream(Encoding.UTF8.GetBytes(source));
+            this.stream = new MemoryStream(Encoding.UTF8.GetBytes(source));
         }
 
         protected byte[] Buffer { get; } = new byte[4096];
@@ -17,7 +19,7 @@
 
         protected int BufferPosition { get; private set; }
 
-        protected Stream Stream { get; }
+        protected Stream Stream => this.stream;
 
         public Token GetNextToken()
         {
@@ -26,9 +28,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && this.Stream != null)
+            if (disposing)
             {
-                this.Stream.Dispose();
+                this.stream.Dispose();
             }
 
             base.Dispose(disposing);

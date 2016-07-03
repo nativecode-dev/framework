@@ -15,10 +15,13 @@
             this.Query.QueryString = QueryProcesses;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public event ProcessEventHandler ProcessCreated;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public event ProcessEventHandler ProcessRemoved;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public event ProcessEventHandler ProcessUpdated;
 
         private void HandleEventArrived(object sender, EventArrivedEventArgs e)

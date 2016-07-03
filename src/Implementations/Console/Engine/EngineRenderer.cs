@@ -6,7 +6,6 @@
     using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Types.Structs;
     using System;
     using System.Collections.Generic;
@@ -122,21 +121,19 @@
             int count;
             InputRecord record;
 
-            if (NativeHelper.ReadConsoleInput(handle, out record, 1, out count) == false)
+            if (NativeHelper.ReadConsoleInput(handle, out record, 1, out count))
             {
-                throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
+                if (count == 1 && record.EventType == KeyEventType)
+                {
+                    var state = record.KeyEvent.ControlKeyState;
+                    var shift = (state & ControlKeyState.ShiftPressed) != 0;
+                    var alt = (state & (ControlKeyState.LeftAltPressed | ControlKeyState.RightAltPressed)) != 0;
+                    var control = (state & (ControlKeyState.LeftCtrlPressed | ControlKeyState.RightCtrlPressed)) != 0;
 
-            if (count == 1 && record.EventType == KeyEventType)
-            {
-                var state = record.KeyEvent.ControlKeyState;
-                var shift = (state & ControlKeyState.ShiftPressed) != 0;
-                var alt = (state & (ControlKeyState.LeftAltPressed | ControlKeyState.RightAltPressed)) != 0;
-                var control = (state & (ControlKeyState.LeftCtrlPressed | ControlKeyState.RightCtrlPressed)) != 0;
+                    var consoleKeyInfo = new ConsoleKeyInfo(record.KeyEvent.UnicodeChar, (ConsoleKey)record.KeyEvent.VirtualKeyCode, shift, alt, control);
 
-                var consoleKeyInfo = new ConsoleKeyInfo(record.KeyEvent.UnicodeChar, (ConsoleKey)record.KeyEvent.VirtualKeyCode, shift, alt, control);
-
-                this.Execute(consoleKeyInfo);
+                    this.Execute(consoleKeyInfo);
+                }
             }
         }
 
@@ -156,10 +153,7 @@
 
                 this.RenderGameObjects(cells, bounds);
 
-                if (NativeHelper.WriteConsoleOutput(buffer.Handle, cells, size, origin, ref rect) == false)
-                {
-                    throw new NativeMethodException(Marshal.GetLastWin32Error());
-                }
+                NativeHelper.WriteConsoleOutput(buffer.Handle, cells, size, origin, ref rect);
             }
         }
 

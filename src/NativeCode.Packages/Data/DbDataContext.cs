@@ -1,5 +1,8 @@
 ﻿namespace NativeCode.Packages.Data
 {
+    using NativeCode.Core.Data;
+    using NativeCode.Core.Platform;
+    using NativeCode.Core.Platform.Connections;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -7,10 +10,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using NativeCode.Core.Data;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Connections;
-
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")]
     public abstract class DbDataContext : DbContext, IDataContext
     {
         private readonly List<Action<DbEntityEntry>> interceptors = new List<Action<DbEntityEntry>>();
@@ -54,11 +54,6 @@
             }
         }
 
-        public Task<int> CopyAsync<TSource>(string name, CancellationToken cancellationToken) where TSource : IEntity
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual async Task<T> FindAsync<T, TKey>(TKey key, CancellationToken cancellationToken) where T : class, IEntity where TKey : struct
         {
             var dbset = this.Set(typeof(T));
@@ -99,21 +94,21 @@
             return changed > 0;
         }
 
-        public Task<bool> SaveAsync<T>(T entity, CancellationToken cancellationToken) where T : class, IEntity
+        public async Task<bool> SaveAsync<T>(T entity, CancellationToken cancellationToken) where T : class, IEntity
         {
             this.SetEntity(entity);
 
-            return this.SaveAsync(cancellationToken);
+            return await this.SaveAsync(cancellationToken);
         }
 
-        public Task<bool> SaveAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken) where T : class, IEntity
+        public async Task<bool> SaveAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken) where T : class, IEntity
         {
             foreach (var entity in entities)
             {
                 this.SetEntity(entity);
             }
 
-            return this.SaveAsync(cancellationToken);
+            return await this.SaveAsync(cancellationToken);
         }
 
         protected void SetEntity<T>(T entity) where T : class, IEntity

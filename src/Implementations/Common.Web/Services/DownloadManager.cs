@@ -1,19 +1,16 @@
 ﻿namespace Common.Web.Services
 {
+    using Common.Data.Entities.Storage;
+    using Common.DataServices;
+    using Common.Models.Models;
+    using Common.Models.Models.Downloads;
+    using NativeCode.Core.Types;
+    using NativeCode.Core.Types.Mappings;
     using System;
     using System.Linq;
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using Common.Data.Entities;
-    using Common.Data.Entities.Storage;
-    using Common.DataServices;
-    using Common.Models.Models;
-    using Common.Models.Models.Downloads;
-
-    using NativeCode.Core.Types;
-    using NativeCode.Core.Types.Mappings;
 
     public class DownloadManager : Disposable, IDownloadManager
     {
@@ -37,13 +34,13 @@
                 var token = CancellationToken.None;
                 var share = await this.storage.GetByNameAsync(request.Storage, token).ConfigureAwait(false);
                 var download = new Download
-                                   {
-                                       Filename = request.Filename,
-                                       Source = request.Source,
-                                       Url = request.Url,
-                                       Storage = share,
-                                       Title = request.Title ?? request.Filename
-                                   };
+                {
+                    Filename = request.Filename,
+                    Source = request.Source,
+                    Url = request.Url,
+                    Storage = share,
+                    Title = request.Title ?? request.Filename
+                };
 
                 await this.downloads.EnqueueAsync(download, token).ConfigureAwait(false);
 

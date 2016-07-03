@@ -2,7 +2,7 @@
 {
     using System.Runtime.InteropServices;
 
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Size = 4)]
     public struct Point
     {
         public int X;

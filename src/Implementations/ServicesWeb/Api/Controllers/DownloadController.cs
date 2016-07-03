@@ -1,15 +1,13 @@
 ﻿namespace ServicesWeb.Api.Controllers
 {
+    using Common.Models.Models;
+    using Common.Models.Models.Downloads;
+    using Common.Web.Services;
+    using NativeCode.Core.Dependencies.Attributes;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
-
-    using Common.Models.Models;
-    using Common.Models.Models.Downloads;
-    using Common.Web.Services;
-
-    using NativeCode.Core.Dependencies.Attributes;
 
     [Dependency]
     [RoutePrefix("api/downloads")]

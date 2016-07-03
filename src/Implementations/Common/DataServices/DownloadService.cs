@@ -1,5 +1,11 @@
 ﻿namespace Common.DataServices
 {
+    using Common.Data;
+    using Common.Data.Entities.Storage;
+    using Common.Models.Models.Enums;
+    using NativeCode.Core.Data;
+    using NativeCode.Core.Platform;
+    using NativeCode.Core.Platform.Security;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -8,15 +14,6 @@
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using Common.Data;
-    using Common.Data.Entities;
-    using Common.Data.Entities.Storage;
-    using Common.Models.Models.Enums;
-
-    using NativeCode.Core.Data;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Security;
 
     public class DownloadService : DataService<Download>, IDownloadService
     {
@@ -31,17 +28,17 @@
             this.platform = platform;
         }
 
-        public Task<bool> ChangeStateAsync(Guid key, DownloadState state, CancellationToken cancellationToken)
+        public async Task<bool> ChangeStateAsync(Guid key, DownloadState state, CancellationToken cancellationToken)
         {
             var download = this.Context.Downloads.Find(key);
 
             if (download != null)
             {
                 download.State = state;
-                return this.Context.SaveAsync(cancellationToken);
+                return await this.Context.SaveAsync(cancellationToken);
             }
 
-            return Task.FromResult(false);
+            return false;
         }
 
         public async Task<IEnumerable<Download>> ClaimAsync(int count, CancellationToken cancellationToken)
@@ -93,9 +90,9 @@
             throw new InvalidOperationException("Failed to save download entity.");
         }
 
-        public Task<IEnumerable<Download>> GetDownloadsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Download>> GetDownloadsAsync(CancellationToken cancellationToken)
         {
-            return this.Context.Downloads.Include(x => x.Storage)
+            return await this.Context.Downloads.Include(x => x.Storage)
                 .ToListAsync(cancellationToken)
                 .ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
         }
@@ -105,29 +102,29 @@
             var downloads = this.Context.Downloads;
 
             return new DownloadStats
-                       {
-                           Claimed = await downloads.CountAsync(x => x.State == DownloadState.Claimed, cancellationToken).ConfigureAwait(false),
-                           Completed = await downloads.CountAsync(x => x.State == DownloadState.Completed, cancellationToken).ConfigureAwait(false),
-                           Downloading =
+            {
+                Claimed = await downloads.CountAsync(x => x.State == DownloadState.Claimed, cancellationToken).ConfigureAwait(false),
+                Completed = await downloads.CountAsync(x => x.State == DownloadState.Completed, cancellationToken).ConfigureAwait(false),
+                Downloading =
                                await downloads.CountAsync(x => x.State == DownloadState.Downloading, cancellationToken).ConfigureAwait(false),
-                           Failed = await downloads.CountAsync(x => x.State == DownloadState.Failed, cancellationToken).ConfigureAwait(false),
-                           Queued = await downloads.CountAsync(x => x.State == DownloadState.Queued, cancellationToken).ConfigureAwait(false),
-                           Retrying = await downloads.CountAsync(x => x.State == DownloadState.Retry, cancellationToken).ConfigureAwait(false),
-                           Total = await downloads.CountAsync(cancellationToken).ConfigureAwait(false)
-                       };
+                Failed = await downloads.CountAsync(x => x.State == DownloadState.Failed, cancellationToken).ConfigureAwait(false),
+                Queued = await downloads.CountAsync(x => x.State == DownloadState.Queued, cancellationToken).ConfigureAwait(false),
+                Retrying = await downloads.CountAsync(x => x.State == DownloadState.Retry, cancellationToken).ConfigureAwait(false),
+                Total = await downloads.CountAsync(cancellationToken).ConfigureAwait(false)
+            };
         }
 
-        public Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Download>> GetResumableWorkForMachineAsync(CancellationToken cancellationToken)
         {
             return
-                this.QueryByMachineName(x => x.State == DownloadState.Claimed || x.State == DownloadState.Downloading)
+                await this.QueryByMachineName(x => x.State == DownloadState.Claimed || x.State == DownloadState.Downloading)
                     .ToListAsync(cancellationToken)
                     .ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
         }
 
-        public Task<IEnumerable<Download>> GetRetryableWorkForMachineAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Download>> GetRetryableWorkForMachineAsync(CancellationToken cancellationToken)
         {
-            return this.QueryByMachineName(x => x.State == DownloadState.Retry)
+            return await this.QueryByMachineName(x => x.State == DownloadState.Retry)
                 .ToListAsync(cancellationToken)
                 .ContinueWith(x => (IEnumerable<Download>)x.Result, cancellationToken);
         }
@@ -160,15 +157,15 @@
             }
 
             return new DownloadStats
-                       {
-                           Claimed = account.Downloads.Count(x => x.State == DownloadState.Claimed),
-                           Completed = account.Downloads.Count(x => x.State == DownloadState.Completed),
-                           Downloading = account.Downloads.Count(x => x.State == DownloadState.Downloading),
-                           Failed = account.Downloads.Count(x => x.State == DownloadState.Failed),
-                           Queued = account.Downloads.Count(x => x.State == DownloadState.Queued),
-                           Retrying = account.Downloads.Count(x => x.State == DownloadState.Retry),
-                           Total = account.Downloads.Count()
-                       };
+            {
+                Claimed = account.Downloads.Count(x => x.State == DownloadState.Claimed),
+                Completed = account.Downloads.Count(x => x.State == DownloadState.Completed),
+                Downloading = account.Downloads.Count(x => x.State == DownloadState.Downloading),
+                Failed = account.Downloads.Count(x => x.State == DownloadState.Failed),
+                Queued = account.Downloads.Count(x => x.State == DownloadState.Queued),
+                Retrying = account.Downloads.Count(x => x.State == DownloadState.Retry),
+                Total = account.Downloads.Count
+            };
         }
 
         private IQueryable<Download> QueryByMachineName(Expression<Func<Download, bool>> filter)

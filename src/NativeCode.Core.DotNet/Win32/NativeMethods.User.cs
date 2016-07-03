@@ -29,7 +29,7 @@
         [DllImport(User32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool GetWindowRect(IntPtr hwnd, out SmallRect smallRect);
 
-        [DllImport(User32, CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(User32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         [DllImport(User32, CharSet = CharSet.Auto, SetLastError = true)]

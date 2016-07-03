@@ -1,12 +1,11 @@
 ﻿namespace Common.Web.Services
 {
+    using Common.Models.Models;
+    using Common.Models.Models.Downloads;
     using System;
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using Common.Models.Models;
-    using Common.Models.Models.Downloads;
 
     public interface IDownloadManager : IDisposable
     {
