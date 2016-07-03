@@ -33,7 +33,7 @@
         {
             var cookie = request.GetRequestCookie();
 
-            if (string.IsNullOrWhiteSpace(cookie).Not())
+            if (string.IsNullOrWhiteSpace(cookie) == false)
             {
                 return new HttpCookie(FormsAuthentication.FormsCookieName, cookie);
             }

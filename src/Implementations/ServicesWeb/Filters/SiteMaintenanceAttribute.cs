@@ -11,7 +11,7 @@
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context.ContainsAttribute<IgnoreSiteMaintenanceAttribute>().Not() && Database.UpgradeRequired)
+            if (context.ContainsAttribute<IgnoreSiteMaintenanceAttribute>() == false && Database.UpgradeRequired)
             {
                 var user = context.RequestContext.HttpContext.User;
                 context.Result = user.IsAuthenticated() ? new RedirectResult("~/admin/database/upgrade") : new RedirectResult("~/maintenance");

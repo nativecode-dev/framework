@@ -3,6 +3,7 @@
     using System;
     using System.Runtime.CompilerServices;
 
+    [Serializable]
     public class NativeMethodException : Exception
     {
         public NativeMethodException(int error, [CallerMemberName] string caller = default(string))

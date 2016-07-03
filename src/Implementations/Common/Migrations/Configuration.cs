@@ -49,7 +49,7 @@ namespace Common.Migrations
 
             using (new DisposableAction(() => Thread.CurrentPrincipal = previous))
             {
-                if (identity == null || identity.IsAuthenticated.Not())
+                if (identity == null || identity.IsAuthenticated == false)
                 {
                     throw new InvalidOperationException("Could not determine current windows identity.");
                 }
@@ -68,7 +68,7 @@ namespace Common.Migrations
                             var sam = (string)entry.Properties["sAMAccountName"].Value;
                             var upn = (string)entry.Properties["userPrincipalName"].Value;
 
-                            if (StringExtensions.AllEmpty(dn, sam, upn).Not())
+                            if (StringExtensions.AllEmpty(dn, sam, upn) == false)
                             {
                                 var parts = ParseDistinguishedName(dn);
                                 var domain = string.Join(".", parts);

@@ -23,7 +23,7 @@
         {
             using (var context = resolver.Resolve<CoreDataContext>())
             {
-                if (context.Database.Exists() && context.Database.CompatibleWithModel(true).Not())
+                if (context.Database.Exists() && context.Database.CompatibleWithModel(true) == false)
                 {
                     if (Interlocked.CompareExchange(ref upgradable, 1, 0) == 0)
                     {

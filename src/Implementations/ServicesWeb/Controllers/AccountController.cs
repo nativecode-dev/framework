@@ -40,7 +40,7 @@
             {
                 FormsAuthentication.SetAuthCookie(model.Login, true);
 
-                if (string.IsNullOrWhiteSpace(model.RedirectUrl).Not())
+                if (string.IsNullOrWhiteSpace(model.RedirectUrl) == false)
                 {
                     return this.Redirect(model.RedirectUrl);
                 }

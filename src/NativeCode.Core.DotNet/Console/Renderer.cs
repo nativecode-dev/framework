@@ -1,17 +1,15 @@
 ﻿namespace NativeCode.Core.DotNet.Console
 {
-    using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-
     using Microsoft.Win32.SafeHandles;
-
     using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Enums;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Types;
+    using System;
+    using System.Diagnostics;
+    using System.Runtime.InteropServices;
 
     public abstract class Renderer<TContext> : Disposable
         where TContext : RenderContext, new()
@@ -113,61 +111,13 @@
             }
         }
 
-        protected abstract void RenderComplete(TContext context);
-
-        protected abstract void RenderSetup(TContext context);
-
-        protected abstract void RenderView(TContext context, BufferHandle buffer);
-
         protected void ApplySettings(BufferHandle buffer)
         {
             var info = new ConsoleCursorInfo { Size = (uint)this.Settings.CursorSize, Visible = this.Settings.CursorVisible };
 
-            if (NativeMethods.SetConsoleCursorInfo(buffer.Handle, ref info).Not())
+            if (NativeMethods.SetConsoleCursorInfo(buffer.Handle, ref info) == false)
             {
                 Debug.WriteLine($"Failed to update cursor settings, error was {Marshal.GetLastWin32Error()}.");
-            }
-        }
-
-        protected void Flip()
-        {
-            this.ApplySettings(this.BackBuffer);
-
-            var active = this.ActiveBuffer;
-            var back = this.BackBuffer;
-
-            if (NativeMethods.SetConsoleActiveScreenBuffer(back.Handle))
-            {
-                this.ActiveBuffer = back;
-                this.BackBuffer = active;
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && !this.Disposed)
-            {
-                if (this.ActiveBuffer != null)
-                {
-                    this.ActiveBuffer.Dispose();
-                    this.ActiveBuffer = null;
-                }
-
-                if (this.BackBuffer != null)
-                {
-                    this.BackBuffer.Dispose();
-                    this.BackBuffer = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
-        protected virtual void HandleConsoleKey(ConsoleKeyInfo key, RenderMode mode)
-        {
-            if (mode == RenderMode.Editor)
-            {
-                this.Write(key);
             }
         }
 
@@ -207,11 +157,59 @@
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && !this.Disposed)
+            {
+                if (this.ActiveBuffer != null)
+                {
+                    this.ActiveBuffer.Dispose();
+                    this.ActiveBuffer = null;
+                }
+
+                if (this.BackBuffer != null)
+                {
+                    this.BackBuffer.Dispose();
+                    this.BackBuffer = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        protected void Flip()
+        {
+            this.ApplySettings(this.BackBuffer);
+
+            var active = this.ActiveBuffer;
+            var back = this.BackBuffer;
+
+            if (NativeMethods.SetConsoleActiveScreenBuffer(back.Handle))
+            {
+                this.ActiveBuffer = back;
+                this.BackBuffer = active;
+            }
+        }
+
+        protected virtual void HandleConsoleKey(ConsoleKeyInfo key, RenderMode mode)
+        {
+            if (mode == RenderMode.Editor)
+            {
+                this.Write(key);
+            }
+        }
+
+        protected abstract void RenderComplete(TContext context);
+
+        protected abstract void RenderSetup(TContext context);
+
+        protected abstract void RenderView(TContext context, BufferHandle buffer);
+
         protected void UpdateCursorPosition()
         {
             var position = new Coord(this.CursorX, this.CursorY);
 
-            if (NativeMethods.SetConsoleCursorPosition(this.ActiveBuffer.Handle, position).Not())
+            if (NativeMethods.SetConsoleCursorPosition(this.ActiveBuffer.Handle, position) == false)
             {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
             }

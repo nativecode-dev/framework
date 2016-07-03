@@ -1,19 +1,17 @@
 ﻿namespace Console.Engine
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.InteropServices;
-
     using Console.Engine.Mapping;
     using Console.Engine.Objects;
-
     using NativeCode.Core.DotNet.Console;
     using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Types.Structs;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.InteropServices;
 
     public class EngineRenderer : Renderer<EngineRenderContext>
     {
@@ -41,20 +39,9 @@
             this.ViewPositionY = this.Map[this.MapIndex].Start.Y;
         }
 
-        protected override void HandleConsoleKey(ConsoleKeyInfo key, RenderMode mode)
-        {
-            base.HandleConsoleKey(key, mode);
-
-            if (mode == RenderMode.Editor)
-            {
-                var position = this.ActiveBuffer.Position;
-                this.Map.WriteCells(this.MapIndex, position, 1);
-            }
-        }
-
         protected override void CursorDown()
         {
-            var movable = this.IsMapBounded().Bottom.Not();
+            var movable = this.IsMapBounded().Bottom == false;
 
             if (this.Mode != RenderMode.Editor && movable)
             {
@@ -66,9 +53,23 @@
             }
         }
 
+        protected override void CursorLeft()
+        {
+            var movable = this.IsMapBounded().Left == false;
+
+            if (this.Mode != RenderMode.Editor && movable)
+            {
+                this.ViewPositionX--;
+            }
+            else
+            {
+                base.CursorLeft();
+            }
+        }
+
         protected override void CursorRight()
         {
-            var movable = this.IsMapBounded().Right.Not();
+            var movable = this.IsMapBounded().Right == false;
 
             if (this.Mode != RenderMode.Editor && movable)
             {
@@ -82,7 +83,7 @@
 
         protected override void CursorUp()
         {
-            var movable = this.IsMapBounded().Top.Not();
+            var movable = this.IsMapBounded().Top == false;
 
             if (this.Mode != RenderMode.Editor && movable)
             {
@@ -94,17 +95,48 @@
             }
         }
 
-        protected override void CursorLeft()
+        protected override void HandleConsoleKey(ConsoleKeyInfo key, RenderMode mode)
         {
-            var movable = this.IsMapBounded().Left.Not();
+            base.HandleConsoleKey(key, mode);
 
-            if (this.Mode != RenderMode.Editor && movable)
+            if (mode == RenderMode.Editor)
             {
-                this.ViewPositionX--;
+                var position = this.ActiveBuffer.Position;
+                this.Map.WriteCells(this.MapIndex, position, 1);
             }
-            else
+        }
+
+        protected override void RenderComplete(EngineRenderContext context)
+        {
+        }
+
+        protected override void RenderSetup(EngineRenderContext context)
+        {
+            const int KeyEventType = 1;
+            context.IsDirty = context.LastViewPositionX != this.ViewPositionX || context.LastViewPositionY != this.ViewPositionY;
+            context.LastViewPositionX = this.ViewPositionX;
+            context.LastViewPositionY = this.ViewPositionY;
+
+            var handle = NativeHelper.GetStandardInputHandle();
+
+            int count;
+            InputRecord record;
+
+            if (NativeHelper.ReadConsoleInput(handle, out record, 1, out count) == false)
             {
-                base.CursorLeft();
+                throw new NativeMethodException(Marshal.GetLastWin32Error());
+            }
+
+            if (count == 1 && record.EventType == KeyEventType)
+            {
+                var state = record.KeyEvent.ControlKeyState;
+                var shift = (state & ControlKeyState.ShiftPressed) != 0;
+                var alt = (state & (ControlKeyState.LeftAltPressed | ControlKeyState.RightAltPressed)) != 0;
+                var control = (state & (ControlKeyState.LeftCtrlPressed | ControlKeyState.RightCtrlPressed)) != 0;
+
+                var consoleKeyInfo = new ConsoleKeyInfo(record.KeyEvent.UnicodeChar, (ConsoleKey)record.KeyEvent.VirtualKeyCode, shift, alt, control);
+
+                this.Execute(consoleKeyInfo);
             }
         }
 
@@ -124,65 +156,16 @@
 
                 this.RenderGameObjects(cells, bounds);
 
-                if (NativeMethods.WriteConsoleOutput(buffer.Handle, cells, size, origin, ref rect).Not())
+                if (NativeHelper.WriteConsoleOutput(buffer.Handle, cells, size, origin, ref rect) == false)
                 {
                     throw new NativeMethodException(Marshal.GetLastWin32Error());
                 }
             }
         }
 
-        protected override void RenderComplete(EngineRenderContext context)
-        {
-        }
-
-        protected override void RenderSetup(EngineRenderContext context)
-        {
-            const int KeyEventType = 1;
-            context.IsDirty = context.LastViewPositionX != this.ViewPositionX || context.LastViewPositionY != this.ViewPositionY;
-            context.LastViewPositionX = this.ViewPositionX;
-            context.LastViewPositionY = this.ViewPositionY;
-
-            var handle = NativeMethods.GetStandardInputHandle();
-
-            int count;
-            InputRecord record;
-
-            if (NativeMethods.ReadConsoleInput(handle, out record, 1, out count).Not())
-            {
-                throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
-
-            if (count == 1 && record.EventType == KeyEventType)
-            {
-                var state = record.KeyEvent.ControlKeyState;
-                var shift = (state & ControlKeyState.ShiftPressed) != 0;
-                var alt = (state & (ControlKeyState.LeftAltPressed | ControlKeyState.RightAltPressed)) != 0;
-                var control = (state & (ControlKeyState.LeftCtrlPressed | ControlKeyState.RightCtrlPressed)) != 0;
-
-                var consoleKeyInfo = new ConsoleKeyInfo(record.KeyEvent.UnicodeChar, (ConsoleKey)record.KeyEvent.VirtualKeyCode, shift, alt, control);
-
-                this.Execute(consoleKeyInfo);
-            }
-        }
-
         private static RendererOptions CreateDefaultSettings(int width, int height)
         {
             return new RendererOptions { CursorVisible = false, ScreenHeight = height, ScreenWidth = width };
-        }
-
-        private void RenderGameObjects(CharInfo[] cells, Bounds bounds)
-        {
-            var objects = this.UpdateGameObjects(bounds);
-            this.UpdateMapCells(objects, cells);
-        }
-
-        private IEnumerable<IEngineObjectElement> UpdateGameObjects(Bounds bounds)
-        {
-            return Enumerable.Empty<IEngineObjectElement>();
-        }
-
-        private void UpdateMapCells(IEnumerable<IEngineObjectElement> objects, CharInfo[] cells)
-        {
         }
 
         private BoundsClamp IsMapBounded()
@@ -199,6 +182,21 @@
             var bottom = this.ViewPositionY + height == mapHeight;
 
             return new BoundsClamp { Left = left, Top = top, Bottom = bottom, Right = right };
+        }
+
+        private void RenderGameObjects(CharInfo[] cells, Bounds bounds)
+        {
+            var objects = this.UpdateGameObjects(bounds);
+            this.UpdateMapCells(objects, cells);
+        }
+
+        private IEnumerable<IEngineObjectElement> UpdateGameObjects(Bounds bounds)
+        {
+            return Enumerable.Empty<IEngineObjectElement>();
+        }
+
+        private void UpdateMapCells(IEnumerable<IEngineObjectElement> objects, CharInfo[] cells)
+        {
         }
     }
 }

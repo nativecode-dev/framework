@@ -1,14 +1,11 @@
 ﻿namespace Console
 {
+    using Console.Engine.Objects.Mobiles;
+    using NativeCode.Core.DotNet.Win32;
+    using Nito.AsyncEx;
     using System;
     using System.IO;
     using System.Threading.Tasks;
-
-    using Console.Engine.Objects.Mobiles;
-
-    using NativeCode.Core.DotNet.Win32;
-
-    using Nito.AsyncEx;
 
     internal class Program
     {
@@ -16,7 +13,7 @@
 
         public static void Main(string[] args)
         {
-            var encoding = NativeMethods.GetConsoleEncoding();
+            var encoding = NativeHelper.GetConsoleEncoding();
 
             AsyncContext.Run(MainAsync);
         }

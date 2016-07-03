@@ -22,7 +22,7 @@
 
         protected override async Task AuthenticateAsync(HttpRequestMessage request, string login, string password, CancellationToken cancellationToken)
         {
-            if (UserLoginName.IsValid(login, UserLoginNameFormat.UserPrincipalName).Not())
+            if (UserLoginName.IsValid(login, UserLoginNameFormat.UserPrincipalName) == false)
             {
                 var account = await this.accounts.FindAsync(login, cancellationToken).ConfigureAwait(false);
                 var property = account?.Properties.SingleOrDefault(x => x.Name == "UserPrincipalName");

@@ -73,6 +73,7 @@
     <Compile Include="Win32\Exceptions\NativeMethodException.cs" />
     <Compile Include="Win32\Extensions\SmallRectExtensions.cs" />
     <Compile Include="Win32\HookEvent.cs" />
+    <Compile Include="Win32\NativeHelper.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
     <Compile Include="Win32\NativeMethods.Kernel.cs">
       <DependentUpon>NativeMethods.cs</DependentUpon>

@@ -1,9 +1,10 @@
 ﻿namespace NativeCode.Core.Authorization
 {
+    using Core.Types;
     using System.IO;
     using System.Text;
 
-    public class SecurityExpressionTokenizer
+    public class SecurityExpressionTokenizer : Disposable
     {
         public SecurityExpressionTokenizer(string source)
         {
@@ -23,6 +24,21 @@
             return null;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.Stream != null)
+            {
+                this.Stream.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private void FillBuffer()
+        {
+            this.BufferCount = this.Stream.Read(this.Buffer, 0, this.Buffer.Length);
+        }
+
         private char MoveNext()
         {
             var next = (char)this.Buffer[this.BufferPosition];
@@ -34,11 +50,6 @@
             }
 
             return next;
-        }
-
-        private void FillBuffer()
-        {
-            this.BufferCount = this.Stream.Read(this.Buffer, 0, this.Buffer.Length);
         }
     }
 }

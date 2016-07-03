@@ -1,15 +1,13 @@
 ﻿namespace NativeCode.Core.DotNet.Win32
 {
+    using Microsoft.Win32.SafeHandles;
+    using NativeCode.Core.DotNet.Win32.Enums;
+    using NativeCode.Core.DotNet.Win32.Structs;
     using System;
     using System.Runtime.InteropServices;
     using System.Text;
 
-    using Microsoft.Win32.SafeHandles;
-
-    using NativeCode.Core.DotNet.Win32.Enums;
-    using NativeCode.Core.DotNet.Win32.Structs;
-
-    public static partial class NativeMethods
+    internal static partial class NativeMethods
     {
         public delegate bool EnumCodePagesProcDelegate(string lpCodePageString);
 
@@ -50,16 +48,16 @@
         public static extern bool SetConsoleCursorPosition(SafeHandle hwnd, Coord position);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool SetCurrentConsoleFontEx(SafeHandle hwnd, bool maximumWindow, ref ConsoleFontInfoEx info);
+        public static extern bool SetConsoleScreenBufferInfoEx(SafeHandle hwnd, ref ConsoleScreenBufferInfoEx info);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool SetConsoleScreenBufferSize(SafeHandle hwnd, Coord size);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool SetConsoleScreenBufferInfoEx(SafeHandle hwnd, ref ConsoleScreenBufferInfoEx info);
+        public static extern bool SetConsoleWindowInfo(SafeHandle hwnd, bool absolute, [In] ref SmallRect rect);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool SetConsoleWindowInfo(SafeHandle hwnd, bool absolute, [In] ref SmallRect rect);
+        public static extern bool SetCurrentConsoleFontEx(SafeHandle hwnd, bool maximumWindow, ref ConsoleFontInfoEx info);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool WriteConsoleOutput(SafeHandle hwnd, CharInfo[] buffer, Coord size, Coord coord, ref SmallRect smallRect);
@@ -99,6 +97,6 @@
             }
         }
 
-        #endregion
+        #endregion Helpers
     }
 }

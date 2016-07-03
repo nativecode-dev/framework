@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.DotNet.Win32
 {
-    public static partial class NativeMethods
+    internal static partial class NativeMethods
     {
         private const string Kernel32 = "kernel32.dll";
 

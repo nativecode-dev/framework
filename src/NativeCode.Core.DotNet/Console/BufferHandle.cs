@@ -1,16 +1,14 @@
 namespace NativeCode.Core.DotNet.Console
 {
-    using System;
-    using System.Runtime.InteropServices;
-
     using Microsoft.Win32.SafeHandles;
-
     using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Types;
     using NativeCode.Core.Types.Structs;
+    using System;
+    using System.Runtime.InteropServices;
 
     public class BufferHandle : Disposable
     {
@@ -73,7 +71,7 @@ namespace NativeCode.Core.DotNet.Console
 
         public void Write(char character, bool moveCursor = false, Color color = Color.ForegroundGreen)
         {
-            this.Write(character.ToString(), moveCursor);
+            this.Write(character.ToString(), moveCursor, color);
         }
 
         public void Write(string text, bool moveCursor = false, Color color = Color.ForegroundGreen)
@@ -91,7 +89,7 @@ namespace NativeCode.Core.DotNet.Console
                 buffer[index].Char.UnicodeChar = text[index];
             }
 
-            if (NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, origin, ref rect).Not())
+            if (NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, origin, ref rect) == false)
             {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
             }
@@ -100,18 +98,6 @@ namespace NativeCode.Core.DotNet.Console
             {
                 Console.SetCursorPosition(info.CursorPosition.X + 1, info.CursorPosition.Y);
             }
-        }
-
-        protected ConsoleScreenBufferInfo GetScreenBufferInfo()
-        {
-            ConsoleScreenBufferInfo info;
-
-            if (NativeMethods.GetConsoleScreenBufferInfo(this.Handle, out info).Not())
-            {
-                throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
-
-            return info;
         }
 
         protected override void Dispose(bool disposing)
@@ -128,10 +114,16 @@ namespace NativeCode.Core.DotNet.Console
             base.Dispose(disposing);
         }
 
-        private void ConfigureBufferHandle()
+        protected ConsoleScreenBufferInfo GetScreenBufferInfo()
         {
-            this.ConfigureFont();
-            this.ConfigureBuffer();
+            ConsoleScreenBufferInfo info;
+
+            if (NativeMethods.GetConsoleScreenBufferInfo(this.Handle, out info) == false)
+            {
+                throw new NativeMethodException(Marshal.GetLastWin32Error());
+            }
+
+            return info;
         }
 
         private void ConfigureBuffer()
@@ -155,16 +147,22 @@ namespace NativeCode.Core.DotNet.Console
             }
         }
 
+        private void ConfigureBufferHandle()
+        {
+            this.ConfigureFont();
+            this.ConfigureBuffer();
+        }
+
         private unsafe void ConfigureFont()
         {
             var current = new ConsoleFontInfoEx { Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
             var updated = new ConsoleFontInfoEx
-                              {
-                                  FontFamily = 0,
-                                  FontSize = new Coord(12, 12),
-                                  FontWeight = 0,
-                                  Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>()
-                              };
+            {
+                FontFamily = 0,
+                FontSize = new Coord(12, 12),
+                FontWeight = 0,
+                Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>()
+            };
 
             var pointer = new IntPtr(updated.FaceName);
             Marshal.Copy(this.Settings.FontName.ToCharArray(), 0, pointer, this.Settings.FontName.Length);
@@ -172,7 +170,7 @@ namespace NativeCode.Core.DotNet.Console
             updated.FontSize = new Coord(current.FontSize.X, current.FontSize.Y);
             updated.FontWeight = current.FontWeight;
 
-            if (NativeMethods.SetCurrentConsoleFontEx(this.Handle, true, ref updated).Not())
+            if (NativeMethods.SetCurrentConsoleFontEx(this.Handle, true, ref updated) == false)
             {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
             }

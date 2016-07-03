@@ -38,7 +38,7 @@
                 return new ValidationResult("Settings value was null and expected it to exist.");
             }
 
-            if (Equals(setting, value).Not())
+            if (Equals(setting, value) == false)
             {
                 var message = this.FormatErrorMessage(validationContext.DisplayName);
                 return new ValidationResult($"Settings value did not match value supplied. {message}.");

@@ -14,22 +14,22 @@
 
         public string UserModified { get; protected set; }
 
-        void IEntityAuditor.SetDateCreated(DateTimeOffset value)
+        public void SetDateCreated(DateTimeOffset value)
         {
             this.DateCreated = value;
         }
 
-        void IEntityAuditor.SetDateModified(DateTimeOffset value)
+        public void SetDateModified(DateTimeOffset value)
         {
             this.DateModified = value;
         }
 
-        void IEntityAuditor.SetUserCreated(IIdentity identity)
+        public void SetUserCreated(IIdentity identity)
         {
             this.UserCreated = identity.Name;
         }
 
-        void IEntityAuditor.SetUserModified(IIdentity identity)
+        public void SetUserModified(IIdentity identity)
         {
             this.UserModified = identity.Name;
         }
@@ -41,7 +41,7 @@
         [Key]
         public TKey Key { get; protected set; }
 
-        void IEntityKeySetter<TKey>.SetKey(TKey key)
+        public void SetKey(TKey key)
         {
             this.Key = key;
         }

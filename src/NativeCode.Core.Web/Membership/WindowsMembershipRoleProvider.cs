@@ -33,7 +33,7 @@
         {
             var domain = GetDomainFromSettings();
 
-            if (UserLoginName.IsValid(username, UserLoginNameFormat.UserPrincipalName).Not())
+            if (UserLoginName.IsValid(username, UserLoginNameFormat.UserPrincipalName) == false)
             {
                 return GetGroupsForUser(domain, username).ToArray();
             }

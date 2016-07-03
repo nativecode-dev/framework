@@ -120,7 +120,7 @@
 
         private Task RunGameLoopAsync(CancellationToken cancellationToken)
         {
-            while (cancellationToken.IsCancellationRequested.Not())
+            while (cancellationToken.IsCancellationRequested == false)
             {
                 this.Renderer.Render();
             }
@@ -130,7 +130,7 @@
 
         private Task RunSoundLoopAsync(CancellationToken cancellationToken)
         {
-            while (cancellationToken.IsCancellationRequested.Not())
+            while (cancellationToken.IsCancellationRequested == false)
             {
                 // await PlayTetrisAsync(cancellationToken).ConfigureAwait(false);
             }

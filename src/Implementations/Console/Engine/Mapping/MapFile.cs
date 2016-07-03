@@ -237,7 +237,7 @@
 
             var map = StructExtensions.FromBytes<MapLayer>(buffer);
 
-            if (this.maps.ContainsKey(map.Name).Not())
+            if (this.maps.ContainsKey(map.Name) == false)
             {
                 this.maps.Add(map.Name, map);
             }

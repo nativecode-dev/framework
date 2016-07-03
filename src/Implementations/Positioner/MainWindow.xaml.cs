@@ -1,12 +1,11 @@
 ﻿namespace Positioner
 {
+    using NativeCode.Core.DotNet.Win32;
+    using NativeCode.Core.DotNet.Win32.Structs;
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Windows;
-
-    using NativeCode.Core.DotNet.Win32;
-    using NativeCode.Core.DotNet.Win32.Structs;
 
     /// <summary>
     /// Interaction logic for MainWindow.
@@ -51,6 +50,40 @@
             base.OnClosing(e);
         }
 
+        private void ClickBottom(object sender, RoutedEventArgs e)
+        {
+            if (this.ForegroundHandle.HasValue)
+            {
+                WindowHelper.CenterBottom(this.ForegroundHandle.Value);
+            }
+        }
+
+        private void ClickCenter(object sender, RoutedEventArgs e)
+        {
+            if (this.ForegroundHandle.HasValue)
+            {
+                WindowHelper.Center(this.ForegroundHandle.Value);
+            }
+        }
+
+        private void ClickQuit(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(0);
+        }
+
+        private void ClickShow(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Visible;
+        }
+
+        private void ClickTop(object sender, RoutedEventArgs e)
+        {
+            if (this.ForegroundHandle.HasValue)
+            {
+                WindowHelper.CenterTop(this.ForegroundHandle.Value);
+            }
+        }
+
         private void HandleForegroundChange(IntPtr hwnd)
         {
             if (this.Visibility != Visibility.Visible)
@@ -60,10 +93,7 @@
 
             try
             {
-                uint id;
-
-                NativeMethods.GetWindowThreadProcessId(hwnd, out id);
-
+                var id = NativeHelper.GetWindowThreadProcessId(hwnd);
                 using (var process = Process.GetProcessById((int)id))
                 {
                     if (process.Id != this.AppProcess.Id)
@@ -76,46 +106,6 @@
             {
                 Trace.WriteLine(ex.Message);
             }
-        }
-
-        private bool GetWindowThreadProcessId(IntPtr hwnd, out uint id)
-        {
-            NativeMethods.GetWindowThreadProcessId(hwnd, out id);
-            return true;
-        }
-
-        private void ClickCenter(object sender, RoutedEventArgs e)
-        {
-            if (this.ForegroundHandle.HasValue)
-            {
-                WindowHelper.Center(this.ForegroundHandle.Value);
-            }
-        }
-
-        private void ClickBottom(object sender, RoutedEventArgs e)
-        {
-            if (this.ForegroundHandle.HasValue)
-            {
-                WindowHelper.CenterBottom(this.ForegroundHandle.Value);
-            }
-        }
-
-        private void ClickTop(object sender, RoutedEventArgs e)
-        {
-            if (this.ForegroundHandle.HasValue)
-            {
-                WindowHelper.CenterTop(this.ForegroundHandle.Value);
-            }
-        }
-
-        private void ClickQuit(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown(0);
-        }
-
-        private void ClickShow(object sender, RoutedEventArgs e)
-        {
-            this.Visibility = Visibility.Visible;
         }
     }
 }
