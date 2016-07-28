@@ -1,5 +1,6 @@
 namespace NativeCode.Core.Caching
 {
+    using System;
     using System.Collections.Concurrent;
 
     public class SafeCache<T> : ICache<T>
@@ -23,7 +24,12 @@ namespace NativeCode.Core.Caching
             return defaultValue;
         }
 
-        public void Set(string key, T value)
+        public bool Get(string key, out T value)
+        {
+            return this.cached.TryGetValue(key, out value);
+        }
+
+        public void Set(string key, T value, TimeSpan? duration = default(TimeSpan?))
         {
             this.cached.AddOrUpdate(key, k => value, (k, v) => value);
         }
