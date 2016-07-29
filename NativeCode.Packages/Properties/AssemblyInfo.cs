@@ -9,7 +9,7 @@ using NativeCode.Core;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion(CoreConstants.AssemblyVersion)]
+[assembly: AssemblyInformationalVersion("1.0.0.0")]
 [assembly: AssemblyProduct("NativeCode.Packages")]
 [assembly: AssemblyTitle("NativeCode.Packages")]
 [assembly: AssemblyTrademark("")]
