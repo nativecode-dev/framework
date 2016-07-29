@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Web.Owin.Middleware
+﻿namespace NativeCode.Packages.Owin.Owin.Middleware
 {
     using System;
     using System.Collections.Generic;

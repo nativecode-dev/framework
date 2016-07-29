@@ -44,7 +44,7 @@
     <Compile Include="IDataContext.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IEntityAuditor.cs" />
-    <Compile Include="IEntityKeySetter.cs" />
+    <Compile Include="IEntityIdSetter.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

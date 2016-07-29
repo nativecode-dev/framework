@@ -76,8 +76,6 @@
     <Compile Include="Data\DbDataFactory.cs" />
     <Compile Include="Dependencies\UnityDependencyRegistrar.cs" />
     <Compile Include="Dependencies\UnityDependencyResolver.cs" />
-    <Compile Include="Platform\OwinApplication.cs" />
-    <Compile Include="Platform\OwinStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dependencies\UnityDependencyContainer.cs" />
   </ItemGroup>

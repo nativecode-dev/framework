@@ -1,6 +1,6 @@
-﻿namespace NativeCode.Packages.Platform
+﻿namespace NativeCode.Packages.Owin.Platform
 {
-    using Owin;
+    using global::Owin;
 
     public abstract class OwinStartup
     {

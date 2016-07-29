@@ -35,15 +35,15 @@
         }
     }
 
-    public abstract class Entity<TKey> : Entity, IEntityKeySetter<TKey>
-        where TKey : struct
+    public abstract class Entity<T> : Entity, IEntityIdSetter<T>
+        where T : struct
     {
         [Key]
-        public TKey Key { get; protected set; }
+        public T Id { get; protected set; }
 
-        public void SetKey(TKey key)
+        public void SetId(T id)
         {
-            this.Key = key;
+            this.Id = id;
         }
     }
 }

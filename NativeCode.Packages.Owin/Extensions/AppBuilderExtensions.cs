@@ -1,11 +1,11 @@
-﻿namespace NativeCode.Core.Web.Extensions
+﻿namespace NativeCode.Packages.Owin.Extensions
 {
     using global::Owin;
 
     using Microsoft.Owin;
 
     using NativeCode.Core.Platform;
-    using NativeCode.Core.Web.Owin.Middleware;
+    using NativeCode.Packages.Owin.Owin.Middleware;
 
     public static class AppBuilderExtensions
     {

@@ -18,6 +18,6 @@
         where TKey : struct
     {
         [Key]
-        TKey Key { get; }
+        TKey Id { get; }
     }
 }

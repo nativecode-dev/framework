@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Web.Owin.Middleware
+﻿namespace NativeCode.Packages.Owin.Owin.Middleware
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -21,7 +21,7 @@
 
         protected IOwinResponse Response { get; private set; }
 
-        [SuppressMessage("ReSharper", "ConsiderUsingAsyncSuffix")]
+        [SuppressMessage("ReSharper", "ConsiderUsingAsyncSuffix", Justification = "Method name required by framework.")]
         public async Task Invoke(IDictionary<string, object> environment)
         {
             var context = new OwinContext(environment);

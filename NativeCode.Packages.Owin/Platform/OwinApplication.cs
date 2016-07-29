@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Packages.Platform
+﻿namespace NativeCode.Packages.Owin.Platform
 {
     using System;
     using System.Security.Principal;
@@ -34,12 +34,7 @@
 
         protected override void PreInitialization()
         {
-            var identity = WindowsIdentity.GetCurrent();
-
-            if (identity != null)
-            {
-                Thread.CurrentPrincipal = new WindowsPrincipal(identity);
-            }
+            Thread.CurrentPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
 
             base.PreInitialization();
         }

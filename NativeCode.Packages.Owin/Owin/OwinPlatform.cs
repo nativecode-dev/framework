@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Web.Owin
+﻿namespace NativeCode.Packages.Owin.Owin
 {
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.DotNet.Platform;

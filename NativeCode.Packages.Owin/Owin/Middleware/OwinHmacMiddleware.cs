@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Web.Owin.Middleware
+﻿namespace NativeCode.Packages.Owin.Owin.Middleware
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +7,7 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Security;
+    using NativeCode.Core.Web;
     using NativeCode.Core.Web.Hmac;
 
     public class OwinHmacMiddleware : OwinMiddleware
