@@ -47,9 +47,25 @@
         /// <summary>
         /// Allows creating a custom query.
         /// </summary>
+        /// <typeparam name="T">The entity type.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <returns>Returns a modified <see cref="IQueryable" />.</returns>
+        IQueryable<T> Query<T>(Func<IQueryable<TEntity>, IQueryable<T>> query);
+
+        /// <summary>
+        /// Allows creating a custom query.
+        /// </summary>
         /// <param name="query">The query.</param>
         /// <returns>Returns a modified  <see cref="IQueryable" />.</returns>
         Task<IQueryable<TEntity>> QueryAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> query);
+
+        /// <summary>
+        /// Allows creating a custom query.
+        /// </summary>
+        /// <typeparam name="T">The entity type.</typeparam>
+        /// <param name="query">The query.</param>
+        /// <returns>Returns a modified <see cref="IQueryable" />.</returns>
+        Task<IQueryable<T>> QueryAsync<T>(Func<IQueryable<TEntity>, Task<IQueryable<T>>> query);
 
         /// <summary>
         /// Saves the provided entity
