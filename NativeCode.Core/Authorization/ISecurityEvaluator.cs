@@ -1,7 +1,10 @@
 ﻿namespace NativeCode.Core.Authorization
 {
+    /// <summary>
+    /// Provides a contract to evaluate a security token.
+    /// </summary>
     public interface ISecurityEvaluator
     {
-        bool Evaluate(SimpleToken token, ISecurityEvaluatorContext context);
+        bool IsValid(SecurityToken token, ISecurityEvaluatorContext context);
     }
 }

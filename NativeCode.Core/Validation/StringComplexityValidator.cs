@@ -20,6 +20,11 @@ namespace NativeCode.Core.Validation
             return type == typeof(string);
         }
 
+        public bool CanValidate<T>()
+        {
+            return this.CanValidate(typeof(T));
+        }
+
         public ValidationResult Validate(object instance, ValidationContext validationContext)
         {
             return null;

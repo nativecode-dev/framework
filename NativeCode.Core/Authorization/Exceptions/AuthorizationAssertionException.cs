@@ -2,9 +2,9 @@
 {
     using NativeCode.Core.Exceptions;
 
-    public class AuthorizationAssertionFailedException : FrameworkException
+    public class AuthorizationAssertionException : FrameworkException
     {
-        public AuthorizationAssertionFailedException(string requirements)
+        public AuthorizationAssertionException(string requirements)
             : base(CreateExceptionMessage(requirements))
         {
         }

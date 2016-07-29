@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Data\DbDataContext.cs" />
     <Compile Include="Data\DbDataFactory.cs" />
+    <Compile Include="Data\DbRepository.cs" />
     <Compile Include="Dependencies\UnityDependencyRegistrar.cs" />
     <Compile Include="Dependencies\UnityDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

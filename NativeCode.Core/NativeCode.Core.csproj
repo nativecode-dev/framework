@@ -41,21 +41,14 @@
   <ItemGroup>
     <Compile Include="Authorization\Attributes\EvaluateAttribute.cs" />
     <Compile Include="Authorization\AuthorizationHandlers.cs" />
-    <Compile Include="Authorization\Exceptions\AuthorizationAssertionFailedException.cs" />
+    <Compile Include="Authorization\Exceptions\AuthorizationAssertionException.cs" />
     <Compile Include="Authorization\ISecurityEvaluator.cs" />
     <Compile Include="Authorization\ISecurityEvaluatorContext.cs" />
     <Compile Include="Authorization\ISecurityStringParser.cs" />
     <Compile Include="Authorization\Parsing\SecurityTokenizer.cs" />
     <Compile Include="Authorization\Parsing\SecurityToken.cs" />
     <Compile Include="Authorization\Parsing\SecurityTokenType.cs" />
-    <Compile Include="Authorization\SecurityEvaluator.cs" />
-    <Compile Include="Authorization\SecurityExpressionTokenizer.cs" />
-    <Compile Include="Authorization\SecurityStringParser.cs" />
-    <Compile Include="Authorization\SimpleToken.cs" />
-    <Compile Include="Authorization\SimpleTokenType.cs" />
-    <Compile Include="Authorization\Token.cs" />
-    <Compile Include="Authorization\TokenRule.cs" />
-    <Compile Include="Authorization\TokenType.cs" />
+    <Compile Include="Authorization\SecurityToken.cs" />
     <Compile Include="Authorization\Types\Feature.cs" />
     <Compile Include="Authorization\IAuthorizationHandler.cs" />
     <Compile Include="Authorization\IAuthorizationProvider.cs" />
@@ -93,10 +86,6 @@
     <Compile Include="Localization\Translation\Attributes\TranslateAttribute.cs" />
     <Compile Include="Localization\Translation\IObjectTranslator.cs" />
     <Compile Include="Localization\Translation\ObjectTranslator.cs" />
-    <Compile Include="Patterns\DataMovement\Conveyor.cs" />
-    <Compile Include="Patterns\DataMovement\ConveyorConfiguration.cs" />
-    <Compile Include="Patterns\DataMovement\IConveyorHandler.cs" />
-    <Compile Include="Patterns\DataMovement\IConveyorPackage.cs" />
     <Compile Include="Serialization\LowerScoreContractResolver.cs" />
     <Compile Include="Types\Retry.cs" />
     <Compile Include="Localization\Translation\TranslationProvider.cs">

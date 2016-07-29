@@ -38,9 +38,6 @@
     <Compile Include="DataFactory.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="IDataFactory.cs" />
-    <Compile Include="Repository.cs">
-      <DependentUpon>IRepository.cs</DependentUpon>
-    </Compile>
     <Compile Include="IDataContext.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IEntityAuditor.cs" />

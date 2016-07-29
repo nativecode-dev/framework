@@ -8,7 +8,7 @@
 
     public class HttpContextRedirectAuthorizationHandler : IAuthorizationHandler
     {
-        public void AssertDeny(string requirements, object[] parameters)
+        public bool IsAuthorized(string requirements, object[] parameters)
         {
             if (HttpContext.Current != null)
             {
@@ -18,7 +18,7 @@
                 HttpContext.Current.Response.Redirect(url, end);
             }
 
-            throw new AuthorizationAssertionFailedException(requirements);
+            throw new AuthorizationAssertionException(requirements);
         }
     }
 }

@@ -49,7 +49,7 @@
         /// </summary>
         /// <param name="query">The query.</param>
         /// <returns>Returns a modified  <see cref="IQueryable" />.</returns>
-        Task<IQueryable<TEntity>> QueryAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> query);
+        Task<IQueryable<TEntity>> QueryAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> query);
 
         /// <summary>
         /// Saves the provided entity
@@ -69,14 +69,16 @@
         /// Saves the provided entity
         /// </summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><c>true</c> if save succeeded, <c>false</c> otherwise.</returns>
-        Task<bool> SaveAsync(TEntity entity);
+        Task<bool> SaveAsync(TEntity entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Saves the provided entities
         /// </summary>
         /// <param name="entities">The entities.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns><c>true</c> if save succeeded, <c>false</c> otherwise.</returns>
-        Task<bool> SaveAsync(IEnumerable<TEntity> entities);
+        Task<bool> SaveAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken);
     }
 }
