@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Authorization.Types
+﻿namespace NativeCode.Core.Platform.Security.Authorization.Types
 {
     public struct Feature
     {

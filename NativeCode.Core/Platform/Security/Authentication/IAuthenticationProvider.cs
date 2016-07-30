@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Platform.Security
+﻿namespace NativeCode.Core.Platform.Security.Authentication
 {
     using System.Security.Principal;
     using System.Threading;

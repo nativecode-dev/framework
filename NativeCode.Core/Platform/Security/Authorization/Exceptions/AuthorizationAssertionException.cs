@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Authorization.Exceptions
+﻿namespace NativeCode.Core.Platform.Security.Authorization.Exceptions
 {
     using NativeCode.Core.Exceptions;
 

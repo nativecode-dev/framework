@@ -1,11 +1,11 @@
-namespace NativeCode.Core.Authorization
+namespace NativeCode.Core.Platform.Security.Authorization
 {
     using System.Collections.Generic;
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using NativeCode.Core.Authorization.Types;
+    using NativeCode.Core.Platform.Security.Authorization.Types;
 
     /// <summary>
     /// Provides a contract to validate authorizations.

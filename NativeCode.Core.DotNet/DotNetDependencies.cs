@@ -8,6 +8,8 @@
     using NativeCode.Core.Logging;
     using NativeCode.Core.Platform.Connections;
     using NativeCode.Core.Platform.Security;
+    using NativeCode.Core.Platform.Security.Authentication;
+    using NativeCode.Core.Platform.Security.Authorization;
 
     public class DotNetDependencies : DependencyModule
     {

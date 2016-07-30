@@ -9,36 +9,43 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Logging;
     using NativeCode.Core.Platform;
+    using NativeCode.Core.Platform.Security.Authentication;
 
+    /// <summary>
+    /// Delegating handler that provides basic authentication via HTTP.
+    /// </summary>
+    /// <seealso cref="System.Net.Http.DelegatingHandler" />
     public class BasicAuthDelegatingHandler : DelegatingHandler
     {
-        private readonly IPlatform platform;
-
-        public BasicAuthDelegatingHandler()
-            : this(DependencyLocator.Resolver.Resolve<IPlatform>())
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasicAuthDelegatingHandler"/> class.
+        /// </summary>
+        /// <param name="authentication">The authentication.</param>
+        /// <param name="logger">The logger.</param>
+        /// <param name="platform">The platform.</param>
+        public BasicAuthDelegatingHandler(IAuthenticationProvider authentication, ILogger logger, IPlatform platform)
         {
+            this.Authentication = authentication;
+            this.Logger = logger;
+            this.Platform = platform;
         }
 
-        public BasicAuthDelegatingHandler(IPlatform platform)
-        {
-            this.platform = platform;
-        }
+        /// <summary>
+        /// Gets the authentication.
+        /// </summary>
+        protected IAuthenticationProvider Authentication { get; }
 
-        protected virtual async Task AuthenticateAsync(HttpRequestMessage request, string login, string password, CancellationToken cancellationToken)
-        {
-            var principal = await this.platform.AuthenticateAsync(login, password, cancellationToken).ConfigureAwait(false);
+        /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        protected ILogger Logger { get; }
 
-            if (principal == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
-
-            this.platform.SetCurrentPrincipal(principal);
-
-            request.GetRequestContext().Principal = principal;
-        }
+        /// <summary>
+        /// Gets the platform.
+        /// </summary>
+        protected IPlatform Platform { get; }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
@@ -52,7 +59,12 @@
                 var login = parts[0];
                 var password = parts[1];
 
-                await this.AuthenticateAsync(request, login, password, cancellationToken).ConfigureAwait(false);
+                var result = await this.Authentication.AuthenticateAsync(login, password, cancellationToken);
+
+                if (result.Result != AuthenticationResultType.Authenticated)
+                {
+                    throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                }
             }
 
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);

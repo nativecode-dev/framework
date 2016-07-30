@@ -17,9 +17,9 @@
     {
         public IPlatform Platform { get; private set; }
 
-        public Settings Settings => this.ApplicationCore?.Settings;
+        public Settings Settings => this.ApplicationProxy?.Settings;
 
-        protected ApplicationCore ApplicationCore { get; private set; }
+        protected ApplicationProxy ApplicationProxy { get; private set; }
 
         public override sealed void Dispose()
         {
@@ -44,8 +44,8 @@
 
         public virtual void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
-            this.ApplicationCore = new ApplicationCore(this.CreatePlatform());
-            this.ApplicationCore.Initialize(name, assemblies.Where(this.CanIncludeAssembly), modules);
+            this.ApplicationProxy = new ApplicationProxy(this.CreatePlatform());
+            this.ApplicationProxy.Initialize(name, assemblies.Where(this.CanIncludeAssembly), modules);
         }
 
         protected virtual bool CanIncludeAssembly(Assembly assembly)

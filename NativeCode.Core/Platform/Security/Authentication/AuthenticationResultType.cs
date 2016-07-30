@@ -1,41 +1,36 @@
-﻿namespace NativeCode.Core.Platform.Security
+﻿namespace NativeCode.Core.Platform.Security.Authentication
 {
     public enum AuthenticationResultType
     {
         /// <summary>
         /// Specifies the default authentication result.
         /// </summary>
-        Default = 0, 
+        Default = 0,
 
         /// <summary>
         /// Specifies the authentication succeeded.
         /// </summary>
-        Authenticated = 1, 
+        Authenticated = 1,
 
         /// <summary>
         /// Specifies the authentication was denied.
         /// </summary>
-        Denied = Default, 
+        Denied = Default,
 
         /// <summary>
         /// Specifies the authentication has expired.
         /// </summary>
-        Expired = 2, 
+        Expired = 2,
 
         /// <summary>
         /// Specifies the authentication failed.
         /// </summary>
-        Failed = 3, 
+        Failed = 3,
 
         /// <summary>
         /// Specifies the account is locked.
         /// </summary>
-        Locked = 4, 
-
-        /// <summary>
-        /// Specifies the account is marked.
-        /// </summary>
-        Marked = 5, 
+        Locked = 4,
 
         /// <summary>
         /// Specifies the account was not found.

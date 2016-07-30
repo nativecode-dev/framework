@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Authorization
+﻿namespace NativeCode.Core.Platform.Security.Authorization
 {
     using JetBrains.Annotations;
 

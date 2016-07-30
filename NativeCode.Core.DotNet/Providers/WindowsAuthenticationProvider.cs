@@ -8,16 +8,16 @@
     using System.Threading.Tasks;
 
     using NativeCode.Core.Extensions;
+    using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Security;
-
-    using Principal = NativeCode.Core.Platform.Principal;
+    using NativeCode.Core.Platform.Security.Authentication;
 
     public class WindowsAuthenticationProvider : IAuthenticationProvider
     {
         public Task<AuthenticationResult> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
         {
             AuthenticationResultType result;
-            var principal = Principal.Anonymous;
+            var principal = ApplicationPrincipal.Anonymous;
 
             try
             {

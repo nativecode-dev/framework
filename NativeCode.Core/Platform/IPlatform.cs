@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Security.Principal;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     using JetBrains.Annotations;
 
@@ -44,15 +42,6 @@
         /// Gets the resolver.
         /// </summary>
         IDependencyResolver Resolver { get; }
-
-        /// <summary>
-        /// Authenticate the credentials.
-        /// </summary>
-        /// <param name="login">The login.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Returns an authenticated <see cref="IPrincipal" />.</returns>
-        Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken);
 
         /// <summary>
         /// Creates a child dependency scope.

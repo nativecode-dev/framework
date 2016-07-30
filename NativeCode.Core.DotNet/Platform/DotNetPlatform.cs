@@ -7,7 +7,6 @@
     using System.Reflection;
     using System.Security.Principal;
     using System.Threading;
-    using System.Threading.Tasks;
 
     using JetBrains.Annotations;
 
@@ -15,8 +14,6 @@
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Security;
-
-    using Principal = NativeCode.Core.Platform.Principal;
 
     public class DotNetPlatform : Platform
     {
@@ -70,29 +67,6 @@
             return result;
         }
 
-        public override async Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
-        {
-            // TODO: Service location, kinda ugly...can we do better?
-            var authenticators = this.Resolver.ResolveAll<IAuthenticationProvider>();
-
-            foreach (var authenticator in authenticators)
-            {
-                if (!authenticator.CanHandle(login))
-                {
-                    continue;
-                }
-
-                var response = await authenticator.AuthenticateAsync(login, password, cancellationToken).ConfigureAwait(false);
-
-                if (response.Result == AuthenticationResultType.Authenticated)
-                {
-                    return response.Principal;
-                }
-            }
-
-            return null;
-        }
-
         public override IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
         {
             return filter == null ? AppDomain.CurrentDomain.GetAssemblies() : AppDomain.CurrentDomain.GetAssemblies().Where(filter);
@@ -114,7 +88,7 @@
                     return new WindowsPrincipal(identity);
                 }
 
-                return Principal.Anonymous;
+                return ApplicationPrincipal.Anonymous;
             }
 
             return Thread.CurrentPrincipal;

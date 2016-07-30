@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using NativeCode.Core.Platform.Security;
+    using NativeCode.Core.Platform.Security.Authorization;
 
     public class HmacSettingsProvider : IHmacSettingsProvider
     {

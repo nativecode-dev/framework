@@ -39,21 +39,15 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Authorization\Attributes\EvaluateAttribute.cs" />
-    <Compile Include="Authorization\AuthorizationHandlers.cs" />
-    <Compile Include="Authorization\Exceptions\AuthorizationAssertionException.cs" />
-    <Compile Include="Authorization\ISecurityEvaluator.cs" />
-    <Compile Include="Authorization\ISecurityEvaluatorContext.cs" />
-    <Compile Include="Authorization\ISecurityStringParser.cs" />
-    <Compile Include="Authorization\Parsing\SecurityTokenizer.cs" />
-    <Compile Include="Authorization\Parsing\SecurityToken.cs" />
-    <Compile Include="Authorization\Parsing\SecurityTokenType.cs" />
-    <Compile Include="Authorization\SecurityToken.cs" />
-    <Compile Include="Authorization\Types\Feature.cs" />
-    <Compile Include="Authorization\IAuthorizationHandler.cs" />
-    <Compile Include="Authorization\IAuthorizationProvider.cs" />
-    <Compile Include="Authorization\Types\Permission.cs" />
-    <Compile Include="Authorization\Types\Role.cs" />
+    <Compile Include="Platform\Security\Authorization\Exceptions\AuthorizationAssertionException.cs" />
+    <Compile Include="Platform\Security\Authorization\ISecurityEvaluator.cs" />
+    <Compile Include="Platform\Security\Authorization\ISecurityEvaluatorContext.cs" />
+    <Compile Include="Platform\Security\Authorization\ISecurityStringParser.cs" />
+    <Compile Include="Platform\Security\Authorization\SecurityToken.cs" />
+    <Compile Include="Platform\Security\Authorization\Types\Feature.cs" />
+    <Compile Include="Platform\Security\Authorization\IAuthorizationProvider.cs" />
+    <Compile Include="Platform\Security\Authorization\Types\Permission.cs" />
+    <Compile Include="Platform\Security\Authorization\Types\Role.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\SafeCache.cs" />
     <Compile Include="Dependencies\Attributes\IgnoreDependencyAttribute.cs" />
@@ -116,7 +110,7 @@
     <Compile Include="Platform\Application.cs">
       <DependentUpon>IApplication.cs</DependentUpon>
     </Compile>
-    <Compile Include="Platform\ApplicationCore.cs" />
+    <Compile Include="Platform\ApplicationProxy.cs" />
     <Compile Include="Platform\IApplication.cs" />
     <Compile Include="Localization\Translation\ITranslationProvider.cs" />
     <Compile Include="Localization\Translation\ITranslator.cs" />
@@ -124,17 +118,17 @@
     <Compile Include="Logging\ILogWriter.cs" />
     <Compile Include="Logging\InMemoryLogWriter.cs" />
     <Compile Include="Logging\LogMessageType.cs" />
-    <Compile Include="Platform\Identity.cs" />
+    <Compile Include="Platform\ApplicationIdentity.cs" />
     <Compile Include="Platform\IPlatform.cs" />
     <Compile Include="Platform\Platform.cs" />
-    <Compile Include="Platform\Principal.cs" />
-    <Compile Include="Platform\Security\IHmacSettingsProvider.cs" />
+    <Compile Include="Platform\ApplicationPrincipal.cs" />
+    <Compile Include="Platform\Security\Authorization\IHmacSettingsProvider.cs" />
     <Compile Include="Platform\Security\UserLoginName.cs" />
     <Compile Include="Platform\Security\UserLoginNameFormat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Platform\Security\AuthenticationResult.cs" />
-    <Compile Include="Platform\Security\AuthenticationResultType.cs" />
-    <Compile Include="Platform\Security\IAuthenticationProvider.cs" />
+    <Compile Include="Platform\Security\Authentication\AuthenticationResult.cs" />
+    <Compile Include="Platform\Security\Authentication\AuthenticationResultType.cs" />
+    <Compile Include="Platform\Security\Authentication\IAuthenticationProvider.cs" />
     <Compile Include="Platform\Connections\IConnectionStringProvider.cs" />
     <Compile Include="Serialization\IStringSerializer.cs" />
     <Compile Include="Serialization\JsonNetStringSerializer.cs" />

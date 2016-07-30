@@ -7,6 +7,7 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Security;
+    using NativeCode.Core.Platform.Security.Authorization;
     using NativeCode.Core.Web;
     using NativeCode.Core.Web.Hmac;
 

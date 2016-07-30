@@ -4,15 +4,22 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Security.Principal;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Types;
 
+    /// <summary>
+    /// Abstract class to manage the underlying platform.
+    /// </summary>
+    /// <seealso cref="NativeCode.Core.Types.Disposable" />
+    /// <seealso cref="NativeCode.Core.Platform.IPlatform" />
     public abstract class Platform : Disposable, IPlatform
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Platform"/> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
         protected Platform(IDependencyContainer container)
         {
             this.Container = container;
@@ -30,8 +37,6 @@
         public IDependencyResolver Resolver => this.Container.Resolver;
 
         protected IDependencyContainer Container { get; private set; }
-
-        public abstract Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken);
 
         public virtual IDependencyContainer CreateDependencyScope(IDependencyContainer parent = null)
         {

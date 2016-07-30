@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Authorization
+﻿namespace NativeCode.Core.Platform.Security.Authorization
 {
     /// <summary>
     /// Provides a contract to evaluate a security token.

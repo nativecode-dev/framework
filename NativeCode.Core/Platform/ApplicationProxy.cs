@@ -12,11 +12,20 @@
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Settings;
 
-    public class ApplicationCore : IApplication
+    /// <summary>
+    /// Provides a proxy class so that the <see cref="IApplication" /> interface can be exposed
+    /// by types that must be derived, i.e. HttpApplication.
+    /// </summary>
+    /// <seealso cref="NativeCode.Core.Platform.IApplication" />
+    public class ApplicationProxy : IApplication
     {
         private static int counter;
 
-        public ApplicationCore(IPlatform platform)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationProxy" /> class.
+        /// </summary>
+        /// <param name="platform">The platform.</param>
+        public ApplicationProxy(IPlatform platform)
         {
             this.Platform = platform;
         }

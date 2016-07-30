@@ -5,6 +5,7 @@
     using NativeCode.Core.Localization.Translation;
     using NativeCode.Core.Logging;
     using NativeCode.Core.Platform.Security;
+    using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Serialization;
     using NativeCode.Core.Validation;
 
