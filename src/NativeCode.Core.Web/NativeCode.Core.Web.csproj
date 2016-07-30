@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Authentication\CookieAuthenticationData.cs" />
     <Compile Include="Authentication\CookieAuthentication.cs" />
+    <Compile Include="Caching\HttpRuntimeCache.cs" />
     <Compile Include="Hmac\CanonicalMessage.cs" />
     <Compile Include="Hmac\HmacSignatureAlgorithm.cs" />
     <Compile Include="HttpHeaders.cs" />
