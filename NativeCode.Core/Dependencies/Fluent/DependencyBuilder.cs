@@ -6,7 +6,8 @@
     {
         private readonly DependencyProperties properties;
 
-        public DependencyBuilder() : this(new DependencyProperties())
+        public DependencyBuilder()
+            : this(new DependencyProperties())
         {
         }
 

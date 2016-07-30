@@ -14,37 +14,37 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            RegisterPlatform(registrar);
-            RegisterLocalization(registrar);
-            RegisterLogging(registrar);
-            RegisterSerialization(registrar);
-            RegisterValidation(registrar);
+            this.RegisterPlatform(registrar);
+            this.RegisterLocalization(registrar);
+            this.RegisterLogging(registrar);
+            this.RegisterSerialization(registrar);
+            this.RegisterValidation(registrar);
         }
 
-        private static void RegisterLocalization(IDependencyRegistrar registrar)
+        protected virtual void RegisterLocalization(IDependencyRegistrar registrar)
         {
             registrar.Register<ITranslator, Translator>();
             registrar.Register<ITranslationProvider, TranslationProvider>(lifetime: DependencyLifetime.PerApplication);
         }
 
-        private static void RegisterLogging(IDependencyRegistrar registrar)
+        protected virtual void RegisterLogging(IDependencyRegistrar registrar)
         {
             registrar.Register<ILogger, Logger>();
             registrar.Register<ILogWriter, InMemoryLogWriter>(DependencyKey.QualifiedName);
             registrar.RegisterFactory(x => x.ResolveAll<ILogWriter>(), lifetime: DependencyLifetime.PerResolve);
         }
 
-        private static void RegisterPlatform(IDependencyRegistrar registrar)
+        protected virtual void RegisterPlatform(IDependencyRegistrar registrar)
         {
             registrar.RegisterFactory(x => x.ResolveAll<IAuthenticationProvider>(), lifetime: DependencyLifetime.PerResolve);
         }
 
-        private static void RegisterSerialization(IDependencyRegistrar registrar)
+        protected virtual void RegisterSerialization(IDependencyRegistrar registrar)
         {
             registrar.Register<IStringSerializer, JsonNetStringSerializer>();
         }
 
-        private static void RegisterValidation(IDependencyRegistrar registrar)
+        protected virtual void RegisterValidation(IDependencyRegistrar registrar)
         {
             registrar.Register<IObjectValidator, StringComplexityValidator>();
         }

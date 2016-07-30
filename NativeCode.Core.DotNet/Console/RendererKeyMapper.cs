@@ -7,20 +7,6 @@
     {
         private readonly Dictionary<ConsoleKey, KeyMapping> mappings = new Dictionary<ConsoleKey, KeyMapping>();
 
-        public void Register(string name, ConsoleKey key, RenderMode mode, Action handler, bool alt = false, bool control = false, bool shift = false)
-        {
-            var mapping = new KeyMapping(name, mode, handler, alt, control, shift);
-
-            if (this.mappings.ContainsKey(key))
-            {
-                this.mappings[key] = mapping;
-            }
-            else
-            {
-                this.mappings.Add(key, mapping);
-            }
-        }
-
         public Action GetMapping(ConsoleKeyInfo key, RenderMode mode)
         {
             if (this.mappings.ContainsKey(key.Key))
@@ -51,6 +37,20 @@
             return null;
         }
 
+        public void Register(string name, ConsoleKey key, RenderMode mode, Action handler, bool alt = false, bool control = false, bool shift = false)
+        {
+            var mapping = new KeyMapping(name, mode, handler, alt, control, shift);
+
+            if (this.mappings.ContainsKey(key))
+            {
+                this.mappings[key] = mapping;
+            }
+            else
+            {
+                this.mappings.Add(key, mapping);
+            }
+        }
+
         private class KeyMapping
         {
             public KeyMapping(string name, RenderMode mode, Action handler, bool alt = false, bool control = false, bool shift = false)
@@ -68,13 +68,13 @@
 
             public bool Control { get; }
 
-            public bool Shift { get; }
-
             public Action Handler { get; }
 
             public RenderMode Mode { get; }
 
             public string Name { get; set; }
+
+            public bool Shift { get; }
         }
     }
 }

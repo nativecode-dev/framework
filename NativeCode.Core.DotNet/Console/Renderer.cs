@@ -1,15 +1,17 @@
 ﻿namespace NativeCode.Core.DotNet.Console
 {
+    using System;
+    using System.Diagnostics;
+    using System.Runtime.InteropServices;
+
     using Microsoft.Win32.SafeHandles;
+
     using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Enums;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Types;
-    using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
 
     public abstract class Renderer<TContext> : Disposable
         where TContext : RenderContext, new()

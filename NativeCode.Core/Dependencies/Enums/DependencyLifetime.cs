@@ -2,15 +2,15 @@ namespace NativeCode.Core.Dependencies.Enums
 {
     public enum DependencyLifetime
     {
-        Default = 0,
+        Default = 0, 
 
-        PerApplication = 1,
+        PerApplication = 1, 
 
-        PerCall = Default,
+        PerCall = Default, 
 
-        PerContainer = 2,
+        PerContainer = 2, 
 
-        PerResolve = 3,
+        PerResolve = 3, 
 
         PerThread = 4
     }

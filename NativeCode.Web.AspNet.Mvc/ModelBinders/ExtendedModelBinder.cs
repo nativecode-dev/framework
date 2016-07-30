@@ -19,9 +19,9 @@
         }
 
         protected override object GetPropertyValue(
-            ControllerContext controllerContext,
-            ModelBindingContext bindingContext,
-            PropertyDescriptor propertyDescriptor,
+            ControllerContext controllerContext, 
+            ModelBindingContext bindingContext, 
+            PropertyDescriptor propertyDescriptor, 
             IModelBinder propertyBinder)
         {
             return this.BindCommaSeparatedString(propertyDescriptor.PropertyType, propertyDescriptor.Name, bindingContext)

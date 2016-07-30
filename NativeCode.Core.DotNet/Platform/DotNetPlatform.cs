@@ -70,16 +70,6 @@
             return result;
         }
 
-        public override IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
-        {
-            return filter == null ? AppDomain.CurrentDomain.GetAssemblies() : AppDomain.CurrentDomain.GetAssemblies().Where(filter);
-        }
-
-        public override IEnumerable<Assembly> GetAssemblies(params string[] prefixes)
-        {
-            return this.GetAssemblies(x => prefixes.Any(p => x.FullName.Contains(p)));
-        }
-
         public override async Task<IPrincipal> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
         {
             // TODO: Service location, kinda ugly...can we do better?
@@ -101,6 +91,16 @@
             }
 
             return null;
+        }
+
+        public override IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
+        {
+            return filter == null ? AppDomain.CurrentDomain.GetAssemblies() : AppDomain.CurrentDomain.GetAssemblies().Where(filter);
+        }
+
+        public override IEnumerable<Assembly> GetAssemblies(params string[] prefixes)
+        {
+            return this.GetAssemblies(x => prefixes.Any(p => x.FullName.Contains(p)));
         }
 
         public override IPrincipal GetCurrentPrincipal()

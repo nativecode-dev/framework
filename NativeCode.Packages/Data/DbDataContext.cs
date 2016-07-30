@@ -77,6 +77,17 @@
             }
         }
 
+        private void ProcessEntityChanges()
+        {
+            foreach (var entry in this.ChangeTracker.Entries())
+            {
+                foreach (var interceptor in this.interceptors)
+                {
+                    interceptor(entry);
+                }
+            }
+        }
+
         private void UpdateAuditProperties(DbEntityEntry entry)
         {
             var auditor = entry.Entity as IEntityAuditor;
@@ -93,17 +104,6 @@
 
                 auditor.SetDateModified(DateTimeOffset.UtcNow);
                 auditor.SetUserModified(principal.Identity);
-            }
-        }
-
-        private void ProcessEntityChanges()
-        {
-            foreach (var entry in this.ChangeTracker.Entries())
-            {
-                foreach (var interceptor in this.interceptors)
-                {
-                    interceptor(entry);
-                }
             }
         }
     }

@@ -14,16 +14,6 @@
 
     public class WindowsAuthenticationProvider : IAuthenticationProvider
     {
-        public bool CanHandle(string login)
-        {
-            return UserLoginName.IsValid(login, UserLoginNameFormat.UserPrincipalName);
-        }
-
-        public IPrincipal CreatePrincipal(string login)
-        {
-            return new WindowsPrincipal(new WindowsIdentity(login));
-        }
-
         public Task<AuthenticationResult> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
         {
             AuthenticationResultType result;
@@ -53,6 +43,16 @@
             }
 
             return Task.FromResult(new AuthenticationResult(result, principal));
+        }
+
+        public bool CanHandle(string login)
+        {
+            return UserLoginName.IsValid(login, UserLoginNameFormat.UserPrincipalName);
+        }
+
+        public IPrincipal CreatePrincipal(string login)
+        {
+            return new WindowsPrincipal(new WindowsIdentity(login));
         }
 
         private static AuthenticationResultType AuthenticateUser(AuthenticablePrincipal user, string password)

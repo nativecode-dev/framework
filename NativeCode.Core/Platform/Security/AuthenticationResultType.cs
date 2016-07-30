@@ -2,20 +2,44 @@
 {
     public enum AuthenticationResultType
     {
-        Default = 0,
+        /// <summary>
+        /// Specifies the default authentication result.
+        /// </summary>
+        Default = 0, 
 
-        Authenticated = Default,
+        /// <summary>
+        /// Specifies the authentication succeeded.
+        /// </summary>
+        Authenticated = 1, 
 
-        Denied = 1,
+        /// <summary>
+        /// Specifies the authentication was denied.
+        /// </summary>
+        Denied = Default, 
 
-        Expired = 2,
+        /// <summary>
+        /// Specifies the authentication has expired.
+        /// </summary>
+        Expired = 2, 
 
-        Failed = 3,
+        /// <summary>
+        /// Specifies the authentication failed.
+        /// </summary>
+        Failed = 3, 
 
-        Locked = 4,
+        /// <summary>
+        /// Specifies the account is locked.
+        /// </summary>
+        Locked = 4, 
 
-        Marked = 5,
+        /// <summary>
+        /// Specifies the account is marked.
+        /// </summary>
+        Marked = 5, 
 
+        /// <summary>
+        /// Specifies the account was not found.
+        /// </summary>
         NotFound = 6
     }
 }

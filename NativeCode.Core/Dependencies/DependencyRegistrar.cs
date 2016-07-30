@@ -38,27 +38,10 @@
             return this;
         }
 
-        public virtual IDependencyRegistrar RegisterFactory<T>(
-            Func<IDependencyResolver, T> factory,
-            string key = null,
-            DependencyLifetime lifetime = DependencyLifetime.Default)
-        {
-            this.InternalRegisterFactory(typeof(T), resolver => factory(resolver), key, lifetime);
-
-            return this;
-        }
-
-        public virtual IDependencyRegistrar RegisterInstance<T>(T instance, DependencyLifetime lifetime = default(DependencyLifetime))
-        {
-            this.InternalRegisterInstance(typeof(T), instance, lifetime);
-
-            return this;
-        }
-
         public abstract IDependencyRegistrar Register(
-            Type type,
-            Type implementation,
-            string key = null,
+            Type type, 
+            Type implementation, 
+            string key = null, 
             DependencyLifetime lifetime = DependencyLifetime.Default);
 
         public IDependencyRegistrar RegisterAssembly(Assembly assembly)
@@ -76,11 +59,28 @@
             return this;
         }
 
+        public virtual IDependencyRegistrar RegisterFactory<T>(
+            Func<IDependencyResolver, T> factory, 
+            string key = null, 
+            DependencyLifetime lifetime = DependencyLifetime.Default)
+        {
+            this.InternalRegisterFactory(typeof(T), resolver => factory(resolver), key, lifetime);
+
+            return this;
+        }
+
         public abstract IDependencyRegistrar RegisterFactory(
-            Type type,
-            Func<IDependencyResolver, object> factory,
-            string key = null,
+            Type type, 
+            Func<IDependencyResolver, object> factory, 
+            string key = null, 
             DependencyLifetime lifetime = DependencyLifetime.Default);
+
+        public virtual IDependencyRegistrar RegisterInstance<T>(T instance, DependencyLifetime lifetime = default(DependencyLifetime))
+        {
+            this.InternalRegisterInstance(typeof(T), instance, lifetime);
+
+            return this;
+        }
 
         public abstract IDependencyRegistrar RegisterInstance(Type type, object instance, DependencyLifetime lifetime = default(DependencyLifetime));
 
@@ -153,9 +153,9 @@
         }
 
         private void InternalRegisterFactory(
-            Type type,
-            Func<IDependencyResolver, object> factory,
-            string key = null,
+            Type type, 
+            Func<IDependencyResolver, object> factory, 
+            string key = null, 
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             if (IgnoreDependencyAttribute.ValidateType(type))

@@ -8,15 +8,18 @@
 
     public class WhenUsingTypeExtensions
     {
+        private interface IDerived
+        {
+        }
+
         [Fact]
-        public void ShouldReturnTrueWhenDerivesFromType()
+        public void ShouldReturnFalseWhenGenericTypeNotDerived()
         {
             // Arrange
-            var @base = typeof(BaseClass);
             var derived = typeof(DerivedClass);
 
             // Act, Assert
-            Assert.True(derived.HasBaseClass(@base));
+            Assert.False(derived.HasBaseClass<Array>());
         }
 
         [Fact]
@@ -41,13 +44,24 @@
         }
 
         [Fact]
-        public void ShouldReturnFalseWhenGenericTypeNotDerived()
+        public void ShouldReturnTrueWhenDerivesFromType()
+        {
+            // Arrange
+            var @base = typeof(BaseClass);
+            var derived = typeof(DerivedClass);
+
+            // Act, Assert
+            Assert.True(derived.HasBaseClass(@base));
+        }
+
+        [Fact]
+        public void ShouldReturnTrueWhenGenericTypeImplementsInterface()
         {
             // Arrange
             var derived = typeof(DerivedClass);
 
-            // Act, Assert
-            Assert.False(derived.HasBaseClass<Array>());
+            // Acct, Assert
+            Assert.True(derived.HasInterface<IDerived>());
         }
 
         [Fact]
@@ -62,27 +76,6 @@
         }
 
         [Fact]
-        public void ShouldReturnWhenTypeNotImplementsInterface()
-        {
-            // Arrange
-            var @interface = typeof(IDisposable);
-            var derived = typeof(DerivedClass);
-
-            // Acct, Assert
-            Assert.False(derived.HasInterface(@interface));
-        }
-
-        [Fact]
-        public void ShouldReturnTrueWhenGenericTypeImplementsInterface()
-        {
-            // Arrange
-            var derived = typeof(DerivedClass);
-
-            // Acct, Assert
-            Assert.True(derived.HasInterface<IDerived>());
-        }
-
-        [Fact]
         public void ShouldReturnWhenGenericTypeNotImplementsInterface()
         {
             // Arrange
@@ -92,8 +85,15 @@
             Assert.False(derived.HasInterface<IDisposable>());
         }
 
-        private interface IDerived
+        [Fact]
+        public void ShouldReturnWhenTypeNotImplementsInterface()
         {
+            // Arrange
+            var @interface = typeof(IDisposable);
+            var derived = typeof(DerivedClass);
+
+            // Acct, Assert
+            Assert.False(derived.HasInterface(@interface));
         }
 
         private class BaseClass

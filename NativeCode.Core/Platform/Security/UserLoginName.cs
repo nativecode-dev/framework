@@ -12,13 +12,13 @@
 
     public class UserLoginName
     {
-        private static readonly Dictionary<UserLoginNameFormat, Regex> Formats = new Dictionary<UserLoginNameFormat, Regex>();
-
         private const string PatternDomain = @"^(?<name>[a-z][a-z0-9\.-]+)\\(?<domain>(?![\x20\.]+$)([^\\/""[\\]:|<>+=;,?\*@]+))$";
 
         private const string PatternName = @"^(?<name>[a-z][a-z0-9\.-]+)";
 
         private const string PatternUserPrincipalName = @"^(?<name>[A-Z0-9._%+-]+)@(?<domain>[A-Z0-9.-]+\.[A-Z]{2,})$";
+
+        private static readonly Dictionary<UserLoginNameFormat, Regex> Formats = new Dictionary<UserLoginNameFormat, Regex>();
 
         static UserLoginName()
         {
@@ -37,9 +37,9 @@
 
         public string Domain { get; }
 
-        public string Login { get; }
-
         public UserLoginNameFormat Format { get; private set; }
+
+        public string Login { get; }
 
         protected string Source { get; }
 

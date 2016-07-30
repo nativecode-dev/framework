@@ -56,7 +56,6 @@
     <Compile Include="Authorization\Types\Role.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\SafeCache.cs" />
-    <Compile Include="CoreConstants.cs" />
     <Compile Include="Dependencies\Attributes\IgnoreDependencyAttribute.cs" />
     <Compile Include="Dependencies\DependencyContainer.cs">
       <DependentUpon>IDependencyContainer.cs</DependentUpon>

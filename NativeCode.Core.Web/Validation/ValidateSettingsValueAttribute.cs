@@ -4,7 +4,6 @@
     using System.ComponentModel.DataAnnotations;
 
     using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]

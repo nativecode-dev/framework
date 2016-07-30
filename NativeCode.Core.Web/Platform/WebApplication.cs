@@ -1,9 +1,5 @@
 ﻿namespace NativeCode.Core.Web.Platform
 {
-    using Humanizer;
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Settings;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,33 +7,25 @@
     using System.Web;
     using System.Web.Compilation;
 
+    using Humanizer;
+
+    using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Platform;
+    using NativeCode.Core.Settings;
+
     public abstract class WebApplication : HttpApplication, IWebApplication
     {
+        public IPlatform Platform { get; private set; }
+
+        public Settings Settings => this.ApplicationCore?.Settings;
+
         protected ApplicationCore ApplicationCore { get; private set; }
 
-        public sealed override void Dispose()
+        public override sealed void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (this.Platform != null)
-                {
-                    this.Platform.Dispose();
-                    this.Platform = null;
-                }
-
-                base.Dispose();
-            }
-        }
-
-        public IPlatform Platform { get; private set; }
-
-        public Settings Settings => this.ApplicationCore?.Settings;
 
         public virtual string GetApplicationName()
         {
@@ -66,5 +54,19 @@
         }
 
         protected abstract IPlatform CreatePlatform();
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.Platform != null)
+                {
+                    this.Platform.Dispose();
+                    this.Platform = null;
+                }
+
+                base.Dispose();
+            }
+        }
     }
 }

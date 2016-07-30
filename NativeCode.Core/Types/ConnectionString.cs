@@ -11,9 +11,9 @@
 
     public class ConnectionString : DynamicObject
     {
-        private readonly List<Func<string, string>> resolvers = new List<Func<string, string>>();
-
         private readonly Dictionary<string, string> members = new Dictionary<string, string>();
+
+        private readonly List<Func<string, string>> resolvers = new List<Func<string, string>>();
 
         public ConnectionString()
         {

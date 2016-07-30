@@ -5,8 +5,6 @@
 
     public static class HttpHeaders
     {
-        #region Headers
-
         public const string Accept = "Accept";
 
         public const string Authorization = "Authorization";
@@ -17,21 +15,15 @@
 
         public const string ContentType = "Content-Type";
 
-        public const string SetCookie = "Set-Cookie";
-
-        #endregion
-
-        #region Keys
-
-        public const string KeyRequestUserKey = "X-Custom-Request-UserKey";
-
         public const string KeyRequestSignature = "X-Custom-Request-Signature";
 
         public const string KeyRequestSignatureCrypto = "X-Custom-Request-Signature-Crypto";
 
         public const string KeyRequestSignatureTimestamp = "X-Custom-Request-Signature-Timestamp";
 
-        #endregion
+        public const string KeyRequestUserKey = "X-Custom-Request-UserKey";
+
+        public const string SetCookie = "Set-Cookie";
 
         public static string GetHeaderValue(this HttpRequestMessage request, string key, string defaultValue = default(string))
         {
@@ -41,6 +33,11 @@
             }
 
             return defaultValue;
+        }
+
+        public static string GetRequestCookie(this HttpRequestMessage request)
+        {
+            return request.GetHeaderValue(SetCookie);
         }
 
         public static string GetRequestKey(this HttpRequestMessage request)
@@ -56,11 +53,6 @@
         public static string GetRequestSignatureCrypto(this HttpRequestMessage request)
         {
             return request.GetHeaderValue(KeyRequestSignatureCrypto);
-        }
-
-        public static string GetRequestCookie(this HttpRequestMessage request)
-        {
-            return request.GetHeaderValue(SetCookie);
         }
     }
 }

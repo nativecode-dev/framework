@@ -21,17 +21,19 @@
             this.Platform = platform;
         }
 
+        public IPlatform Platform { get; private set; }
+
+        public Settings Settings { get; } = new JsonSettings();
+
         protected bool Disposed { get; private set; }
+
+        protected bool Initialized { get; private set; }
 
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        public IPlatform Platform { get; private set; }
-
-        public Settings Settings { get; } = new JsonSettings();
 
         public virtual string GetApplicationName()
         {
@@ -42,8 +44,6 @@
         {
             return null;
         }
-
-        protected bool Initialized { get; private set; }
 
         public void Initialize(string name, params IDependencyModule[] modules)
         {

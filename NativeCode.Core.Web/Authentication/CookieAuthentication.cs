@@ -19,7 +19,7 @@
 
             return new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
                        {
-                           HttpOnly = true,
+                           HttpOnly = true, 
                            Path = FormsAuthentication.FormsCookiePath
                        };
         }

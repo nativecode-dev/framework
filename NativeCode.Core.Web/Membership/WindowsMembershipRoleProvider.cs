@@ -8,7 +8,6 @@
     using System.Web.Configuration;
     using System.Web.Security;
 
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Security;
 
     public class WindowsMembershipRoleProvider : WindowsTokenRoleProvider
@@ -18,16 +17,6 @@
         private static readonly Lazy<RoleManagerSection> MembershipProviderSettingsInstance = new Lazy<RoleManagerSection>(LoadRoleManagerSection);
 
         public static RoleManagerSection RoleManagerSection => MembershipProviderSettingsInstance.Value;
-
-        private static RoleManagerSection LoadRoleManagerSection()
-        {
-            return (RoleManagerSection)ConfigurationManager.GetSection(PathRoleManager);
-        }
-
-        public override bool IsUserInRole(string username, string roleName)
-        {
-            return false;
-        }
 
         public override string[] GetRolesForUser(string username)
         {
@@ -39,6 +28,11 @@
             }
 
             return base.GetRolesForUser(username);
+        }
+
+        public override bool IsUserInRole(string username, string roleName)
+        {
+            return false;
         }
 
         private static string GetDomainFromSettings()
@@ -67,6 +61,11 @@
             }
 
             return result;
+        }
+
+        private static RoleManagerSection LoadRoleManagerSection()
+        {
+            return (RoleManagerSection)ConfigurationManager.GetSection(PathRoleManager);
         }
     }
 }

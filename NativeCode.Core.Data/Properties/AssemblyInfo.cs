@@ -1,11 +1,9 @@
 ﻿using System.Reflection;
 using System.Resources;
 
-using NativeCode.Core;
-
-[assembly: AssemblyCompany(CoreConstants.Company)]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCopyright(CoreConstants.Copyright)]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

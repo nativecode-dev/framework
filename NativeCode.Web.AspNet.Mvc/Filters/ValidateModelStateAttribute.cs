@@ -3,8 +3,6 @@
     using System;
     using System.Web.Mvc;
 
-    using NativeCode.Core.Extensions;
-
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class ValidateModelStateAttribute : ActionFilterAttribute
     {

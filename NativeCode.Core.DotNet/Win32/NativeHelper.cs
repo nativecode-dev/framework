@@ -1,10 +1,13 @@
 ﻿namespace NativeCode.Core.DotNet.Win32
 {
-    using Exceptions;
-    using Microsoft.Win32.SafeHandles;
     using System;
     using System.Runtime.InteropServices;
     using System.Text;
+
+    using Microsoft.Win32.SafeHandles;
+
+    using NativeCode.Core.DotNet.Win32.Exceptions;
+    using NativeCode.Core.DotNet.Win32.Structs;
 
     public static class NativeHelper
     {
@@ -26,7 +29,7 @@
             return id;
         }
 
-        public static bool ReadConsoleInput(SafeHandle handle, out Structs.InputRecord buffer, uint length, out int count)
+        public static bool ReadConsoleInput(SafeHandle handle, out InputRecord buffer, uint length, out int count)
         {
             if (NativeMethods.ReadConsoleInput(handle, out buffer, length, out count) == false)
             {
@@ -36,7 +39,7 @@
             return true;
         }
 
-        public static bool WriteConsoleOutput(SafeHandle handle, Structs.CharInfo[] buffer, Structs.Coord size, Structs.Coord coord, ref Structs.SmallRect rect)
+        public static bool WriteConsoleOutput(SafeHandle handle, CharInfo[] buffer, Coord size, Coord coord, ref SmallRect rect)
         {
             if (NativeMethods.WriteConsoleOutput(handle, buffer, size, coord, ref rect) == false)
             {

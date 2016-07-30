@@ -6,15 +6,14 @@
     {
         private static readonly char[] Symbols = { '@', '#', '$' };
 
+        public enum State
+        {
+            None = 0
+        }
+
         protected int Index { get; private set; }
 
         protected string Statement { get; private set; }
-
-        public void Tokenize(string statement)
-        {
-            this.Index = 0;
-            this.Statement = statement.TrimNewLines();
-        }
 
         public bool Next(out char value)
         {
@@ -44,9 +43,10 @@
             return false;
         }
 
-        public enum State
+        public void Tokenize(string statement)
         {
-            None = 0
+            this.Index = 0;
+            this.Statement = statement.TrimNewLines();
         }
     }
 }

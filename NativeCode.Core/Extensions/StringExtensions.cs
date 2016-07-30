@@ -13,28 +13,6 @@
             return values.Any(string.IsNullOrWhiteSpace);
         }
 
-        public static bool NotEmpty(params string[] values)
-        {
-            return values.All(x => !string.IsNullOrWhiteSpace(x));
-        }
-
-        public static string Replace(this string value, string replacement, params string[] characters)
-        {
-            return characters.Aggregate(value, (current, character) => current.Replace(character, replacement));
-        }
-
-        public static string[] Split(this string value, string separator)
-        {
-            return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        public static string TrimNewLines(this string value, string replacement = "")
-        {
-            return value.Replace(Environment.NewLine, replacement);
-        }
-
-        #region Quotations
-
         public static string Dequote([NotNull] this string value)
         {
             if (value.IsQuoted())
@@ -72,6 +50,11 @@
             return value.StartsWith("'") && value.EndsWith("'");
         }
 
+        public static bool NotEmpty(params string[] values)
+        {
+            return values.All(x => !string.IsNullOrWhiteSpace(x));
+        }
+
         public static string Quote([NotNull] this string value)
         {
             if (value.IsDoubleQuoted())
@@ -82,6 +65,11 @@
             return "\"" + value + "\"";
         }
 
+        public static string Replace(this string value, string replacement, params string[] characters)
+        {
+            return characters.Aggregate(value, (current, character) => current.Replace(character, replacement));
+        }
+
         public static string SingleQuote([NotNull] this string value)
         {
             if (value.IsSingleQuoted())
@@ -90,6 +78,11 @@
             }
 
             return "'" + value + "'";
+        }
+
+        public static string[] Split(this string value, string separator)
+        {
+            return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static string ToBase64String(this string value, Encoding encoding = null)
@@ -104,6 +97,9 @@
             return Convert.ToBase64String(bytes);
         }
 
-        #endregion
+        public static string TrimNewLines(this string value, string replacement = "")
+        {
+            return value.Replace(Environment.NewLine, replacement);
+        }
     }
 }

@@ -22,8 +22,6 @@
             this.hook = NativeMethods.SetWinEventHook(minEvent, maxEvent, hwnd, this.handler, 0, 0, WinEvent.OutOfContext);
         }
 
-        protected abstract void Handler(IntPtr hwineventhook, uint eventtype, IntPtr hwnd, int idobject, int idchild, uint dweventthread, uint dwmseventtime);
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && !this.Disposed)
@@ -33,5 +31,7 @@
 
             base.Dispose(disposing);
         }
+
+        protected abstract void Handler(IntPtr hwineventhook, uint eventtype, IntPtr hwnd, int idobject, int idchild, uint dweventthread, uint dwmseventtime);
     }
 }

@@ -4,19 +4,19 @@
 
     public abstract class DependencyContainer : IDependencyContainer
     {
+        public abstract IDependencyRegistrar Registrar { get; }
+
+        public abstract IDependencyResolver Resolver { get; }
+
         protected bool Disposed { get; private set; }
+
+        public abstract IDependencyContainer CreateChildContainer();
 
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        public abstract IDependencyRegistrar Registrar { get; }
-
-        public abstract IDependencyResolver Resolver { get; }
-
-        public abstract IDependencyContainer CreateChildContainer();
 
         protected virtual void Dispose(bool disposing)
         {

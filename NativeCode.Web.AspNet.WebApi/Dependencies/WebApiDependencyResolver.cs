@@ -17,15 +17,15 @@
             this.container = container;
         }
 
+        public IDependencyScope BeginScope()
+        {
+            return new WebApiDependencyResolver(this.container.CreateChildContainer());
+        }
+
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public IDependencyScope BeginScope()
-        {
-            return new WebApiDependencyResolver(this.container.CreateChildContainer());
         }
 
         public object GetService(Type serviceType)

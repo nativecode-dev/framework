@@ -58,6 +58,14 @@
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
+        private static void EnsureMatchingScheme(string scheme)
+        {
+            if (scheme.ToUpper() != "BASIC")
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+        }
+
         private static string[] GetParameterParts(AuthenticationHeaderValue authorization)
         {
             var bytes = Convert.FromBase64String(authorization.Parameter);
@@ -70,14 +78,6 @@
             }
 
             return parts;
-        }
-
-        private static void EnsureMatchingScheme(string scheme)
-        {
-            if (scheme.ToUpper() != "BASIC")
-            {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
         }
     }
 }

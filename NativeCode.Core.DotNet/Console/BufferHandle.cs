@@ -1,14 +1,15 @@
 namespace NativeCode.Core.DotNet.Console
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     using Microsoft.Win32.SafeHandles;
+
     using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Types;
     using NativeCode.Core.Types.Structs;
-    using System;
-    using System.Runtime.InteropServices;
 
     public class BufferHandle : Disposable
     {
@@ -157,12 +158,12 @@ namespace NativeCode.Core.DotNet.Console
         {
             var current = new ConsoleFontInfoEx { Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
             var updated = new ConsoleFontInfoEx
-            {
-                FontFamily = 0,
-                FontSize = new Coord(12, 12),
-                FontWeight = 0,
-                Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>()
-            };
+                              {
+                                  FontFamily = 0, 
+                                  FontSize = new Coord(12, 12), 
+                                  FontWeight = 0, 
+                                  Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>()
+                              };
 
             var pointer = new IntPtr(updated.FaceName);
             Marshal.Copy(this.Settings.FontName.ToCharArray(), 0, pointer, this.Settings.FontName.Length);

@@ -9,38 +9,6 @@
 
     public static class WindowHelper
     {
-        public static SmallRect GetDisplayBounds()
-        {
-            var rect = new SmallRect();
-
-            if (NativeMethods.SystemParametersInfo(SystemProperty.GetWorkArea, 0, ref rect, SystemPropertyFlags.None))
-            {
-                return rect;
-            }
-
-            return default(SmallRect);
-        }
-
-        public static IntPtr GetWindowAtCursor()
-        {
-            Point cursor;
-
-            if (NativeMethods.GetCursorPos(out cursor))
-            {
-                var hwnd = NativeMethods.WindowFromPoint(cursor);
-
-                uint id;
-
-                NativeMethods.GetWindowThreadProcessId(hwnd, out id);
-
-                var process = Process.GetProcessById((int)id);
-
-                return process.MainWindowHandle;
-            }
-
-            return IntPtr.Zero;
-        }
-
         public static bool Center(IntPtr hwnd, CenteringPosition position)
         {
             switch (position)
@@ -93,22 +61,6 @@
             return false;
         }
 
-        public static bool CenterTop(IntPtr hwnd)
-        {
-            SmallRect window;
-
-            if (NativeMethods.GetWindowRect(hwnd, out window))
-            {
-                var desktop = GetDisplayBounds();
-
-                var left = (desktop.Right - window.Width()) / 2;
-
-                return NativeMethods.SetWindowPos(hwnd, IntPtr.Zero, left, 0, window.Width(), window.Height(), 0);
-            }
-
-            return false;
-        }
-
         public static bool CenterHorizontal(IntPtr hwnd)
         {
             SmallRect window;
@@ -121,6 +73,22 @@
                 var left = (desktop.Right - window.Width()) / 2;
 
                 return NativeMethods.SetWindowPos(hwnd, IntPtr.Zero, left, top, window.Width(), window.Height(), 0);
+            }
+
+            return false;
+        }
+
+        public static bool CenterTop(IntPtr hwnd)
+        {
+            SmallRect window;
+
+            if (NativeMethods.GetWindowRect(hwnd, out window))
+            {
+                var desktop = GetDisplayBounds();
+
+                var left = (desktop.Right - window.Width()) / 2;
+
+                return NativeMethods.SetWindowPos(hwnd, IntPtr.Zero, left, 0, window.Width(), window.Height(), 0);
             }
 
             return false;
@@ -141,6 +109,38 @@
             }
 
             return false;
+        }
+
+        public static SmallRect GetDisplayBounds()
+        {
+            var rect = new SmallRect();
+
+            if (NativeMethods.SystemParametersInfo(SystemProperty.GetWorkArea, 0, ref rect, SystemPropertyFlags.None))
+            {
+                return rect;
+            }
+
+            return default(SmallRect);
+        }
+
+        public static IntPtr GetWindowAtCursor()
+        {
+            Point cursor;
+
+            if (NativeMethods.GetCursorPos(out cursor))
+            {
+                var hwnd = NativeMethods.WindowFromPoint(cursor);
+
+                uint id;
+
+                NativeMethods.GetWindowThreadProcessId(hwnd, out id);
+
+                var process = Process.GetProcessById((int)id);
+
+                return process.MainWindowHandle;
+            }
+
+            return IntPtr.Zero;
         }
 
         public static bool Move(IntPtr hwnd, int left, int top)

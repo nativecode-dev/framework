@@ -2,10 +2,13 @@
 {
     using NativeCode.Core.Types;
 
+    /// <summary>
+    /// Provides a contract to return a <see cref="ConnectionString" /> instance.
+    /// </summary>
     public interface IConnectionStringProvider
     {
-        ConnectionString GetDefaultConnectionString();
-
         ConnectionString GetConnectionString(string name);
+
+        ConnectionString GetDefaultConnectionString();
     }
 }

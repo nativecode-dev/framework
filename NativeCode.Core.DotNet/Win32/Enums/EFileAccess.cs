@@ -9,27 +9,27 @@
 
         MaximumAllowed = 0x2000000, // MaximumAllowed access type
 
-        Delete = 0x10000,
+        Delete = 0x10000, 
 
-        ReadControl = 0x20000,
+        ReadControl = 0x20000, 
 
-        WriteDac = 0x40000,
+        WriteDac = 0x40000, 
 
-        WriteOwner = 0x80000,
+        WriteOwner = 0x80000, 
 
-        Synchronize = 0x100000,
+        Synchronize = 0x100000, 
 
-        StandardRightsRequired = 0xF0000,
+        StandardRightsRequired = 0xF0000, 
 
-        StandardRightsRead = ReadControl,
+        StandardRightsRead = ReadControl, 
 
-        StandardRightsWrite = ReadControl,
+        StandardRightsWrite = ReadControl, 
 
-        StandardRightsExecute = ReadControl,
+        StandardRightsExecute = ReadControl, 
 
-        StandardRightsAll = 0x1F0000,
+        StandardRightsAll = 0x1F0000, 
 
-        SpecificRightsAll = 0xFFFF,
+        SpecificRightsAll = 0xFFFF, 
 
         FileReadData = 0x0001, // file & pipe
 
@@ -59,21 +59,21 @@
 
         FileWriteAttributes = 0x0100, // all
 
-        GenericRead = 0x80000000,
+        GenericRead = 0x80000000, 
 
-        GenericWrite = 0x40000000,
+        GenericWrite = 0x40000000, 
 
-        GenericExecute = 0x20000000,
+        GenericExecute = 0x20000000, 
 
-        GenericAll = 0x10000000,
+        GenericAll = 0x10000000, 
 
-        FileRightsAll = 0x00FFFF,
+        FileRightsAll = 0x00FFFF, 
 
-        FileAllAccess = StandardRightsRequired | Synchronize | 0x1FF,
+        FileAllAccess = StandardRightsRequired | Synchronize | 0x1FF, 
 
-        FileGenericRead = StandardRightsRead | FileReadData | FileReadAttributes | FileReadEa | Synchronize,
+        FileGenericRead = StandardRightsRead | FileReadData | FileReadAttributes | FileReadEa | Synchronize, 
 
-        FileGenericWrite = StandardRightsWrite | FileWriteData | FileWriteAttributes | FileWriteEa | FileAppendData | Synchronize,
+        FileGenericWrite = StandardRightsWrite | FileWriteData | FileWriteAttributes | FileWriteEa | FileAppendData | Synchronize, 
 
         FileGenericExecute = StandardRightsExecute | FileReadAttributes | FileExecute | Synchronize
     }

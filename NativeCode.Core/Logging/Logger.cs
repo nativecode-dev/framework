@@ -9,6 +9,10 @@
     {
         private readonly IEnumerable<ILogWriter> writers;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Logger" /> class.
+        /// </summary>
+        /// <param name="writers">The writers.</param>
         public Logger(IEnumerable<ILogWriter> writers)
         {
             this.writers = writers;

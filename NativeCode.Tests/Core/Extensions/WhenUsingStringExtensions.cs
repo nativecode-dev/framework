@@ -8,41 +8,11 @@
     {
         private const string StringNoQuotes = "'Tis the season to be jolly!";
 
+        private const string StringWithBothQuotes = "'\"" + StringNoQuotes + "\"'";
+
         private const string StringWithDoubleQuotes = "\"" + StringNoQuotes + "\"";
 
         private const string StringWithSingleQuotes = "'" + StringNoQuotes + "'";
-
-        private const string StringWithBothQuotes = "'\"" + StringNoQuotes + "\"'";
-
-        [Fact]
-        public void ShouldDoNothingWithUnquotedString()
-        {
-            // Arrange, Act
-            var dequoted = StringNoQuotes.Dequote();
-
-            // Assert
-            Assert.Equal(StringNoQuotes, dequoted);
-        }
-
-        [Fact]
-        public void ShouldRemoveDoubleQuotes()
-        {
-            // Arrange, Act
-            var dequoted = StringWithDoubleQuotes.Dequote();
-
-            // Assert
-            Assert.Equal(StringNoQuotes, dequoted);
-        }
-
-        [Fact]
-        public void ShouldRemoveSingleQuotes()
-        {
-            // Arrange, Act
-            var dequoted = StringWithSingleQuotes.Dequote();
-
-            // Assert
-            Assert.Equal(StringNoQuotes, dequoted);
-        }
 
         [Fact]
         public void ShouldAddDoubleQuotes()
@@ -65,6 +35,16 @@
         }
 
         [Fact]
+        public void ShouldDoNothingWithUnquotedString()
+        {
+            // Arrange, Act
+            var dequoted = StringNoQuotes.Dequote();
+
+            // Assert
+            Assert.Equal(StringNoQuotes, dequoted);
+        }
+
+        [Fact]
         public void ShouldNotAddDoubleQuotesToStringWithDoubleQuotes()
         {
             // Arrange, Act
@@ -82,6 +62,26 @@
 
             // Assert
             Assert.Equal(StringWithBothQuotes, quoted);
+        }
+
+        [Fact]
+        public void ShouldRemoveDoubleQuotes()
+        {
+            // Arrange, Act
+            var dequoted = StringWithDoubleQuotes.Dequote();
+
+            // Assert
+            Assert.Equal(StringNoQuotes, dequoted);
+        }
+
+        [Fact]
+        public void ShouldRemoveSingleQuotes()
+        {
+            // Arrange, Act
+            var dequoted = StringWithSingleQuotes.Dequote();
+
+            // Assert
+            Assert.Equal(StringNoQuotes, dequoted);
         }
 
         [Fact]

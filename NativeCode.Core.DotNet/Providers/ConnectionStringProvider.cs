@@ -8,11 +8,6 @@
 
     public class ConnectionStringProvider : IConnectionStringProvider
     {
-        public virtual ConnectionString GetDefaultConnectionString()
-        {
-            return this.GetConnectionString("Default");
-        }
-
         public virtual ConnectionString GetConnectionString(string name)
         {
             foreach (ConnectionStringSettings connectionString in ConfigurationManager.ConnectionStrings)
@@ -24,6 +19,11 @@
             }
 
             return default(ConnectionString);
+        }
+
+        public virtual ConnectionString GetDefaultConnectionString()
+        {
+            return this.GetConnectionString("Default");
         }
     }
 }

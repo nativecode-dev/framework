@@ -18,6 +18,19 @@
         {
         }
 
+        public string CustomIdentifier
+        {
+            get
+            {
+                return this.GetValue<string>(KeyCustomIdentifier);
+            }
+
+            set
+            {
+                this.SetValue(KeyCustomIdentifier, value);
+            }
+        }
+
         public string DomainName
         {
             get
@@ -41,19 +54,6 @@
             set
             {
                 this.SetValue(KeyLoginName, value);
-            }
-        }
-
-        public string CustomIdentifier
-        {
-            get
-            {
-                return this.GetValue<string>(KeyCustomIdentifier);
-            }
-
-            set
-            {
-                this.SetValue(KeyCustomIdentifier, value);
             }
         }
     }

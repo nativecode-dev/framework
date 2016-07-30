@@ -5,15 +5,15 @@ namespace NativeCode.Core.Validation
     [Flags]
     public enum StringComplexityRules
     {
-        None = 0,
+        None = 0, 
 
-        RequireAlpha = 1,
+        RequireAlpha = 1, 
 
-        RequireCasing = 1 << 1,
+        RequireCasing = 1 << 1, 
 
-        RequireNumeric = 1 << 2,
+        RequireNumeric = 1 << 2, 
 
-        RequireSymbols = 1 << 3,
+        RequireSymbols = 1 << 3, 
 
         RequireAll = RequireAlpha | RequireCasing | RequireNumeric | RequireSymbols
     }

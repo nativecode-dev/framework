@@ -24,6 +24,7 @@
             {
                 return this.GetMemberValue(false);
             }
+
             set
             {
                 this.SetMemberValue(value);
@@ -38,6 +39,7 @@
             {
                 return this.GetMemberValue(false);
             }
+
             set
             {
                 this.SetMemberValue(value);
@@ -50,6 +52,7 @@
             {
                 return this.GetMemberValue(DateTimeOffset.UtcNow);
             }
+
             set
             {
                 this.SetMemberValue(value);
@@ -62,6 +65,7 @@
             {
                 return this.GetMemberValue(DateTimeOffset.UtcNow);
             }
+
             set
             {
                 this.SetMemberValue(value);

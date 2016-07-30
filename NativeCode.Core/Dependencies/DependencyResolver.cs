@@ -11,12 +11,12 @@
             return (T)this.Resolve(typeof(T), key);
         }
 
+        public abstract object Resolve(Type type, string key = null);
+
         public IEnumerable<T> ResolveAll<T>()
         {
             return this.ResolveAll(typeof(T)).Cast<T>();
         }
-
-        public abstract object Resolve(Type type, string key = null);
 
         public abstract IEnumerable<object> ResolveAll(Type type);
 

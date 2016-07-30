@@ -11,7 +11,8 @@
             this.finalizer = finalizer;
         }
 
-        public DisposableAction(Action initializer, Action finalizer) : this(finalizer)
+        public DisposableAction(Action initializer, Action finalizer)
+            : this(finalizer)
         {
             initializer();
         }

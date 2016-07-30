@@ -19,6 +19,12 @@
             this.Prefix = this.GetType().Namespace;
         }
 
+        public IEnumerable<string> Keys => this.GetKeys();
+
+        protected string PathSeparator { get; set; } = ".";
+
+        protected string Prefix { get; set; }
+
         public object this[string key]
         {
             get
@@ -32,12 +38,6 @@
             }
         }
 
-        public IEnumerable<string> Keys => this.GetKeys();
-
-        protected string PathSeparator { get; set; } = ".";
-
-        protected string Prefix { get; set; }
-
         public T GetValue<T>([NotNull] string name, T defaultValue = default(T))
         {
             if (this.IsPath(name))
@@ -49,6 +49,12 @@
             return this.ReadValue(name, defaultValue);
         }
 
+        public abstract void Load([NotNull] string content, Encoding encoding);
+
+        public abstract void Load([NotNull] Stream stream);
+
+        public abstract void Save([NotNull] Stream stream);
+
         public void SetValue<T>([NotNull] string name, T value, bool overwrite = true)
         {
             if (this.IsPath(name))
@@ -58,32 +64,12 @@
             }
         }
 
-        public abstract void Load([NotNull] string content, Encoding encoding);
-
-        public abstract void Load([NotNull] Stream stream);
-
-        public abstract void Save([NotNull] Stream stream);
-
         protected abstract IEnumerable<string> GetKeys();
-
-        protected abstract T ReadValue<T>([NotNull] string name, T defaultValue = default(T));
-
-        protected abstract T ReadValue<T>([NotNull] string[] path, T defaultValue = default(T));
-
-        protected abstract void WriteValue<T>([NotNull] string name, T value, bool overwrite);
-
-        protected abstract void WriteValue<T>([NotNull] string[] path, T value, bool overwrite);
 
         protected T GetMemberValue<T>(T defaultValue = default(T), [CallerMemberName] string name = null)
         {
             var key = this.GetPrefixKey(name);
             return this.GetValue(key, defaultValue);
-        }
-
-        protected void SetMemberValue<T>(T value, [CallerMemberName] string name = null)
-        {
-            var key = this.GetPrefixKey(name);
-            this.SetValue(key, value);
         }
 
         protected string GetPrefixKey(string name)
@@ -103,5 +89,19 @@
             // For example, ".name" is not a path but ".name.other" is.
             return value.IndexOf(this.PathSeparator, StringComparison.Ordinal) > 0;
         }
+
+        protected abstract T ReadValue<T>([NotNull] string name, T defaultValue = default(T));
+
+        protected abstract T ReadValue<T>([NotNull] string[] path, T defaultValue = default(T));
+
+        protected void SetMemberValue<T>(T value, [CallerMemberName] string name = null)
+        {
+            var key = this.GetPrefixKey(name);
+            this.SetValue(key, value);
+        }
+
+        protected abstract void WriteValue<T>([NotNull] string name, T value, bool overwrite);
+
+        protected abstract void WriteValue<T>([NotNull] string[] path, T value, bool overwrite);
     }
 }

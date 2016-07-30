@@ -20,40 +20,20 @@
             this.Width = width;
         }
 
+        public int Height { get; }
+
+        public int Width { get; }
+
         public BufferCell this[int x, int y]
         {
             get
             {
                 return this.cells[this.Index(x, y)];
             }
+
             set
             {
                 this.cells[this.Index(x, y)] = value;
-            }
-        }
-
-        public int Height { get; }
-
-        public int Width { get; }
-
-        public int Index(int x, int y)
-        {
-            return x + this.Width * y;
-        }
-
-        public void Write(char data, int x, int y)
-        {
-            this.cells[x + this.Width * y].Data = data;
-            this.cells[x + this.Width * y].X = x;
-            this.cells[x + this.Width * y].Y = y;
-        }
-
-        public void Write(string text, int x, int y)
-        {
-            for (var index = 0; index < text.Length; index++)
-            {
-                var character = text[index];
-                this.Write(character, x + index, y);
             }
         }
 
@@ -74,6 +54,27 @@
             }
 
             return buffer;
+        }
+
+        public int Index(int x, int y)
+        {
+            return x + this.Width * y;
+        }
+
+        public void Write(char data, int x, int y)
+        {
+            this.cells[x + this.Width * y].Data = data;
+            this.cells[x + this.Width * y].X = x;
+            this.cells[x + this.Width * y].Y = y;
+        }
+
+        public void Write(string text, int x, int y)
+        {
+            for (var index = 0; index < text.Length; index++)
+            {
+                var character = text[index];
+                this.Write(character, x + index, y);
+            }
         }
     }
 }

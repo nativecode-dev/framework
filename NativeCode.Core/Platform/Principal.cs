@@ -13,12 +13,12 @@
             this.Identity = identity;
         }
 
+        public IIdentity Identity { get; }
+
         public bool IsInRole(string role)
         {
             return false;
         }
-
-        public IIdentity Identity { get; }
 
         private class AnonymousIdentity : IIdentity
         {

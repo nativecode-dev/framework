@@ -31,9 +31,9 @@
 
         public override long Length { get; }
 
-        protected bool StreamOwner { get; }
-
         public override long Position { get; set; }
+
+        protected bool StreamOwner { get; }
 
         public override void Flush()
         {

@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Tests.Core.Extensions
 {
     using System;
-    using System.Runtime.InteropServices;
 
     using NativeCode.Core.Extensions;
 
@@ -9,6 +8,28 @@
 
     public class WhenUsingObjectExtensions
     {
+        [Fact]
+        public void ShouldCompareEqualTypesWithIs()
+        {
+            // Arrange
+            var source = new object();
+            var target = typeof(object);
+
+            // Act, Assert
+            Assert.True(source.Is(target));
+        }
+
+        [Fact]
+        public void ShouldCompareUnequalTypesWithIs()
+        {
+            // Arrange
+            var source = new object();
+            var target = typeof(bool);
+
+            // Act, Assert
+            Assert.False(source.Is(target));
+        }
+
         [Fact]
         public void ShouldDisposeObjectIfInterfaceImplemented()
         {
@@ -40,28 +61,6 @@
 
             // Act, Assert
             Assert.Throws<InvalidCastException>(() => instance.Ensure(typeof(bool)));
-        }
-
-        [Fact]
-        public void ShouldCompareEqualTypesWithIs()
-        {
-            // Arrange
-            var source = new object();
-            var target = typeof(object);
-
-            // Act, Assert
-            Assert.True(source.Is(target));
-        }
-
-        [Fact]
-        public void ShouldCompareUnequalTypesWithIs()
-        {
-            // Arrange
-            var source = new object();
-            var target = typeof(bool);
-
-            // Act, Assert
-            Assert.False(source.Is(target));
         }
 
         [Fact]

@@ -7,7 +7,8 @@
 
     public static class ExceptionExtensions
     {
-        public static StringBuilder CreateExceptionBuilder<TException>([NotNull] this TException exception, bool includeStackTrace = true) where TException : Exception
+        public static StringBuilder CreateExceptionBuilder<TException>([NotNull] this TException exception, bool includeStackTrace = true)
+            where TException : Exception
         {
             var builder = new StringBuilder();
 

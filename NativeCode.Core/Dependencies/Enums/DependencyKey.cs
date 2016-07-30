@@ -2,11 +2,11 @@
 {
     public enum DependencyKey
     {
-        Default = 0,
+        Default = 0, 
 
-        Name = 1,
+        Name = 1, 
 
-        QualifiedName = 2,
+        QualifiedName = 2, 
 
         ShortName = 3
     }

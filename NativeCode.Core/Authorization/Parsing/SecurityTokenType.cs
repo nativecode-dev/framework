@@ -2,15 +2,15 @@ namespace NativeCode.Core.Authorization.Parsing
 {
     public enum SecurityTokenType
     {
-        Default = 0,
+        Default = 0, 
 
-        Constant,
+        Constant, 
 
-        Identifier,
+        Identifier, 
 
-        Literal = Default,
+        Literal = Default, 
 
-        Operator,
+        Operator, 
 
         Symbol
     }

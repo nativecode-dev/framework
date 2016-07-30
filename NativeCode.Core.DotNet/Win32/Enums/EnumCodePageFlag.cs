@@ -2,7 +2,7 @@
 {
     public enum EnumCodePageFlag : uint
     {
-        Installed = 1,
+        Installed = 1, 
 
         Supported = 2
     }

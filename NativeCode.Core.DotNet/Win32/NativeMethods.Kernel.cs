@@ -1,11 +1,13 @@
 ﻿namespace NativeCode.Core.DotNet.Win32
 {
-    using Microsoft.Win32.SafeHandles;
-    using NativeCode.Core.DotNet.Win32.Enums;
-    using NativeCode.Core.DotNet.Win32.Structs;
     using System;
     using System.Runtime.InteropServices;
     using System.Text;
+
+    using Microsoft.Win32.SafeHandles;
+
+    using NativeCode.Core.DotNet.Win32.Enums;
+    using NativeCode.Core.DotNet.Win32.Structs;
 
     internal static partial class NativeMethods
     {
