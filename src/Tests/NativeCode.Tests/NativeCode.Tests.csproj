@@ -76,11 +76,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
+    <ProjectReference Include="..\..\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
       <Name>NativeCode.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NativeCode.Packages\NativeCode.Packages.csproj">
+    <ProjectReference Include="..\..\NativeCode.Packages\NativeCode.Packages.csproj">
       <Project>{E6C2ADC9-CB2A-4C0C-B342-B740C637F1BC}</Project>
       <Name>NativeCode.Packages</Name>
     </ProjectReference>

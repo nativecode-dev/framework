@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core", "NativeCode.Core\NativeCode.Core.csproj", "{2BA5C42A-32EC-43DB-9AEC-A9323D354951}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Tests", "NativeCode.Tests\NativeCode.Tests.csproj", "{40D8575D-34A0-4B80-87CA-301BC6E19350}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Tests", "Tests\NativeCode.Tests\NativeCode.Tests.csproj", "{40D8575D-34A0-4B80-87CA-301BC6E19350}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{0BE504AC-1561-4870-87C8-210B467708EB}"
 	ProjectSection(SolutionItems) = preProject
@@ -30,6 +30,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Packages.Owin", "NativeCode.Packages.Owin\NativeCode.Packages.Owin.csproj", "{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.DotNet.Win32", "NativeCode.Core.DotNet.Win32\NativeCode.Core.DotNet.Win32.csproj", "{AE566659-F4F2-4EB4-A537-8B736DBD876F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tests", ".tests", "{BC966123-4BA8-49EF-9344-EDDB7F3CD6ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,5 +82,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40D8575D-34A0-4B80-87CA-301BC6E19350} = {BC966123-4BA8-49EF-9344-EDDB7F3CD6ED}
 	EndGlobalSection
 EndGlobal
