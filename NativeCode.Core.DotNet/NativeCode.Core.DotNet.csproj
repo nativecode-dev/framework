@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JetBrains.Annotations, Version=10.1.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
@@ -37,73 +37,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console\Controls\Control.cs" />
-    <Compile Include="Console\Controls\Panel.cs" />
-    <Compile Include="Console\RenderContext.cs" />
-    <Compile Include="Console\RendererKeyMapper.cs" />
-    <Compile Include="Console\RenderMode.cs" />
-    <Compile Include="Console\RendererOptions.cs" />
     <Compile Include="DotNetDependencies.cs" />
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="Platform\DotNetApplication.cs" />
     <Compile Include="Platform\DotNetPlatform.cs" />
     <Compile Include="Platform\Security\HmacSettingsProvider.cs" />
     <Compile Include="Providers\ConnectionStringProvider.cs" />
-    <Compile Include="Console\BufferCell.cs" />
-    <Compile Include="Console\BufferHandle.cs" />
-    <Compile Include="Console\BufferMap.cs" />
-    <Compile Include="Console\Renderer.cs" />
     <Compile Include="Providers\WindowsAuthenticationProvider.cs" />
-    <Compile Include="Win32\CenteringPosition.cs" />
-    <Compile Include="Win32\Enums\EnumCodePageFlag.cs" />
-    <Compile Include="Win32\Enums\EFileMode.cs" />
-    <Compile Include="Win32\Enums\EFileAccess.cs" />
-    <Compile Include="Win32\Enums\EFileAttributes.cs" />
-    <Compile Include="Win32\Enums\EFileShare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Win32\Enums\Event.cs" />
-    <Compile Include="Win32\Enums\SystemPropertyFlags.cs" />
-    <Compile Include="Win32\Enums\SystemProperty.cs" />
-    <Compile Include="Win32\Enums\WinEvent.cs" />
-    <Compile Include="Win32\Exceptions\NativeMethodException.cs" />
-    <Compile Include="Win32\Extensions\SmallRectExtensions.cs" />
-    <Compile Include="Win32\HookEvent.cs" />
-    <Compile Include="Win32\NativeHelper.cs" />
-    <Compile Include="Win32\NativeMethods.cs" />
-    <Compile Include="Win32\NativeMethods.Kernel.cs">
-      <DependentUpon>NativeMethods.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Win32\NativeMethods.User.cs">
-      <DependentUpon>NativeMethods.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Win32\StandardHandles.cs" />
-    <Compile Include="Win32\Structs\CharInfo.cs" />
-    <Compile Include="Win32\Structs\CharUnion.cs" />
-    <Compile Include="Win32\Structs\Color.cs" />
-    <Compile Include="Win32\Structs\ConsoleCursorInfo.cs" />
-    <Compile Include="Win32\Structs\ConsoleFontInfoEx.cs" />
-    <Compile Include="Win32\Structs\ConsoleMetrics.cs" />
-    <Compile Include="Win32\Structs\ConsoleScreenBufferInfo.cs" />
-    <Compile Include="Win32\Structs\ConsoleScreenBufferInfoEx.cs" />
-    <Compile Include="Win32\Structs\ControlKeyState.cs" />
-    <Compile Include="Win32\Structs\Coord.cs" />
-    <Compile Include="Win32\Structs\FocusEventRecord.cs" />
-    <Compile Include="Win32\Structs\InputRecord.cs" />
-    <Compile Include="Win32\Structs\KeyEventRecord.cs" />
-    <Compile Include="Win32\Structs\MenuEventRecord.cs" />
-    <Compile Include="Win32\Structs\MouseEventRecord.cs" />
-    <Compile Include="Win32\Structs\Point.cs" />
-    <Compile Include="Win32\Structs\SmallRect.cs" />
-    <Compile Include="Win32\ForegroundChangeHook.cs" />
-    <Compile Include="Win32\Structs\WindowBufferSizeRecord.cs" />
-    <Compile Include="Win32\WindowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">

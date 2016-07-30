@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AE566659-F4F2-4EB4-A537-8B736DBD876F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NativeCode.Core.DotNet.Win32</RootNamespace>
+    <AssemblyName>NativeCode.Core.DotNet.Win32</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CenteringPosition.cs" />
+    <Compile Include="Console\BufferCell.cs" />
+    <Compile Include="Console\BufferHandle.cs" />
+    <Compile Include="Console\BufferMap.cs" />
+    <Compile Include="Console\Controls\Control.cs" />
+    <Compile Include="Console\Controls\Panel.cs" />
+    <Compile Include="Console\RenderContext.cs" />
+    <Compile Include="Console\Renderer.cs" />
+    <Compile Include="Console\RendererKeyMapper.cs" />
+    <Compile Include="Console\RendererOptions.cs" />
+    <Compile Include="Console\RenderMode.cs" />
+    <Compile Include="Enums\EFileAccess.cs" />
+    <Compile Include="Enums\EFileAttributes.cs" />
+    <Compile Include="Enums\EFileMode.cs" />
+    <Compile Include="Enums\EFileShare.cs" />
+    <Compile Include="Enums\EnumCodePageFlag.cs" />
+    <Compile Include="Enums\Event.cs" />
+    <Compile Include="Enums\SystemProperty.cs" />
+    <Compile Include="Enums\SystemPropertyFlags.cs" />
+    <Compile Include="Enums\WinEvent.cs" />
+    <Compile Include="Exceptions\NativeMethodException.cs" />
+    <Compile Include="Extensions\SmallRectExtensions.cs" />
+    <Compile Include="ForegroundChangeHook.cs" />
+    <Compile Include="HookEvent.cs" />
+    <Compile Include="NativeHelper.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="NativeMethods.Kernel.cs">
+      <DependentUpon>NativeMethods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NativeMethods.User.cs">
+      <DependentUpon>NativeMethods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandardHandles.cs" />
+    <Compile Include="Structs\CharInfo.cs" />
+    <Compile Include="Structs\CharUnion.cs" />
+    <Compile Include="Structs\Color.cs" />
+    <Compile Include="Structs\ConsoleCursorInfo.cs" />
+    <Compile Include="Structs\ConsoleFontInfoEx.cs" />
+    <Compile Include="Structs\ConsoleMetrics.cs" />
+    <Compile Include="Structs\ConsoleScreenBufferInfo.cs" />
+    <Compile Include="Structs\ConsoleScreenBufferInfoEx.cs" />
+    <Compile Include="Structs\ControlKeyState.cs" />
+    <Compile Include="Structs\Coord.cs" />
+    <Compile Include="Structs\FocusEventRecord.cs" />
+    <Compile Include="Structs\InputRecord.cs" />
+    <Compile Include="Structs\KeyEventRecord.cs" />
+    <Compile Include="Structs\MenuEventRecord.cs" />
+    <Compile Include="Structs\MouseEventRecord.cs" />
+    <Compile Include="Structs\Point.cs" />
+    <Compile Include="Structs\SmallRect.cs" />
+    <Compile Include="Structs\WindowBufferSizeRecord.cs" />
+    <Compile Include="WindowHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
+      <Project>{2BA5C42A-32EC-43DB-9AEC-A9323D354951}</Project>
+      <Name>NativeCode.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NativeCode.Core.DotNet.Win32.nuspec" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

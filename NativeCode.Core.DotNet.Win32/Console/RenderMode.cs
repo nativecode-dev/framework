@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.DotNet.Console
+﻿namespace NativeCode.Core.DotNet.Win32.Console
 {
     public enum RenderMode
     {

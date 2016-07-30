@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.DotNet.Console.Controls
+﻿namespace NativeCode.Core.DotNet.Win32.Console.Controls
 {
     public abstract class Control
     {

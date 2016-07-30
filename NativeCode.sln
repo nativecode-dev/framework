@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Data", "Nat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Packages.Owin", "NativeCode.Packages.Owin\NativeCode.Packages.Owin.csproj", "{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.DotNet.Win32", "NativeCode.Core.DotNet.Win32\NativeCode.Core.DotNet.Win32.csproj", "{AE566659-F4F2-4EB4-A537-8B736DBD876F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE566659-F4F2-4EB4-A537-8B736DBD876F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE566659-F4F2-4EB4-A537-8B736DBD876F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE566659-F4F2-4EB4-A537-8B736DBD876F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE566659-F4F2-4EB4-A537-8B736DBD876F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
