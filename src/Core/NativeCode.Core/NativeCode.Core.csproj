@@ -154,19 +154,19 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Humanizer, Version=2.0.1.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Humanizer.Core.2.0.1\lib\portable-win+net45+wp8+wpa81\Humanizer.dll</HintPath>
+      <HintPath>..\..\packages\Humanizer.Core.2.0.1\lib\portable-win+net45+wp8+wpa81\Humanizer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="JetBrains.Annotations.PCL328, Version=10.1.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.10.1.5\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\JetBrains.Annotations.PCL328.dll</HintPath>
+      <HintPath>..\..\packages\JetBrains.Annotations.10.1.5\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\JetBrains.Annotations.PCL328.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Polly, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
+      <HintPath>..\..\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
