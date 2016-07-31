@@ -3,11 +3,11 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.DotNet.Logging;
-    using NativeCode.Core.DotNet.Platform.Security;
-    using NativeCode.Core.DotNet.Providers;
+    using NativeCode.Core.DotNet.Platform.Connections;
+    using NativeCode.Core.DotNet.Platform.Security.Authentication;
+    using NativeCode.Core.DotNet.Platform.Security.Authorization;
     using NativeCode.Core.Logging;
     using NativeCode.Core.Platform.Connections;
-    using NativeCode.Core.Platform.Security;
     using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Platform.Security.Authorization;
 
@@ -17,6 +17,7 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
+            registrar.Register<IAuthenticationProvider, WindowsAuthenticationProvider>();
             registrar.Register<IAuthenticationProvider, WindowsAuthenticationProvider>(DependencyKey.QualifiedName);
             registrar.Register<IConnectionStringProvider, ConnectionStringProvider>();
             registrar.Register<IHmacSettingsProvider, HmacSettingsProvider>();

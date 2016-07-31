@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JetBrains.Annotations, Version=10.1.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
@@ -47,9 +49,9 @@
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="Platform\DotNetApplication.cs" />
     <Compile Include="Platform\DotNetPlatform.cs" />
-    <Compile Include="Platform\Security\HmacSettingsProvider.cs" />
-    <Compile Include="Providers\ConnectionStringProvider.cs" />
-    <Compile Include="Providers\WindowsAuthenticationProvider.cs" />
+    <Compile Include="Platform\Security\Authorization\HmacSettingsProvider.cs" />
+    <Compile Include="Platform\Connections\ConnectionStringProvider.cs" />
+    <Compile Include="Platform\Security\Authentication\WindowsAuthenticationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

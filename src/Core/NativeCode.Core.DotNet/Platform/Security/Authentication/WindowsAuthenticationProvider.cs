@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.DotNet.Providers
+﻿namespace NativeCode.Core.DotNet.Platform.Security.Authentication
 {
     using System;
     using System.Diagnostics;
@@ -31,7 +31,7 @@
 
                         if (result == AuthenticationResultType.Authenticated && user != null)
                         {
-                            principal = this.CreatePrincipal(user.UserPrincipalName);
+                            principal = new WindowsPrincipal(new WindowsIdentity(user.UserPrincipalName));
                         }
                     }
                 }
@@ -48,11 +48,6 @@
         public bool CanHandle(string login)
         {
             return UserLoginName.IsValid(login, UserLoginNameFormat.UserPrincipalName);
-        }
-
-        public IPrincipal CreatePrincipal(string login)
-        {
-            return new WindowsPrincipal(new WindowsIdentity(login));
         }
 
         private static AuthenticationResultType AuthenticateUser(AuthenticablePrincipal user, string password)

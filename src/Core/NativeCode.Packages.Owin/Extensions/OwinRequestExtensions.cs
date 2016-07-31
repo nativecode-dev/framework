@@ -1,16 +1,16 @@
 ﻿namespace NativeCode.Packages.Owin.Extensions
 {
+    using System.Linq;
+
     using Microsoft.Owin;
 
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Packages.Owin.Authentication;
     using NativeCode.Packages.Owin.Owin;
 
     public static class OwinRequestExtensions
     {
         public static OwinCookie GetCookie(this IOwinRequest request, string name)
         {
-            return DependencyLocator.Resolver.Resolve<OwinCookieAuthentication>().GetCookie(request, name);
+            return new OwinCookie(request.Cookies.SingleOrDefault(c => c.Key == name));
         }
     }
 }

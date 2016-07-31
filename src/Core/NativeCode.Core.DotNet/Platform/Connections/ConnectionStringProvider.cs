@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.DotNet.Providers
+﻿namespace NativeCode.Core.DotNet.Platform.Connections
 {
     using System;
     using System.Configuration;

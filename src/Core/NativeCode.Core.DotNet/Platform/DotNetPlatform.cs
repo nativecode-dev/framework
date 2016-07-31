@@ -2,18 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.DirectoryServices.AccountManagement;
     using System.Linq;
     using System.Reflection;
     using System.Security.Principal;
     using System.Threading;
 
-    using JetBrains.Annotations;
-
     using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Security;
 
     public class DotNetPlatform : Platform
     {
@@ -27,45 +22,6 @@
         public override string DataPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         public override string MachineName => Environment.MachineName;
-
-        public static IEnumerable<string> GetActiveDirectoryGroups([NotNull] IPrincipal principal)
-        {
-            var result = new List<string>();
-
-            if (principal.IsAuthenticated(true))
-            {
-                UserLoginName userLoginName;
-
-                if (UserLoginName.TryParse(principal.Identity.Name, out userLoginName))
-                {
-                    var domain = userLoginName.Domain;
-
-                    if (string.IsNullOrWhiteSpace(domain))
-                    {
-                        var application = DependencyLocator.Resolver.Resolve<IApplication>();
-                        domain = application.Settings.GetValue("Global.DefaultDomain", ".");
-                    }
-
-                    using (var context = new PrincipalContext(ContextType.Domain, domain))
-                    {
-                        using (var user = UserPrincipal.FindByIdentity(context, userLoginName.Login))
-                        {
-                            if (user == null)
-                            {
-                                return result;
-                            }
-
-                            using (var groups = user.GetAuthorizationGroups())
-                            {
-                                result.AddRange(groups.OfType<GroupPrincipal>().Select(item => item.Name));
-                            }
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
 
         public override IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
         {
@@ -81,34 +37,10 @@
         {
             if (string.IsNullOrWhiteSpace(Thread.CurrentPrincipal.Identity.Name))
             {
-                var identity = WindowsIdentity.GetCurrent();
-
-                if (identity != null)
-                {
-                    return new WindowsPrincipal(identity);
-                }
-
-                return ApplicationPrincipal.Anonymous;
+                return new WindowsPrincipal(WindowsIdentity.GetCurrent());
             }
 
             return Thread.CurrentPrincipal;
-        }
-
-        public override IEnumerable<string> GetCurrentRoles()
-        {
-            var principal = this.GetCurrentPrincipal();
-
-            if (principal != null)
-            {
-                return GetActiveDirectoryGroups(principal);
-            }
-
-            return Enumerable.Empty<string>();
-        }
-
-        public override void SetCurrentPrincipal(IPrincipal principal)
-        {
-            Thread.CurrentPrincipal = principal;
         }
     }
 }

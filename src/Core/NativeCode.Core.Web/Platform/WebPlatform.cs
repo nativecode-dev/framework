@@ -40,15 +40,5 @@
 
             return base.GetCurrentPrincipal();
         }
-
-        public override void SetCurrentPrincipal(IPrincipal principal)
-        {
-            if (HttpContext.Current != null)
-            {
-                HttpContext.Current.User = principal;
-            }
-
-            base.SetCurrentPrincipal(principal);
-        }
     }
 }

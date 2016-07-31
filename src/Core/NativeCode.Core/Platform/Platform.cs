@@ -17,7 +17,7 @@
     public abstract class Platform : Disposable, IPlatform
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Platform"/> class.
+        /// Initializes a new instance of the <see cref="Platform" /> class.
         /// </summary>
         /// <param name="container">The container.</param>
         protected Platform(IDependencyContainer container)
@@ -53,10 +53,6 @@
         public abstract IEnumerable<Assembly> GetAssemblies(params string[] prefixes);
 
         public abstract IPrincipal GetCurrentPrincipal();
-
-        public abstract IEnumerable<string> GetCurrentRoles();
-
-        public abstract void SetCurrentPrincipal(IPrincipal principal);
 
         protected override void Dispose(bool disposing)
         {

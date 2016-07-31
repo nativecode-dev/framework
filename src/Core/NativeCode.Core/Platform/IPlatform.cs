@@ -69,17 +69,5 @@
         /// </summary>
         /// <returns>Returns a <see cref="IPrincipal" />.</returns>
         IPrincipal GetCurrentPrincipal();
-
-        /// <summary>
-        /// Gets the current roles.
-        /// </summary>
-        /// <returns>Returns a collection of role names.</returns>
-        IEnumerable<string> GetCurrentRoles();
-
-        /// <summary>
-        /// Sets the current principal.
-        /// </summary>
-        /// <param name="principal">The principal.</param>
-        void SetCurrentPrincipal(IPrincipal principal);
     }
 }

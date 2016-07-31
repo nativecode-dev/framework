@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Net.Http;
+    using System.Web;
 
     public static class HttpHeaders
     {
@@ -53,6 +54,11 @@
         public static string GetRequestSignatureCrypto(this HttpRequestMessage request)
         {
             return request.GetHeaderValue(KeyRequestSignatureCrypto);
+        }
+
+        public static void SetResponseCookie(this HttpResponseMessage response, HttpCookie cookie)
+        {
+            response.Headers.TryAddWithoutValidation(SetCookie, cookie.Value);
         }
     }
 }

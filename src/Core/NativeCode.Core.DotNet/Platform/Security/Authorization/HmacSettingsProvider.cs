@@ -1,10 +1,9 @@
-﻿namespace NativeCode.Core.DotNet.Platform.Security
+﻿namespace NativeCode.Core.DotNet.Platform.Security.Authorization
 {
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using NativeCode.Core.Platform.Security;
     using NativeCode.Core.Platform.Security.Authorization;
 
     public class HmacSettingsProvider : IHmacSettingsProvider

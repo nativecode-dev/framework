@@ -1,6 +1,5 @@
 ﻿namespace NativeCode.Core.Platform.Security.Authentication
 {
-    using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,12 +23,5 @@
         /// <param name="login">The login.</param>
         /// <returns><c>true</c> if this instance can handle the specified login; otherwise, <c>false</c>.</returns>
         bool CanHandle(string login);
-
-        /// <summary>
-        /// Creates the principal.
-        /// </summary>
-        /// <param name="login">The login.</param>
-        /// <returns>Returns a new <see cref="IPrincipal" />.</returns>
-        IPrincipal CreatePrincipal(string login);
     }
 }

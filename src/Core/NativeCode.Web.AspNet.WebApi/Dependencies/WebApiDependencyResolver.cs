@@ -5,6 +5,7 @@
     using System.Web.Http.Dependencies;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Logging;
 
     using IDependencyResolver = System.Web.Http.Dependencies.IDependencyResolver;
 
@@ -12,14 +13,22 @@
     {
         private IDependencyContainer container;
 
-        public WebApiDependencyResolver(IDependencyContainer container)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebApiDependencyResolver" /> class.
+        /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="logger">The logger.</param>
+        public WebApiDependencyResolver(IDependencyContainer container, ILogger logger)
         {
             this.container = container;
+            this.Logger = logger;
         }
+
+        protected ILogger Logger { get; }
 
         public IDependencyScope BeginScope()
         {
-            return new WebApiDependencyResolver(this.container.CreateChildContainer());
+            return new WebApiDependencyResolver(this.container.CreateChildContainer(), this.Logger);
         }
 
         public void Dispose()
@@ -34,8 +43,9 @@
             {
                 return this.container.Resolver.Resolve(serviceType);
             }
-            catch
+            catch (Exception ex)
             {
+                this.Logger.Exception(ex);
                 return null;
             }
         }
@@ -46,8 +56,9 @@
             {
                 return this.container.Resolver.ResolveAll(serviceType);
             }
-            catch
+            catch (Exception ex)
             {
+                this.Logger.Exception(ex);
                 return null;
             }
         }

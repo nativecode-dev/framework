@@ -3,7 +3,7 @@
     using System;
     using System.Web.Security;
 
-    using NativeCode.Core.DotNet.Providers;
+    using NativeCode.Core.DotNet.Platform.Security.Authentication;
 
     public abstract class BaseMembershipProvider : MembershipProvider
     {

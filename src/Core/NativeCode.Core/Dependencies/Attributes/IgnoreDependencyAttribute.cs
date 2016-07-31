@@ -22,7 +22,7 @@
 
         public bool ThrowOnError { get; }
 
-        public static bool ValidateType([ItemCanBeNull] Type type)
+        public static bool ValidateType([NotNull] Type type)
         {
             var attribute = type?.GetTypeInfo().GetCustomAttribute<IgnoreDependencyAttribute>(true);
 

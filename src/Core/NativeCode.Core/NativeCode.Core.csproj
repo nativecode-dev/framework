@@ -24,7 +24,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -34,11 +35,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Messaging\IMessageQueueClient.cs" />
+    <Compile Include="Messaging\IMessageQueueProvider.cs" />
+    <Compile Include="Messaging\QueueConfiguration.cs" />
+    <Compile Include="Messaging\QueueProviderConfiguration.cs" />
     <Compile Include="Platform\Security\Authorization\Exceptions\AuthorizationAssertionException.cs" />
     <Compile Include="Platform\Security\Authorization\ISecurityEvaluator.cs" />
     <Compile Include="Platform\Security\Authorization\ISecurityEvaluatorContext.cs" />
