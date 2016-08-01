@@ -1,9 +1,10 @@
-﻿namespace NativeCode.Core.Types
+﻿namespace NativeCode.Core.Platform.Connections
 {
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     using Humanizer;
 
@@ -11,15 +12,12 @@
 
     public class ConnectionString : DynamicObject
     {
-        private readonly Dictionary<string, string> members = new Dictionary<string, string>();
+        private readonly Dictionary<string, object> members = new Dictionary<string, object>();
 
         private readonly List<Func<string, string>> resolvers = new List<Func<string, string>>();
 
         public ConnectionString()
         {
-            this.resolvers.Add(x => string.Equals(x, "IntegratedSecurity") ? "Integrated Security" : null);
-            this.resolvers.Add(x => string.Equals(x, "MultipleActiveResultSets") ? "MultipleActiveResultSets" : null);
-            this.resolvers.Add(x => string.Equals(x, "TrustedConnection") ? "Trusted_Connection" : null);
         }
 
         public ConnectionString([NotNull] string connectionString)
@@ -28,16 +26,11 @@
             this.Parse(connectionString);
         }
 
-        public string this[string key]
+        public object this[string key]
         {
             get
             {
-                if (this.members.ContainsKey(key))
-                {
-                    return this.members[key];
-                }
-
-                return default(string);
+                return this.members.ContainsKey(key) ? this.members[key] : default(object);
             }
 
             set
@@ -104,7 +97,22 @@
             return base.TrySetMember(binder, null);
         }
 
-        private void Parse([NotNull] string connectionString)
+        protected T GetValue<T>([CallerMemberName] string key = null)
+        {
+            return (T)this[key];
+        }
+
+        protected void Resolver(Func<string, string> resolver)
+        {
+            this.resolvers.Add(resolver);
+        }
+
+        protected void SetValue<T>(T value, [CallerMemberName] string key = null)
+        {
+            this[key] = value;
+        }
+
+        protected void Parse([NotNull] string connectionString)
         {
             var properties = connectionString.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 

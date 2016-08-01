@@ -9,9 +9,9 @@
     {
         public override bool ValidateUser(string username, string password)
         {
-            if (this.Provider.CanHandle(username))
+            if (this.Handler.CanHandle(username))
             {
-                var response = this.Provider.AuthenticateAsync(username, password, CancellationToken.None).Result;
+                var response = this.Handler.AuthenticateAsync(username, password, CancellationToken.None).Result;
 
                 if (response != null && response.Result == AuthenticationResultType.Authenticated)
                 {

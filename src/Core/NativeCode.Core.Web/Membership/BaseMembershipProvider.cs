@@ -7,7 +7,7 @@
 
     public abstract class BaseMembershipProvider : MembershipProvider
     {
-        protected readonly WindowsAuthenticationProvider Provider = new WindowsAuthenticationProvider();
+        protected readonly WindowsAuthenticationHandler Handler = new WindowsAuthenticationHandler();
 
         public override string ApplicationName
         {

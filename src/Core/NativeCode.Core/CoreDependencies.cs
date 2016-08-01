@@ -36,7 +36,7 @@
 
         protected virtual void RegisterPlatform(IDependencyRegistrar registrar)
         {
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationProvider>(), lifetime: DependencyLifetime.PerResolve);
+            registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>(), lifetime: DependencyLifetime.PerResolve);
         }
 
         protected virtual void RegisterSerialization(IDependencyRegistrar registrar)

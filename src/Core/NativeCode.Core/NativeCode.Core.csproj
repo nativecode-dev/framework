@@ -45,6 +45,9 @@
     <Compile Include="Messaging\IMessageQueueProvider.cs" />
     <Compile Include="Messaging\QueueConfiguration.cs" />
     <Compile Include="Messaging\QueueProviderConfiguration.cs" />
+    <Compile Include="Platform\Connections\SqlServerConnectionString.cs" />
+    <Compile Include="Platform\Security\Authentication\AuthenticationProvider.cs" />
+    <Compile Include="Platform\Security\Authentication\IAuthenticationProvider.cs" />
     <Compile Include="Platform\Security\Authorization\Exceptions\AuthorizationAssertionException.cs" />
     <Compile Include="Platform\Security\Authorization\ISecurityEvaluator.cs" />
     <Compile Include="Platform\Security\Authorization\ISecurityEvaluatorContext.cs" />
@@ -134,13 +137,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Platform\Security\Authentication\AuthenticationResult.cs" />
     <Compile Include="Platform\Security\Authentication\AuthenticationResultType.cs" />
-    <Compile Include="Platform\Security\Authentication\IAuthenticationProvider.cs" />
+    <Compile Include="Platform\Security\Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Platform\Connections\IConnectionStringProvider.cs" />
     <Compile Include="Serialization\IStringSerializer.cs" />
     <Compile Include="Serialization\JsonNetStringSerializer.cs" />
     <Compile Include="Settings\JsonSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Types\ConnectionString.cs" />
+    <Compile Include="Platform\Connections\ConnectionString.cs" />
     <Compile Include="Types\Disposable.cs" />
     <Compile Include="Types\DisposableAction.cs" />
     <Compile Include="Types\StreamMonitor.cs" />

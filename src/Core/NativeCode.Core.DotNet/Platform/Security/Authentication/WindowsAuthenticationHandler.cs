@@ -12,7 +12,7 @@
     using NativeCode.Core.Platform.Security;
     using NativeCode.Core.Platform.Security.Authentication;
 
-    public class WindowsAuthenticationProvider : IAuthenticationProvider
+    public class WindowsAuthenticationHandler : IAuthenticationHandler
     {
         public Task<AuthenticationResult> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
         {

@@ -1,10 +1,10 @@
 ﻿namespace NativeCode.Tests.Core.Types
 {
-    using NativeCode.Core.Types;
+    using NativeCode.Core.Platform.Connections;
 
     using Xunit;
 
-    public class WhenUsingConnectionStrings
+    public class WhenUsingSqlServerConnectionStrings
     {
         private const string DefaultConnectionString = "Server=(local); Database=NativeCodeServices; Integrated Security=True; MultipleActiveResultSets=True;";
 
@@ -14,7 +14,7 @@
         public void ParseConnectionString()
         {
             // Arrange, Act
-            var sut = new ConnectionString(DefaultConnectionString);
+            var sut = new SqlServerConnectionString(DefaultConnectionString);
 
             // Assert
             Assert.Equal("(local)", sut["Server"]);
@@ -27,7 +27,7 @@
         public void ShouldCreateConnectionString()
         {
             // Arrange, Act
-            var sut = new ConnectionString(DefaultConnectionString);
+            var sut = new SqlServerConnectionString(DefaultConnectionString);
 
             // Assert
             Assert.Equal(ExpectedConnectionString, sut.ToString());

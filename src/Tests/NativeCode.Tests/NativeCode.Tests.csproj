@@ -73,7 +73,7 @@
     <Compile Include="Core\Extensions\WhenUsingStructExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingTypeExtensions.cs" />
     <Compile Include="Core\Settings\WhenUsingJsonSettingsReader.cs" />
-    <Compile Include="Core\Types\WhenUsingConnectionStrings.cs" />
+    <Compile Include="Core\Types\WhenUsingSqlServerConnectionStrings.cs" />
     <Compile Include="Core\Types\WhenUsingDisposableAction.cs" />
     <Compile Include="DependencyFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

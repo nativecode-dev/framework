@@ -51,7 +51,7 @@
     <Compile Include="Platform\DotNetPlatform.cs" />
     <Compile Include="Platform\Security\Authorization\HmacSettingsProvider.cs" />
     <Compile Include="Platform\Connections\ConnectionStringProvider.cs" />
-    <Compile Include="Platform\Security\Authentication\WindowsAuthenticationProvider.cs" />
+    <Compile Include="Platform\Security\Authentication\WindowsAuthenticationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

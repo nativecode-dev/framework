@@ -17,11 +17,16 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            registrar.Register<IAuthenticationProvider, WindowsAuthenticationProvider>();
-            registrar.Register<IAuthenticationProvider, WindowsAuthenticationProvider>(DependencyKey.QualifiedName);
             registrar.Register<IConnectionStringProvider, ConnectionStringProvider>();
             registrar.Register<IHmacSettingsProvider, HmacSettingsProvider>();
             registrar.Register<ILogWriter, TraceLogWriter>(DependencyKey.QualifiedName);
+        }
+
+        private static void RegisterAuthentication(IDependencyRegistrar registrar)
+        {
+            registrar.Register<IAuthenticationProvider, AuthenticationProvider>();
+            registrar.Register<IAuthenticationHandler, WindowsAuthenticationHandler>(DependencyKey.QualifiedName);
+            registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>());
         }
     }
 }

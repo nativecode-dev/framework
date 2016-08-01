@@ -20,7 +20,7 @@
     public class BasicAuthDelegatingHandler : DelegatingHandler
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BasicAuthDelegatingHandler"/> class.
+        /// Initializes a new instance of the <see cref="BasicAuthDelegatingHandler" /> class.
         /// </summary>
         /// <param name="authentication">The authentication.</param>
         /// <param name="logger">The logger.</param>
