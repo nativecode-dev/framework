@@ -1,10 +1,10 @@
-﻿namespace NativeCode.Packages.Owin.Extensions
+﻿namespace NativeCode.Core.Packages.Owin.Extensions
 {
     using System.Linq;
 
     using Microsoft.Owin;
 
-    using NativeCode.Packages.Owin.Owin;
+    using NativeCode.Core.Packages.Owin.Owin;
 
     public static class OwinRequestExtensions
     {

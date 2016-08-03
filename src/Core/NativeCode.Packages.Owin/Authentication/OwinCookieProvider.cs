@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Packages.Owin.Authentication
+﻿namespace NativeCode.Core.Packages.Owin.Authentication
 {
     using System;
     using System.Web.Security;
@@ -6,9 +6,9 @@
     using Microsoft.Owin;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Packages.Owin.Owin;
     using NativeCode.Core.Serialization;
     using NativeCode.Core.Web.Platform.Providers.Cookies;
-    using NativeCode.Packages.Owin.Owin;
 
     public class OwinCookieProvider<TData> : CookieProvider<IOwinRequest, IOwinResponse, OwinCookie, TData>
     {

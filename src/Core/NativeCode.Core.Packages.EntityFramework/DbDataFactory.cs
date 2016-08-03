@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Packages.Data
+﻿namespace NativeCode.Core.Packages.EntityFramework
 {
     using NativeCode.Core.Data;
 

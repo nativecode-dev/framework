@@ -7,8 +7,8 @@
     <ProjectGuid>{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NativeCode.Packages.Owin</RootNamespace>
-    <AssemblyName>NativeCode.Packages.Owin</AssemblyName>
+    <RootNamespace>NativeCode.Core.Packages.Owin</RootNamespace>
+    <AssemblyName>NativeCode.Core.Packages.Owin</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -68,7 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="NativeCode.Packages.Owin.nuspec" />
+    <None Include="NativeCode.Core.Packages.Owin.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Packages.Owin.Owin
+﻿namespace NativeCode.Core.Packages.Owin.Owin
 {
     using System.Collections.Generic;
 

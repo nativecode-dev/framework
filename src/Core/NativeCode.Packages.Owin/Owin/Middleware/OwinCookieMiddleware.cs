@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Packages.Owin.Owin.Middleware
+﻿namespace NativeCode.Core.Packages.Owin.Owin.Middleware
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
 
     using Microsoft.Owin;
 
-    using NativeCode.Packages.Owin.Extensions;
+    using NativeCode.Core.Packages.Owin.Extensions;
 
     public class OwinCookieMiddleware : OwinMiddleware
     {

@@ -82,17 +82,25 @@
     <Compile Include="WhenTestingApplication.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
+      <Project>{a872f951-9c26-4380-bd6d-ecbcb03e699d}</Project>
+      <Name>NativeCode.Core.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj">
       <Project>{EC619B91-B1DA-4893-8AD6-2D8A2D54B853}</Project>
       <Name>NativeCode.Core.DotNet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.EntityFramework\NativeCode.Core.Packages.EntityFramework.csproj">
+      <Project>{10015b10-a96f-4477-b00f-fd462d1b20c6}</Project>
+      <Name>NativeCode.Core.Packages.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj">
+      <Project>{1bc8ea4d-9a80-47fc-b393-30101f9debc6}</Project>
+      <Name>NativeCode.Core.Packages.Unity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
       <Name>NativeCode.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\NativeCode.Packages\NativeCode.Packages.csproj">
-      <Project>{E6C2ADC9-CB2A-4C0C-B342-B740C637F1BC}</Project>
-      <Name>NativeCode.Packages</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Packages.Owin.Platform
+﻿namespace NativeCode.Core.Packages.Owin.Platform
 {
     using global::Owin;
 

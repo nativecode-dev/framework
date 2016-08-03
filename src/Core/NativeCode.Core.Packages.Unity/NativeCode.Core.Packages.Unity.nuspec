@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<package>
+  <metadata>
+    <id>$id$</id>
+    <authors>NativeCode</authors>
+    <description>Implements the NativeCode.Core dependency container using Unity.</description>
+    <language>en-US</language>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <tags>nativecode</tags>
+    <version>$version$</version>
+  </metadata>
+</package>

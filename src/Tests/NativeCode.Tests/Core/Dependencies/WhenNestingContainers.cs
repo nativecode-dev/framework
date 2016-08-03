@@ -1,7 +1,7 @@
 ﻿namespace NativeCode.Tests.Core.Dependencies
 {
+    using NativeCode.Core.Packages.Unity;
     using NativeCode.Core.Types;
-    using NativeCode.Packages.Dependencies;
 
     using Xunit;
 

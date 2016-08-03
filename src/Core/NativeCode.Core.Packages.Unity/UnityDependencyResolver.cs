@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Packages.Dependencies
+﻿namespace NativeCode.Core.Packages.Unity
 {
     using System;
     using System.Collections.Generic;

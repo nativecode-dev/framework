@@ -1,4 +1,4 @@
-namespace NativeCode.Packages.Dependencies
+namespace NativeCode.Core.Packages.Unity
 {
     using System;
 
@@ -17,9 +17,9 @@ namespace NativeCode.Packages.Dependencies
         }
 
         public override IDependencyRegistrar Register(
-            Type type, 
-            Type implementation, 
-            string key = null, 
+            Type type,
+            Type implementation,
+            string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             this.container.RegisterType(type, implementation, key, this.CreateLifetimeManager(lifetime));
@@ -28,9 +28,9 @@ namespace NativeCode.Packages.Dependencies
         }
 
         public override IDependencyRegistrar RegisterFactory(
-            Type type, 
-            Func<IDependencyResolver, object> factory, 
-            string key = null, 
+            Type type,
+            Func<IDependencyResolver, object> factory,
+            string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             var member = new InjectionFactory(x => factory(new UnityDependencyResolver(x)));

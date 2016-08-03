@@ -21,11 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Web.AspNet.Mvc",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Web", "Core\NativeCode.Core.Web\NativeCode.Core.Web.csproj", "{DDAD0473-9C03-41C1-9BE5-54F94EF9D324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Packages", "Core\NativeCode.Packages\NativeCode.Packages.csproj", "{E6C2ADC9-CB2A-4C0C-B342-B740C637F1BC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Data", "Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj", "{A872F951-9C26-4380-BD6D-ECBCB03E699D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Packages.Owin", "Core\NativeCode.Packages.Owin\NativeCode.Packages.Owin.csproj", "{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Owin", "Core\NativeCode.Packages.Owin\NativeCode.Core.Packages.Owin.csproj", "{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.DotNet.Win32", "Core\NativeCode.Core.DotNet.Win32\NativeCode.Core.DotNet.Win32.csproj", "{AE566659-F4F2-4EB4-A537-8B736DBD876F}"
 EndProject
@@ -34,6 +32,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.DotNet", "Core\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj", "{EC619B91-B1DA-4893-8AD6-2D8A2D54B853}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Rabbit", "Core\NativeCode.Core.Packages.Rabbit\NativeCode.Core.Packages.Rabbit.csproj", "{6ACFCA6E-573B-4852-AA79-72A43F38CC81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{E11C5D6A-8678-407A-B178-D39D8FA618F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.EntityFramework", "Core\NativeCode.Core.Packages.EntityFramework\NativeCode.Core.Packages.EntityFramework.csproj", "{10015B10-A96F-4477-B00F-FD462D1B20C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Unity", "Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj", "{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +65,6 @@ Global
 		{DDAD0473-9C03-41C1-9BE5-54F94EF9D324}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDAD0473-9C03-41C1-9BE5-54F94EF9D324}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDAD0473-9C03-41C1-9BE5-54F94EF9D324}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6C2ADC9-CB2A-4C0C-B342-B740C637F1BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6C2ADC9-CB2A-4C0C-B342-B740C637F1BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6C2ADC9-CB2A-4C0C-B342-B740C637F1BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6C2ADC9-CB2A-4C0C-B342-B740C637F1BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A872F951-9C26-4380-BD6D-ECBCB03E699D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A872F951-9C26-4380-BD6D-ECBCB03E699D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A872F951-9C26-4380-BD6D-ECBCB03E699D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,11 +85,23 @@ Global
 		{6ACFCA6E-573B-4852-AA79-72A43F38CC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ACFCA6E-573B-4852-AA79-72A43F38CC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ACFCA6E-573B-4852-AA79-72A43F38CC81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10015B10-A96F-4477-B00F-FD462D1B20C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10015B10-A96F-4477-B00F-FD462D1B20C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10015B10-A96F-4477-B00F-FD462D1B20C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10015B10-A96F-4477-B00F-FD462D1B20C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{40D8575D-34A0-4B80-87CA-301BC6E19350} = {BC966123-4BA8-49EF-9344-EDDB7F3CD6ED}
+		{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E} = {E11C5D6A-8678-407A-B178-D39D8FA618F3}
+		{6ACFCA6E-573B-4852-AA79-72A43F38CC81} = {E11C5D6A-8678-407A-B178-D39D8FA618F3}
+		{10015B10-A96F-4477-B00F-FD462D1B20C6} = {E11C5D6A-8678-407A-B178-D39D8FA618F3}
+		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6} = {E11C5D6A-8678-407A-B178-D39D8FA618F3}
 	EndGlobalSection
 EndGlobal
