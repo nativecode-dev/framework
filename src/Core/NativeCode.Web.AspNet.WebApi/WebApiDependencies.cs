@@ -29,7 +29,7 @@
         private static void RegisterHandlers(IDependencyRegistrar registrar)
         {
             registrar.Register<DelegatingHandler, BasicAuthDelegatingHandler>(DependencyKey.QualifiedName);
-            registrar.Register<DelegatingHandler, DefaultHeaderKeyDelegatingHandler>(DependencyKey.QualifiedName);
+            registrar.Register<DelegatingHandler, BasicHeaderKeyDelegatingHandler>(DependencyKey.QualifiedName);
 
             registrar.RegisterFactory(resolver => resolver.ResolveAll<DelegatingHandler>());
         }

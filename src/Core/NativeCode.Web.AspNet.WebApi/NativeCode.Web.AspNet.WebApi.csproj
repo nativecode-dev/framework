@@ -55,7 +55,7 @@
     <Compile Include="Filters\ValidateModelFilterAttribute.cs" />
     <Compile Include="Formatters\JsonBrowserMediaTypeFormatter.cs" />
     <Compile Include="Handlers\BasicAuthDelegatingHandler.cs" />
-    <Compile Include="Handlers\DefaultHeaderKeyDelegatingHandler.cs" />
+    <Compile Include="Handlers\BasicHeaderKeyDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebApiDependencies.cs" />
   </ItemGroup>
