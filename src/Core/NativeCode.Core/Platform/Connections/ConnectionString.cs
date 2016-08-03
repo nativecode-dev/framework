@@ -6,9 +6,9 @@
     using System.Linq;
     using System.Runtime.CompilerServices;
 
-    using Humanizer;
-
     using JetBrains.Annotations;
+
+    using NativeCode.Core.Extensions;
 
     public class ConnectionString : DynamicObject
     {
@@ -57,7 +57,7 @@
 
         public static implicit operator string(ConnectionString instance)
         {
-            return object.Equals(instance, null) ? null : instance.ToString();
+            return Equals(instance, null) ? null : instance.ToString();
         }
 
         public static implicit operator ConnectionString(string value)
@@ -143,7 +143,7 @@
             foreach (var property in properties)
             {
                 var parts = property.Split('=');
-                var key = parts[0].Trim().Dehumanize();
+                var key = parts[0].Trim().Replace(" ", string.Empty);
                 var value = parts[1].Trim();
 
                 if (!this.members.ContainsKey(key))

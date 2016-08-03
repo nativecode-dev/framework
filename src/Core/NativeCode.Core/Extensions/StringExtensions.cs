@@ -1,6 +1,7 @@
 ﻿namespace NativeCode.Core.Extensions
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
@@ -100,6 +101,27 @@
         public static string TrimNewLines(this string value, string replacement = "")
         {
             return value.Replace(Environment.NewLine, replacement);
+        }
+
+        public static string AddSpaces(this string value)
+        {
+            var values = new List<string>();
+            var word = string.Empty;
+
+            foreach (var character in value)
+            {
+                if (values.Any() && char.IsUpper(character))
+                {
+                    values.Add(word);
+                    word = string.Empty;
+                }
+
+                word += character;
+            }
+
+            values.Add(word);
+
+            return string.Join(" ", values);
         }
     }
 }

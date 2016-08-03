@@ -7,8 +7,6 @@
     using System.Web;
     using System.Web.Compilation;
 
-    using Humanizer;
-
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
@@ -29,7 +27,7 @@
 
         public virtual string GetApplicationName()
         {
-            return this.GetType().Name.Replace("Application", string.Empty).Humanize(LetterCasing.Title);
+            return this.GetType().Name.Replace("Application", string.Empty);
         }
 
         public virtual string GetApplicationVersion()
