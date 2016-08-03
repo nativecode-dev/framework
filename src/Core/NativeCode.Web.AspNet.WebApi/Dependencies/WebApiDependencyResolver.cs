@@ -69,7 +69,7 @@
             }
 
             this.Logger.Debug($"Ignoring {serviceType.FullName}.");
-            return default(IEnumerable<object>);
+            return new object[0];
         }
 
         protected override void Dispose(bool disposing)
