@@ -40,6 +40,7 @@
             {
                 if (this.IgnoreDependency(serviceType) == false)
                 {
+                    this.Logger.Debug($"Resolving {serviceType.FullName}.");
                     return this.container.Resolver.Resolve(serviceType);
                 }
             }
@@ -48,6 +49,7 @@
                 this.Logger.Exception(ex);
             }
 
+            this.Logger.Debug($"Ignoring {serviceType.FullName}.");
             return default(object);
         }
 
@@ -57,6 +59,7 @@
             {
                 if (this.IgnoreDependency(serviceType) == false)
                 {
+                    this.Logger.Debug($"Resolving {serviceType.FullName}.");
                     return this.container.Resolver.ResolveAll(serviceType);
                 }
             }
@@ -65,6 +68,7 @@
                 this.Logger.Exception(ex);
             }
 
+            this.Logger.Debug($"Ignoring {serviceType.FullName}.");
             return default(IEnumerable<object>);
         }
 
@@ -82,7 +86,6 @@
         {
             if (type != null && string.IsNullOrWhiteSpace(type.Namespace) == false)
             {
-                this.Logger.Debug($"Ignoring {type.FullName}.");
                 return type.Namespace.StartsWith("System.");
             }
 
