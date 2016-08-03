@@ -7,9 +7,6 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
-    using NativeCode.Core.Dependencies.Attributes;
-
-    [Dependency]
     public class ValidateModelFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(HttpActionContext actionContext)

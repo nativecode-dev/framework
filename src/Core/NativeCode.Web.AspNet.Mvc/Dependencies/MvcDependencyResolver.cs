@@ -5,12 +5,13 @@
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Logging;
+    using NativeCode.Core.Types;
 
     using IDependencyResolver = System.Web.Mvc.IDependencyResolver;
 
-    public class MvcDependencyResolver : IDependencyResolver
+    public class MvcDependencyResolver : Disposable, IDependencyResolver
     {
-        private readonly IDependencyContainer container;
+        private IDependencyContainer container;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MvcDependencyResolver" /> class.
@@ -29,26 +30,53 @@
         {
             try
             {
-                return this.container.Resolver.Resolve(serviceType);
+                if (IsFiltered(serviceType) == false)
+                {
+                    return this.container.Resolver.Resolve(serviceType);
+                }
             }
             catch (Exception ex)
             {
                 this.Logger.Exception(ex);
-                return null;
             }
+
+            return default(object);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
             try
             {
-                return this.container.Resolver.ResolveAll(serviceType);
+                if (IsFiltered(serviceType) == false)
+                {
+                    return this.container.Resolver.ResolveAll(serviceType);
+                }
             }
             catch (Exception ex)
             {
                 this.Logger.Exception(ex);
-                return null;
             }
+
+            return default(IEnumerable<object>);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.container != null)
+            {
+                this.container.Dispose();
+                this.container = null;
+            }
+        }
+
+        private static bool IsFiltered(Type type)
+        {
+            if (type != null && string.IsNullOrWhiteSpace(type.Namespace) == false)
+            {
+                return type.Namespace.StartsWith("System.");
+            }
+
+            return false;
         }
     }
 }

@@ -7,10 +7,8 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
-    using NativeCode.Core.Dependencies.Attributes;
     using NativeCode.Core.Platform.Maintenance;
 
-    [Dependency]
     public class MaintenanceFilterAttribute : ActionFilterAttribute
     {
         public MaintenanceFilterAttribute(IMaintainUpgradeState maintenance)

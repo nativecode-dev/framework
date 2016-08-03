@@ -6,10 +6,11 @@
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Logging;
+    using NativeCode.Core.Types;
 
     using IDependencyResolver = System.Web.Http.Dependencies.IDependencyResolver;
 
-    public class WebApiDependencyResolver : IDependencyResolver
+    public class WebApiDependencyResolver : Disposable, IDependencyResolver
     {
         private IDependencyContainer container;
 
@@ -28,65 +29,63 @@
 
         public IDependencyScope BeginScope()
         {
-            return new WebApiDependencyResolver(this.container.CreateChildContainer(), this.Logger);
-        }
+            this.Logger.Debug("Creating new dependency scope.");
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            return new WebApiDependencyResolver(this.container.CreateChildContainer(), this.Logger);
         }
 
         public object GetService(Type serviceType)
         {
-            // Ignoring system types is faster than allowig a resolve exception.
-            if (this.IsFiltered(serviceType))
-            {
-                return null;
-            }
-
             try
             {
-                return this.container.Resolver.Resolve(serviceType);
+                if (IsFiltered(serviceType))
+                {
+                    return this.container.Resolver.Resolve(serviceType);
+                }
             }
             catch (Exception ex)
             {
                 this.Logger.Exception(ex);
-                return null;
             }
+
+            return default(object);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            // Ignoring system types is faster than allowig a resolve exception.
-            if (this.IsFiltered(serviceType))
-            {
-                return null;
-            }
-
             try
             {
-                return this.container.Resolver.ResolveAll(serviceType);
+                if (IsFiltered(serviceType))
+                {
+                    return this.container.Resolver.ResolveAll(serviceType);
+                }
             }
             catch (Exception ex)
             {
                 this.Logger.Exception(ex);
-                return null;
             }
+
+            return default(IEnumerable<object>);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing && this.container != null)
             {
                 this.container.Dispose();
                 this.container = null;
+                this.Logger.Debug("Dependency scope disposed.");
             }
         }
 
-        private bool IsFiltered(Type type)
+        private static bool IsFiltered(Type type)
         {
-            return type.Namespace.StartsWith("System.");
+            if (type != null && string.IsNullOrWhiteSpace(type.Namespace) == false)
+            {
+                return type.Namespace.StartsWith("System.");
+            }
+
+            return false;
         }
     }
 }
