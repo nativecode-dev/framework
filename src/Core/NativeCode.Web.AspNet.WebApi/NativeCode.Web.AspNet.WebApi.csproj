@@ -51,7 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies\WebApiDependencyResolver.cs" />
-    <Compile Include="Filters\ValidateModelAttribute.cs" />
+    <Compile Include="Filters\MaintenanceFilterAttribute.cs" />
+    <Compile Include="Filters\ValidateModelFilterAttribute.cs" />
     <Compile Include="Formatters\JsonBrowserMediaTypeFormatter.cs" />
     <Compile Include="Handlers\BasicAuthDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

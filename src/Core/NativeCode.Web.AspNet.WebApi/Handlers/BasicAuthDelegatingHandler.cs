@@ -9,6 +9,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    using NativeCode.Core.Dependencies.Attributes;
+    using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Logging;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Security.Authentication;
@@ -17,6 +19,8 @@
     /// Delegating handler that provides basic authentication via HTTP.
     /// </summary>
     /// <seealso cref="System.Net.Http.DelegatingHandler" />
+    [Dependency]
+    [Dependency(typeof(DelegatingHandler), DependencyKey.QualifiedName)]
     public class BasicAuthDelegatingHandler : DelegatingHandler
     {
         /// <summary>

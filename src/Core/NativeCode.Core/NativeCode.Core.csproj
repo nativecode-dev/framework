@@ -46,6 +46,9 @@
     <Compile Include="Messaging\QueueConfiguration.cs" />
     <Compile Include="Messaging\QueueProviderConfiguration.cs" />
     <Compile Include="Platform\Connections\SqlServerConnectionString.cs" />
+    <Compile Include="Platform\Maintenance\IMaintainUpgradeState.cs" />
+    <Compile Include="Platform\Maintenance\InMemoryUpgradeState.cs" />
+    <Compile Include="Platform\Maintenance\MaintenanceImmuneAttribute.cs" />
     <Compile Include="Platform\Security\Authentication\AuthenticationProvider.cs" />
     <Compile Include="Platform\Security\Authentication\IAuthenticationProvider.cs" />
     <Compile Include="Platform\Security\Authorization\Exceptions\AuthorizationAssertionException.cs" />

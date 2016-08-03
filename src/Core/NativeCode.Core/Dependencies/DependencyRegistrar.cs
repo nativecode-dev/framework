@@ -39,9 +39,9 @@
         }
 
         public abstract IDependencyRegistrar Register(
-            Type type, 
-            Type implementation, 
-            string key = null, 
+            Type type,
+            Type implementation,
+            string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default);
 
         public IDependencyRegistrar RegisterAssembly(Assembly assembly)
@@ -52,7 +52,13 @@
 
                 foreach (var attribute in attributes)
                 {
-                    this.Register(attribute.Contract, type, attribute.Key, attribute.Lifetime);
+                    if (string.IsNullOrWhiteSpace(attribute.Key) == false)
+                    {
+                        this.Register(attribute.Contract, type, attribute.Key, attribute.Lifetime);
+                        continue;
+                    }
+
+                    this.Register(attribute.Contract, type, GetKeyOverrideString(type, attribute.KeyType), attribute.Lifetime);
                 }
             }
 
@@ -60,8 +66,8 @@
         }
 
         public virtual IDependencyRegistrar RegisterFactory<T>(
-            Func<IDependencyResolver, T> factory, 
-            string key = null, 
+            Func<IDependencyResolver, T> factory,
+            string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             this.InternalRegisterFactory(typeof(T), resolver => factory(resolver), key, lifetime);
@@ -70,9 +76,9 @@
         }
 
         public abstract IDependencyRegistrar RegisterFactory(
-            Type type, 
-            Func<IDependencyResolver, object> factory, 
-            string key = null, 
+            Type type,
+            Func<IDependencyResolver, object> factory,
+            string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default);
 
         public virtual IDependencyRegistrar RegisterInstance<T>(T instance, DependencyLifetime lifetime = default(DependencyLifetime))
@@ -114,7 +120,7 @@
             return key;
         }
 
-        private static string GetKeyOverrideString(Type type, DependencyKey key = DependencyKey.Default)
+        private static string GetKeyOverrideString(Type type, DependencyKey key = DependencyKey.None)
         {
             switch (key)
             {
@@ -153,9 +159,9 @@
         }
 
         private void InternalRegisterFactory(
-            Type type, 
-            Func<IDependencyResolver, object> factory, 
-            string key = null, 
+            Type type,
+            Func<IDependencyResolver, object> factory,
+            string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             if (IgnoreDependencyAttribute.ValidateType(type))

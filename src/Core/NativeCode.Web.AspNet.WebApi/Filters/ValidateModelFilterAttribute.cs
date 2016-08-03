@@ -5,7 +5,10 @@
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
-    public class ValidateModelAttribute : ActionFilterAttribute
+    using NativeCode.Core.Dependencies.Attributes;
+
+    [Dependency]
+    public class ValidateModelFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {

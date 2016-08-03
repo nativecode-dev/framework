@@ -4,6 +4,7 @@
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Localization.Translation;
     using NativeCode.Core.Logging;
+    using NativeCode.Core.Platform.Maintenance;
     using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Serialization;
     using NativeCode.Core.Validation;
@@ -37,6 +38,7 @@
         protected virtual void RegisterPlatform(IDependencyRegistrar registrar)
         {
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>(), lifetime: DependencyLifetime.PerResolve);
+            registrar.Register<IMaintainUpgradeState, InMemoryUpgradeState>();
         }
 
         protected virtual void RegisterSerialization(IDependencyRegistrar registrar)
