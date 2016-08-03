@@ -1,4 +1,4 @@
-namespace NativeCode.Core.Web.Platform.Providers.Cookies
+namespace NativeCode.Core.Web.Platform.Security.Cookies
 {
     using JetBrains.Annotations;
 

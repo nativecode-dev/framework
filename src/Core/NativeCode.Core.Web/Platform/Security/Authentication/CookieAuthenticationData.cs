@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Web.Authentication
+﻿namespace NativeCode.Core.Web.Platform.Security.Authentication
 {
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Platform;

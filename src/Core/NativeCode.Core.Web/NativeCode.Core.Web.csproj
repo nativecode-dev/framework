@@ -55,10 +55,10 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication\CookieAuthenticationData.cs" />
-    <Compile Include="Platform\Providers\Cookies\CookieProvider.cs" />
-    <Compile Include="Platform\Providers\Cookies\HttpContextCookieProvider.cs" />
-    <Compile Include="Platform\Providers\Cookies\HttpMessageCookieProvider.cs" />
+    <Compile Include="Platform\Security\Authentication\CookieAuthenticationData.cs" />
+    <Compile Include="Platform\Security\Cookies\CookieProvider.cs" />
+    <Compile Include="Platform\Security\Cookies\HttpContextCookieProvider.cs" />
+    <Compile Include="Platform\Security\Cookies\HttpMessageCookieProvider.cs" />
     <Compile Include="Caching\HttpRuntimeCache.cs" />
     <Compile Include="Hmac\CanonicalMessage.cs" />
     <Compile Include="Hmac\HmacSignatureAlgorithm.cs" />

@@ -2,7 +2,6 @@
 {
     using System.Threading;
 
-    using NativeCode.Core.Platform.Security;
     using NativeCode.Core.Platform.Security.Authentication;
 
     public class WindowsMembershipProvider : BaseMembershipProvider

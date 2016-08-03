@@ -47,6 +47,7 @@
     <Compile Include="Messaging\QueueConfiguration.cs" />
     <Compile Include="Messaging\QueueProviderConfiguration.cs" />
     <Compile Include="Platform\Connections\SqlServerConnectionString.cs" />
+    <Compile Include="Platform\FileSystem\IFileSystem.cs" />
     <Compile Include="Platform\Maintenance\IMaintainUpgradeState.cs" />
     <Compile Include="Platform\Maintenance\InMemoryUpgradeState.cs" />
     <Compile Include="Platform\Maintenance\MaintenanceImmuneAttribute.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="Localization\Translation\Attributes\TranslateAttribute.cs" />
     <Compile Include="Localization\Translation\IObjectTranslator.cs" />
     <Compile Include="Localization\Translation\ObjectTranslator.cs" />
+    <Compile Include="Platform\Security\KeyManagement\DefaultKeyManager.cs" />
+    <Compile Include="Platform\Security\KeyManagement\IKeyManager.cs" />
     <Compile Include="Serialization\LowerScoreContractResolver.cs" />
     <Compile Include="Types\Retry.cs" />
     <Compile Include="Localization\Translation\TranslationProvider.cs">

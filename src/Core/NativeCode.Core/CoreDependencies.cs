@@ -6,6 +6,7 @@
     using NativeCode.Core.Logging;
     using NativeCode.Core.Platform.Maintenance;
     using NativeCode.Core.Platform.Security.Authentication;
+    using NativeCode.Core.Platform.Security.KeyManagement;
     using NativeCode.Core.Serialization;
     using NativeCode.Core.Validation;
 
@@ -39,6 +40,7 @@
         {
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>(), lifetime: DependencyLifetime.PerResolve);
             registrar.Register<IMaintainUpgradeState, InMemoryUpgradeState>();
+            registrar.Register<IKeyManager, DefaultKeyManager>();
         }
 
         protected virtual void RegisterSerialization(IDependencyRegistrar registrar)

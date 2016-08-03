@@ -8,7 +8,7 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Packages.Owin.Owin;
     using NativeCode.Core.Serialization;
-    using NativeCode.Core.Web.Platform.Providers.Cookies;
+    using NativeCode.Core.Web.Platform.Security.Cookies;
 
     public class OwinCookieProvider<TData> : CookieProvider<IOwinRequest, IOwinResponse, OwinCookie, TData>
     {

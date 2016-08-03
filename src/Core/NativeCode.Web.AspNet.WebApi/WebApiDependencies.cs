@@ -22,12 +22,15 @@
         {
             registrar.Register<ActionFilterAttribute, MaintenanceFilterAttribute>(DependencyKey.QualifiedName);
             registrar.Register<ActionFilterAttribute, ValidateModelFilterAttribute>(DependencyKey.QualifiedName);
+
             registrar.RegisterFactory(resolver => resolver.ResolveAll<ActionFilterAttribute>());
         }
 
         private static void RegisterHandlers(IDependencyRegistrar registrar)
         {
             registrar.Register<DelegatingHandler, BasicAuthDelegatingHandler>(DependencyKey.QualifiedName);
+            registrar.Register<DelegatingHandler, DefaultHeaderKeyDelegatingHandler>(DependencyKey.QualifiedName);
+
             registrar.RegisterFactory(resolver => resolver.ResolveAll<DelegatingHandler>());
         }
     }

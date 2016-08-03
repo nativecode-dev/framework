@@ -50,6 +50,7 @@
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="Platform\DotNetApplication.cs" />
     <Compile Include="Platform\DotNetPlatform.cs" />
+    <Compile Include="Platform\FileSystem\DotNetFileSystem.cs" />
     <Compile Include="Platform\Security\Authorization\HmacSettingsProvider.cs" />
     <Compile Include="Platform\Connections\ConnectionStringProvider.cs" />
     <Compile Include="Platform\Security\Authentication\WindowsAuthenticationHandler.cs" />
