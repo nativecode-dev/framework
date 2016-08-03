@@ -20,7 +20,12 @@
         private readonly IPlatform platform;
 
         protected DbDataContext(IConnectionStringProvider provider, IPlatform platform)
-            : base(provider.GetDefaultConnectionString().ToString())
+            : this(provider.GetDefaultConnectionString().ToString(), platform)
+        {
+        }
+
+        protected DbDataContext(string connectionString, IPlatform platform)
+            : base(connectionString)
         {
             this.interceptors.Add(this.UpdateAuditProperties);
             this.interceptors.Add(UpdateKeyProperties);
