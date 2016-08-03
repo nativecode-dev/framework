@@ -39,6 +39,12 @@
 
         public object GetService(Type serviceType)
         {
+            // Ignoring system types is faster than allowig a resolve exception.
+            if (this.IsFiltered(serviceType))
+            {
+                return null;
+            }
+
             try
             {
                 return this.container.Resolver.Resolve(serviceType);
@@ -52,6 +58,12 @@
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
+            // Ignoring system types is faster than allowig a resolve exception.
+            if (this.IsFiltered(serviceType))
+            {
+                return null;
+            }
+
             try
             {
                 return this.container.Resolver.ResolveAll(serviceType);
@@ -70,6 +82,11 @@
                 this.container.Dispose();
                 this.container = null;
             }
+        }
+
+        private bool IsFiltered(Type type)
+        {
+            return type.Namespace.StartsWith("System.");
         }
     }
 }
