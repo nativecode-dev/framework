@@ -5,7 +5,6 @@ namespace NativeCode.Core.DotNet.Win32.Console
 
     using Microsoft.Win32.SafeHandles;
 
-    using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
     using NativeCode.Core.Types;
@@ -13,7 +12,16 @@ namespace NativeCode.Core.DotNet.Win32.Console
 
     public class BufferHandle : Disposable
     {
-        public BufferHandle(RendererOptions settings, SafeFileHandle handle, bool ownHandle = true)
+        public BufferHandle(RendererOptions settings, SafeFileHandle handle)
+        {
+            this.Handle = handle;
+            this.OwnHandle = true;
+            this.Settings = settings;
+
+            this.ConfigureBufferHandle();
+        }
+
+        public BufferHandle(RendererOptions settings, SafeFileHandle handle, bool ownHandle)
         {
             this.Handle = handle;
             this.OwnHandle = ownHandle;
@@ -70,12 +78,17 @@ namespace NativeCode.Core.DotNet.Win32.Console
             }
         }
 
-        public void Write(char character, bool moveCursor = false, Color color = Color.ForegroundGreen)
+        public void Write(char character)
         {
-            this.Write(character.ToString(), moveCursor, color);
+            this.Write(character.ToString(), false, Color.ForegroundGreen);
         }
 
-        public void Write(string text, bool moveCursor = false, Color color = Color.ForegroundGreen)
+        public void Write(char character, bool moveCursor)
+        {
+            this.Write(character.ToString(), moveCursor, Color.ForegroundGreen);
+        }
+
+        public void Write(string text, bool moveCursor, Color color)
         {
             var info = this.GetScreenBufferInfo();
             var rect = new SmallRect(info.CursorPosition.X, info.CursorPosition.Y, info.CursorPosition.X + text.Length, info.CursorPosition.Y + 1);
@@ -103,13 +116,10 @@ namespace NativeCode.Core.DotNet.Win32.Console
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && !this.Disposed)
+            if (disposing && !this.Disposed && this.OwnHandle && this.Handle != null)
             {
-                if (this.OwnHandle && this.Handle != null)
-                {
-                    this.Handle.Dispose();
-                    this.Handle = null;
-                }
+                this.Handle.Dispose();
+                this.Handle = null;
             }
 
             base.Dispose(disposing);
@@ -159,9 +169,9 @@ namespace NativeCode.Core.DotNet.Win32.Console
             var current = new ConsoleFontInfoEx { Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
             var updated = new ConsoleFontInfoEx
                               {
-                                  FontFamily = 0, 
-                                  FontSize = new Coord(12, 12), 
-                                  FontWeight = 0, 
+                                  FontFamily = 0,
+                                  FontSize = new Coord(12, 12),
+                                  FontWeight = 0,
                                   Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>()
                               };
 

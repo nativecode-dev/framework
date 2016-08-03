@@ -5,6 +5,11 @@
 
     public abstract class DataFactory : IDataFactory
     {
+        public TEntity Create<TEntity, TKey>(TKey key) where TEntity : class, IEntity<TKey>, new() where TKey : struct
+        {
+            return this.Create<TEntity, TKey>(key, null);
+        }
+
         public virtual TEntity Create<TEntity, TKey>(TKey key, Action<TEntity> setter) where TEntity : class, IEntity<TKey>, new() where TKey : struct
         {
             var entity = new TEntity();

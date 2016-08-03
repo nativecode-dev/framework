@@ -6,7 +6,6 @@
 
     using Microsoft.Win32.SafeHandles;
 
-    using NativeCode.Core.DotNet.Win32;
     using NativeCode.Core.DotNet.Win32.Enums;
     using NativeCode.Core.DotNet.Win32.Exceptions;
     using NativeCode.Core.DotNet.Win32.Structs;
@@ -19,8 +18,6 @@
         private const EFileAccess DefaultFileAccess = EFileAccess.GenericRead | EFileAccess.GenericWrite;
 
         private const EFileShare DefaultFileShare = EFileShare.Read | EFileShare.Write;
-
-        private readonly TContext context = new TContext();
 
         protected Renderer(RendererOptions settings)
         {
@@ -44,6 +41,8 @@
         public RenderMode Mode { get; private set; }
 
         public RendererOptions Settings { get; }
+
+        protected TContext Context { get; } = new TContext();
 
         public void Execute(ConsoleKeyInfo key)
         {
@@ -70,28 +69,33 @@
                     buffer = this.BackBuffer;
                 }
 
-                this.context.LastRenderStart = DateTimeOffset.UtcNow;
-                this.RenderSetup(this.context);
-                this.RenderView(this.context, buffer);
+                this.Context.LastRenderStart = DateTimeOffset.UtcNow;
+                this.RenderSetup();
+                this.RenderView(buffer);
 
-                if (this.Mode == RenderMode.Rendering && this.context.IsDirty)
+                if (this.Mode == RenderMode.Rendering && this.Context.IsDirty)
                 {
                     this.Flip();
                 }
             }
             catch (Exception ex)
             {
-                this.context.Exceptions.Add(ex);
+                this.Context.Exceptions.Add(ex);
                 Debug.WriteLine(ex.Stringify());
             }
             finally
             {
-                this.RenderComplete(this.context);
-                this.context.LastRenderStop = DateTimeOffset.UtcNow;
+                this.RenderComplete();
+                this.Context.LastRenderStop = DateTimeOffset.UtcNow;
             }
         }
 
-        public void SetMode(RenderMode mode, bool force = false)
+        public void SetMode(RenderMode mode)
+        {
+            this.SetMode(mode, false);
+        }
+
+        public void SetMode(RenderMode mode, bool force)
         {
             if (this.Mode != mode || force)
             {
@@ -201,11 +205,11 @@
             }
         }
 
-        protected abstract void RenderComplete(TContext context);
+        protected abstract void RenderComplete();
 
-        protected abstract void RenderSetup(TContext context);
+        protected abstract void RenderSetup();
 
-        protected abstract void RenderView(TContext context, BufferHandle buffer);
+        protected abstract void RenderView(BufferHandle buffer);
 
         protected void UpdateCursorPosition()
         {
@@ -263,7 +267,12 @@
             }
         }
 
-        private BufferHandle CreateBuffer(SafeFileHandle handle, bool ownHandle = true)
+        private BufferHandle CreateBuffer(SafeFileHandle handle)
+        {
+            return new BufferHandle(this.Settings, handle, true);
+        }
+
+        private BufferHandle CreateBuffer(SafeFileHandle handle, bool ownHandle)
         {
             return new BufferHandle(this.Settings, handle, ownHandle);
         }
