@@ -7,13 +7,15 @@
     {
         private static int counter;
 
-        public static IDependencyResolver Resolver { get; private set; }
+        public static IDependencyContainer RootContainer { get; private set; }
+
+        public static IDependencyResolver Resolver => RootContainer.Resolver;
 
         public static void SetRootContainer(IDependencyContainer container)
         {
             if (Interlocked.CompareExchange(ref counter, 1, 0) == 0)
             {
-                Resolver = container.Resolver;
+                RootContainer = container;
             }
             else
             {
