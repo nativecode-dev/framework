@@ -2,6 +2,8 @@
 {
     using System.Net;
     using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
@@ -12,10 +14,31 @@
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            if (actionContext.ModelState.IsValid == false)
+            if (this.ValidateModelState(actionContext))
             {
-                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, actionContext.ModelState);
+                base.OnActionExecuting(actionContext);
             }
+        }
+
+        public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
+        {
+            if (this.ValidateModelState(actionContext))
+            {
+                return Task.FromResult(0);
+            }
+
+            return base.OnActionExecutingAsync(actionContext, cancellationToken);
+        }
+
+        private bool ValidateModelState(HttpActionContext context)
+        {
+            if (context.ModelState.IsValid == false)
+            {
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.BadRequest, context.ModelState);
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -4,7 +4,6 @@
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
 
@@ -23,26 +22,23 @@
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            this.ValidateMaintenance(actionContext.ActionDescriptor);
+            this.ValidateMaintenance(actionContext);
             base.OnActionExecuting(actionContext);
         }
 
         public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            this.ValidateMaintenance(actionContext.ActionDescriptor);
+            this.ValidateMaintenance(actionContext);
             return base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
 
-        private void ValidateMaintenance(HttpActionDescriptor action)
+        private void ValidateMaintenance(HttpActionContext context)
         {
-            var immune = action.GetCustomAttributes<MaintenanceImmuneAttribute>();
+            var immune = context.ActionDescriptor.GetCustomAttributes<MaintenanceImmuneAttribute>();
 
             if (immune == null && this.Maintenance.Active)
             {
-                var response = new HttpResponseMessage(HttpStatusCode.TemporaryRedirect);
-
-                // TODO: Set the reponse header location.
-                throw new HttpResponseException(response);
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.TemporaryRedirect, "Site has maintenance mode enabled.");
             }
         }
     }

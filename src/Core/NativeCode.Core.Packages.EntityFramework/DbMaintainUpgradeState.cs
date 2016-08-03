@@ -57,10 +57,20 @@
 
         protected bool HasPendingMigrations(string connectionString, string providerName = "System.Data.SqlClient")
         {
-            var configuration = new DbMigrationsConfiguration<T> { TargetDatabase = new DbConnectionInfo(connectionString, providerName) };
-            var migration = new DbMigrator(configuration);
+            this.Logger.Informational($"Checking for pending migrations using ({connectionString}) with [{providerName}].");
 
-            return migration.GetPendingMigrations().Any();
+            try
+            {
+                var configuration = new DbMigrationsConfiguration<T> { TargetDatabase = new DbConnectionInfo(connectionString, providerName) };
+                var migration = new DbMigrator(configuration);
+
+                return migration.GetPendingMigrations().Any();
+            }
+            catch (Exception ex)
+            {
+                this.Logger.Exception(ex);
+                return false;
+            }
         }
     }
 }
