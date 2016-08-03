@@ -64,7 +64,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ApplicationFixture.cs" />
     <Compile Include="Core\Dependencies\WhenNestingContainers.cs" />
     <Compile Include="Core\Extensions\WhenUsingExceptionExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingEnumerableExtensions.cs" />
@@ -79,7 +78,6 @@
     <Compile Include="DependencyFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhenTesting.cs" />
-    <Compile Include="WhenTestingApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj">

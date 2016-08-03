@@ -7,11 +7,12 @@
     using Microsoft.Owin.Hosting;
 
     using NativeCode.Core.Platform;
+    using NativeCode.Core.Settings;
 
     public class OwinApplication : Application
     {
-        public OwinApplication(IPlatform platform)
-            : base(platform)
+        public OwinApplication(IPlatform platform, Settings settings)
+            : base(platform, settings)
         {
         }
 

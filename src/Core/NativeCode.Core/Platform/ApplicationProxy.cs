@@ -23,14 +23,16 @@
         /// Initializes a new instance of the <see cref="ApplicationProxy" /> class.
         /// </summary>
         /// <param name="platform">The platform.</param>
-        public ApplicationProxy(IPlatform platform)
+        /// <param name="settings">The settings.</param>
+        public ApplicationProxy(IPlatform platform, Settings settings)
         {
             this.Platform = platform;
+            this.Settings = settings;
         }
 
         public IPlatform Platform { get; private set; }
 
-        public Settings Settings { get; } = new JsonSettings();
+        public Settings Settings { get; }
 
         protected bool Disposed { get; private set; }
 

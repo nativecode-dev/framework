@@ -14,11 +14,6 @@
     public interface IApplication : IDisposable
     {
         /// <summary>
-        /// Gets the platform.
-        /// </summary>
-        IPlatform Platform { get; }
-
-        /// <summary>
         /// Gets the settings.
         /// </summary>
         Settings Settings { get; }

@@ -67,7 +67,6 @@
     <Compile Include="Membership\WindowsMembershipProvider.cs" />
     <Compile Include="Membership\WindowsMembershipRoleProvider.cs" />
     <Compile Include="Membership\BaseMembershipRoleProvider.cs" />
-    <Compile Include="Platform\IWebApplication.cs" />
     <Compile Include="Platform\WebPlatform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Platform\WebApplication.cs" />
