@@ -12,18 +12,27 @@
 
     public class ConnectionString : DynamicObject
     {
-        private readonly Dictionary<string, object> members = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> members;
 
-        private readonly List<Func<string, string>> resolvers = new List<Func<string, string>>();
+        private readonly List<Func<string, string>> resolvers;
 
         public ConnectionString()
         {
+            this.members = new Dictionary<string, object>();
+            this.resolvers = new List<Func<string, string>>();
         }
 
         public ConnectionString([NotNull] string connectionString)
-            : this()
         {
+            this.members = new Dictionary<string, object>();
+            this.resolvers = new List<Func<string, string>>();
             this.Parse(connectionString);
+        }
+
+        public ConnectionString([NotNull] ConnectionString connectionString)
+        {
+            this.members = connectionString.members;
+            this.resolvers = connectionString.resolvers;
         }
 
         public object this[string key]
@@ -44,6 +53,21 @@
                     this.members.Add(key, value);
                 }
             }
+        }
+
+        public static implicit operator string(ConnectionString instance)
+        {
+            return object.Equals(instance, null) ? null : instance.ToString();
+        }
+
+        public static implicit operator ConnectionString(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return new ConnectionString();
+            }
+
+            return new ConnectionString(value);
         }
 
         public override IEnumerable<string> GetDynamicMemberNames()

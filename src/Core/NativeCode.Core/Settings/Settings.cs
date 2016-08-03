@@ -8,10 +8,8 @@
 
     using JetBrains.Annotations;
 
-    using NativeCode.Core.Dependencies.Attributes;
     using NativeCode.Core.Extensions;
 
-    [IgnoreDependency("Settings must always be manually constructed for parameter variance.")]
     public abstract class Settings
     {
         protected Settings()
@@ -38,12 +36,23 @@
             }
         }
 
-        public T GetValue<T>([NotNull] string name, T defaultValue = default(T))
+        public T GetValue<T>([NotNull] string name, T defaultValue = default(T), bool saveWhenDefault = false)
         {
             if (this.IsPath(name))
             {
                 var path = name.Split(this.PathSeparator);
+
+                if (saveWhenDefault)
+                {
+                    this.WriteValue(path, defaultValue, true);
+                }
+
                 return this.ReadValue(path, defaultValue);
+            }
+
+            if (saveWhenDefault)
+            {
+                this.WriteValue(name, defaultValue, true);
             }
 
             return this.ReadValue(name, defaultValue);
@@ -66,10 +75,10 @@
 
         protected abstract IEnumerable<string> GetKeys();
 
-        protected T GetMemberValue<T>(T defaultValue = default(T), [CallerMemberName] string name = null)
+        protected T GetMemberValue<T>(T defaultValue = default(T), [CallerMemberName] string name = null, bool saveWhenDefault = false)
         {
             var key = this.GetPrefixKey(name);
-            return this.GetValue(key, defaultValue);
+            return this.GetValue(key, defaultValue, saveWhenDefault);
         }
 
         protected string GetPrefixKey(string name)

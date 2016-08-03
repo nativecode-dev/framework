@@ -38,6 +38,7 @@
       <HintPath>..\..\packages\JetBrains.Annotations.10.1.5\lib\net\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
@@ -53,6 +54,7 @@
     <Compile Include="Platform\Connections\ConnectionStringProvider.cs" />
     <Compile Include="Platform\Security\Authentication\WindowsAuthenticationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\ConfigurationSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
