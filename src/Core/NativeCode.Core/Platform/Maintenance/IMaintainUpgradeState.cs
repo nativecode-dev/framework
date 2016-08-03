@@ -11,20 +11,15 @@
         bool Active { get; }
 
         /// <summary>
-        /// Enters the maintenance.
+        /// Enters maintenance mode.
         /// </summary>
-        void EnterMaintenance();
+        /// <returns>Returns maintenance key.</returns>
+        string EnterMaintenance();
 
         /// <summary>
-        /// Exits the maintenance.
+        /// Exits maintenance mode.
         /// </summary>
         /// <param name="key">The key.</param>
         void ExitMaintenance(string key);
-
-        /// <summary>
-        /// Generates the maintenance key.
-        /// </summary>
-        /// <returns>Returns a maintenance key.</returns>
-        string GenerateMaintenanceKey();
     }
 }

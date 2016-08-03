@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DbDataContext.cs" />
     <Compile Include="DbDataFactory.cs" />
+    <Compile Include="DbMaintainUpgradeState.cs" />
     <Compile Include="DbRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

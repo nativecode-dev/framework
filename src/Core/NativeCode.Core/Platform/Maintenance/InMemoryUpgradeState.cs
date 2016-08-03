@@ -19,23 +19,25 @@
         /// </summary>
         public string MaintenanceKey => generated;
 
-        public void EnterMaintenance()
+        public string EnterMaintenance()
         {
             if (Interlocked.CompareExchange(ref state, 1, 1) == 0)
             {
                 generated = this.GenerateMaintenanceKey();
             }
+
+            return generated;
         }
 
         public void ExitMaintenance(string key)
         {
             if (Interlocked.CompareExchange(ref state, 0, 0) == 1 && key == generated)
             {
-                key = null;
+                generated = null;
             }
         }
 
-        public virtual string GenerateMaintenanceKey()
+        protected virtual string GenerateMaintenanceKey()
         {
             return Guid.NewGuid().ToString();
         }
