@@ -38,7 +38,7 @@
         {
             try
             {
-                if (IsFiltered(serviceType) == false)
+                if (this.IgnoreDependency(serviceType) == false)
                 {
                     return this.container.Resolver.Resolve(serviceType);
                 }
@@ -55,7 +55,7 @@
         {
             try
             {
-                if (IsFiltered(serviceType) == false)
+                if (this.IgnoreDependency(serviceType) == false)
                 {
                     return this.container.Resolver.ResolveAll(serviceType);
                 }
@@ -78,10 +78,11 @@
             }
         }
 
-        private static bool IsFiltered(Type type)
+        protected virtual bool IgnoreDependency(Type type)
         {
             if (type != null && string.IsNullOrWhiteSpace(type.Namespace) == false)
             {
+                this.Logger.Debug($"Ignoring {type.FullName}.");
                 return type.Namespace.StartsWith("System.");
             }
 
