@@ -38,7 +38,7 @@
         {
             try
             {
-                if (IsFiltered(serviceType))
+                if (IsFiltered(serviceType) == false)
                 {
                     return this.container.Resolver.Resolve(serviceType);
                 }
@@ -55,7 +55,7 @@
         {
             try
             {
-                if (IsFiltered(serviceType))
+                if (IsFiltered(serviceType) == false)
                 {
                     return this.container.Resolver.ResolveAll(serviceType);
                 }
