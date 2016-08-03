@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Web", "Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Data", "Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj", "{A872F951-9C26-4380-BD6D-ECBCB03E699D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Owin", "Core\NativeCode.Packages.Owin\NativeCode.Core.Packages.Owin.csproj", "{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Owin", "Core\NativeCode.Core.Packages.Owin\NativeCode.Core.Packages.Owin.csproj", "{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.DotNet.Win32", "Core\NativeCode.Core.DotNet.Win32\NativeCode.Core.DotNet.Win32.csproj", "{AE566659-F4F2-4EB4-A537-8B736DBD876F}"
 EndProject
