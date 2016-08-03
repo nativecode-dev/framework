@@ -58,6 +58,10 @@
       <Project>{a872f951-9c26-4380-bd6d-ecbcb03e699d}</Project>
       <Name>NativeCode.Core.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj">
+      <Project>{EC619B91-B1DA-4893-8AD6-2D8A2D54B853}</Project>
+      <Name>NativeCode.Core.DotNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
       <Name>NativeCode.Core</Name>

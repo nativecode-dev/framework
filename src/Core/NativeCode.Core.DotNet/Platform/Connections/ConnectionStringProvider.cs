@@ -4,10 +4,14 @@
     using System.Configuration;
 
     using NativeCode.Core.Platform.Connections;
-    using NativeCode.Core.Types;
 
     public class ConnectionStringProvider : IConnectionStringProvider
     {
+        public ConnectionString GetConnectionString<T>()
+        {
+            return this.GetConnectionString(typeof(T).Name);
+        }
+
         public virtual ConnectionString GetConnectionString(string name)
         {
             foreach (ConnectionStringSettings connectionString in ConfigurationManager.ConnectionStrings)

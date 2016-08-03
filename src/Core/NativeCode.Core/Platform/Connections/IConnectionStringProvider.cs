@@ -1,12 +1,17 @@
 ﻿namespace NativeCode.Core.Platform.Connections
 {
-    using NativeCode.Core.Types;
-
     /// <summary>
     /// Provides a contract to return a <see cref="ConnectionString" /> instance.
     /// </summary>
     public interface IConnectionStringProvider
     {
+        /// <summary>
+        /// Gets the connection string.
+        /// </summary>
+        /// <typeparam name="T">The type to name.</typeparam>
+        /// <returns>Returns the named <see cref="ConnectionString" />.</returns>
+        ConnectionString GetConnectionString<T>();
+
         /// <summary>
         /// Gets the connection string.
         /// </summary>
