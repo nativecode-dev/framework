@@ -8,12 +8,13 @@
     using System.Web.Compilation;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
 
     public abstract class WebApplication : HttpApplication, IWebApplication
     {
-        public IPlatform Platform { get; private set; }
+        public IPlatform Platform => this.ApplicationProxy.Platform;
 
         public Settings Settings => this.ApplicationProxy?.Settings;
 
@@ -32,7 +33,7 @@
 
         public virtual string GetApplicationVersion()
         {
-            return null;
+            return this.GetType().Assembly.GetVersion();
         }
 
         public virtual void Initialize(string name, params IDependencyModule[] modules)
@@ -42,7 +43,7 @@
 
         public virtual void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
-            this.ApplicationProxy = new ApplicationProxy(this.CreatePlatform());
+            this.ApplicationProxy = new ApplicationProxy(this.Platform);
             this.ApplicationProxy.Initialize(name, assemblies.Where(this.CanIncludeAssembly), modules);
         }
 
@@ -57,10 +58,10 @@
         {
             if (disposing)
             {
-                if (this.Platform != null)
+                if (this.ApplicationProxy != null)
                 {
-                    this.Platform.Dispose();
-                    this.Platform = null;
+                    this.ApplicationProxy.Dispose();
+                    this.ApplicationProxy = null;
                 }
 
                 base.Dispose();
