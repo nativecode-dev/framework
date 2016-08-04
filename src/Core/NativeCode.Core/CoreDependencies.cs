@@ -32,7 +32,7 @@
         protected virtual void RegisterLogging(IDependencyRegistrar registrar)
         {
             registrar.Register<ILogger, Logger>();
-            registrar.Register<ILogWriter, InMemoryLogWriter>(DependencyKey.QualifiedName);
+            registrar.Register<ILogWriter, NullLogWriter>(DependencyKey.QualifiedName);
             registrar.RegisterFactory(resolver => resolver.ResolveAll<ILogWriter>(), lifetime: DependencyLifetime.PerResolve);
         }
 
