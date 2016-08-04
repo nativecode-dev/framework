@@ -9,10 +9,10 @@
     using NativeCode.Core.Platform.Connections;
     using NativeCode.Core.Platform.Maintenance;
 
-    public class DbMaintainUpgradeState<T> : IMaintainUpgradeState
+    public class DbMaintenanceProvider<T> : IMaintenanceProvider
         where T : DbDataContext
     {
-        public DbMaintainUpgradeState(IConnectionStringProvider connections, ILogger logger)
+        public DbMaintenanceProvider(IConnectionStringProvider connections, ILogger logger)
         {
             this.Logger = logger;
 
@@ -22,10 +22,9 @@
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether this <see cref="IMaintainUpgradeState" /> is maintenance.
-        /// </summary>
         public bool Active { get; private set; }
+
+        public string Name => $"DbContext: {typeof(T).FullName}";
 
         protected ILogger Logger { get; }
 

@@ -16,39 +16,41 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            this.RegisterPlatform(registrar);
-            this.RegisterLocalization(registrar);
-            this.RegisterLogging(registrar);
-            this.RegisterSerialization(registrar);
-            this.RegisterValidation(registrar);
+            RegisterPlatform(registrar);
+            RegisterLocalization(registrar);
+            RegisterLogging(registrar);
+            RegisterSerialization(registrar);
+            RegisterValidation(registrar);
         }
 
-        protected virtual void RegisterLocalization(IDependencyRegistrar registrar)
+        private static void RegisterLocalization(IDependencyRegistrar registrar)
         {
             registrar.Register<ITranslator, Translator>();
-            registrar.Register<ITranslationProvider, TranslationProvider>(lifetime: DependencyLifetime.PerApplication);
+            registrar.Register<ITranslationProvider, TranslationProvider>();
         }
 
-        protected virtual void RegisterLogging(IDependencyRegistrar registrar)
+        private static void RegisterLogging(IDependencyRegistrar registrar)
         {
             registrar.Register<ILogger, Logger>();
             registrar.Register<ILogWriter, NullLogWriter>(DependencyKey.QualifiedName);
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<ILogWriter>(), lifetime: DependencyLifetime.PerResolve);
+
+            registrar.RegisterFactory(resolver => resolver.ResolveAll<ILogWriter>());
         }
 
-        protected virtual void RegisterPlatform(IDependencyRegistrar registrar)
+        private static void RegisterPlatform(IDependencyRegistrar registrar)
         {
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>(), lifetime: DependencyLifetime.PerResolve);
-            registrar.Register<IMaintainUpgradeState, InMemoryUpgradeState>();
-            registrar.Register<IKeyManager, DefaultKeyManager>();
+            registrar.Register<IKeyManager, KeyManager>();
+
+            registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>());
+            registrar.RegisterFactory(resolver => resolver.ResolveAll<IMaintenanceProvider>());
         }
 
-        protected virtual void RegisterSerialization(IDependencyRegistrar registrar)
+        private static void RegisterSerialization(IDependencyRegistrar registrar)
         {
             registrar.Register<IStringSerializer, JsonNetStringSerializer>();
         }
 
-        protected virtual void RegisterValidation(IDependencyRegistrar registrar)
+        private static void RegisterValidation(IDependencyRegistrar registrar)
         {
             registrar.Register<IObjectValidator, StringComplexityValidator>();
         }

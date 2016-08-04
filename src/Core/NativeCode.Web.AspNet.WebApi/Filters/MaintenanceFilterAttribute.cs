@@ -1,5 +1,8 @@
 ﻿namespace NativeCode.Web.AspNet.WebApi.Filters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -11,12 +14,12 @@
 
     public class MaintenanceFilterAttribute : ActionFilterAttribute
     {
-        public MaintenanceFilterAttribute(IMaintainUpgradeState maintenance)
+        public MaintenanceFilterAttribute(IEnumerable<IMaintenanceProvider> providers)
         {
-            this.Maintenance = maintenance;
+            this.Providers = providers;
         }
 
-        protected IMaintainUpgradeState Maintenance { get; }
+        protected IEnumerable<IMaintenanceProvider> Providers { get; }
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
@@ -32,11 +35,13 @@
 
         private void ValidateMaintenance(HttpActionContext context)
         {
-            var immune = context.ActionDescriptor.GetCustomAttributes<MaintenanceImmuneAttribute>();
+            var immune = context.ActionDescriptor.GetCustomAttributes<MaintenanceIgnoreAttribute>();
+            var providers = this.Providers.Where(p => p.Active).ToList();
 
-            if (immune == null && this.Maintenance.Active)
+            if (immune == null && providers.Any())
             {
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.TemporaryRedirect, "Site has maintenance mode enabled.");
+                var message = providers.Select(provider => $"Maintenance required for {provider.Name}.").ToList();
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.TemporaryRedirect, string.Join(Environment.NewLine, message));
             }
         }
     }

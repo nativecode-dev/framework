@@ -3,7 +3,7 @@
     using System;
 
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class MaintenanceImmuneAttribute : Attribute
+    public sealed class MaintenanceIgnoreAttribute : Attribute
     {
     }
 }

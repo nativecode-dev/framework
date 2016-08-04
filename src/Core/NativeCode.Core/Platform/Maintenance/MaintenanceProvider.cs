@@ -3,16 +3,21 @@
     using System;
     using System.Threading;
 
-    public class InMemoryUpgradeState : IMaintainUpgradeState
+    public abstract class MaintenanceProvider : IMaintenanceProvider
     {
         private static int state;
 
         private static string generated;
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="IMaintainUpgradeState" /> is in maintenance.
+        /// Gets a value indicating whether this <see cref="IMaintenanceProvider" /> is in maintenance.
         /// </summary>
         public bool Active => state != 0;
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        public string Name => $"In-Memory Upgrade State";
 
         /// <summary>
         /// Gets the maintenance key.

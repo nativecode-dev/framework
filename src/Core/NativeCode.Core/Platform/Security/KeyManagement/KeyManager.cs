@@ -5,9 +5,9 @@
 
     using NativeCode.Core.Platform.FileSystem;
 
-    public class DefaultKeyManager : IKeyManager
+    public class KeyManager : IKeyManager
     {
-        public DefaultKeyManager(IPlatform platform, IFileSystem files)
+        public KeyManager(IPlatform platform, IFileSystem files)
         {
             this.Files = files;
             this.Platform = platform;
