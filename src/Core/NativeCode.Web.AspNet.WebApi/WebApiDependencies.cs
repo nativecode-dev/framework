@@ -20,7 +20,10 @@
 
         private static void RegisterFilters(IDependencyRegistrar registrar)
         {
+            registrar.Register<MaintenanceFilterAttribute>();
             registrar.Register<ActionFilterAttribute, MaintenanceFilterAttribute>(DependencyKey.QualifiedName);
+
+            registrar.Register<ValidateModelFilterAttribute>();
             registrar.Register<ActionFilterAttribute, ValidateModelFilterAttribute>(DependencyKey.QualifiedName);
 
             registrar.RegisterFactory(resolver => resolver.ResolveAll<ActionFilterAttribute>());
@@ -28,7 +31,10 @@
 
         private static void RegisterHandlers(IDependencyRegistrar registrar)
         {
+            registrar.Register<BasicAuthDelegatingHandler>();
             registrar.Register<DelegatingHandler, BasicAuthDelegatingHandler>(DependencyKey.QualifiedName);
+
+            registrar.Register<BasicHeaderKeyDelegatingHandler>();
             registrar.Register<DelegatingHandler, BasicHeaderKeyDelegatingHandler>(DependencyKey.QualifiedName);
 
             registrar.RegisterFactory(resolver => resolver.ResolveAll<DelegatingHandler>());
