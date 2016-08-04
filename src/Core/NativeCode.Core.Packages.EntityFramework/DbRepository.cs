@@ -15,9 +15,10 @@
     /// </summary>
     /// <typeparam name="TEntity">The type of the t entity.</typeparam>
     /// <typeparam name="TContext">The type of the t context.</typeparam>
+    /// <seealso cref="NativeCode.Core.Data.IRepository{TEntity}" />
+    /// <seealso cref="NativeCode.Core.Data.IRepositoryContext{TContext}" />
     /// <seealso cref="NativeCode.Core.Types.Disposable" />
-    /// <seealso cref="NativeCode.Core.Data.IRepository{TEntity, TContext}" />
-    public abstract class DbRepository<TEntity, TContext> : Disposable, IRepository<TEntity, TContext>
+    public class DbRepository<TEntity, TContext> : Disposable, IRepository<TEntity>, IRepositoryContext<TContext>
         where TEntity : class, IEntity where TContext : DbContext, IDataContext
     {
         /// <summary>

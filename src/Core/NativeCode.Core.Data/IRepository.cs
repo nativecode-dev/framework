@@ -10,16 +10,10 @@
     /// Provides a contract to manage entities
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <seealso cref="System.IDisposable" />
-    public interface IRepository<TEntity, out TContext> : IDisposable
-        where TEntity : class, IEntity where TContext : class, IDataContext
+    public interface IRepository<TEntity> : IDisposable
+        where TEntity : class, IEntity
     {
-        /// <summary>
-        /// Gets the data context.
-        /// </summary>
-        TContext DataContext { get; }
-
         /// <summary>
         /// Finds a single matching entity.
         /// </summary>
