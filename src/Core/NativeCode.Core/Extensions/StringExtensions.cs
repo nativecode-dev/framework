@@ -103,25 +103,32 @@
             return value.Replace(Environment.NewLine, replacement);
         }
 
-        public static string AddSpaces(this string value)
+        public static string ToLowerScore(this string value, char separator = '_')
         {
-            var values = new List<string>();
-            var word = string.Empty;
+            var characters = new List<char>();
 
-            foreach (var character in value)
+            foreach (var character in value.ToCharArray())
             {
-                if (values.Any() && char.IsUpper(character))
+                if (char.IsUpper(character))
                 {
-                    values.Add(word);
-                    word = string.Empty;
+                    if (characters.Any())
+                    {
+                        characters.Add(separator);
+                    }
+
+                    characters.Add(char.ToLower(character));
+                    continue;
                 }
 
-                word += character;
+                if (char.IsWhiteSpace(character))
+                {
+                    continue;
+                }
+
+                characters.Add(character);
             }
 
-            values.Add(word);
-
-            return string.Join(" ", values);
+            return string.Join(string.Empty, characters);
         }
     }
 }

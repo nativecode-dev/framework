@@ -31,7 +31,7 @@
         {
             var connection = this.GetRabbitConnection(options.Uri);
 
-            return new RabbitMessageQueue<TMessage>(this.Serializer, this.Logger, connection.CreateModel(), options);
+            return new RabbitMessageQueue<TMessage>(this.Serializer, this.Logger, connection, options);
         }
 
         protected virtual RabbitConnection GetRabbitConnection(RabbitUri uri)

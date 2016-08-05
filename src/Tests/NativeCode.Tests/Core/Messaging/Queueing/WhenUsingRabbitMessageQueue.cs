@@ -22,10 +22,10 @@
         {
             // Arrange
             using (var factory = new RabbitMessageQueueFactory(this.Resolve<ILogger>(), this.Resolve<IStringSerializer>()))
-            using (var queue = factory.Create<TestQueueMessage>(RabbitConnectionUrl))
+            using (var queue = factory.Create<SimpleQueueMessage>(RabbitConnectionUrl))
             {
                 // Act
-                var request = new TestQueueMessage();
+                var request = new SimpleQueueMessage();
                 queue.Enqueue(request);
                 var message = queue.Dequeue();
 

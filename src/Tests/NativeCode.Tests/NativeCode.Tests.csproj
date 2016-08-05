@@ -72,7 +72,7 @@
     <Compile Include="Core\Extensions\WhenUsingStringExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingStructExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingTypeExtensions.cs" />
-    <Compile Include="Core\Messaging\Queueing\TestQueueMessage.cs" />
+    <Compile Include="Core\Messaging\Queueing\SimpleQueueMessage.cs" />
     <Compile Include="Core\Messaging\Queueing\WhenUsingRabbitMessageQueue.cs" />
     <Compile Include="Core\Settings\WhenUsingJsonSettingsReader.cs" />
     <Compile Include="Core\Types\WhenUsingSqlServerConnectionStrings.cs" />

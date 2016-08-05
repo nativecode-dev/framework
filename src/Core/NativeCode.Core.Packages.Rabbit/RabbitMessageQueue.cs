@@ -3,6 +3,7 @@
     using System;
     using System.Text;
 
+    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
@@ -14,18 +15,18 @@
     internal class RabbitMessageQueue<TMessage> : Disposable, IMessageQueue<TMessage>
         where TMessage : class, new()
     {
-        public RabbitMessageQueue(IStringSerializer serializer, ILogger logger, IModel model, RabbitMessageQueueOptions options)
+        public RabbitMessageQueue(IStringSerializer serializer, ILogger logger, RabbitConnection connection, RabbitMessageQueueOptions options)
         {
             this.Logger = logger;
-            this.Model = model;
+            this.Channel = connection.CreateModel();
             this.Options = options;
             this.Serializer = serializer;
 
-            this.Model.ExchangeDeclare(this.ExchangeName, ExchangeType.Direct, options.Durable, options.AutoDelete, null);
-            this.Model.QueueDeclare(this.QueueName, options.Durable, options.Exclusive, options.AutoDelete, null);
-            this.Model.QueueBind(this.QueueName, this.ExchangeName, this.RoutingKey);
+            this.Channel.ExchangeDeclare(this.ExchangeName, ExchangeType.Topic, options.Durable, options.AutoDelete, null);
+            this.Channel.QueueDeclare(this.QueueName, options.Durable, options.Exclusive, options.AutoDelete, null);
+            this.Channel.QueueBind(this.QueueName, this.ExchangeName, this.RoutingKey);
 
-            this.Model.CallbackException += this.ModelOnCallbackException;
+            this.Channel.CallbackException += this.ModelOnCallbackException;
         }
 
         private void ModelOnCallbackException(object sender, CallbackExceptionEventArgs callbackExceptionEventArgs)
@@ -33,15 +34,15 @@
             this.Logger.Exception(callbackExceptionEventArgs.Exception);
         }
 
-        public string QueueName => typeof(TMessage).Name;
+        public string QueueName => typeof(TMessage).Name.ToLowerScore('.');
 
         public string RoutingKey => this.QueueName;
 
-        public string ExchangeName => $"/{this.QueueName}";
+        public string ExchangeName => $"{this.QueueName}";
+
+        protected IModel Channel { get; }
 
         protected ILogger Logger { get; }
-
-        protected IModel Model { get; }
 
         protected RabbitMessageQueueOptions Options { get; }
 
@@ -51,7 +52,7 @@
         {
             this.EnsureModelAvailable();
 
-            var result = this.Model.BasicGet(this.QueueName, true);
+            var result = this.Channel.BasicGet(this.QueueName, true);
 
             if (result == null)
             {
@@ -64,7 +65,7 @@
             }
             finally
             {
-                this.Model.BasicAck(result.DeliveryTag, false);
+                this.Channel.BasicAck(result.DeliveryTag, false);
             }
         }
 
@@ -72,7 +73,7 @@
         {
             this.EnsureModelAvailable();
 
-            this.Model.BasicPublish(this.ExchangeName, this.RoutingKey, null, data);
+            this.Channel.BasicPublish(this.ExchangeName, this.RoutingKey, null, data);
         }
 
         public TMessage Dequeue()
@@ -98,8 +99,8 @@
         {
             if (disposing && this.Disposed == false)
             {
-                this.Model.Close();
-                this.Model.Dispose();
+                this.Channel.Close();
+                this.Channel.Dispose();
             }
 
             base.Dispose(disposing);
@@ -107,7 +108,7 @@
 
         private void EnsureModelAvailable()
         {
-            if (this.Model == null || this.Model.IsClosed)
+            if (this.Channel == null || this.Channel.IsClosed)
             {
                 throw new InvalidOperationException("Message queue unavailable.");
             }

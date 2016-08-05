@@ -2,7 +2,7 @@ namespace NativeCode.Tests.Core.Messaging.Queueing
 {
     using System;
 
-    public class TestQueueMessage
+    public class SimpleQueueMessage
     {
         public Guid Id { get; set; }
     }
