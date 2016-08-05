@@ -43,10 +43,11 @@
   <ItemGroup>
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Logging\NullLogWriter.cs" />
-    <Compile Include="Messaging\IMessageQueueClient.cs" />
-    <Compile Include="Messaging\IMessageQueueProvider.cs" />
-    <Compile Include="Messaging\QueueConfiguration.cs" />
-    <Compile Include="Messaging\QueueProviderConfiguration.cs" />
+    <Compile Include="Messaging\Queuing\IMessageQueue.cs" />
+    <Compile Include="Messaging\Queuing\IMessageQueueFactory.cs" />
+    <Compile Include="Messaging\Queuing\MessageQueueFactory.cs">
+      <DependentUpon>IMessageQueueFactory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Platform\Connections\SqlServerConnectionString.cs" />
     <Compile Include="Platform\FileSystem\IFileSystem.cs" />
     <Compile Include="Platform\Maintenance\IMaintenanceProvider.cs" />
@@ -97,6 +98,8 @@
     <Compile Include="Platform\Security\KeyManagement\KeyManager.cs" />
     <Compile Include="Platform\Security\KeyManagement\IKeyManager.cs" />
     <Compile Include="Serialization\LowerScoreContractResolver.cs" />
+    <Compile Include="Types\Credentials.cs" />
+    <Compile Include="Types\DisposableManager.cs" />
     <Compile Include="Types\Retry.cs" />
     <Compile Include="Localization\Translation\TranslationProvider.cs">
       <DependentUpon>ITranslationProvider.cs</DependentUpon>
@@ -147,7 +150,7 @@
     <Compile Include="Platform\Security\Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Platform\Connections\IConnectionStringProvider.cs" />
     <Compile Include="Serialization\IStringSerializer.cs" />
-    <Compile Include="Serialization\JsonNetStringSerializer.cs" />
+    <Compile Include="Serialization\JsonStringSerializer.cs" />
     <Compile Include="Settings\JsonSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Platform\Connections\ConnectionString.cs" />

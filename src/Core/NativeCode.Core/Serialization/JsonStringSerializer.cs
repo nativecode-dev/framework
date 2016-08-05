@@ -2,13 +2,19 @@
 {
     using Newtonsoft.Json;
 
-    public class JsonNetStringSerializer : IStringSerializer
+    public class JsonStringSerializer : IStringSerializer
     {
-        public JsonNetStringSerializer()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonStringSerializer"/> class.
+        /// </summary>
+        public JsonStringSerializer()
         {
             this.Settings = new JsonSerializerSettings { Formatting = Formatting.Indented, ContractResolver = new LowerScoreContractResolver() };
         }
 
+        /// <summary>
+        /// Gets the settings.
+        /// </summary>
         protected JsonSerializerSettings Settings { get; private set; }
 
         public T Deserialize<T>(string value)

@@ -47,7 +47,7 @@
 
         private static void RegisterSerialization(IDependencyRegistrar registrar)
         {
-            registrar.Register<IStringSerializer, JsonNetStringSerializer>();
+            registrar.Register<IStringSerializer, JsonStringSerializer>();
         }
 
         private static void RegisterValidation(IDependencyRegistrar registrar)

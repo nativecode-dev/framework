@@ -72,12 +72,17 @@
     <Compile Include="Core\Extensions\WhenUsingStringExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingStructExtensions.cs" />
     <Compile Include="Core\Extensions\WhenUsingTypeExtensions.cs" />
+    <Compile Include="Core\Messaging\Queueing\TestQueueMessage.cs" />
+    <Compile Include="Core\Messaging\Queueing\WhenUsingRabbitMessageQueue.cs" />
     <Compile Include="Core\Settings\WhenUsingJsonSettingsReader.cs" />
     <Compile Include="Core\Types\WhenUsingSqlServerConnectionStrings.cs" />
     <Compile Include="Core\Types\WhenUsingDisposableAction.cs" />
     <Compile Include="DependencyFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhenTesting.cs" />
+    <Compile Include="WhenTestingApplication.cs" />
+    <Compile Include="WhenTestingDependencies.cs" />
+    <Compile Include="WhenTestingPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
@@ -92,6 +97,10 @@
       <Project>{10015b10-a96f-4477-b00f-fd462d1b20c6}</Project>
       <Name>NativeCode.Core.Packages.EntityFramework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Rabbit\NativeCode.Core.Packages.Rabbit.csproj">
+      <Project>{6acfca6e-573b-4852-aa79-72a43f38cc81}</Project>
+      <Name>NativeCode.Core.Packages.Rabbit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj">
       <Project>{1bc8ea4d-9a80-47fc-b393-30101f9debc6}</Project>
       <Name>NativeCode.Core.Packages.Unity</Name>
@@ -105,6 +114,7 @@
     <EmbeddedResource Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

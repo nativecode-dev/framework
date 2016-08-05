@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Web.AspNet.WebApi
+﻿namespace NativeCode.Web.AspNet.WebApi.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@
 
         protected ILogger Logger { get; }
 
-        protected void Disposable<T>(T disposable) where T : IDisposable
+        protected void EnsureDisposed<T>(T disposable) where T : IDisposable
         {
             this.disposables.Add(disposable);
         }

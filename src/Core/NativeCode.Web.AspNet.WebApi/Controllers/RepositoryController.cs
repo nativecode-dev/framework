@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Web.AspNet.WebApi
+﻿namespace NativeCode.Web.AspNet.WebApi.Controllers
 {
     using NativeCode.Core.Data;
     using NativeCode.Core.Logging;
@@ -10,7 +10,7 @@
             : base(logger)
         {
             this.Repository = repository;
-            this.Disposable(repository);
+            this.EnsureDisposed(repository);
         }
 
         protected IRepository<TEntity> Repository { get; }

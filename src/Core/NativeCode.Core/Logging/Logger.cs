@@ -5,7 +5,7 @@
 
     using NativeCode.Core.Extensions;
 
-    internal class Logger : ILogger
+    public class Logger : ILogger
     {
         private readonly IEnumerable<ILogWriter> writers;
 
