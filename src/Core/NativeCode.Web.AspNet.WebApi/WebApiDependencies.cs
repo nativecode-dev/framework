@@ -34,9 +34,6 @@
             registrar.Register<BasicAuthDelegatingHandler>();
             registrar.Register<DelegatingHandler, BasicAuthDelegatingHandler>(DependencyKey.QualifiedName);
 
-            registrar.Register<BasicHeaderKeyDelegatingHandler>();
-            registrar.Register<DelegatingHandler, BasicHeaderKeyDelegatingHandler>(DependencyKey.QualifiedName);
-
             registrar.RegisterFactory(resolver => resolver.ResolveAll<DelegatingHandler>());
         }
     }

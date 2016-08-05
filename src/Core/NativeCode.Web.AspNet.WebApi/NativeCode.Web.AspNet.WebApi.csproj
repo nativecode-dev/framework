@@ -52,11 +52,11 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Dependencies\WebApiDependencyResolver.cs" />
+    <Compile Include="Filters\KeyAuthorizationFilterAttribute.cs" />
     <Compile Include="Filters\MaintenanceFilterAttribute.cs" />
     <Compile Include="Filters\ValidateModelFilterAttribute.cs" />
     <Compile Include="Formatters\JsonBrowserMediaTypeFormatter.cs" />
     <Compile Include="Handlers\BasicAuthDelegatingHandler.cs" />
-    <Compile Include="Handlers\BasicHeaderKeyDelegatingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\RepositoryController.cs" />
     <Compile Include="WebApiDependencies.cs" />
@@ -70,6 +70,10 @@
     <ProjectReference Include="..\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
       <Project>{A872F951-9C26-4380-BD6D-ECBCB03E699D}</Project>
       <Name>NativeCode.Core.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NativeCode.Core.Web\NativeCode.Core.Web.csproj">
+      <Project>{ddad0473-9c03-41c1-9be5-54f94ef9d324}</Project>
+      <Name>NativeCode.Core.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2BA5C42A-32EC-43DB-9AEC-A9323D354951}</Project>
