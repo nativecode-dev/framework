@@ -52,16 +52,6 @@
             return query(this.DataContext.Set<TEntity>());
         }
 
-        public virtual Task<IQueryable<TEntity>> QueryAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> query)
-        {
-            return query(this.DataContext.Set<TEntity>());
-        }
-
-        public Task<IQueryable<T>> QueryAsync<T>(Func<IQueryable<TEntity>, Task<IQueryable<T>>> query)
-        {
-            return query(this.DataContext.Set<TEntity>());
-        }
-
         public virtual bool Save(TEntity entity)
         {
             return this.DataContext.Save(entity);
