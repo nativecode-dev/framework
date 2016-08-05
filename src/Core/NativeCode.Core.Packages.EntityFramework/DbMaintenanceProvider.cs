@@ -8,23 +8,22 @@
     using NativeCode.Core.Platform.Connections;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Maintenance;
+    using NativeCode.Core.Types;
 
     public class DbMaintenanceProvider<T> : IMaintenanceProvider
         where T : DbDataContext
     {
+        private readonly LazyFactory<bool> migrations;
+
         public DbMaintenanceProvider(IConnectionStringProvider connections, ILogger logger)
         {
+            this.migrations = new LazyFactory<bool>(() => this.PendingMigrations(connections.GetConnectionString<T>()));
             this.Logger = logger;
-
-            if (this.HasPendingMigrations(connections.GetDefaultConnectionString()))
-            {
-                this.EnterMaintenance();
-            }
         }
 
-        public bool Active { get; private set; }
+        public bool Active => this.migrations.Value;
 
-        public string Name => $"DbContext: {typeof(T).FullName}";
+        public string Name => $"DBCONTEXT:{typeof(T).FullName}";
 
         protected ILogger Logger { get; }
 
@@ -35,39 +34,44 @@
 
         public string EnterMaintenance()
         {
-            this.Active = true;
-            this.GenerateMaintenanceKey();
-            this.Logger.Informational($"Entering maintenance mode. Use {this.MaintenanceKey} to unlock.");
+            if (string.IsNullOrWhiteSpace(this.MaintenanceKey))
+            {
+                var key = this.GenerateKey();
+                this.Logger.Informational($"Entering maintenance mode. Use {key} to unlock.");
+            }
 
             return this.MaintenanceKey;
         }
 
         public void ExitMaintenance(string key)
         {
-            this.Active = key == this.MaintenanceKey;
-            this.MaintenanceKey = null;
+            if (string.IsNullOrWhiteSpace(this.MaintenanceKey) == false && this.MaintenanceKey == key)
+            {
+                this.MaintenanceKey = null;
+                this.migrations.Reset();
+            }
         }
 
-        protected virtual string GenerateMaintenanceKey()
+        protected virtual string GenerateKey()
         {
-            this.MaintenanceKey = Guid.NewGuid().ToString();
-            return this.MaintenanceKey;
+            return this.MaintenanceKey = Guid.NewGuid().ToString();
         }
 
-        protected bool HasPendingMigrations(string connectionString, string providerName = "System.Data.SqlClient")
+        protected bool PendingMigrations(string connectionString, string providerName = "System.Data.SqlClient")
         {
-            this.Logger.Debug($"Checking for pending migrations using [{connectionString}] with [{providerName}].");
+            var name = typeof(T).Name;
+            this.Logger.Debug($"Checking pending migrations for {name}.");
+            this.Logger.Informational($"Provider='{providerName}', ConnectionString='{connectionString}'");
 
             try
             {
                 var configuration = new DbMigrationsConfiguration<T> { TargetDatabase = new DbConnectionInfo(connectionString, providerName) };
                 var migration = new DbMigrator(configuration);
-
                 var pending = migration.GetPendingMigrations().Any();
 
                 if (pending)
                 {
-                    this.Logger.Debug($"No pending migrations found for {typeof(T).Name}.");
+                    this.EnterMaintenance();
                 }
 
                 return pending;
@@ -75,8 +79,11 @@
             catch (Exception ex)
             {
                 this.Logger.Exception(ex);
-                return false;
             }
+
+            this.Logger.Debug($"No pending migrations found for {name}.");
+
+            return false;
         }
     }
 }

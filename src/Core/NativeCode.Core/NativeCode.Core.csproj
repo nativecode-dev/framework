@@ -100,6 +100,7 @@
     <Compile Include="Platform\Serialization\LowerScoreContractResolver.cs" />
     <Compile Include="Types\Credentials.cs" />
     <Compile Include="Types\DisposableManager.cs" />
+    <Compile Include="Types\LazyFactory.cs" />
     <Compile Include="Types\Retry.cs" />
     <Compile Include="Localization\Translation\TranslationProvider.cs">
       <DependentUpon>ITranslationProvider.cs</DependentUpon>

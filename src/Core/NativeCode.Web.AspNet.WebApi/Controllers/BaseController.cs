@@ -5,16 +5,20 @@
     using System.Linq;
     using System.Web.Http;
 
+    using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Logging;
 
     public abstract class BaseController : ApiController
     {
         private readonly List<IDisposable> disposables = new List<IDisposable>();
 
-        protected BaseController(ILogger logger)
+        protected BaseController(IApplication application, ILogger logger)
         {
+            this.Application = application;
             this.Logger = logger;
         }
+
+        protected IApplication Application { get; }
 
         protected ILogger Logger { get; }
 

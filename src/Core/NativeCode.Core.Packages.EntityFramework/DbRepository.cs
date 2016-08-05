@@ -25,7 +25,7 @@
         /// Initializes a new instance of the <see cref="DbRepository{TEntity,TContext}" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        protected DbRepository(TContext context)
+        public DbRepository(TContext context)
         {
             this.DataContext = context;
         }
