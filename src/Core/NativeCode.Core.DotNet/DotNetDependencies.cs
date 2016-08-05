@@ -7,9 +7,9 @@
     using NativeCode.Core.DotNet.Platform.FileSystem;
     using NativeCode.Core.DotNet.Platform.Security.Authentication;
     using NativeCode.Core.DotNet.Platform.Security.Authorization;
-    using NativeCode.Core.Logging;
     using NativeCode.Core.Platform.Connections;
     using NativeCode.Core.Platform.FileSystem;
+    using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Platform.Security.Authorization;
 

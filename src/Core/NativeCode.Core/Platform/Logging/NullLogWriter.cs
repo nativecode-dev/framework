@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Logging
+﻿namespace NativeCode.Core.Platform.Logging
 {
     public class NullLogWriter : ILogWriter
     {

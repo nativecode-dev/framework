@@ -3,9 +3,9 @@
     using System;
     using System.Text;
 
-    using NativeCode.Core.Logging;
-    using NativeCode.Core.Messaging.Queuing;
-    using NativeCode.Core.Serialization;
+    using NativeCode.Core.Platform.Logging;
+    using NativeCode.Core.Platform.Messaging.Queuing;
+    using NativeCode.Core.Platform.Serialization;
     using NativeCode.Core.Types;
 
     using RabbitMQ.Client;

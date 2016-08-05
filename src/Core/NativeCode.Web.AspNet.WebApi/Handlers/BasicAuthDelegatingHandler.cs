@@ -9,8 +9,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    using NativeCode.Core.Logging;
     using NativeCode.Core.Platform;
+    using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Security.Authentication;
 
     /// <summary>

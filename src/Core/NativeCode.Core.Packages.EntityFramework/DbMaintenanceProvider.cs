@@ -5,8 +5,8 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    using NativeCode.Core.Logging;
     using NativeCode.Core.Platform.Connections;
+    using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Maintenance;
 
     public class DbMaintenanceProvider<T> : IMaintenanceProvider

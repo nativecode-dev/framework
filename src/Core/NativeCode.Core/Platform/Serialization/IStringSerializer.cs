@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Serialization
+﻿namespace NativeCode.Core.Platform.Serialization
 {
     using JetBrains.Annotations;
 

@@ -2,7 +2,7 @@ namespace NativeCode.Core.Web.Platform.Security.Cookies
 {
     using JetBrains.Annotations;
 
-    using NativeCode.Core.Serialization;
+    using NativeCode.Core.Platform.Serialization;
 
     public abstract class CookieProvider<TRequest, TResponse, TCookie, TData>
     {

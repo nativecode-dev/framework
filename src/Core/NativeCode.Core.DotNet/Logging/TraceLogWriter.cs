@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
 
-    using NativeCode.Core.Logging;
+    using NativeCode.Core.Platform.Logging;
 
     public class TraceLogWriter : ILogWriter
     {

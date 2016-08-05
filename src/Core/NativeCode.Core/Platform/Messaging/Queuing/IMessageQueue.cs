@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Messaging.Queuing
+﻿namespace NativeCode.Core.Platform.Messaging.Queuing
 {
     using System;
 
@@ -32,7 +32,7 @@
     /// Provides a contract to queue and retrieve messages.
     /// </summary>
     /// <typeparam name="TMessage">The type of the message.</typeparam>
-    /// <seealso cref="NativeCode.Core.Messaging.Queuing.IMessageQueue" />
+    /// <seealso cref="IMessageQueue" />
     public interface IMessageQueue<TMessage> : IMessageQueue
         where TMessage : class, new()
     {

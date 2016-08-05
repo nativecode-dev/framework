@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Logging;
+    using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Types;
 
     using IDependencyResolver = System.Web.Mvc.IDependencyResolver;

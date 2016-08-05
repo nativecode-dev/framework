@@ -5,8 +5,8 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.DotNet.Logging;
-    using NativeCode.Core.Logging;
     using NativeCode.Core.Packages.Unity;
+    using NativeCode.Core.Platform.Logging;
 
     public abstract class WhenTestingDependencies : WhenTesting
     {

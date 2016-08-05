@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Web.Http;
 
-    using NativeCode.Core.Logging;
+    using NativeCode.Core.Platform.Logging;
 
     public abstract class BaseController : ApiController
     {

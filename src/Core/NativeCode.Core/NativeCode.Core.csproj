@@ -42,10 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Extensions\AssemblyExtensions.cs" />
-    <Compile Include="Logging\NullLogWriter.cs" />
-    <Compile Include="Messaging\Queuing\IMessageQueue.cs" />
-    <Compile Include="Messaging\Queuing\IMessageQueueFactory.cs" />
-    <Compile Include="Messaging\Queuing\MessageQueueFactory.cs">
+    <Compile Include="Platform\Logging\NullLogWriter.cs" />
+    <Compile Include="Platform\Messaging\Queuing\IMessageQueue.cs" />
+    <Compile Include="Platform\Messaging\Queuing\IMessageQueueFactory.cs" />
+    <Compile Include="Platform\Messaging\Queuing\MessageQueueFactory.cs">
       <DependentUpon>IMessageQueueFactory.cs</DependentUpon>
     </Compile>
     <Compile Include="Platform\Connections\SqlServerConnectionString.cs" />
@@ -97,7 +97,7 @@
     <Compile Include="Localization\Translation\ObjectTranslator.cs" />
     <Compile Include="Platform\Security\KeyManagement\KeyManager.cs" />
     <Compile Include="Platform\Security\KeyManagement\IKeyManager.cs" />
-    <Compile Include="Serialization\LowerScoreContractResolver.cs" />
+    <Compile Include="Platform\Serialization\LowerScoreContractResolver.cs" />
     <Compile Include="Types\Credentials.cs" />
     <Compile Include="Types\DisposableManager.cs" />
     <Compile Include="Types\Retry.cs" />
@@ -107,7 +107,7 @@
     <Compile Include="Localization\Translation\Translator.cs">
       <DependentUpon>ITranslator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logging\Logger.cs">
+    <Compile Include="Platform\Logging\Logger.cs">
       <DependentUpon>ILogger.cs</DependentUpon>
     </Compile>
     <Compile Include="CoreDependencies.cs" />
@@ -134,9 +134,9 @@
     <Compile Include="Platform\IApplication.cs" />
     <Compile Include="Localization\Translation\ITranslationProvider.cs" />
     <Compile Include="Localization\Translation\ITranslator.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\ILogWriter.cs" />
-    <Compile Include="Logging\LogMessageType.cs" />
+    <Compile Include="Platform\Logging\ILogger.cs" />
+    <Compile Include="Platform\Logging\ILogWriter.cs" />
+    <Compile Include="Platform\Logging\LogMessageType.cs" />
     <Compile Include="Platform\ApplicationIdentity.cs" />
     <Compile Include="Platform\IPlatform.cs" />
     <Compile Include="Platform\Platform.cs" />
@@ -149,8 +149,8 @@
     <Compile Include="Platform\Security\Authentication\AuthenticationResultType.cs" />
     <Compile Include="Platform\Security\Authentication\IAuthenticationHandler.cs" />
     <Compile Include="Platform\Connections\IConnectionStringProvider.cs" />
-    <Compile Include="Serialization\IStringSerializer.cs" />
-    <Compile Include="Serialization\JsonStringSerializer.cs" />
+    <Compile Include="Platform\Serialization\IStringSerializer.cs" />
+    <Compile Include="Platform\Serialization\JsonStringSerializer.cs" />
     <Compile Include="Settings\JsonSettings.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Platform\Connections\ConnectionString.cs" />

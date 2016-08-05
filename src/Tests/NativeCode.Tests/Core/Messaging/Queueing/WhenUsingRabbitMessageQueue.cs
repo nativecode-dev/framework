@@ -2,9 +2,9 @@
 {
     using System;
 
-    using NativeCode.Core.Logging;
     using NativeCode.Core.Packages.Rabbit;
-    using NativeCode.Core.Serialization;
+    using NativeCode.Core.Platform.Logging;
+    using NativeCode.Core.Platform.Serialization;
 
     using Xunit;
 

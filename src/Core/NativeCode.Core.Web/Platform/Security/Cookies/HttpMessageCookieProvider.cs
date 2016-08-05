@@ -3,7 +3,7 @@ namespace NativeCode.Core.Web.Platform.Security.Cookies
     using System.Net.Http;
     using System.Web;
 
-    using NativeCode.Core.Serialization;
+    using NativeCode.Core.Platform.Serialization;
 
     public class HttpMessageCookieProvider<TData> : CookieProvider<HttpRequestMessage, HttpResponseMessage, HttpCookie, TData>
     {

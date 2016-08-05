@@ -3,11 +3,11 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Localization.Translation;
-    using NativeCode.Core.Logging;
+    using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Maintenance;
     using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Platform.Security.KeyManagement;
-    using NativeCode.Core.Serialization;
+    using NativeCode.Core.Platform.Serialization;
     using NativeCode.Core.Validation;
 
     public class CoreDependencies : DependencyModule

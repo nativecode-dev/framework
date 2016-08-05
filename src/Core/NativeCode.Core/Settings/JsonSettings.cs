@@ -6,7 +6,7 @@ namespace NativeCode.Core.Settings
     using System.Text;
 
     using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Serialization;
+    using NativeCode.Core.Platform.Serialization;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;

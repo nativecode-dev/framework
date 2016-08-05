@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Messaging.Queuing
+﻿namespace NativeCode.Core.Platform.Messaging.Queuing
 {
     using System;
 

@@ -1,7 +1,7 @@
 ﻿namespace NativeCode.Core.Packages.Rabbit
 {
     using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Messaging.Queuing;
+    using NativeCode.Core.Platform.Messaging.Queuing;
 
     public class RabbitDependencies : DependencyModule
     {
