@@ -1,6 +1,7 @@
 ﻿namespace NativeCode.Core.Packages.Rabbit
 {
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.Platform.Messaging.Queuing;
 
     public class RabbitDependencies : DependencyModule
@@ -9,7 +10,7 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            registrar.Register<IMessageQueueFactory, RabbitMessageQueueFactory>();
+            registrar.Register<IMessageQueueFactory, RabbitMessageQueueFactory>(lifetime: DependencyLifetime.PerApplication);
         }
     }
 }

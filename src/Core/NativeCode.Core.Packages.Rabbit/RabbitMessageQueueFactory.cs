@@ -22,12 +22,12 @@
 
         protected IStringSerializer Serializer { get; }
 
-        public IMessageQueue<TMessage> Create<TMessage>(Uri connection) where TMessage : class, new()
+        public virtual IMessageQueue<TMessage> Create<TMessage>(Uri connection) where TMessage : class, new()
         {
             return this.Create<TMessage>(new RabbitMessageQueueOptions(connection));
         }
 
-        public IMessageQueue<TMessage> Create<TMessage>(RabbitMessageQueueOptions options) where TMessage : class, new()
+        public virtual IMessageQueue<TMessage> Create<TMessage>(RabbitMessageQueueOptions options) where TMessage : class, new()
         {
             var connection = this.GetRabbitConnection(options.Uri);
 
