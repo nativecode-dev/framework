@@ -19,7 +19,7 @@
             // Assert
             Assert.Equal("(local)", sut["Server"]);
             Assert.Equal("NativeCodeServices", sut["Database"]);
-            Assert.Equal("True", sut["IntegratedSecurity"]);
+            Assert.Equal("True", sut["Integrated Security"]);
             Assert.Equal("True", sut["MultipleActiveResultSets"]);
         }
 

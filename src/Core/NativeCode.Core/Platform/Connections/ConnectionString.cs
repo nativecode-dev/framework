@@ -8,8 +8,6 @@
 
     using JetBrains.Annotations;
 
-    using NativeCode.Core.Extensions;
-
     public class ConnectionString : DynamicObject
     {
         private readonly Dictionary<string, object> members;
@@ -123,7 +121,7 @@
 
         protected T GetValue<T>([CallerMemberName] string key = null)
         {
-            return (T)this[key];
+            return (T)this[this.Resolve(key)];
         }
 
         protected void Resolver(Func<string, string> resolver)
@@ -133,7 +131,7 @@
 
         protected void SetValue<T>(T value, [CallerMemberName] string key = null)
         {
-            this[key] = value;
+            this[this.Resolve(key)] = value;
         }
 
         protected void Parse([NotNull] string connectionString)
@@ -143,7 +141,7 @@
             foreach (var property in properties)
             {
                 var parts = property.Split('=');
-                var key = parts[0].Trim().Replace(" ", string.Empty);
+                var key = parts[0].Trim();
                 var value = parts[1].Trim();
 
                 if (!this.members.ContainsKey(key))
