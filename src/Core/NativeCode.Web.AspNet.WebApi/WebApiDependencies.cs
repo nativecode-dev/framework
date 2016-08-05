@@ -20,11 +20,14 @@
 
         private static void RegisterFilters(IDependencyRegistrar registrar)
         {
+            registrar.Register<KeyAuthorizationFilterAttribute>();
+            registrar.Register<FilterAttribute, KeyAuthorizationFilterAttribute>(DependencyKey.QualifiedName);
+
             registrar.Register<MaintenanceFilterAttribute>();
-            registrar.Register<ActionFilterAttribute, MaintenanceFilterAttribute>(DependencyKey.QualifiedName);
+            registrar.Register<FilterAttribute, MaintenanceFilterAttribute>(DependencyKey.QualifiedName);
 
             registrar.Register<ValidateModelFilterAttribute>();
-            registrar.Register<ActionFilterAttribute, ValidateModelFilterAttribute>(DependencyKey.QualifiedName);
+            registrar.Register<FilterAttribute, ValidateModelFilterAttribute>(DependencyKey.QualifiedName);
 
             registrar.RegisterFactory(resolver => resolver.ResolveAll<ActionFilterAttribute>());
         }
