@@ -20,5 +20,13 @@
         /// <param name="connection">The connection.</param>
         /// <returns>Returns a new queue.</returns>
         public abstract IMessageQueue<TMessage> Create<TMessage>(Uri connection) where TMessage : class, new();
+
+        /// <summary>
+        /// Creates a new message queue.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="connection">The connection.</param>
+        /// <returns>Returns a new queue.</returns>
+        public abstract IMessageQueue Create(Type type, Uri connection);
     }
 }

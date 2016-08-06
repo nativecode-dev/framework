@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Platform\Logging\NullLogWriter.cs" />
+    <Compile Include="Platform\Messaging\Processing\IMessageProcessor.cs" />
+    <Compile Include="Platform\Messaging\Processing\MessageProcessor.cs" />
     <Compile Include="Platform\Messaging\Queuing\IMessageQueue.cs" />
     <Compile Include="Platform\Messaging\Queuing\IMessageQueueFactory.cs" />
     <Compile Include="Platform\Messaging\Queuing\MessageQueueFactory.cs">
