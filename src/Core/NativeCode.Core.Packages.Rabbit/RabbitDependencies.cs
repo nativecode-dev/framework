@@ -10,7 +10,9 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            registrar.Register<IMessageQueueFactory, RabbitMessageQueueFactory>(lifetime: DependencyLifetime.PerApplication);
+            registrar.Register<RabbitMessageQueueFactory>(lifetime: DependencyLifetime.PerApplication);
+            registrar.RegisterFactory<IMessageQueueFactory>(resolver => resolver.Resolve<RabbitMessageQueueFactory>());
+            registrar.RegisterFactory<IMessageQueueFactory<RabbitMessageQueueOptions>>(resolver => resolver.Resolve<RabbitMessageQueueFactory>());
         }
     }
 }
