@@ -3,7 +3,6 @@
     using System;
     using System.Text;
 
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
@@ -20,6 +19,7 @@
             this.Logger = logger;
             this.Channel = connection.CreateModel();
             this.Options = options;
+            this.QueueName = options.QueueName;
             this.Serializer = serializer;
 
             this.Channel.ExchangeDeclare(this.ExchangeName, ExchangeType.Topic, options.Durable, options.AutoDelete, null);
@@ -34,13 +34,13 @@
             this.Logger.Exception(callbackExceptionEventArgs.Exception);
         }
 
-        public string QueueName => typeof(TMessage).Name.ToLowerScore('.');
+        public string QueueName { get; }
 
         public string RoutingKey => this.QueueName;
 
         public string ExchangeName => $"{this.QueueName}";
 
-        protected IModel Channel { get; }
+        protected IModel Channel { get; private set; }
 
         protected ILogger Logger { get; }
 
@@ -97,10 +97,13 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && this.Disposed == false)
+            if (disposing && this.Disposed == false && this.Channel != null)
             {
+                this.Channel.CallbackException -= this.ModelOnCallbackException;
+
                 this.Channel.Close();
                 this.Channel.Dispose();
+                this.Channel = null;
             }
 
             base.Dispose(disposing);

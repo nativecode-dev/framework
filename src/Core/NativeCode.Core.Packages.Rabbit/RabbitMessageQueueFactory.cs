@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Concurrent;
 
+    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
@@ -24,7 +25,7 @@
 
         public virtual IMessageQueue<TMessage> Create<TMessage>(Uri connection) where TMessage : class, new()
         {
-            return this.Create<TMessage>(new RabbitMessageQueueOptions(connection));
+            return this.Create<TMessage>(new RabbitMessageQueueOptions(connection) { QueueName = typeof(TMessage).Name.ToLowerScore('.') });
         }
 
         public virtual IMessageQueue<TMessage> Create<TMessage>(RabbitMessageQueueOptions options) where TMessage : class, new()
