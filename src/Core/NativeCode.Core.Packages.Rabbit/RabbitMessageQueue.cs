@@ -29,6 +29,8 @@
                 this.Channel.QueueBind(this.QueueName, this.ExchangeName, this.RoutingKey);
 
                 this.Channel.CallbackException += this.ModelOnCallbackException;
+
+                this.Logger.Debug($"Connected to message queue {this.QueueName} at {this.Options.Uri}.");
             }
             catch (Exception ex)
             {
