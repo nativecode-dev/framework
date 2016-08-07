@@ -2,6 +2,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using NativeCode.Core.Platform.Logging;
@@ -20,36 +21,36 @@ namespace NativeCode.Core.Platform.Messaging.Processing
 
         public abstract bool CanProcessMessage(object message);
 
-        public Task ProcessMessageAsync(object message)
+        public Task ProcessMessageAsync(object message, CancellationToken cancellationToken)
         {
-            return this.ProcessMessageAsync(message, RetryCount);
+            return this.ProcessMessageAsync(message, RetryCount, cancellationToken);
         }
 
-        public Task ProcessMessageAsync(object message, int retries)
+        public Task ProcessMessageAsync(object message, int retries, CancellationToken cancellationToken)
         {
-            return this.ProcessMessageAsync(message, RetryCount, true);
+            return this.ProcessMessageAsync(message, RetryCount, true, cancellationToken);
         }
 
-        public Task ProcessMessageAsync(object message, int retries, bool requeue)
+        public Task ProcessMessageAsync(object message, int retries, bool requeue, CancellationToken cancellationToken)
         {
-            return Task.Factory.StartNew(() => this.ExecuteAsync(message, retries, requeue));
+            return Task.Factory.StartNew(() => this.ExecuteAsync(message, retries, requeue, cancellationToken));
         }
 
-        protected abstract Task HandleMessageAsync(object message);
+        protected abstract Task HandleMessageAsync(object message, CancellationToken cancellationToken);
 
-        protected abstract Task RequeueMessageAsync(object message);
+        protected abstract Task RequeueMessageAsync(object message, CancellationToken cancellationToken);
 
-        private async Task ExecuteAsync(object message, int retries, bool requeue)
+        private async Task ExecuteAsync(object message, int retries, bool requeue, CancellationToken cancellationToken)
         {
             try
             {
-                await Retry.Until(() => this.HandleMessageAsync(message), retries);
+                await Retry.Until(() => this.HandleMessageAsync(message, cancellationToken), retries);
             }
             catch (Exception ex)
             {
                 if (requeue)
                 {
-                    await this.RequeueMessageAsync(message);
+                    await this.RequeueMessageAsync(message, cancellationToken);
                 }
 
                 this.Logger.Exception(ex);
@@ -71,18 +72,18 @@ namespace NativeCode.Core.Platform.Messaging.Processing
             return message.GetType() == typeof(TMessage);
         }
 
-        protected override Task HandleMessageAsync(object message)
+        protected override Task HandleMessageAsync(object message, CancellationToken cancellationToken)
         {
-            return this.HandleMessageAsync((TMessage)message);
+            return this.HandleMessageAsync((TMessage)message, cancellationToken);
         }
 
-        protected override Task RequeueMessageAsync(object message)
+        protected override Task RequeueMessageAsync(object message, CancellationToken cancellationToken)
         {
-            return this.RequeueMessageAsync((TMessage)message);
+            return this.RequeueMessageAsync((TMessage)message, cancellationToken);
         }
 
-        protected abstract Task HandleMessageAsync(TMessage message);
+        protected abstract Task HandleMessageAsync(TMessage message, CancellationToken cancellationToken);
 
-        protected abstract Task RequeueMessageAsync(TMessage message);
+        protected abstract Task RequeueMessageAsync(TMessage message, CancellationToken cancellationToken);
     }
 }

@@ -62,7 +62,7 @@
                             continue;
                         }
 
-                        await this.ConsumeNextMessageAsync(cancellationToken, queue, tasks);
+                        await this.ConsumeNextMessageAsync(queue, tasks, cancellationToken);
                     }
                     catch (Exception ex)
                     {
@@ -82,7 +82,7 @@
             return Task.Delay(TimeSpan.FromMilliseconds(250), cancellationToken);
         }
 
-        private async Task ConsumeNextMessageAsync(CancellationToken cancellationToken, IMessageQueue<TMessage> queue, ICollection<Task> tasks)
+        private async Task ConsumeNextMessageAsync(IMessageQueue<TMessage> queue, ICollection<Task> tasks, CancellationToken cancellationToken)
         {
             var message = queue.Dequeue();
 
@@ -92,7 +92,7 @@
                 {
                     try
                     {
-                        tasks.Add(handler.ProcessMessageAsync(message));
+                        tasks.Add(handler.ProcessMessageAsync(message, cancellationToken));
                     }
                     catch (Exception ex)
                     {

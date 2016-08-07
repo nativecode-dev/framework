@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.Platform.Messaging.Processing
 {
-    using System;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using JetBrains.Annotations;
@@ -21,16 +21,18 @@
         /// Processes the provided message.
         /// </summary>
         /// <param name="message">The message.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Returns a <see cref="Task" />.</returns>
-        Task ProcessMessageAsync([NotNull] object message);
+        Task ProcessMessageAsync([NotNull] object message, CancellationToken cancellationToken);
 
         /// <summary>
         /// Processes the provided message.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="retries">The retries.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Returns a <see cref="Task" />.</returns>
-        Task ProcessMessageAsync([NotNull] object message, int retries);
+        Task ProcessMessageAsync([NotNull] object message, int retries, CancellationToken cancellationToken);
 
         /// <summary>
         /// Processes the provided message.
@@ -38,7 +40,8 @@
         /// <param name="message">The message.</param>
         /// <param name="retries">The retries.</param>
         /// <param name="requeue">if set to <c>true</c> re-queue message.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Returns a <see cref="Task" />.</returns>
-        Task ProcessMessageAsync([NotNull] object message, int retries, bool requeue);
+        Task ProcessMessageAsync([NotNull] object message, int retries, bool requeue, CancellationToken cancellationToken);
     }
 }
