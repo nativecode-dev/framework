@@ -48,9 +48,11 @@
 
             while (cancellationToken.IsCancellationRequested == false)
             {
+                this.Logger.Debug($"{this.GetType().Name}.ConsumeQueueAsync/IsCancellationRequested={cancellationToken.IsCancellationRequested}");
+
                 try
                 {
-                    if (tasks.Count >= this.counter)
+                    if (tasks.Count <= this.counter)
                     {
                         await this.RemoveCompletedAsync(tasks, cancellationToken);
                         continue;
