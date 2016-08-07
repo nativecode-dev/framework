@@ -2,7 +2,9 @@
 {
     using System;
 
-    public abstract class MessageQueueFactory<TConfiguration> : IMessageQueueFactory<TConfiguration>
+    using NativeCode.Core.Types;
+
+    public abstract class MessageQueueFactory<TConfiguration> : Disposable, IMessageQueueFactory<TConfiguration>
         where TConfiguration : class, new()
     {
         /// <summary>

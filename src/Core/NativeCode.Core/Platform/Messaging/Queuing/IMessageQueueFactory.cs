@@ -5,7 +5,7 @@
     /// <summary>
     /// Provides a factory to create <see cref="IMessageQueue" /> instances.
     /// </summary>
-    public interface IMessageQueueFactory
+    public interface IMessageQueueFactory : IDisposable
     {
         /// <summary>
         /// Creates a new message queue.

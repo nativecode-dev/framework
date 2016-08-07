@@ -8,14 +8,14 @@
     /// <summary>
     /// Provides a contract to process queue messages.
     /// </summary>
-    public interface IMessageProcessor
+    public interface IMessageHandler
     {
         /// <summary>
         /// Determines whether this instance can process the message type.
         /// </summary>
-        /// <param name="type">The type.</param>
+        /// <param name="message">The message.</param>
         /// <returns><c>true</c> if this instance can process the message type; otherwise, <c>false</c>.</returns>
-        bool CanProcessMessage([NotNull] Type type);
+        bool CanProcessMessage([NotNull] object message);
 
         /// <summary>
         /// Processes the provided message.

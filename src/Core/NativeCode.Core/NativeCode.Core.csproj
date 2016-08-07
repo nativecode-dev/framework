@@ -43,10 +43,16 @@
   <ItemGroup>
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Platform\Logging\NullLogWriter.cs" />
-    <Compile Include="Platform\Messaging\Processing\IMessageProcessor.cs" />
-    <Compile Include="Platform\Messaging\Processing\MessageProcessor.cs" />
+    <Compile Include="Platform\Messaging\Processing\IMessageHandler.cs" />
+    <Compile Include="Platform\Messaging\Processing\MessageHandler.cs">
+      <DependentUpon>IMessageHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Platform\Messaging\Queuing\IMessageQueue.cs" />
+    <Compile Include="Platform\Messaging\Queuing\IMessageQueueConsumer.cs" />
     <Compile Include="Platform\Messaging\Queuing\IMessageQueueFactory.cs" />
+    <Compile Include="Platform\Messaging\Queuing\MessageQueueConsumer.cs">
+      <DependentUpon>IMessageQueueConsumer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Platform\Messaging\Queuing\MessageQueueFactory.cs">
       <DependentUpon>IMessageQueueFactory.cs</DependentUpon>
     </Compile>
@@ -55,6 +61,7 @@
     <Compile Include="Platform\Maintenance\IMaintenanceProvider.cs" />
     <Compile Include="Platform\Maintenance\MaintenanceProvider.cs" />
     <Compile Include="Platform\Maintenance\MaintenanceIgnoreAttribute.cs" />
+    <Compile Include="Platform\Messaging\Queuing\PollingQueueConsumer.cs" />
     <Compile Include="Platform\Security\Authentication\AuthenticationProvider.cs" />
     <Compile Include="Platform\Security\Authentication\IAuthenticationProvider.cs" />
     <Compile Include="Platform\Security\Authorization\Exceptions\AuthorizationAssertionException.cs" />

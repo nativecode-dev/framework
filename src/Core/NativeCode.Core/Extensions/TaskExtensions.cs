@@ -6,7 +6,7 @@
     {
         public static bool IsDone(this Task task)
         {
-            return task.IsErrorState() || task.IsCompleted;
+            return task.IsCompleted || task.IsErrorState();
         }
 
         public static bool IsErrorState(this Task task)

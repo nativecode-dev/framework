@@ -5,6 +5,7 @@
     using NativeCode.Core.Localization.Translation;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Maintenance;
+    using NativeCode.Core.Platform.Messaging.Processing;
     using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Platform.Security.KeyManagement;
     using NativeCode.Core.Platform.Serialization;
@@ -43,6 +44,7 @@
 
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>());
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IMaintenanceProvider>());
+            registrar.RegisterFactory(resolver => resolver.ResolveAll<IMessageHandler>());
         }
 
         private static void RegisterSerialization(IDependencyRegistrar registrar)

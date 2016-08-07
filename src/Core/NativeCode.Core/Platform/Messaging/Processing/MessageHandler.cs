@@ -7,18 +7,18 @@ namespace NativeCode.Core.Platform.Messaging.Processing
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Types;
 
-    public abstract class MessageProcessor : IMessageProcessor
+    public abstract class MessageHandler : IMessageHandler
     {
         private const int RetryCount = 5;
 
-        internal MessageProcessor(ILogger logger)
+        internal MessageHandler(ILogger logger)
         {
             this.Logger = logger;
         }
 
         protected ILogger Logger { get; }
 
-        public abstract bool CanProcessMessage(Type type);
+        public abstract bool CanProcessMessage(object message);
 
         public Task ProcessMessageAsync(object message)
         {
@@ -59,16 +59,16 @@ namespace NativeCode.Core.Platform.Messaging.Processing
     }
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
-    public abstract class MessageProcessor<TMessage> : MessageProcessor
+    public abstract class MessageHandler<TMessage> : MessageHandler
     {
-        protected MessageProcessor(ILogger logger)
+        protected MessageHandler(ILogger logger)
             : base(logger)
         {
         }
 
-        public override bool CanProcessMessage(Type type)
+        public override bool CanProcessMessage(object message)
         {
-            return type == typeof(TMessage);
+            return message.GetType() == typeof(TMessage);
         }
 
         protected override void ProcessMessage(object message)
