@@ -32,24 +32,24 @@ namespace NativeCode.Core.Platform.Messaging.Processing
 
         public Task ProcessMessageAsync(object message, int retries, bool requeue)
         {
-            return Task.Factory.StartNew(() => this.ExecuteProcessor(message, retries, requeue));
+            return Task.Factory.StartNew(() => this.ExecuteAsync(message, retries, requeue));
         }
 
-        protected abstract void ProcessMessage(object message);
+        protected abstract Task HandleMessageAsync(object message);
 
-        protected abstract void RequeueMessage(object message);
+        protected abstract Task RequeueMessageAsync(object message);
 
-        private void ExecuteProcessor(object message, int retries, bool requeue)
+        private async Task ExecuteAsync(object message, int retries, bool requeue)
         {
             try
             {
-                Retry.Until(() => this.ProcessMessage(message), retries);
+                await Retry.Until(() => this.HandleMessageAsync(message), retries);
             }
             catch (Exception ex)
             {
                 if (requeue)
                 {
-                    this.RequeueMessage(message);
+                    await this.RequeueMessageAsync(message);
                 }
 
                 this.Logger.Exception(ex);
@@ -71,18 +71,18 @@ namespace NativeCode.Core.Platform.Messaging.Processing
             return message.GetType() == typeof(TMessage);
         }
 
-        protected override void ProcessMessage(object message)
+        protected override Task HandleMessageAsync(object message)
         {
-            this.ProcessMessage((TMessage)message);
+            return this.HandleMessageAsync((TMessage)message);
         }
 
-        protected override void RequeueMessage(object message)
+        protected override Task RequeueMessageAsync(object message)
         {
-            this.RequeueMessage((TMessage)message);
+            return this.RequeueMessageAsync((TMessage)message);
         }
 
-        protected abstract void ProcessMessage(TMessage message);
+        protected abstract Task HandleMessageAsync(TMessage message);
 
-        protected abstract void RequeueMessage(TMessage message);
+        protected abstract Task RequeueMessageAsync(TMessage message);
     }
 }
