@@ -8,14 +8,16 @@
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
+    using NativeCode.Core.Extensions;
     using NativeCode.Core.Settings;
+    using NativeCode.Core.Types;
 
     /// <summary>
     /// Provides a proxy class so that the <see cref="IApplication" /> interface can be exposed
     /// by types that must be derived, i.e. HttpApplication.
     /// </summary>
     /// <seealso cref="NativeCode.Core.Platform.IApplication" />
-    public class ApplicationProxy : IApplication
+    public class ApplicationProxy : DisposableManager, IApplication
     {
         private static int counter;
 
@@ -23,26 +25,25 @@
         /// Initializes a new instance of the <see cref="ApplicationProxy" /> class.
         /// </summary>
         /// <param name="platform">The platform.</param>
+        /// <param name="cancellationTokenManager">The cancellation token manager.</param>
         /// <param name="settings">The settings.</param>
-        public ApplicationProxy(IPlatform platform, Settings settings)
+        public ApplicationProxy(IPlatform platform, CancellationTokenManager cancellationTokenManager, Settings settings)
         {
             this.Platform = platform;
             this.Settings = settings;
+            this.TokenManager = cancellationTokenManager;
+
+            this.EnsureDisposed(this.Platform);
+            this.EnsureDisposed(this.TokenManager);
         }
 
         public IPlatform Platform { get; private set; }
 
         public Settings Settings { get; }
 
-        protected bool Disposed { get; private set; }
+        public CancellationTokenManager TokenManager { get; }
 
         protected bool Initialized { get; private set; }
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
 
         public virtual string GetApplicationName()
         {
@@ -51,7 +52,7 @@
 
         public virtual string GetApplicationVersion()
         {
-            return null;
+            return this.GetType().GetTypeInfo().Assembly.GetVersion();
         }
 
         public void Initialize(string name, params IDependencyModule[] modules)
@@ -83,20 +84,10 @@
             }
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
-            if (disposing && !this.Disposed)
-            {
-                this.Disposed = true;
-
-                this.PersistSettings();
-
-                if (this.Platform != null)
-                {
-                    this.Platform.Dispose();
-                    this.Platform = null;
-                }
-            }
+            this.PersistSettings();
+            base.Dispose(disposing);
         }
 
         protected void EnsureInitialized()

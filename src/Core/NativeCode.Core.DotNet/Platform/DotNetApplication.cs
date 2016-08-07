@@ -1,19 +1,14 @@
 ﻿namespace NativeCode.Core.DotNet.Platform
 {
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
+    using NativeCode.Core.Types;
 
     public abstract class DotNetApplication : Application
     {
-        protected DotNetApplication(IPlatform platform, Settings settings)
-            : base(platform, settings)
+        protected DotNetApplication(IPlatform platform, CancellationTokenManager cancellationTokenManager, Settings settings)
+            : base(platform, cancellationTokenManager, settings)
         {
-        }
-
-        public override string GetApplicationVersion()
-        {
-            return this.GetType().Assembly.GetVersion();
         }
     }
 }

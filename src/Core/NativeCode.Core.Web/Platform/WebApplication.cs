@@ -10,6 +10,7 @@
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
+    using NativeCode.Core.Types;
 
     public abstract class WebApplication : HttpApplication
     {
@@ -49,10 +50,10 @@
         /// <summary>
         /// Creates a new application proxy.
         /// </summary>
-        /// <returns>Returns a new <see cref="ApplicationProxy"/>.</returns>
+        /// <returns>Returns a new <see cref="ApplicationProxy" />.</returns>
         protected virtual ApplicationProxy CreateApplicationProxy()
         {
-            return new ApplicationProxy(this.CreatePlatform(), this.CreateSettings());
+            return new ApplicationProxy(this.CreatePlatform(), new CancellationTokenManager(), this.CreateSettings());
         }
 
         /// <summary>

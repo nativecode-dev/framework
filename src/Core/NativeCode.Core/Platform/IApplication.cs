@@ -6,6 +6,7 @@
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Settings;
+    using NativeCode.Core.Types;
 
     /// <summary>
     /// Provides a contract for an application instance.
@@ -22,6 +23,11 @@
         /// Gets the settings.
         /// </summary>
         Settings Settings { get; }
+
+        /// <summary>
+        /// Gets the token manager.
+        /// </summary>
+        CancellationTokenManager TokenManager { get; }
 
         /// <summary>
         /// Gets the name of the application.
