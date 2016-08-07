@@ -18,14 +18,12 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            RegisterPlatform(registrar);
             RegisterLocalization(registrar);
             RegisterLogging(registrar);
+            RegisterPlatform(registrar);
+            RegisterQueueing(registrar);
             RegisterSerialization(registrar);
             RegisterValidation(registrar);
-
-            registrar.Register<CancellationTokenManager>();
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<IMessageHandler>());
         }
 
         private static void RegisterLocalization(IDependencyRegistrar registrar)
@@ -44,10 +42,15 @@
 
         private static void RegisterPlatform(IDependencyRegistrar registrar)
         {
+            registrar.Register<CancellationTokenManager>();
             registrar.Register<IKeyManager, KeyManager>();
 
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>());
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IMaintenanceProvider>());
+        }
+
+        private static void RegisterQueueing(IDependencyRegistrar registrar)
+        {
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IMessageHandler>());
         }
 

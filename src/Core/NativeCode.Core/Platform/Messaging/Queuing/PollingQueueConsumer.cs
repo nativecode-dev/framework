@@ -16,11 +16,9 @@
     {
         private int counter;
 
-        public PollingQueueConsumer(ILogger logger, IMessageQueue<TMessage> queue, IStringSerializer serializer, IEnumerable<IMessageHandler> handlers)
-            : base(queue)
+        public PollingQueueConsumer(ILogger logger, IEnumerable<IMessageHandler> handlers, IMessageQueue<TMessage> queue, IStringSerializer serializer)
+            : base(logger, handlers, queue)
         {
-            this.Handlers = handlers;
-            this.Logger = logger;
             this.Serializer = serializer;
         }
 
@@ -39,10 +37,6 @@
                 }
             }
         }
-
-        protected IEnumerable<IMessageHandler> Handlers { get; }
-
-        protected ILogger Logger { get; }
 
         protected IStringSerializer Serializer { get; }
 
