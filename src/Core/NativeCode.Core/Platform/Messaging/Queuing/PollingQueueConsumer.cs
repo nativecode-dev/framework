@@ -48,11 +48,9 @@
 
             while (cancellationToken.IsCancellationRequested == false)
             {
-                this.Logger.Debug($"{this.GetType().Name}.ConsumeQueueAsync/IsCancellationRequested={cancellationToken.IsCancellationRequested}");
-
                 try
                 {
-                    if (tasks.Count <= this.counter)
+                    if (tasks.Count == this.counter)
                     {
                         await this.RemoveCompletedAsync(tasks, cancellationToken);
                         continue;
@@ -75,18 +73,17 @@
                 tasks.Remove(task);
             }
 
-            return Task.Delay(TimeSpan.FromMilliseconds(250), cancellationToken);
+            return Task.Delay(this.ThrottleCleanup, cancellationToken);
         }
 
-        private async Task ConsumeNextMessageAsync(IMessageQueue<TMessage> queue, ICollection<Task> tasks, CancellationToken cancellationToken)
+        private Task ConsumeNextMessageAsync(IMessageQueue<TMessage> queue, ICollection<Task> tasks, CancellationToken cancellationToken)
         {
             var message = queue.Dequeue();
 
             if (message == null)
             {
                 this.Logger.Debug($"No messages found from {queue.QueueName}.");
-                await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
-                return;
+                return Task.Delay(this.ThrottleEmptyQueue, cancellationToken);
             }
 
             this.Logger.Debug(this.Serializer.Serialize(message));
@@ -104,6 +101,8 @@
                     this.Logger.Exception(ex);
                 }
             }
+
+            return Task.Delay(this.ThrottleConsume, cancellationToken);
         }
     }
 }

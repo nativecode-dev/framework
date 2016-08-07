@@ -6,6 +6,12 @@
 
     public interface IMessageQueueConsumer
     {
+        TimeSpan ThrottleCleanup { get; }
+
+        TimeSpan ThrottleConsume { get; }
+
+        TimeSpan ThrottleEmptyQueue { get; }
+
         Task StartAsync(Uri url, CancellationToken cancellationToken);
     }
 }

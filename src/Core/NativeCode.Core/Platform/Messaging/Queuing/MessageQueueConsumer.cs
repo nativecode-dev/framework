@@ -24,6 +24,12 @@
 
         protected IMessageQueue<TMessage> Queue { get; }
 
+        public virtual TimeSpan ThrottleCleanup { get; } = TimeSpan.FromMilliseconds(250);
+
+        public virtual TimeSpan ThrottleConsume { get; } = TimeSpan.FromMilliseconds(50);
+
+        public TimeSpan ThrottleEmptyQueue { get; } = TimeSpan.FromMilliseconds(1000);
+
         public virtual Task StartAsync(Uri url, CancellationToken cancellationToken)
         {
             this.Logger.Debug($"Starting message consumer for {url}.");
