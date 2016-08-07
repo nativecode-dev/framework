@@ -34,7 +34,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
 
         public Task ProcessMessageAsync(object message, int retries, bool requeue, CancellationToken cancellationToken)
         {
-            return Task.Factory.StartNew(() => this.ExecuteAsync(message, retries, requeue, cancellationToken));
+            return Task.Run(() => this.ExecuteAsync(message, retries, requeue, cancellationToken), cancellationToken);
         }
 
         protected abstract Task HandleMessageAsync(object message, CancellationToken cancellationToken);
@@ -45,16 +45,19 @@ namespace NativeCode.Core.Platform.Messaging.Processing
         {
             try
             {
+                this.Logger.Debug($"Running handler {this.GetType().Name} {retries} time(s).");
                 await Retry.Until(() => this.HandleMessageAsync(message, cancellationToken), retries);
             }
             catch (Exception ex)
             {
+                this.Logger.Exception(ex);
+
                 if (requeue)
                 {
+                    this.Logger.Debug($"Re-queuing message for handler {this.GetType().Name}.");
                     await this.RequeueMessageAsync(message, cancellationToken);
                 }
 
-                this.Logger.Exception(ex);
                 throw;
             }
         }
@@ -73,7 +76,9 @@ namespace NativeCode.Core.Platform.Messaging.Processing
 
         public override bool CanProcessMessage(object message)
         {
-            return message.GetType() == typeof(TMessage);
+            var type = typeof(TMessage);
+            this.Logger.Debug($"Message Type: {message.GetType().Name}, Expected Type: {type.Name}.");
+            return message.GetType() == type;
         }
 
         protected override Task HandleMessageAsync(object message, CancellationToken cancellationToken)

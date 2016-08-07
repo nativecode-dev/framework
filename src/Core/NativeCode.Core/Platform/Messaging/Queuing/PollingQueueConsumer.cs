@@ -44,6 +44,8 @@
         {
             var tasks = new List<Task>();
 
+            this.Logger.Debug($"Consuming messages for {typeof(TMessage).Name} from {url}.");
+
             while (cancellationToken.IsCancellationRequested == false)
             {
                 try
@@ -78,26 +80,28 @@
         {
             var message = queue.Dequeue();
 
-            if (message != null)
+            if (message == null)
             {
-                this.Logger.Debug(this.Serializer.Serialize(message));
-
-                foreach (var handler in this.Handlers.Where(h => h.CanProcessMessage(message)))
-                {
-                    this.Logger.Debug($"Using handler {handler.GetType().Name}.");
-
-                    try
-                    {
-                        tasks.Add(handler.ProcessMessageAsync(message, cancellationToken));
-                    }
-                    catch (Exception ex)
-                    {
-                        this.Logger.Exception(ex);
-                    }
-                }
+                this.Logger.Debug($"No messages found from {queue.QueueName}.");
+                await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
+                return;
             }
 
-            await Task.Delay(TimeSpan.FromMilliseconds(500), cancellationToken);
+            this.Logger.Debug(this.Serializer.Serialize(message));
+
+            foreach (var handler in this.Handlers.Where(h => h.CanProcessMessage(message)))
+            {
+                this.Logger.Debug($"Calling handler {handler.GetType().Name}.");
+
+                try
+                {
+                    tasks.Add(handler.ProcessMessageAsync(message, cancellationToken));
+                }
+                catch (Exception ex)
+                {
+                    this.Logger.Exception(ex);
+                }
+            }
         }
     }
 }
