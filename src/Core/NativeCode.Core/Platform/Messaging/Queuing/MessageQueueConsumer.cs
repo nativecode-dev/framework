@@ -4,18 +4,15 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using NativeCode.Core.Types;
-
-    public abstract class MessageQueueConsumer<TMessage> : DisposableManager, IMessageQueueConsumer
+    public abstract class MessageQueueConsumer<TMessage> : IMessageQueueConsumer
         where TMessage : class, new()
     {
-        protected MessageQueueConsumer(IMessageQueueFactory<TMessage> factory)
+        protected MessageQueueConsumer(IMessageQueue<TMessage> queue)
         {
-            this.Factory = factory;
-            this.EnsureDisposed(this.Factory);
+            this.Queue = queue;
         }
 
-        protected IMessageQueueFactory<TMessage> Factory { get; }
+        protected IMessageQueue<TMessage> Queue { get; }
 
         public virtual Task StartAsync(Uri url, CancellationToken cancellationToken)
         {

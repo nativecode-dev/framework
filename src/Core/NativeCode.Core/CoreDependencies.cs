@@ -25,6 +25,7 @@
             RegisterValidation(registrar);
 
             registrar.Register<CancellationTokenManager>();
+            registrar.RegisterFactory(resolver => resolver.ResolveAll<IMessageHandler>());
         }
 
         private static void RegisterLocalization(IDependencyRegistrar registrar)

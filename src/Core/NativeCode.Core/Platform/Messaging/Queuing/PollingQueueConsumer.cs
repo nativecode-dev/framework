@@ -16,15 +16,15 @@
     {
         private int counter;
 
-        public PollingQueueConsumer(ILogger logger, IMessageQueueFactory<TMessage> factory, IStringSerializer serializer, IEnumerable<IMessageHandler> handlers)
-            : base(factory)
+        public PollingQueueConsumer(ILogger logger, IMessageQueue<TMessage> queue, IStringSerializer serializer, IEnumerable<IMessageHandler> handlers)
+            : base(queue)
         {
             this.Handlers = handlers;
             this.Logger = logger;
             this.Serializer = serializer;
         }
 
-        public int MaxMessasages
+        public int Concurrency
         {
             get
             {
@@ -35,7 +35,7 @@
             {
                 if (Interlocked.CompareExchange(ref this.counter, value, this.counter) != this.counter)
                 {
-                    this.Logger.Warning($"Could not set MaxMessages, currently set at {this.counter}.");
+                    this.Logger.Warning($"Could not set Concurrency, currently set at {this.counter}.");
                 }
             }
         }
@@ -50,32 +50,30 @@
         {
             var tasks = new List<Task>();
 
-            using (var queue = this.Factory.Create<TMessage>(url))
+            while (cancellationToken.IsCancellationRequested == false)
             {
-                while (cancellationToken.IsCancellationRequested == false)
+                try
                 {
-                    try
+                    if (tasks.Count >= this.counter)
                     {
-                        if (tasks.Count >= this.counter)
-                        {
-                            await RemoveCompletedAsync(tasks, cancellationToken);
-                            continue;
-                        }
+                        await this.RemoveCompletedAsync(tasks, cancellationToken);
+                        continue;
+                    }
 
-                        await this.ConsumeNextMessageAsync(queue, tasks, cancellationToken);
-                    }
-                    catch (Exception ex)
-                    {
-                        this.Logger.Exception(ex);
-                    }
+                    await this.ConsumeNextMessageAsync(this.Queue, tasks, cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    this.Logger.Exception(ex);
                 }
             }
         }
 
-        private static Task RemoveCompletedAsync(ICollection<Task> tasks, CancellationToken cancellationToken)
+        private Task RemoveCompletedAsync(ICollection<Task> tasks, CancellationToken cancellationToken)
         {
             foreach (var task in tasks.Where(t => t.IsDone()).ToList())
             {
+                this.Logger.Debug($"Removing task {task.Id}.");
                 tasks.Remove(task);
             }
 
@@ -88,8 +86,12 @@
 
             if (message != null)
             {
+                this.Logger.Debug(this.Serializer.Serialize(message));
+
                 foreach (var handler in this.Handlers.Where(h => h.CanProcessMessage(message)))
                 {
+                    this.Logger.Debug($"Using handler {handler.GetType().Name}.");
+
                     try
                     {
                         tasks.Add(handler.ProcessMessageAsync(message, cancellationToken));

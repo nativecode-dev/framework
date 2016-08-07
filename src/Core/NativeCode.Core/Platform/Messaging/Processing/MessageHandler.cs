@@ -6,6 +6,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
     using System.Threading.Tasks;
 
     using NativeCode.Core.Platform.Logging;
+    using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Types;
 
     public abstract class MessageHandler : IMessageHandler
@@ -60,12 +61,15 @@ namespace NativeCode.Core.Platform.Messaging.Processing
     }
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
-    public abstract class MessageHandler<TMessage> : MessageHandler
+    public abstract class MessageHandler<TMessage> : MessageHandler where TMessage : class, new()
     {
-        protected MessageHandler(ILogger logger)
+        protected MessageHandler(IMessageQueue<TMessage> queue, ILogger logger)
             : base(logger)
         {
+            this.Queue = queue;
         }
+
+        protected IMessageQueue<TMessage> Queue { get; }
 
         public override bool CanProcessMessage(object message)
         {

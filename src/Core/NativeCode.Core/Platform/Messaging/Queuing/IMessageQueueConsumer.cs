@@ -4,7 +4,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public interface IMessageQueueConsumer : IDisposable
+    public interface IMessageQueueConsumer
     {
         Task StartAsync(Uri url, CancellationToken cancellationToken);
     }
