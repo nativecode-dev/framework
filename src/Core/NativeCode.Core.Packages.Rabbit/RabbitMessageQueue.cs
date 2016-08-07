@@ -16,17 +16,25 @@
     {
         public RabbitMessageQueue(IStringSerializer serializer, ILogger logger, RabbitConnection connection, RabbitMessageQueueOptions options)
         {
-            this.Logger = logger;
-            this.Channel = connection.CreateModel();
-            this.Options = options;
-            this.QueueName = options.QueueName;
-            this.Serializer = serializer;
+            try
+            {
+                this.Logger = logger;
+                this.Channel = connection.CreateModel();
+                this.Options = options;
+                this.QueueName = options.QueueName;
+                this.Serializer = serializer;
 
-            this.Channel.ExchangeDeclare(this.ExchangeName, ExchangeType.Topic, options.Durable, options.AutoDelete, null);
-            this.Channel.QueueDeclare(this.QueueName, options.Durable, options.Exclusive, options.AutoDelete, null);
-            this.Channel.QueueBind(this.QueueName, this.ExchangeName, this.RoutingKey);
+                this.Channel.ExchangeDeclare(this.ExchangeName, ExchangeType.Topic, options.Durable, options.AutoDelete, null);
+                this.Channel.QueueDeclare(this.QueueName, options.Durable, options.Exclusive, options.AutoDelete, null);
+                this.Channel.QueueBind(this.QueueName, this.ExchangeName, this.RoutingKey);
 
-            this.Channel.CallbackException += this.ModelOnCallbackException;
+                this.Channel.CallbackException += this.ModelOnCallbackException;
+            }
+            catch (Exception ex)
+            {
+                this.Logger.Exception(ex);
+                throw;
+            }
         }
 
         private void ModelOnCallbackException(object sender, CallbackExceptionEventArgs callbackExceptionEventArgs)

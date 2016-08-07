@@ -32,14 +32,14 @@
         {
             var connection = this.GetRabbitConnection(options.Uri);
 
-            return new RabbitMessageQueue<TMessage>(this.Serializer, this.Logger, connection, options);
+            return Retry.Until(() => new RabbitMessageQueue<TMessage>(this.Serializer, this.Logger, connection, options), 5);
         }
 
         protected virtual RabbitConnection GetRabbitConnection(RabbitUri uri)
         {
             if (Connections.ContainsKey(uri) == false)
             {
-                return Connections.AddOrUpdate(uri, key => new RabbitConnection(uri), (k, v) => v);
+                return Connections.AddOrUpdate(uri, key => new RabbitConnection(uri, this.Logger), (k, v) => v);
             }
 
             return Connections[uri];
