@@ -33,7 +33,7 @@
 
             set
             {
-                if (Interlocked.CompareExchange(ref this.counter, this.counter++, this.counter) != this.counter)
+                if (Interlocked.CompareExchange(ref this.counter, value, this.counter) != this.counter)
                 {
                     this.Logger.Warning($"Could not set MaxMessages, currently set at {this.counter}.");
                 }
