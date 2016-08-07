@@ -107,6 +107,7 @@
     <Compile Include="Platform\Security\KeyManagement\KeyManager.cs" />
     <Compile Include="Platform\Security\KeyManagement\IKeyManager.cs" />
     <Compile Include="Platform\Serialization\LowerScoreContractResolver.cs" />
+    <Compile Include="Types\CancellationTokenManager.cs" />
     <Compile Include="Types\Credentials.cs" />
     <Compile Include="Types\DisposableManager.cs" />
     <Compile Include="Types\LazyFactory.cs" />

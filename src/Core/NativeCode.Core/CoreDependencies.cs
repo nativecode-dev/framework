@@ -9,6 +9,7 @@
     using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Platform.Security.KeyManagement;
     using NativeCode.Core.Platform.Serialization;
+    using NativeCode.Core.Types;
     using NativeCode.Core.Validation;
 
     public class CoreDependencies : DependencyModule
@@ -22,6 +23,8 @@
             RegisterLogging(registrar);
             RegisterSerialization(registrar);
             RegisterValidation(registrar);
+
+            registrar.Register<CancellationTokenManager>();
         }
 
         private static void RegisterLocalization(IDependencyRegistrar registrar)
