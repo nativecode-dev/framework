@@ -44,7 +44,7 @@
         {
             var tasks = new List<Task>();
 
-            this.Logger.Debug($"Consuming messages for {typeof(TMessage).Name} from {url}.");
+            this.Logger.Debug($"Consuming messages for {typeof(TMessage).Name}.");
 
             while (cancellationToken.IsCancellationRequested == false)
             {
@@ -80,7 +80,7 @@
         {
             var message = queue.Dequeue();
 
-            if (message == null)
+            if (message == default(TMessage))
             {
                 this.Logger.Debug($"No messages found from {queue.QueueName}.");
                 return Task.Delay(this.ThrottleEmptyQueue, cancellationToken);

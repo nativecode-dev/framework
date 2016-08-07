@@ -6,23 +6,25 @@
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
-    using NativeCode.Core.Types;
 
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
 
-    internal class RabbitMessageQueue<TMessage> : Disposable, IMessageQueue<TMessage>
+    internal class RabbitMessageQueue<TMessage> : MessageQueue<TMessage>
         where TMessage : class, new()
     {
-        public RabbitMessageQueue(IStringSerializer serializer, ILogger logger, RabbitConnection connection, RabbitMessageQueueOptions options)
+        public RabbitMessageQueue(ILogger logger, IStringSerializer serializer, RabbitConnection connection, RabbitMessageQueueOptions options)
+            : base(logger, serializer)
         {
             try
             {
-                this.Logger = logger;
                 this.Channel = connection.CreateModel();
                 this.Options = options;
-                this.QueueName = options.QueueName;
-                this.Serializer = serializer;
+
+                if (string.IsNullOrWhiteSpace(this.Options.QueueName) == false)
+                {
+                    this.QueueName = this.Options.QueueName;
+                }
 
                 this.Channel.ExchangeDeclare(this.ExchangeName, ExchangeType.Topic, options.Durable, options.AutoDelete, null);
                 this.Channel.QueueDeclare(this.QueueName, options.Durable, options.Exclusive, options.AutoDelete, null);
@@ -44,29 +46,23 @@
             this.Logger.Exception(callbackExceptionEventArgs.Exception);
         }
 
-        public string QueueName { get; }
-
         public string RoutingKey => this.QueueName;
 
         public string ExchangeName => $"{this.QueueName}";
 
         protected IModel Channel { get; private set; }
 
-        protected ILogger Logger { get; }
-
         protected RabbitMessageQueueOptions Options { get; }
 
-        protected IStringSerializer Serializer { get; }
-
-        public byte[] GetBytes()
+        public override byte[] GetBytes()
         {
             this.EnsureModelAvailable();
 
-            var result = this.Channel.BasicGet(this.QueueName, true);
+            var result = this.Channel.BasicGet(this.QueueName, false);
 
             if (result == null)
             {
-                return new byte[0];
+                return null;
             }
 
             try
@@ -79,14 +75,14 @@
             }
         }
 
-        public void PublishBytes(byte[] data)
+        public override void PublishBytes(byte[] data)
         {
             this.EnsureModelAvailable();
 
             this.Channel.BasicPublish(this.ExchangeName, this.RoutingKey, null, data);
         }
 
-        public TMessage Dequeue()
+        public override TMessage Dequeue()
         {
             var bytes = this.GetBytes();
 
@@ -98,7 +94,7 @@
             return this.Serializer.Deserialize<TMessage>(Encoding.UTF8.GetString(bytes));
         }
 
-        public void Enqueue(TMessage message)
+        public override void Enqueue(TMessage message)
         {
             var serialized = this.Serializer.Serialize(message);
             var bytes = Encoding.UTF8.GetBytes(serialized);

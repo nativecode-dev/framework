@@ -4,6 +4,6 @@ namespace NativeCode.Tests.Core.Messaging.Queueing
 
     public class SimpleQueueMessage
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
     }
 }

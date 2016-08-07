@@ -32,7 +32,7 @@
         {
             var connection = this.GetRabbitConnection(options.Uri);
 
-            return Retry.Until(() => new RabbitMessageQueue<TMessage>(this.Serializer, this.Logger, connection, options), 5);
+            return Retry.Until(() => new RabbitMessageQueue<TMessage>(this.Logger, this.Serializer, connection, options), 5);
         }
 
         protected virtual RabbitConnection GetRabbitConnection(RabbitUri uri)
