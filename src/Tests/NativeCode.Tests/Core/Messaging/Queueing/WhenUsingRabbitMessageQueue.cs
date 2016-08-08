@@ -2,6 +2,8 @@
 {
     using System;
 
+    using NativeCode.Core.Dependencies.Enums;
+    using NativeCode.Core.DotNet.Logging;
     using NativeCode.Core.Packages.Rabbit;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Serialization;
@@ -14,6 +16,7 @@
 
         public WhenUsingRabbitMessageQueue()
         {
+            this.Container.Registrar.Register<ILogWriter, TraceLogWriter>(DependencyKey.QualifiedName);
             this.Container.Registrar.Register<IStringSerializer, JsonStringSerializer>();
         }
 

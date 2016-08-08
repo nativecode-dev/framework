@@ -14,7 +14,7 @@
     public class PollingQueueConsumer<TMessage> : MessageQueueConsumer<TMessage>
         where TMessage : class, new()
     {
-        private int counter;
+        private int counter = 6;
 
         public PollingQueueConsumer(ILogger logger, IEnumerable<IMessageHandler> handlers, IMessageQueue<TMessage> queue, IStringSerializer serializer)
             : base(logger, handlers, queue)
