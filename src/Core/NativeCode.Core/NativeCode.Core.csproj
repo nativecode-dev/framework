@@ -51,7 +51,9 @@
     <Compile Include="Platform\Messaging\Queuing\IMessageQueue.cs" />
     <Compile Include="Platform\Messaging\Queuing\IMessageQueueConsumer.cs" />
     <Compile Include="Platform\Messaging\Queuing\IMessageQueueFactory.cs" />
-    <Compile Include="Platform\Messaging\Queuing\MessageQueue.cs" />
+    <Compile Include="Platform\Messaging\Queuing\MessageQueue.cs">
+      <DependentUpon>IMessageQueue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Platform\Messaging\Queuing\MessageQueueConsumer.cs">
       <DependentUpon>IMessageQueueConsumer.cs</DependentUpon>
     </Compile>

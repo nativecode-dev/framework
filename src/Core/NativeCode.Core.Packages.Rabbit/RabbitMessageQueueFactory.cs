@@ -3,46 +3,50 @@
     using System;
     using System.Collections.Concurrent;
 
-    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
     using NativeCode.Core.Types;
 
-    public class RabbitMessageQueueFactory : Disposable, IMessageQueueFactory<RabbitMessageQueueOptions>
+    public class RabbitMessageQueueFactory : MessageQueueFactory<RabbitMessageQueueOptions>
     {
+        private const int MaxRetryCount = 10;
+
         private static readonly ConcurrentDictionary<string, RabbitConnection> Connections = new ConcurrentDictionary<string, RabbitConnection>();
 
         public RabbitMessageQueueFactory(ILogger logger, IStringSerializer serializer)
+            : base(logger, serializer)
         {
-            this.Logger = logger;
-            this.Serializer = serializer;
         }
 
-        protected ILogger Logger { get; }
-
-        protected IStringSerializer Serializer { get; }
-
-        public virtual IMessageQueue<TMessage> Create<TMessage>(Uri connection) where TMessage : class, new()
+        public override IMessageQueue<TMessage> Create<TMessage>(Uri connection)
         {
-            return this.Create<TMessage>(new RabbitMessageQueueOptions(connection) { QueueName = typeof(TMessage).Name.ToLowerScore('.') });
+            return this.Create<TMessage>(new RabbitMessageQueueOptions(connection));
         }
 
-        public virtual IMessageQueue<TMessage> Create<TMessage>(RabbitMessageQueueOptions options) where TMessage : class, new()
+        public override IMessageQueue<TMessage> Create<TMessage>(RabbitMessageQueueOptions options)
         {
             var connection = this.GetRabbitConnection(options.Uri);
 
-            return Retry.Until(() => new RabbitMessageQueue<TMessage>(this.Logger, this.Serializer, connection, options), 5);
+            return Retry.Until(
+                () => new RabbitMessageQueue<TMessage>(this.Logger, this.Serializer, connection, options),
+                MaxRetryCount,
+                (ex, count) => this.Logger.Exception(ex));
         }
 
         protected virtual RabbitConnection GetRabbitConnection(RabbitUri uri)
         {
-            if (Connections.ContainsKey(uri) == false)
-            {
-                return Connections.AddOrUpdate(uri, key => new RabbitConnection(uri, this.Logger), (k, v) => v);
-            }
+            return Connections.AddOrUpdate(uri, key => this.NewConnection(uri), this.UpdateConnection);
+        }
 
-            return Connections[uri];
+        protected virtual RabbitConnection NewConnection(RabbitUri uri)
+        {
+            return new RabbitConnection(uri, this.Logger);
+        }
+
+        protected virtual RabbitConnection UpdateConnection(string key, RabbitConnection value)
+        {
+            return value;
         }
 
         protected override void Dispose(bool disposing)

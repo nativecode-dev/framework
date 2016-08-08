@@ -9,16 +9,16 @@
 
     public class RabbitConnection : Disposable
     {
-        private readonly Lazy<IConnection> instance;
+        private readonly LazyFactory<IConnection> instance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RabbitConnection" /> class.
         /// </summary>
         /// <param name="connection">The connection.</param>
         /// <param name="logger">The logger.</param>
-        public RabbitConnection(RabbitUri connection, ILogger logger)
+        protected internal RabbitConnection(RabbitUri connection, ILogger logger)
         {
-            this.instance = new Lazy<IConnection>(() => this.CreateDefaultConnection(connection));
+            this.instance = new LazyFactory<IConnection>(() => this.CreateDefaultConnection(connection));
             this.Logger = logger;
         }
 
@@ -31,6 +31,7 @@
 
         public IModel CreateModel()
         {
+            this.Logger.Debug("Creating model.");
             return this.Connection.CreateModel();
         }
 
@@ -42,7 +43,11 @@
         {
             try
             {
-                var factory = new ConnectionFactory { Uri = connection.ToUri().AbsoluteUri };
+                var url = connection.ToUri().AbsoluteUri;
+                var factory = new ConnectionFactory { Uri = url };
+
+                this.Logger.Debug($"Creating connection for {url}.");
+
                 return factory.CreateConnection();
             }
             catch (Exception ex)

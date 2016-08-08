@@ -25,7 +25,10 @@
 
         protected void EnsureDisposed<TDisposable>(TDisposable disposable) where TDisposable : IDisposable
         {
-            this.disposables.Add(disposable);
+            if (this.disposables.Contains(disposable) == false)
+            {
+                this.disposables.Add(disposable);
+            }
         }
     }
 }
