@@ -42,6 +42,7 @@
     <Compile Include="RabbitConnection.cs" />
     <Compile Include="RabbitDependencies.cs" />
     <Compile Include="RabbitMessageQueue.cs" />
+    <Compile Include="RabbitMessageQueueConsumer.cs" />
     <Compile Include="RabbitMessageQueueFactory.cs" />
     <Compile Include="RabbitMessageQueueOptions.cs" />
     <Compile Include="RabbitUri.cs" />

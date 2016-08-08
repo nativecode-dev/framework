@@ -10,7 +10,7 @@
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
 
-    internal class RabbitMessageQueue<TMessage> : MessageQueue<TMessage>
+    public class RabbitMessageQueue<TMessage> : MessageQueue<TMessage>
         where TMessage : class, new()
     {
         public RabbitMessageQueue(ILogger logger, IStringSerializer serializer, RabbitConnection connection, RabbitMessageQueueOptions options)
