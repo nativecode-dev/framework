@@ -8,7 +8,6 @@
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform.Security.Authorization;
     using NativeCode.Core.Web;
-    using NativeCode.Core.Web.Hmac;
 
     public class OwinHmacMiddleware : OwinMiddleware
     {
@@ -34,8 +33,7 @@
 
             if (StringExtensions.NotEmpty(crypto, length, signature, timestamp))
             {
-                var canonical = new CanonicalMessage(this.Request);
-                canonical.Sign(crypto.ToEnum<HmacSignatureAlgorithm>(), secret);
+                // TODO: HMAC Canonical Message
             }
         }
     }
