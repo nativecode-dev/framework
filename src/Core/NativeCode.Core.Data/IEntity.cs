@@ -38,13 +38,13 @@
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     /// <seealso cref="NativeCode.Core.Data.IEntity" />
-    public interface IEntity<out TKey> : IEntity
+    public interface IEntity<TKey> : IEntity
         where TKey : struct
     {
         /// <summary>
-        /// Gets the identifier.
+        /// Gets or sets the identifier.
         /// </summary>
         [Key]
-        TKey Id { get; }
+        TKey Id { get; set; }
     }
 }

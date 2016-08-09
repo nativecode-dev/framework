@@ -74,11 +74,11 @@
 
         private static void UpdateKeyProperties(DbEntityEntry entry)
         {
-            var setter = entry.Entity as IEntityIdSetter<Guid>;
+            var entity = entry.Entity as IEntity<Guid>;
 
-            if (setter != null && entry.State == EntityState.Added)
+            if (entity != null && entry.State == EntityState.Added)
             {
-                setter.SetId(Guid.NewGuid());
+                entity.Id = Guid.NewGuid();
             }
         }
 

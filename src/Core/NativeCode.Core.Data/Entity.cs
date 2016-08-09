@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics.CodeAnalysis;
     using System.Security.Principal;
 
     public abstract class Entity : IEntityAuditor
@@ -35,11 +36,12 @@
         }
     }
 
-    public abstract class Entity<T> : Entity, IEntityIdSetter<T>
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
+    public abstract class Entity<T> : Entity
         where T : struct
     {
         [Key]
-        public T Id { get; protected set; }
+        public T Id { get; set; }
 
         public void SetId(T id)
         {

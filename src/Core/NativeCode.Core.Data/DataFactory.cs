@@ -13,8 +13,9 @@
         public virtual TEntity Create<TEntity, TKey>(TKey key, Action<TEntity> setter) where TEntity : class, IEntity<TKey>, new() where TKey : struct
         {
             var entity = new TEntity();
-            var keyset = entity as IEntityIdSetter<TKey>;
-            keyset?.SetId(key);
+            var keyset = (IEntity<TKey>)entity;
+
+            keyset.Id = key;
             setter?.Invoke(entity);
 
             this.Seed<TEntity>(new[] { entity });
