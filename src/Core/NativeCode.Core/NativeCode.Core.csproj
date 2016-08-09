@@ -41,6 +41,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Annotations\CodeAnnotationAttribute.cs" />
+    <Compile Include="Annotations\CodeRefactorAttribute.cs" />
+    <Compile Include="Annotations\CodeSmellAttribute.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Platform\FileSystem\FileInspector.cs">
       <DependentUpon>IFileInspector.cs</DependentUpon>
