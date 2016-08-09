@@ -17,7 +17,7 @@
         {
         }
 
-        public override string ApplicationPath => AppDomain.CurrentDomain.BaseDirectory;
+        public override string BinariesPath => AppDomain.CurrentDomain.BaseDirectory;
 
         public override string DataPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 

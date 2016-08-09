@@ -16,10 +16,10 @@
     public interface IPlatform : IDisposable
     {
         /// <summary>
-        /// Gets the application path.
+        /// Gets the application binaries path.
         /// </summary>
         [NotNull]
-        string ApplicationPath { get; }
+        string BinariesPath { get; }
 
         /// <summary>
         /// Gets the data path.

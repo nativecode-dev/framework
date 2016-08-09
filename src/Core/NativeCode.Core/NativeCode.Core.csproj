@@ -45,6 +45,9 @@
     <Compile Include="Annotations\CodeRefactorAttribute.cs" />
     <Compile Include="Annotations\CodeSmellAttribute.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Platform\Application.cs">
+      <DependentUpon>IApplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="Platform\FileSystem\FileInspector.cs">
       <DependentUpon>IFileInspector.cs</DependentUpon>
     </Compile>
@@ -155,10 +158,6 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Platform\Application.cs">
-      <DependentUpon>IApplication.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\ApplicationProxy.cs" />
     <Compile Include="Platform\IApplication.cs" />
     <Compile Include="Localization\Translation\ITranslationProvider.cs" />
     <Compile Include="Localization\Translation\ITranslator.cs" />

@@ -18,7 +18,7 @@
         {
         }
 
-        public override string ApplicationPath => HttpRuntime.AppDomainAppPath;
+        public override string BinariesPath => HttpRuntime.AppDomainAppPath;
 
         public override string DataPath => HttpRuntime.BinDirectory;
 

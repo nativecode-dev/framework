@@ -8,16 +8,16 @@
     using System.Web.Compilation;
 
     using NativeCode.Core.Dependencies;
+    using NativeCode.Core.DotNet.Platform;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
-    using NativeCode.Core.Types;
 
     public abstract class WebApplication : HttpApplication
     {
         /// <summary>
         /// Gets the application proxy.
         /// </summary>
-        protected ApplicationProxy ApplicationProxy { get; private set; }
+        protected IApplication ApplicationProxy { get; private set; }
 
         public override sealed void Dispose()
         {
@@ -51,9 +51,9 @@
         /// Creates a new application proxy.
         /// </summary>
         /// <returns>Returns a new <see cref="ApplicationProxy" />.</returns>
-        protected virtual ApplicationProxy CreateApplicationProxy()
+        protected virtual IApplication CreateApplicationProxy()
         {
-            return new ApplicationProxy(this.CreatePlatform(), this.CreateSettings());
+            return new DotNetApplication(this.CreatePlatform(), this.CreateSettings());
         }
 
         /// <summary>

@@ -15,6 +15,11 @@
     public interface IApplication : IDisposable
     {
         /// <summary>
+        /// Gets the application path.
+        /// </summary>
+        string ApplicationPath { get; }
+
+        /// <summary>
         /// Gets the platform.
         /// </summary>
         IPlatform Platform { get; }

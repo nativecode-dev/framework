@@ -26,7 +26,7 @@
             this.Registrar.RegisterInstance<IPlatform>(this, DependencyLifetime.PerApplication);
         }
 
-        public abstract string ApplicationPath { get; }
+        public abstract string BinariesPath { get; }
 
         public abstract string DataPath { get; }
 
