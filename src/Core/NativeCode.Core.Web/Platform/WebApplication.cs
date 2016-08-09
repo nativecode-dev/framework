@@ -53,7 +53,7 @@
         /// <returns>Returns a new <see cref="ApplicationProxy" />.</returns>
         protected virtual ApplicationProxy CreateApplicationProxy()
         {
-            return new ApplicationProxy(this.CreatePlatform(), new CancellationTokenManager(), this.CreateSettings());
+            return new ApplicationProxy(this.CreatePlatform(), this.CreateSettings());
         }
 
         /// <summary>

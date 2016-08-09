@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Platform
+﻿namespace NativeCode.Core.Platform.Security
 {
     using System.Security.Principal;
 

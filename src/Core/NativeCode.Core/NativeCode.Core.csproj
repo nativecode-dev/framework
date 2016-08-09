@@ -73,6 +73,9 @@
     <Compile Include="Platform\Maintenance\MaintenanceProvider.cs" />
     <Compile Include="Platform\Maintenance\MaintenanceIgnoreAttribute.cs" />
     <Compile Include="Platform\Messaging\Queuing\PollingQueueConsumer.cs" />
+    <Compile Include="Platform\Platform.cs">
+      <DependentUpon>IPlatform.cs</DependentUpon>
+    </Compile>
     <Compile Include="Platform\Security\Authentication\AuthenticationProvider.cs" />
     <Compile Include="Platform\Security\Authentication\IAuthenticationProvider.cs" />
     <Compile Include="Platform\Security\Authorization\Exceptions\AuthorizationAssertionException.cs" />
@@ -118,9 +121,12 @@
     <Compile Include="Platform\Security\KeyManagement\KeyManager.cs" />
     <Compile Include="Platform\Security\KeyManagement\IKeyManager.cs" />
     <Compile Include="Platform\Serialization\LowerScoreContractResolver.cs" />
-    <Compile Include="Types\CancellationTokenManager.cs" />
+    <Compile Include="Types\CancellationTokenManager.cs">
+      <DependentUpon>ICancellationTokenManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Types\Credentials.cs" />
     <Compile Include="Types\DisposableManager.cs" />
+    <Compile Include="Types\ICancellationTokenManager.cs" />
     <Compile Include="Types\LazyFactory.cs" />
     <Compile Include="Types\Retry.cs" />
     <Compile Include="Localization\Translation\TranslationProvider.cs">
@@ -159,10 +165,9 @@
     <Compile Include="Platform\Logging\ILogger.cs" />
     <Compile Include="Platform\Logging\ILogWriter.cs" />
     <Compile Include="Platform\Logging\LogMessageType.cs" />
-    <Compile Include="Platform\ApplicationIdentity.cs" />
+    <Compile Include="Platform\Security\ApplicationIdentity.cs" />
     <Compile Include="Platform\IPlatform.cs" />
-    <Compile Include="Platform\Platform.cs" />
-    <Compile Include="Platform\ApplicationPrincipal.cs" />
+    <Compile Include="Platform\Security\ApplicationPrincipal.cs" />
     <Compile Include="Platform\Security\Authorization\IHmacSettingsProvider.cs" />
     <Compile Include="Platform\Security\UserLoginName.cs" />
     <Compile Include="Platform\Security\UserLoginNameFormat.cs" />

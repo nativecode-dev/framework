@@ -25,23 +25,20 @@
         /// Initializes a new instance of the <see cref="ApplicationProxy" /> class.
         /// </summary>
         /// <param name="platform">The platform.</param>
-        /// <param name="cancellationTokenManager">The cancellation token manager.</param>
         /// <param name="settings">The settings.</param>
-        public ApplicationProxy(IPlatform platform, CancellationTokenManager cancellationTokenManager, Settings settings)
+        public ApplicationProxy(IPlatform platform, Settings settings)
         {
             this.Platform = platform;
             this.Settings = settings;
-            this.TokenManager = cancellationTokenManager;
 
             this.EnsureDisposed(this.Platform);
-            this.EnsureDisposed(this.TokenManager);
         }
 
         public IPlatform Platform { get; private set; }
 
         public Settings Settings { get; }
 
-        public CancellationTokenManager TokenManager { get; }
+        public ICancellationTokenManager CancellationTokens { get; private set; }
 
         protected bool Initialized { get; private set; }
 
@@ -108,6 +105,8 @@
 
         protected virtual void PostInitialization()
         {
+            this.CancellationTokens = this.Platform.Resolver.Resolve<ICancellationTokenManager>();
+            this.EnsureDisposed(this.CancellationTokens);
         }
 
         protected virtual void PreInitialization()

@@ -5,13 +5,12 @@
     using NativeCode.Core.Packages.Rabbit;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
-    using NativeCode.Core.Types;
 
     public abstract class WhenTestingApplication : WhenTestingPlatform
     {
         protected WhenTestingApplication()
         {
-            this.Application = new ApplicationProxy(this.Platform, new CancellationTokenManager(), new JsonSettings());
+            this.Application = new ApplicationProxy(this.Platform, new JsonSettings());
             this.Application.Initialize("test-app", CoreDependencies.Instance, DotNetDependencies.Instance, RabbitDependencies.Instance);
             this.EnsureDisposed(this.Application);
         }

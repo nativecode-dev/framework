@@ -27,7 +27,7 @@
         /// <summary>
         /// Gets the token manager.
         /// </summary>
-        CancellationTokenManager TokenManager { get; }
+        ICancellationTokenManager CancellationTokens { get; }
 
         /// <summary>
         /// Gets the name of the application.

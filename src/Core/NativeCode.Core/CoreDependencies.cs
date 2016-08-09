@@ -42,7 +42,7 @@
 
         private static void RegisterPlatform(IDependencyRegistrar registrar)
         {
-            registrar.Register<CancellationTokenManager>();
+            registrar.Register<ICancellationTokenManager, CancellationTokenManager>();
             registrar.Register<IKeyManager, KeyManager>();
 
             registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>());

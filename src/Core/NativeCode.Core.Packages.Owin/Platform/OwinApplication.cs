@@ -8,12 +8,11 @@
 
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
-    using NativeCode.Core.Types;
 
     public class OwinApplication : Application
     {
-        public OwinApplication(IPlatform platform, CancellationTokenManager cancellationTokenManager, Settings settings)
-            : base(platform, cancellationTokenManager, settings)
+        public OwinApplication(IPlatform platform, Settings settings)
+            : base(platform, settings)
         {
         }
 
