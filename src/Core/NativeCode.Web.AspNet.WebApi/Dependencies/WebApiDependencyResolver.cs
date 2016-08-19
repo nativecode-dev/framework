@@ -80,6 +80,8 @@
                 this.container = null;
                 this.Logger.Debug("Dependency scope disposed.");
             }
+
+            base.Dispose(disposing);
         }
 
         protected virtual bool IgnoreDependency(Type type)

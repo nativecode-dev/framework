@@ -85,17 +85,24 @@
                 return false;
             }
 
-            var source = new CancellationTokenSource();
+            CancellationTokenSource source = null;
 
             try
             {
+                source = new CancellationTokenSource();
                 token = source.Token;
-                return this.tokens.TryAdd(name, source);
+
+                if (this.tokens.TryAdd(name, source))
+                {
+                    return true;
+                }
+
+                source.Dispose();
             }
             catch (Exception ex)
             {
                 this.Logger.Exception(ex);
-                source.Dispose();
+                source?.Dispose();
             }
 
             return false;

@@ -29,8 +29,8 @@
             {
                 // Act
                 var request = new SimpleQueueMessage();
-                queue.Enqueue(request);
-                var message = queue.Dequeue();
+                queue.EnqueueMessage(request);
+                var message = queue.DequeueMessage();
 
                 // Assert
                 Assert.NotNull(message);

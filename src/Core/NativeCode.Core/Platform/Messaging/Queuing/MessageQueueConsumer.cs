@@ -10,8 +10,9 @@
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Processing;
     using NativeCode.Core.Platform.Serialization;
+    using NativeCode.Core.Types;
 
-    public abstract class MessageQueueConsumer<TMessage> : IMessageQueueConsumer
+    public abstract class MessageQueueConsumer<TMessage> : DisposableManager, IMessageQueueConsumer
         where TMessage : class, new()
     {
         private int concurrency = 6;
@@ -22,6 +23,8 @@
             this.Logger = logger;
             this.Queue = queue;
             this.Serializer = serializer;
+
+            this.EnsureDisposed(this.Queue);
         }
 
         public int Concurrency
@@ -65,7 +68,7 @@
 
         protected virtual Task ConsumeNextMessageAsync(ICollection<Task> tasks, CancellationToken cancellationToken)
         {
-            var message = this.Queue.Dequeue();
+            var message = this.Queue.DequeueMessage();
 
             if (message == default(TMessage))
             {

@@ -1,10 +1,12 @@
 ﻿namespace NativeCode.Core.Packages.EntityFramework
 {
+    using System;
     using System.Data.Entity.Infrastructure;
 
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.DotNet.Platform;
     using NativeCode.Core.DotNet.Platform.Connections;
+    using NativeCode.Core.Extensions;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Platform.Connections;
 
@@ -13,7 +15,23 @@
     {
         public TDataContext Create()
         {
-            return this.CreateDataContext(new ShimConnectionStringProvider(), new ShimPlatform(this.CreateDependencyContainer()));
+            IDependencyContainer container = null;
+            IPlatform platform = null;
+
+            try
+            {
+                var provider = new ShimConnectionStringProvider();
+                container = this.CreateDependencyContainer();
+                platform = new ShimPlatform(container);
+
+                return this.CreateDataContext(provider, platform);
+            }
+            catch (Exception ex)
+            {
+                container?.Dispose();
+                platform?.Dispose();
+                throw;
+            }
         }
 
         protected abstract TDataContext CreateDataContext(IConnectionStringProvider connectionStringProvider, IPlatform platform);

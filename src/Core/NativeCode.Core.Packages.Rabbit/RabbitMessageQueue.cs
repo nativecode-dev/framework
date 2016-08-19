@@ -13,24 +13,25 @@
     public class RabbitMessageQueue<TMessage> : MessageQueue<TMessage>
         where TMessage : class, new()
     {
-        public RabbitMessageQueue(ILogger logger, IStringSerializer serializer, RabbitConnection connection, RabbitMessageQueueOptions options)
+        protected internal RabbitMessageQueue(ILogger logger, IStringSerializer serializer, RabbitConnection connection, RabbitMessageQueueOptions options)
             : base(logger, serializer)
         {
+            this.Options = options;
+
+            if (string.IsNullOrWhiteSpace(this.Options.QueueName) == false)
+            {
+                this.QueueName = this.Options.QueueName;
+            }
+
             try
             {
                 this.Channel = connection.CreateModel();
-                this.Options = options;
 
-                if (string.IsNullOrWhiteSpace(this.Options.QueueName) == false)
-                {
-                    this.QueueName = this.Options.QueueName;
-                }
+                this.Channel.CallbackException += this.ModelOnCallbackException;
 
                 this.Channel.ExchangeDeclare(this.ExchangeName, ExchangeType.Topic, options.Durable, options.AutoDelete, null);
                 this.Channel.QueueDeclare(this.QueueName, options.Durable, options.Exclusive, options.AutoDelete, null);
                 this.Channel.QueueBind(this.QueueName, this.ExchangeName, this.RoutingKey);
-
-                this.Channel.CallbackException += this.ModelOnCallbackException;
 
                 this.Logger.Debug($"Connected to message queue {this.QueueName} at {this.Options.Uri}.");
             }
@@ -54,7 +55,7 @@
 
         protected RabbitMessageQueueOptions Options { get; }
 
-        public override byte[] GetBytes()
+        public override byte[] DequeueBytes()
         {
             this.EnsureModelAvailable();
 
@@ -75,16 +76,9 @@
             }
         }
 
-        public override void PublishBytes(byte[] data)
+        public override TMessage DequeueMessage()
         {
-            this.EnsureModelAvailable();
-
-            this.Channel.BasicPublish(this.ExchangeName, this.RoutingKey, null, data);
-        }
-
-        public override TMessage Dequeue()
-        {
-            var bytes = this.GetBytes();
+            var bytes = this.DequeueBytes();
 
             if (bytes == null)
             {
@@ -94,11 +88,18 @@
             return this.Serializer.Deserialize<TMessage>(Encoding.UTF8.GetString(bytes));
         }
 
-        public override void Enqueue(TMessage message)
+        public override void EnqueueBytes(byte[] data)
+        {
+            this.EnsureModelAvailable();
+
+            this.Channel.BasicPublish(this.ExchangeName, this.RoutingKey, null, data);
+        }
+
+        public override void EnqueueMessage(TMessage message)
         {
             var serialized = this.Serializer.Serialize(message);
             var bytes = Encoding.UTF8.GetBytes(serialized);
-            this.PublishBytes(bytes);
+            this.EnqueueBytes(bytes);
         }
 
         protected override void Dispose(bool disposing)

@@ -27,25 +27,25 @@
         /// Gets the next set of bytes.
         /// </summary>
         /// <returns>Returns a byte array.</returns>
-        public abstract byte[] GetBytes();
+        public abstract byte[] DequeueBytes();
 
         /// <summary>
         /// Enqueues the bytes.
         /// </summary>
         /// <param name="data">The data.</param>
-        public abstract void PublishBytes(byte[] data);
+        public abstract void EnqueueBytes(byte[] data);
 
         /// <summary>
         /// Retrieves the next message.
         /// </summary>
         /// <returns>Returns a message or <c>null</c>.</returns>
-        public abstract TMessage Dequeue();
+        public abstract TMessage DequeueMessage();
 
         /// <summary>
         /// Enqueues the specified message.
         /// </summary>
         /// <param name="message">The message.</param>
-        public abstract void Enqueue(TMessage message);
+        public abstract void EnqueueMessage(TMessage message);
 
         private static string GetQueueName()
         {

@@ -67,6 +67,8 @@
                 this.container.Dispose();
                 this.container = null;
             }
+
+            base.Dispose(disposing);
         }
 
         private static bool IsFiltered(Type type)

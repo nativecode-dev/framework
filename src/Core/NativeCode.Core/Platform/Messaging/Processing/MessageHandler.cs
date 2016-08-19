@@ -57,14 +57,13 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                     this.Logger.Debug($"Re-queuing message for handler {this.GetType().Name}.");
                     await this.RequeueMessageAsync(message, cancellationToken);
                 }
-
-                throw;
             }
         }
     }
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
-    public abstract class MessageHandler<TMessage> : MessageHandler where TMessage : class, new()
+    public abstract class MessageHandler<TMessage> : MessageHandler
+        where TMessage : class, new()
     {
         protected MessageHandler(IMessageQueue<TMessage> queue, ILogger logger)
             : base(logger)

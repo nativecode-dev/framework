@@ -24,8 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>
-    </CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -35,8 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>
-    </CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -45,6 +43,7 @@
     <Compile Include="Annotations\CodeRefactorAttribute.cs" />
     <Compile Include="Annotations\CodeSmellAttribute.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="Platform\Application.cs">
       <DependentUpon>IApplication.cs</DependentUpon>
     </Compile>
@@ -53,6 +52,12 @@
     </Compile>
     <Compile Include="Platform\FileSystem\IFileInspector.cs" />
     <Compile Include="Platform\Logging\NullLogWriter.cs" />
+    <Compile Include="Platform\Messaging\MessageQueues\DefaultMessageQueueAdapter.cs" />
+    <Compile Include="Platform\Messaging\MessageQueues\DefaultMessageQueueProvider.cs" />
+    <Compile Include="Platform\Messaging\MessageQueues\IMessageQueueAdapter.cs" />
+    <Compile Include="Platform\Messaging\MessageQueues\IMessageQueueProvider.cs" />
+    <Compile Include="Platform\Messaging\MessageQueues\MessageQueueType.cs" />
+    <Compile Include="Platform\Messaging\MessageQueues\QueueMessage.cs" />
     <Compile Include="Platform\Messaging\Processing\IMessageHandler.cs" />
     <Compile Include="Platform\Messaging\Processing\MessageHandler.cs">
       <DependentUpon>IMessageHandler.cs</DependentUpon>

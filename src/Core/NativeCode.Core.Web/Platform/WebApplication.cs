@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Web;
@@ -19,10 +20,14 @@
         /// </summary>
         protected IApplication ApplicationProxy { get; private set; }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Replacing base class dispose pattern.")]
         public override sealed void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+
+            // This trips code analysis as a double dispose, but it's not.
+            base.Dispose();
         }
 
         /// <summary>

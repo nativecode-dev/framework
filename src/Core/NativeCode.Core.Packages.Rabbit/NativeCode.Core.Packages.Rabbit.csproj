@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,10 +29,11 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RabbitMQ.Client, Version=3.6.5.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\RabbitMQ.Client.3.6.5\lib\net45\RabbitMQ.Client.dll</HintPath>
+    <Reference Include="RabbitMQ.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RabbitMQ.Client.4.0.0\lib\net451\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -42,9 +44,10 @@
     <Compile Include="RabbitConnection.cs" />
     <Compile Include="RabbitDependencies.cs" />
     <Compile Include="RabbitMessageQueue.cs" />
-    <Compile Include="RabbitMessageQueueConsumer.cs" />
+    <Compile Include="RabbitMessageQueueAdapter.cs" />
     <Compile Include="RabbitMessageQueueFactory.cs" />
     <Compile Include="RabbitMessageQueueOptions.cs" />
+    <Compile Include="RabbitMessageQueueProvider.cs" />
     <Compile Include="RabbitUri.cs" />
   </ItemGroup>
   <ItemGroup>

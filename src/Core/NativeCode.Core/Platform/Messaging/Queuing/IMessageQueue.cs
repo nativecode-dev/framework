@@ -19,13 +19,13 @@
         /// </summary>
         /// <returns>Returns a byte array.</returns>
         [CanBeNull]
-        byte[] GetBytes();
+        byte[] DequeueBytes();
 
         /// <summary>
         /// Enqueues the bytes.
         /// </summary>
         /// <param name="data">The data.</param>
-        void PublishBytes([NotNull] byte[] data);
+        void EnqueueBytes([NotNull] byte[] data);
     }
 
     /// <summary>
@@ -41,12 +41,12 @@
         /// </summary>
         /// <returns>Returns a message or <c>null</c>.</returns>
         [CanBeNull]
-        TMessage Dequeue();
+        TMessage DequeueMessage();
 
         /// <summary>
         /// Enqueues the specified message.
         /// </summary>
         /// <param name="message">The message.</param>
-        void Enqueue([NotNull] TMessage message);
+        void EnqueueMessage([NotNull] TMessage message);
     }
 }
