@@ -46,28 +46,35 @@ namespace NativeCode.Core.Platform.Messaging.Processing
 
                 while (cancellationToken.IsCancellationRequested == false)
                 {
-                    tracker.RemoveCompleted(this.HandleTaskRemoved);
-
-                    // Important that we continue the loop if we are at max concurrency. We'll
-                    // pause for a bit to allow processing to potentially complete.
-                    if (tracker.Tasks.Count >= this.Concurrency)
+                    try
                     {
-                        await Task.Delay(this.ThrottleMaxConcurrency, cancellationToken);
-                        continue;
+                        tracker.RemoveCompleted(this.HandleTaskRemoved);
+
+                        // Important that we continue the loop if we are at max concurrency. We'll
+                        // pause for a bit to allow processing to potentially complete.
+                        if (tracker.Tasks.Count >= this.Concurrency)
+                        {
+                            await Task.Delay(this.ThrottleMaxConcurrency, cancellationToken);
+                            continue;
+                        }
+
+                        var result = provider.Next();
+
+                        // If we don't have a response from the queue, then we'll just pause for a bit
+                        // to allow new messages to arrive.
+                        if (result.Body == null)
+                        {
+                            await Task.Delay(this.ThrottleEmptyQueue, cancellationToken);
+                            continue;
+                        }
+
+                        // Process the message we got from the queue.
+                        tracker.Tasks.Add(result, Task.Run(() => this.ProcessMessageAsync(result, cancellationToken), cancellationToken));
                     }
-
-                    var result = provider.Next();
-
-                    // If we don't have a response from the queue, then we'll just pause for a bit
-                    // to allow new messages to arrive.
-                    if (result.Body == null)
+                    catch (Exception ex)
                     {
-                        await Task.Delay(this.ThrottleEmptyQueue, cancellationToken);
-                        continue;
+                        this.Logger.Exception(ex);
                     }
-
-                    // Process the message we got from the queue.
-                    tracker.Tasks.Add(result, Task.Run(() => this.ProcessMessageAsync(result, cancellationToken), cancellationToken));
                 }
             }
         }
