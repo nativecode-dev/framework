@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Platform.Messaging.MessageQueues
+﻿namespace NativeCode.Core.Platform.Messaging.Queuing
 {
     public enum MessageQueueType
     {

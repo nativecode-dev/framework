@@ -6,6 +6,7 @@
     using NativeCode.Core.DotNet.Logging;
     using NativeCode.Core.Packages.Rabbit;
     using NativeCode.Core.Platform.Logging;
+    using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
 
     using Xunit;
@@ -24,17 +25,18 @@
         public void ShouldSendAndReceiveMessage()
         {
             // Arrange
-            using (var factory = new RabbitMessageQueueFactory(this.Resolve<ILogger>(), this.Resolve<IStringSerializer>()))
-            using (var queue = factory.Create<SimpleQueueMessage>(RabbitConnectionUrl))
+            var adapter = new RabbitMessageQueueAdapter(this.Resolve<ILogger>(), this.Resolve<IStringSerializer>());
+
+            using (var provider = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Default))
             {
                 // Act
-                var request = new SimpleQueueMessage();
-                queue.EnqueueMessage(request);
-                var message = queue.DequeueMessage();
+                var message = new SimpleQueueMessage();
+                provider.PublishMessage(message);
+                var response = provider.NextMessage();
+                provider.AcknowledgeMessage(response);
 
                 // Assert
-                Assert.NotNull(message);
-                Assert.Equal(request.Id, message.Id);
+                Assert.Equal(message.Id, response.Id);
             }
         }
     }

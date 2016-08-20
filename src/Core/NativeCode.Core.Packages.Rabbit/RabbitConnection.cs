@@ -25,6 +25,11 @@
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="RabbitConnection"/> is durable.
+        /// </summary>
+        public bool Durable { get; set; } = true;
+
+        /// <summary>
         /// Gets the URI.
         /// </summary>
         public RabbitUri Uri { get; }
@@ -40,9 +45,9 @@
         protected ILogger Logger { get; }
 
         /// <summary>
-        /// Creates the model.
+        /// Creates a model.
         /// </summary>
-        /// <returns>Returns a new <see cref="IModel"/>.</returns>
+        /// <returns>Returns a new <see cref="IModel" />.</returns>
         public IModel CreateModel()
         {
             this.Logger.Debug("Creating model.");
@@ -50,29 +55,73 @@
         }
 
         /// <summary>
-        /// Creates the queue.
+        /// Creates a queue.
+        /// </summary>
+        /// <param name="queue">The queue.</param>
+        /// <returns>IModel.</returns>
+        public IModel CreateQueue(string queue)
+        {
+            return this.CreateQueue(queue, string.Empty);
+        }
+
+        /// <summary>
+        /// Creates a queue.
         /// </summary>
         /// <param name="queue">The queue.</param>
         /// <param name="exchange">The exchange.</param>
-        /// <returns>Returns a new <see cref="IModel"/>.</returns>
+        /// <returns>Returns a new <see cref="IModel" />.</returns>
         public IModel CreateQueue(string queue, string exchange)
         {
-            return this.CreateQueue(queue, exchange, string.Empty, ExchangeType.Direct);
+            return this.CreateQueue(queue, exchange, string.Empty);
         }
 
         /// <summary>
-        /// Creates the pub-sub queue.
+        /// Creates a queue.
         /// </summary>
         /// <param name="queue">The queue.</param>
         /// <param name="exchange">The exchange.</param>
-        /// <returns>Returns a new <see cref="IModel"/>.</returns>
-        public IModel CreatePubSubQueue(string queue, string exchange)
+        /// <param name="route">The route.</param>
+        /// <returns>IModel.</returns>
+        public IModel CreateQueue(string queue, string exchange, string route)
         {
-            return this.CreateQueue(queue, exchange, string.Empty, ExchangeType.Fanout);
+            return this.CreateQueue(queue, exchange, route, ExchangeType.Direct);
         }
 
         /// <summary>
-        /// Creates the default connection factory.
+        /// Creates a pub-sub queue.
+        /// </summary>
+        /// <param name="queue">The queue.</param>
+        /// <returns>IModel.</returns>
+        public IModel CreatePubSubQueue(string queue)
+        {
+            return this.CreatePubSubQueue(queue, string.Empty);
+        }
+
+        /// <summary>
+        /// Creates a pub-sub queue.
+        /// </summary>
+        /// <param name="queue">The queue.</param>
+        /// <param name="exchange">The exchange.</param>
+        /// <returns>Returns a new <see cref="IModel" />.</returns>
+        public IModel CreatePubSubQueue(string queue, string exchange)
+        {
+            return this.CreatePubSubQueue(queue, exchange, string.Empty);
+        }
+
+        /// <summary>
+        /// Creates a pub-sub queue.
+        /// </summary>
+        /// <param name="queue">The queue.</param>
+        /// <param name="exchange">The exchange.</param>
+        /// <param name="route">The route.</param>
+        /// <returns>IModel.</returns>
+        public IModel CreatePubSubQueue(string queue, string exchange, string route)
+        {
+            return this.CreateQueue(queue, exchange, route, ExchangeType.Fanout);
+        }
+
+        /// <summary>
+        /// Creates a default connection factory.
         /// </summary>
         /// <returns>Returns a new <see cref="Connection" />.</returns>
         protected virtual IConnection CreateDefaultConnection(RabbitUri connection)
@@ -94,21 +143,21 @@
         }
 
         /// <summary>
-        /// Creates the queue.
+        /// Creates a queue.
         /// </summary>
         /// <param name="queue">The queue.</param>
         /// <param name="exchange">The exchange.</param>
         /// <param name="route">The route.</param>
         /// <param name="type">The type.</param>
-        /// <returns>Returns a new <see cref="IModel"/>.</returns>
+        /// <returns>Returns a new <see cref="IModel" />.</returns>
         protected virtual IModel CreateQueue(string queue, string exchange, string route, string type)
         {
             var model = this.Connection.CreateModel();
 
             try
             {
-                model.ExchangeDeclare(exchange, type, true);
-                model.QueueDeclare(queue, true, false, false, null);
+                model.ExchangeDeclare(exchange, type, this.Durable);
+                model.QueueDeclare(queue, this.Durable, false, false, null);
                 model.QueueBind(queue, exchange, route);
 
                 return model;

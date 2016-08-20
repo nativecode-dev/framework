@@ -52,35 +52,30 @@
     </Compile>
     <Compile Include="Platform\FileSystem\IFileInspector.cs" />
     <Compile Include="Platform\Logging\NullLogWriter.cs" />
-    <Compile Include="Platform\Messaging\MessageQueues\DefaultMessageQueueAdapter.cs" />
-    <Compile Include="Platform\Messaging\MessageQueues\DefaultMessageQueueProvider.cs" />
-    <Compile Include="Platform\Messaging\MessageQueues\IMessageQueueAdapter.cs" />
-    <Compile Include="Platform\Messaging\MessageQueues\IMessageQueueProvider.cs" />
-    <Compile Include="Platform\Messaging\MessageQueues\MessageQueueType.cs" />
-    <Compile Include="Platform\Messaging\MessageQueues\QueueMessage.cs" />
-    <Compile Include="Platform\Messaging\Processing\IMessageHandler.cs" />
-    <Compile Include="Platform\Messaging\Processing\MessageHandler.cs">
-      <DependentUpon>IMessageHandler.cs</DependentUpon>
+    <Compile Include="Platform\Messaging\Processing\IMessageConsumer.cs" />
+    <Compile Include="Platform\Messaging\Processing\IMessageProcessor.cs" />
+    <Compile Include="Platform\Messaging\Processing\MessageConsumer.cs">
+      <DependentUpon>IMessageConsumer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Platform\Messaging\Queuing\Attributes\MessageQueueAttribute.cs" />
-    <Compile Include="Platform\Messaging\Queuing\IMessageQueue.cs" />
-    <Compile Include="Platform\Messaging\Queuing\IMessageQueueConsumer.cs" />
-    <Compile Include="Platform\Messaging\Queuing\IMessageQueueFactory.cs" />
-    <Compile Include="Platform\Messaging\Queuing\MessageQueue.cs">
-      <DependentUpon>IMessageQueue.cs</DependentUpon>
+    <Compile Include="Platform\Messaging\Processing\MessageProcessor.cs">
+      <DependentUpon>IMessageProcessor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Platform\Messaging\Queuing\MessageQueueConsumer.cs">
-      <DependentUpon>IMessageQueueConsumer.cs</DependentUpon>
+    <Compile Include="Platform\Messaging\Processing\MessageProcessorResult.cs" />
+    <Compile Include="Platform\Messaging\Queuing\IMessageQueueAdapter.cs" />
+    <Compile Include="Platform\Messaging\Queuing\IMessageQueueProvider.cs" />
+    <Compile Include="Platform\Messaging\Queuing\MessageQueueAdapter.cs">
+      <DependentUpon>IMessageQueueAdapter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Platform\Messaging\Queuing\MessageQueueFactory.cs">
-      <DependentUpon>IMessageQueueFactory.cs</DependentUpon>
+    <Compile Include="Platform\Messaging\Queuing\MessageQueueProvider.cs">
+      <DependentUpon>IMessageQueueProvider.cs</DependentUpon>
     </Compile>
+    <Compile Include="Platform\Messaging\Queuing\MessageQueueType.cs" />
+    <Compile Include="Platform\Messaging\Queuing\MessageQueueResult.cs" />
     <Compile Include="Platform\Connections\SqlServerConnectionString.cs" />
     <Compile Include="Platform\FileSystem\IFileSystem.cs" />
     <Compile Include="Platform\Maintenance\IMaintenanceProvider.cs" />
     <Compile Include="Platform\Maintenance\MaintenanceProvider.cs" />
     <Compile Include="Platform\Maintenance\MaintenanceIgnoreAttribute.cs" />
-    <Compile Include="Platform\Messaging\Queuing\PollingQueueConsumer.cs" />
     <Compile Include="Platform\Platform.cs">
       <DependentUpon>IPlatform.cs</DependentUpon>
     </Compile>

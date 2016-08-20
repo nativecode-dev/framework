@@ -1,15 +1,15 @@
-﻿namespace NativeCode.Core.Platform.Messaging.MessageQueues
+﻿namespace NativeCode.Core.Platform.Messaging.Queuing
 {
     using System;
 
-    public struct QueueMessage
+    public struct MessageQueueResult
     {
-        public QueueMessage(byte[] body)
+        public MessageQueueResult(byte[] body)
             : this(Guid.NewGuid().ToString(), body)
         {
         }
 
-        public QueueMessage(string identifier, byte[] body)
+        public MessageQueueResult(string identifier, byte[] body)
         {
             this.Body = body;
             this.Identifier = identifier;

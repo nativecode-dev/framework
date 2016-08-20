@@ -5,7 +5,7 @@
     using NativeCode.Core.Localization.Translation;
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Maintenance;
-    using NativeCode.Core.Platform.Messaging.Processing;
+    using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Security.Authentication;
     using NativeCode.Core.Platform.Security.KeyManagement;
     using NativeCode.Core.Platform.Serialization;
@@ -51,7 +51,7 @@
 
         private static void RegisterQueueing(IDependencyRegistrar registrar)
         {
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<IMessageHandler>());
+            registrar.Register<IMessageQueueAdapter, MessageQueueAdapter>();
         }
 
         private static void RegisterSerialization(IDependencyRegistrar registrar)
