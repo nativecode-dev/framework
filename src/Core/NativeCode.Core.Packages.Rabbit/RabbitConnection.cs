@@ -25,11 +25,6 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="RabbitConnection"/> is durable.
-        /// </summary>
-        public bool Durable { get; set; } = true;
-
-        /// <summary>
         /// Gets the URI.
         /// </summary>
         public RabbitUri Uri { get; }
@@ -84,7 +79,7 @@
         /// <returns>IModel.</returns>
         public IModel CreateQueue(string queue, string exchange, string route)
         {
-            return this.CreateQueue(queue, exchange, route, ExchangeType.Direct);
+            return this.CreateQueue(queue, exchange, route, ExchangeType.Direct, true);
         }
 
         /// <summary>
@@ -117,7 +112,7 @@
         /// <returns>IModel.</returns>
         public IModel CreatePubSubQueue(string queue, string exchange, string route)
         {
-            return this.CreateQueue(queue, exchange, route, ExchangeType.Fanout);
+            return this.CreateQueue(queue, exchange, route, ExchangeType.Fanout, true);
         }
 
         /// <summary>
@@ -149,16 +144,29 @@
         /// <param name="exchange">The exchange.</param>
         /// <param name="route">The route.</param>
         /// <param name="type">The type.</param>
+        /// <param name="durable">if set to <c>true</c> [durable].</param>
         /// <returns>Returns a new <see cref="IModel" />.</returns>
-        protected virtual IModel CreateQueue(string queue, string exchange, string route, string type)
+        protected virtual IModel CreateQueue(string queue, string exchange, string route, string type, bool durable)
         {
             var model = this.Connection.CreateModel();
 
             try
             {
-                model.ExchangeDeclare(exchange, type, this.Durable);
-                model.QueueDeclare(queue, this.Durable, false, false, null);
-                model.QueueBind(queue, exchange, route);
+                if (string.IsNullOrWhiteSpace(exchange) == false)
+                {
+                    model.ExchangeDeclare(exchange, type, durable);
+                }
+
+                if (string.IsNullOrWhiteSpace(queue))
+                {
+                    var queuename = model.QueueDeclare(string.Empty, false, false).QueueName;
+                    model.QueueBind(queuename, exchange, string.Empty);
+                }
+                else
+                {
+                    model.QueueDeclare(queue, durable, false, false, null);
+                    model.QueueBind(queue, exchange, route);
+                }
 
                 return model;
             }
@@ -167,6 +175,16 @@
                 this.Logger.Exception(ex);
                 throw;
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.Disposed == false)
+            {
+                this.Connection.Close();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

@@ -8,6 +8,8 @@
 
         Subscriber = 2,
 
+        Transient = 3,
+
         WorkQueue = Default
     }
 }

@@ -27,10 +27,10 @@
             // Arrange
             var adapter = new RabbitMessageQueueAdapter(this.Resolve<ILogger>(), this.Resolve<IStringSerializer>());
 
-            using (var provider = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Default))
+            using (var provider = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Transient))
             {
                 // Act
-                var message = new SimpleQueueMessage();
+                var message = new SimpleQueueMessage { Id = Guid.NewGuid() };
                 provider.PublishMessage(message);
                 var response = provider.NextMessage();
                 provider.AcknowledgeMessage(response);

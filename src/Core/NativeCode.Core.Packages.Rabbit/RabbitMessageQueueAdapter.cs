@@ -27,7 +27,7 @@
         public IMessageQueueProvider Connect(Type messageType, Uri uri, MessageQueueType queueType)
         {
             var connection = this.GetConnection(uri);
-            var exchange = messageType.Name.ToLowerScore('.');
+            var exchange = GetExchangeName(messageType, queueType);
             var queue = GetQueueName(messageType, queueType);
             var model = GetQueue(connection, queue, exchange, queueType);
 
@@ -36,10 +36,10 @@
 
         public IMessageQueueProvider<TMessage> Connect<TMessage>(Uri uri, MessageQueueType queueType) where TMessage : class, new()
         {
-            var type = typeof(TMessage);
+            var messageType = typeof(TMessage);
             var connection = this.GetConnection(uri);
-            var exchange = type.Name.ToLowerScore('.');
-            var queue = GetQueueName(type, queueType);
+            var exchange = GetExchangeName(messageType, queueType);
+            var queue = GetQueueName(messageType, queueType);
             var model = GetQueue(connection, queue, exchange, queueType);
 
             return new RabbitMessageQueueProvider<TMessage>(queue, exchange, string.Empty, model, this.Serializer);
@@ -61,6 +61,11 @@
             }
 
             return connection;
+        }
+
+        private static string GetExchangeName(Type type, MessageQueueType queueType)
+        {
+            return type.Name.ToLowerScore('.');
         }
 
         private static IModel GetQueue(RabbitConnection connection, string queueName, string exchangeName, MessageQueueType queueType)
