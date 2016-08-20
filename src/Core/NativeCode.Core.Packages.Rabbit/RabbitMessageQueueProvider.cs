@@ -63,13 +63,23 @@ namespace NativeCode.Core.Packages.Rabbit
         {
             this.Queue.BasicPublish(this.ExchangeName, this.RouteName, null, message);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.Disposed == false)
+            {
+                this.Queue.Close();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
     public class RabbitMessageQueueProvider<TMessage> : RabbitMessageQueueProvider, IMessageQueueProvider<TMessage>
         where TMessage : class, new()
     {
-        private readonly ConcurrentDictionary<TMessage, MessageQueueResult> unconsumed = new ConcurrentDictionary<TMessage, MessageQueueResult>();
+        private readonly ConcurrentDictionary<TMessage, MessageQueueResult> acknowledgables = new ConcurrentDictionary<TMessage, MessageQueueResult>();
 
         public RabbitMessageQueueProvider(string queue, string exchange, string route, IModel model, IStringSerializer serializer)
             : base(queue, exchange, route, model)
@@ -81,9 +91,9 @@ namespace NativeCode.Core.Packages.Rabbit
 
         public void AcknowledgeMessage(TMessage message)
         {
-            if (this.unconsumed.ContainsKey(message))
+            if (this.acknowledgables.ContainsKey(message))
             {
-                var result = this.unconsumed[message];
+                var result = this.acknowledgables[message];
 
                 try
                 {
@@ -91,7 +101,7 @@ namespace NativeCode.Core.Packages.Rabbit
                 }
                 finally
                 {
-                    if (this.unconsumed.TryRemove(message, out result) == false)
+                    if (this.acknowledgables.TryRemove(message, out result) == false)
                     {
                         throw new InvalidOperationException("Failed to remove acknowledgement from cache.");
                     }
@@ -122,7 +132,7 @@ namespace NativeCode.Core.Packages.Rabbit
                 var contents = Encoding.UTF8.GetString(result.Body);
                 var message = this.Serializer.Deserialize<TMessage>(contents);
 
-                this.unconsumed.AddOrUpdate(message, key => result, (k, v) => v);
+                this.acknowledgables.AddOrUpdate(message, key => result, (k, v) => v);
 
                 return message;
             }

@@ -56,29 +56,20 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                         continue;
                     }
 
-                    var message = provider.Next();
+                    var result = provider.Next();
 
                     // If we don't have a response from the queue, then we'll just pause for a bit
                     // to allow new messages to arrive.
-                    if (message.Body == null)
+                    if (result.Body == null)
                     {
                         await Task.Delay(this.ThrottleEmptyQueue, cancellationToken);
                         continue;
                     }
 
                     // Process the message we got from the queue.
-                    this.ProcessMessage(message, tracker);
+                    tracker.Tasks.Add(result, Task.Run(() => this.ProcessMessageAsync(result, cancellationToken), cancellationToken));
                 }
             }
-        }
-
-        private void ProcessMessage(MessageQueueResult result, TaskTracker tracker)
-        {
-            var contents = Encoding.UTF8.GetString(result.Body, 0, result.Body.Length);
-            var message = this.Serializer.Deserialize<TMessage>(contents);
-            var task = Task.Run(() => this.Processor.ProcessMessageAsync(message, tracker.CancellationToken), tracker.CancellationToken);
-
-            tracker.Tasks.Add(result, task);
         }
 
         protected virtual void HandleTaskRemoved(MessageQueueResult result, Task<MessageProcessorResult> task, TaskTracker tracker)
@@ -91,6 +82,22 @@ namespace NativeCode.Core.Platform.Messaging.Processing
             if (task.IsFaulted)
             {
                 this.Logger.Exception(task.Exception);
+            }
+        }
+
+        private async Task<MessageProcessorResult> ProcessMessageAsync(MessageQueueResult result, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var contents = Encoding.UTF8.GetString(result.Body, 0, result.Body.Length);
+                var message = this.Serializer.Deserialize<TMessage>(contents);
+
+                return await this.Processor.ProcessMessageAsync(message, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                this.Logger.Exception(ex);
+                return MessageProcessorResult.Exception;
             }
         }
 
