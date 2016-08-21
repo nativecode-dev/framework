@@ -65,6 +65,7 @@
         {
             if (this.connections.ContainsKey(uri))
             {
+                this.Logger.Debug($"Using cached connection for {uri}.");
                 return this.connections[uri];
             }
 
@@ -76,6 +77,7 @@
                 throw new InvalidOperationException("Failed to add new connection.");
             }
 
+            this.Logger.Debug($"Created new connection for {uri}.");
             return connection;
         }
 

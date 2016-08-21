@@ -37,5 +37,19 @@
                 Assert.Equal(message.Id, response.Id);
             }
         }
+
+        [Fact]
+        public void ShouldAllowMultipleConnections()
+        {
+            // Arrange, Act
+            using (var adapter = new RabbitMessageQueueAdapter(this.Resolve<ILogger>(), this.Resolve<IStringSerializer>()))
+            using (var providerA = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Transient))
+            using (var providerB = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Transient))
+            {
+                // Assert
+                Assert.Equal($"simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerA.QueueName);
+                Assert.Equal($"simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerB.QueueName);
+            }
+        }
     }
 }
