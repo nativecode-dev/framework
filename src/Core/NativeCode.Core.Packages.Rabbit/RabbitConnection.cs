@@ -123,10 +123,9 @@
         {
             try
             {
-                var url = connection.ToUri().AbsoluteUri;
-                var factory = new ConnectionFactory { Uri = url };
+                var factory = new ConnectionFactory { Uri = connection };
 
-                this.Logger.Debug($"Creating connection for {url}.");
+                this.Logger.Debug($"Creating connection for {connection}.");
 
                 return factory.CreateConnection();
             }

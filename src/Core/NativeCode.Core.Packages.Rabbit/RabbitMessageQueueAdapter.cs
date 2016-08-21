@@ -12,7 +12,7 @@
 
     public class RabbitMessageQueueAdapter : IMessageQueueAdapter
     {
-        private readonly ConcurrentDictionary<RabbitUri, RabbitConnection> connections = new ConcurrentDictionary<RabbitUri, RabbitConnection>();
+        private readonly ConcurrentDictionary<string, RabbitConnection> connections = new ConcurrentDictionary<string, RabbitConnection>();
 
         public RabbitMessageQueueAdapter(ILogger logger, IStringSerializer serializer)
         {
