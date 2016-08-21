@@ -31,8 +31,7 @@
                 // Act
                 var message = new SimpleQueueMessage { Id = Guid.NewGuid() };
                 provider.PublishMessage(message);
-                var response = provider.NextMessage();
-                provider.AcknowledgeMessage(response);
+                var response = provider.ConsumeMessage();
 
                 // Assert
                 Assert.Equal(message.Id, response.Id);
