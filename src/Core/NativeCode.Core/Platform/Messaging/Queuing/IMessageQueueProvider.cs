@@ -16,6 +16,8 @@
         MessageQueueResult Next();
 
         void Publish([NotNull] byte[] message);
+
+        void Reject(MessageQueueResult result, bool requeue);
     }
 
     public interface IMessageQueueProvider<TMessage> : IMessageQueueProvider
@@ -28,5 +30,7 @@
         TMessage NextMessage();
 
         void PublishMessage(TMessage message);
+
+        void RejectMessage(TMessage message, bool requeue);
     }
 }

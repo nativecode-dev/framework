@@ -104,6 +104,39 @@
         }
 
         /// <summary>
+        /// Creates a transient queue.
+        /// </summary>
+        /// <param name="queue">The queue.</param>
+        /// <returns>IModel.</returns>
+        public IModel CreateTransientQueue(string queue)
+        {
+            return this.CreateQueue(queue, string.Empty, string.Empty, ExchangeType.Direct, false);
+        }
+
+        /// <summary>
+        /// Creates a transient queue.
+        /// </summary>
+        /// <param name="queue">The queue.</param>
+        /// <param name="exchange">The exchange.</param>
+        /// <returns>IModel.</returns>
+        public IModel CreateTransientQueue(string queue, string exchange)
+        {
+            return this.CreateQueue(queue, exchange, string.Empty, ExchangeType.Direct, false);
+        }
+
+        /// <summary>
+        /// Creates a transient queue.
+        /// </summary>
+        /// <param name="queue">The queue.</param>
+        /// <param name="exchange">The exchange.</param>
+        /// <param name="route">The route.</param>
+        /// <returns>IModel.</returns>
+        public IModel CreateTransientQueue(string queue, string exchange, string route)
+        {
+            return this.CreateQueue(queue, exchange, route, ExchangeType.Direct, false);
+        }
+
+        /// <summary>
         /// Creates a pub-sub queue.
         /// </summary>
         /// <param name="queue">The queue.</param>

@@ -25,8 +25,7 @@
         public void ShouldSendAndReceiveMessage()
         {
             // Arrange
-            var adapter = new RabbitMessageQueueAdapter(this.Resolve<ILogger>(), this.Resolve<IStringSerializer>());
-
+            using (var adapter = new RabbitMessageQueueAdapter(this.Resolve<ILogger>(), this.Resolve<IStringSerializer>()))
             using (var provider = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Transient))
             {
                 // Act

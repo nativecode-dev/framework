@@ -38,6 +38,10 @@
         {
             this.queue.Enqueue(message);
         }
+
+        public void Reject(MessageQueueResult result, bool requeue)
+        {
+        }
     }
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
@@ -95,6 +99,10 @@
             var bytes = Encoding.UTF8.GetBytes(contents);
 
             this.Publish(bytes);
+        }
+
+        public void RejectMessage(TMessage message, bool requeue)
+        {
         }
     }
 }

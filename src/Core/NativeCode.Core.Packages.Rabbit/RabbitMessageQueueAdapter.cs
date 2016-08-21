@@ -7,10 +7,11 @@
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
+    using NativeCode.Core.Types;
 
     using RabbitMQ.Client;
 
-    public class RabbitMessageQueueAdapter : IMessageQueueAdapter
+    public class RabbitMessageQueueAdapter : DisposableManager, IMessageQueueAdapter
     {
         private readonly ConcurrentDictionary<string, RabbitConnection> connections = new ConcurrentDictionary<string, RabbitConnection>();
 
@@ -45,6 +46,21 @@
             return new RabbitMessageQueueProvider<TMessage>(queue, exchange, string.Empty, model, this.Serializer);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.Disposed == false)
+            {
+                foreach (var adapter in this.connections.Values)
+                {
+                    adapter.Dispose();
+                }
+
+                this.connections.Clear();
+            }
+
+            base.Dispose(disposing);
+        }
+
         private RabbitConnection GetConnection(RabbitUri uri)
         {
             if (this.connections.ContainsKey(uri))
@@ -75,6 +91,9 @@
                 case MessageQueueType.Publisher:
                 case MessageQueueType.Subscriber:
                     return connection.CreatePubSubQueue(queueName, exchangeName);
+
+                case MessageQueueType.Transient:
+                    return connection.CreateTransientQueue(queueName, exchangeName);
 
                 default:
                     return connection.CreateQueue(queueName, exchangeName);

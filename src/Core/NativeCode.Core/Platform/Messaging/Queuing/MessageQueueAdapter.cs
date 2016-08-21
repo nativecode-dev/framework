@@ -4,8 +4,9 @@
     using System.Collections.Concurrent;
 
     using NativeCode.Core.Extensions;
+    using NativeCode.Core.Types;
 
-    public class MessageQueueAdapter : IMessageQueueAdapter
+    public class MessageQueueAdapter : Disposable, IMessageQueueAdapter
     {
         private readonly ConcurrentDictionary<string, MessageQueueProvider> queues = new ConcurrentDictionary<string, MessageQueueProvider>();
 

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IMessageQueueAdapter
+    public interface IMessageQueueAdapter : IDisposable
     {
         IMessageQueueProvider Connect(Type messageType, Uri uri, MessageQueueType queueType);
 

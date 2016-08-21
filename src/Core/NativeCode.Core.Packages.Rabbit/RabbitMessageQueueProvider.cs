@@ -43,8 +43,7 @@ namespace NativeCode.Core.Packages.Rabbit
 
         public byte[] Consume()
         {
-            var result = this.Queue.BasicGet(this.QueueName, true);
-            return result?.Body;
+            return this.Queue.BasicGet(this.QueueName, true)?.Body;
         }
 
         public MessageQueueResult Next()
@@ -62,6 +61,16 @@ namespace NativeCode.Core.Packages.Rabbit
         public void Publish(byte[] message)
         {
             this.Queue.BasicPublish(this.ExchangeName, this.RouteName, null, message);
+        }
+
+        public void Reject(MessageQueueResult result, bool requeue)
+        {
+            ulong identifier;
+
+            if (ulong.TryParse(result.Identifier, out identifier))
+            {
+                this.Queue.BasicReject(identifier, requeue);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -146,6 +155,26 @@ namespace NativeCode.Core.Packages.Rabbit
             var bytes = Encoding.UTF8.GetBytes(contents);
 
             this.Publish(bytes);
+        }
+
+        public void RejectMessage(TMessage message, bool requeue)
+        {
+            if (this.acknowledgables.ContainsKey(message))
+            {
+                var result = this.acknowledgables[message];
+
+                try
+                {
+                    this.Reject(result, requeue);
+                }
+                finally
+                {
+                    if (this.acknowledgables.TryRemove(message, out result) == false)
+                    {
+                        throw new InvalidOperationException("Failed to remove acknowledgement from cache.");
+                    }
+                }
+            }
         }
     }
 }
