@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Packages.EntityFramework
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading;
@@ -50,26 +49,6 @@
         public IQueryable<T> Query<T>(Func<IQueryable<TEntity>, IQueryable<T>> query)
         {
             return query(this.DataContext.Set<TEntity>());
-        }
-
-        public virtual bool Save(TEntity entity)
-        {
-            return this.DataContext.Save(entity);
-        }
-
-        public virtual bool Save(IEnumerable<TEntity> entities)
-        {
-            return this.DataContext.Save(entities);
-        }
-
-        public virtual Task<bool> SaveAsync(TEntity entity, CancellationToken cancellationToken)
-        {
-            return this.DataContext.SaveAsync(entity, cancellationToken);
-        }
-
-        public virtual Task<bool> SaveAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
-        {
-            return this.DataContext.SaveAsync(entities, cancellationToken);
         }
 
         protected override void Dispose(bool disposing)

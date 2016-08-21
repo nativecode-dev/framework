@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -45,35 +44,5 @@
         /// <param name="query">The query.</param>
         /// <returns>Returns a modified <see cref="IQueryable" />.</returns>
         IQueryable<T> Query<T>(Func<IQueryable<TEntity>, IQueryable<T>> query);
-
-        /// <summary>
-        /// Saves the provided entity
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns><c>true</c> if save succeeded, <c>false</c> otherwise.</returns>
-        bool Save(TEntity entity);
-
-        /// <summary>
-        /// Saves the provided entities
-        /// </summary>
-        /// <param name="entities">The entities.</param>
-        /// <returns><c>true</c> if save succeeded, <c>false</c> otherwise.</returns>
-        bool Save(IEnumerable<TEntity> entities);
-
-        /// <summary>
-        /// Saves the provided entity
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns><c>true</c> if save succeeded, <c>false</c> otherwise.</returns>
-        Task<bool> SaveAsync(TEntity entity, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Saves the provided entities
-        /// </summary>
-        /// <param name="entities">The entities.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns><c>true</c> if save succeeded, <c>false</c> otherwise.</returns>
-        Task<bool> SaveAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken);
     }
 }

@@ -33,38 +33,18 @@
             this.platform = platform;
         }
 
-        public virtual bool Save<T>(T entity) where T : class, IEntity
+        public override int SaveChanges()
         {
-            return this.Save<T>(new[] { entity });
-        }
-
-        public virtual bool Save<T>(IEnumerable<T> entities) where T : class, IEntity
-        {
-            foreach (var entity in entities)
-            {
-                this.SetEntity(entity);
-            }
-
             this.ProcessInterceptors();
 
-            return this.SaveChanges() > 0;
+            return base.SaveChanges();
         }
 
-        public virtual Task<bool> SaveAsync<T>(T entity, CancellationToken cancellationToken) where T : class, IEntity
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            return this.SaveAsync<T>(new[] { entity }, cancellationToken);
-        }
-
-        public virtual async Task<bool> SaveAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken) where T : class, IEntity
-        {
-            foreach (var entity in entities)
-            {
-                this.SetEntity(entity);
-            }
-
             this.ProcessInterceptors();
 
-            return await this.SaveChangesAsync(cancellationToken) > 0;
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         protected void SetEntity<T>(T entity) where T : class, IEntity
