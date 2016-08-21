@@ -5,6 +5,7 @@
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -44,7 +45,7 @@
                 this.SetEntity(entity);
             }
 
-            this.ProcessEntityChanges();
+            this.ProcessInterceptors();
 
             return this.SaveChanges() > 0;
         }
@@ -61,15 +62,17 @@
                 this.SetEntity(entity);
             }
 
-            this.ProcessEntityChanges();
+            this.ProcessInterceptors();
 
             return await this.SaveChangesAsync(cancellationToken) > 0;
         }
 
         protected void SetEntity<T>(T entity) where T : class, IEntity
         {
-            var dbset = this.Set<T>();
-            dbset.Add(entity);
+            if (this.ChangeTracker.Entries().Any(e => e.Entity == entity) == false)
+            {
+                this.Set<T>().Add(entity);
+            }
         }
 
         private static void UpdateKeyProperties(DbEntityEntry entry)
@@ -82,7 +85,7 @@
             }
         }
 
-        private void ProcessEntityChanges()
+        private void ProcessInterceptors()
         {
             foreach (var entry in this.ChangeTracker.Entries())
             {
