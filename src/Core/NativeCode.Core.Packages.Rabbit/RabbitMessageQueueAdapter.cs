@@ -50,9 +50,9 @@
         {
             if (disposing && this.Disposed == false)
             {
-                foreach (var adapter in this.connections.Values)
+                foreach (var connection in this.connections.Values)
                 {
-                    adapter.Dispose();
+                    connection.Dispose();
                 }
 
                 this.connections.Clear();

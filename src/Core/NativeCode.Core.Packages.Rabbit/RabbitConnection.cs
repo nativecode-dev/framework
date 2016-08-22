@@ -9,7 +9,7 @@
 
     public class RabbitConnection : Disposable
     {
-        private readonly LazyFactory<IConnection> instance;
+        private readonly Lazy<IConnection> instance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RabbitConnection" /> class.
@@ -18,16 +18,9 @@
         /// <param name="logger">The logger.</param>
         protected internal RabbitConnection(RabbitUri connection, ILogger logger)
         {
-            this.instance = new LazyFactory<IConnection>(() => this.CreateDefaultConnection(connection));
+            this.instance = new Lazy<IConnection>(() => this.GetConnection(connection));
             this.Logger = logger;
-
-            this.Uri = connection;
         }
-
-        /// <summary>
-        /// Gets the URI.
-        /// </summary>
-        public RabbitUri Uri { get; }
 
         /// <summary>
         /// Gets the connection factory.
@@ -152,15 +145,15 @@
         /// Creates a default connection factory.
         /// </summary>
         /// <returns>Returns a new <see cref="Connection" />.</returns>
-        protected virtual IConnection CreateDefaultConnection(RabbitUri connection)
+        protected virtual IConnection GetConnection(RabbitUri uri)
         {
             try
             {
-                var factory = new ConnectionFactory { Uri = connection };
+                var factory = new ConnectionFactory { Uri = uri };
+                var connection = factory.CreateConnection();
 
-                this.Logger.Debug($"Creating connection for {connection}.");
-
-                return factory.CreateConnection();
+                this.Logger.Debug($"Creating connection for {uri}.");
+                return connection;
             }
             catch (Exception ex)
             {
@@ -207,16 +200,6 @@
                 this.Logger.Exception(ex);
                 throw;
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && this.Disposed == false)
-            {
-                this.Connection.Close();
-            }
-
-            base.Dispose(disposing);
         }
     }
 }
