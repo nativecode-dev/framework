@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Provides a contract to provide caching facilities.
+    /// Provides a contract for caching facilities.
     /// </summary>
     /// <typeparam name="T">The type to cache.</typeparam>
     public interface ICache<T>

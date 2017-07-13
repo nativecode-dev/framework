@@ -1,5 +1,8 @@
 namespace NativeCode.Core.Dependencies.Enums
 {
+    /// <summary>
+    /// Enumeration of dependency lifetimes.
+    /// </summary>
     public enum DependencyLifetime
     {
         /// <summary>

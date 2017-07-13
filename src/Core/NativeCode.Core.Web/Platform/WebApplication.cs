@@ -21,7 +21,7 @@
         protected IApplication ApplicationProxy { get; private set; }
 
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Replacing base class dispose pattern.")]
-        public override sealed void Dispose()
+        public sealed override void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);

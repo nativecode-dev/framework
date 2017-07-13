@@ -2,6 +2,10 @@ namespace NativeCode.Core.Validation
 {
     using System;
 
+    /// <summary>
+    /// Enumeration of values that represent which string complexity requirements
+    /// to use.
+    /// </summary>
     [Flags]
     public enum StringComplexityRules
     {

@@ -13,7 +13,7 @@
 
     public class WhenUsingRabbitMessageQueue : WhenTestingPlatform
     {
-        public static readonly Uri RabbitConnectionUrl = new Uri("amqp://netservices:5OBK1r8NiRyrDSx15dVX@services.nativecode.local/framework-testing");
+        public static readonly Uri RabbitConnectionUrl = new Uri("amqp://testuser:password@localhost/");
 
         public WhenUsingRabbitMessageQueue()
         {
@@ -21,7 +21,7 @@
             this.Container.Registrar.Register<IStringSerializer, JsonStringSerializer>();
         }
 
-        [Fact]
+        [Fact, Trait("Type", "Integration")]
         public void ShouldSendAndReceiveMessage()
         {
             // Arrange
@@ -38,7 +38,7 @@
             }
         }
 
-        [Fact]
+        [Fact, Trait("Type", "Integration")]
         public void ShouldAllowMultipleConnections()
         {
             // Arrange, Act

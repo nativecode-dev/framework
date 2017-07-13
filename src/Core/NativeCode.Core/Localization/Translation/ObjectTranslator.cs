@@ -10,6 +10,10 @@
     using NativeCode.Core.Extensions;
     using NativeCode.Core.Localization.Translation.Attributes;
 
+    /// <summary>
+    /// Translates an object's string properties if it contains translation tokens.
+    /// </summary>
+    /// <seealso cref="NativeCode.Core.Localization.Translation.IObjectTranslator" />
     public class ObjectTranslator : IObjectTranslator
     {
         private static readonly SafeCache<ObjectTranslatorMapping> Cache = new SafeCache<ObjectTranslatorMapping>();

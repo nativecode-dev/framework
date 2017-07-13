@@ -1,5 +1,8 @@
 ﻿namespace NativeCode.Core.Dependencies.Enums
 {
+    /// <summary>
+    /// Enumeration of dependency key types.
+    /// </summary>
     public enum DependencyKey
     {
         /// <summary>
