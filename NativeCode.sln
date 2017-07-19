@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core", "src\Core\NativeCode.Core\NativeCode.Core.csproj", "{2BA5C42A-32EC-43DB-9AEC-A9323D354951}"
 EndProject
@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{0BE504
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		CodeAnalysis.ruleset = CodeAnalysis.ruleset
+		LICENSE.md = LICENSE.md
 		README.md = README.md
 		Settings.StyleCop = Settings.StyleCop
 	EndProjectSection
