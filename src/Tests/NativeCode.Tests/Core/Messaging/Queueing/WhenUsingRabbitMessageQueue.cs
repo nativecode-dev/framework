@@ -47,8 +47,8 @@
             using (var providerB = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Transient))
             {
                 // Assert
-                Assert.Equal($"simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerA.QueueName);
-                Assert.Equal($"simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerB.QueueName);
+                Assert.Equal($"transient-simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerA.QueueName);
+                Assert.Equal($"transient-simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerB.QueueName);
             }
         }
     }
