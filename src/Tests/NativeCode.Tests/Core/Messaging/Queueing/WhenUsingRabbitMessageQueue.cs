@@ -13,7 +13,7 @@
 
     public class WhenUsingRabbitMessageQueue : WhenTestingPlatform
     {
-        public static readonly Uri RabbitConnectionUrl = new Uri("amqp://testuser:p4ssw0rd@queue.nativecode.com/testing");
+        public static readonly Uri RabbitConnectionUrl = new Uri("amqp://testuser:p4ssw0rd@queue.nativecode.com:5672/testing");
 
         public WhenUsingRabbitMessageQueue()
         {

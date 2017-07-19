@@ -72,16 +72,6 @@ namespace NativeCode.Core.Packages.Rabbit
                 this.Queue.BasicReject(identifier, requeue);
             }
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && this.Disposed == false)
-            {
-                this.Queue.Close();
-            }
-
-            base.Dispose(disposing);
-        }
     }
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
