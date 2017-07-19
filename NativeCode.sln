@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core", "src\Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Tests", "src\Tests\NativeCode.Tests\NativeCode.Tests.csproj", "{40D8575D-34A0-4B80-87CA-301BC6E19350}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{0BE504AC-1561-4870-87C8-210B467708EB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{0BE504AC-1561-4870-87C8-210B467708EB}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		CodeAnalysis.ruleset = CodeAnalysis.ruleset
