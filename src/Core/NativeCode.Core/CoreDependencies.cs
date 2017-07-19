@@ -1,16 +1,16 @@
 ﻿namespace NativeCode.Core
 {
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Enums;
-    using NativeCode.Core.Localization.Translation;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Platform.Maintenance;
-    using NativeCode.Core.Platform.Messaging.Queuing;
-    using NativeCode.Core.Platform.Security.Authentication;
-    using NativeCode.Core.Platform.Security.KeyManagement;
-    using NativeCode.Core.Platform.Serialization;
-    using NativeCode.Core.Types;
-    using NativeCode.Core.Validation;
+    using Dependencies;
+    using Dependencies.Enums;
+    using Localization.Translation;
+    using Platform.Logging;
+    using Platform.Maintenance;
+    using Platform.Messaging.Queuing;
+    using Platform.Security.Authentication;
+    using Platform.Security.KeyManagement;
+    using Platform.Serialization;
+    using Types;
+    using Validation;
 
     public class CoreDependencies : DependencyModule
     {

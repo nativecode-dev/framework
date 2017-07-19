@@ -8,10 +8,9 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
-
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Platform.Security.Authentication;
+    using Core.Platform;
+    using Core.Platform.Logging;
+    using Core.Platform.Security.Authentication;
 
     /// <summary>
     /// Delegating handler that provides basic authentication via HTTP.
@@ -47,7 +46,8 @@
         /// </summary>
         protected IPlatform Platform { get; }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
             var authorization = request.Headers.Authorization;
 
@@ -62,9 +62,7 @@
                 var result = await this.Authentication.AuthenticateAsync(login, password, cancellationToken);
 
                 if (result.Result != AuthenticationResultType.Authenticated)
-                {
                     throw new HttpResponseException(HttpStatusCode.Unauthorized);
-                }
             }
 
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
@@ -73,9 +71,7 @@
         private static void EnsureMatchingScheme(string scheme)
         {
             if (scheme.ToUpper() != "BASIC")
-            {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            }
         }
 
         private static string[] GetParameterParts(AuthenticationHeaderValue authorization)
@@ -85,9 +81,7 @@
             var parts = value.Split(':');
 
             if (parts.Length != 2)
-            {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
 
             return parts;
         }

@@ -21,12 +21,11 @@
         /// </summary>
         protected IEnumerable<IAuthenticationHandler> Handlers { get; }
 
-        public Task<AuthenticationResult> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
+        public Task<AuthenticationResult> AuthenticateAsync(string login, string password,
+            CancellationToken cancellationToken)
         {
             foreach (var handler in this.Handlers.Where(h => h.CanHandle(login)))
-            {
                 return handler.AuthenticateAsync(login, password, cancellationToken);
-            }
 
             return Task.FromResult(new AuthenticationResult(AuthenticationResultType.Failed));
         }

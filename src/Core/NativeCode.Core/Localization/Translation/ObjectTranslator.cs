@@ -5,10 +5,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-
-    using NativeCode.Core.Caching;
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Localization.Translation.Attributes;
+    using Attributes;
+    using Caching;
+    using Extensions;
 
     /// <summary>
     /// Translates an object's string properties if it contains translation tokens.
@@ -32,7 +31,7 @@
 
         public void Translate<T>(T instance)
         {
-            this.Translate((object)instance);
+            this.Translate((object) instance);
         }
 
         protected virtual ObjectTranslatorMapping GetMapping(object instance)
@@ -43,19 +42,13 @@
         protected void Translate(object instance, ObjectTranslatorContext context)
         {
             if (context.Resolved(instance) == false)
-            {
                 context.Mark(instance);
-            }
 
             var mapping = this.GetMapping(instance);
 
             if (mapping.HasDecorator || mapping.HasProperties)
-            {
                 foreach (var property in mapping.Properties)
-                {
                     this.TranslateProperty(property, context);
-                }
-            }
         }
 
         protected virtual void TranslateProperty(PropertyInfo property, ObjectTranslatorContext context)
@@ -63,9 +56,7 @@
             var type = property.PropertyType;
 
             if (type == typeof(string))
-            {
-                this.Translator.TranslateString((string)property.GetValue(context));
-            }
+                this.Translator.TranslateString((string) property.GetValue(context));
         }
 
         private bool IsSafelyEnumerable(Type type)
@@ -84,9 +75,7 @@
             public void Mark(object instance)
             {
                 if (this.references.Contains(instance) == false)
-                {
                     this.references.Add(instance);
-                }
             }
 
             public bool Resolved(object instance)
@@ -133,12 +122,8 @@
             private void Build()
             {
                 foreach (var property in this.Type.GetRuntimeProperties())
-                {
                     if (this.CanTranslate(property))
-                    {
                         this.TranslatableProperties.Add(property);
-                    }
-                }
             }
         }
     }

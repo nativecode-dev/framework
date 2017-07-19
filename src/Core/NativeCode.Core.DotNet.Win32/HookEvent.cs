@@ -1,9 +1,8 @@
 ﻿namespace NativeCode.Core.DotNet.Win32
 {
     using System;
-
-    using NativeCode.Core.DotNet.Win32.Enums;
-    using NativeCode.Core.Types;
+    using Enums;
+    using Types;
 
     public abstract class HookEvent : Disposable
     {
@@ -19,19 +18,19 @@
         protected HookEvent(IntPtr hwnd, Event minEvent, Event maxEvent)
         {
             this.handler = this.Handler;
-            this.hook = NativeMethods.SetWinEventHook(minEvent, maxEvent, hwnd, this.handler, 0, 0, WinEvent.OutOfContext);
+            this.hook = NativeMethods.SetWinEventHook(minEvent, maxEvent, hwnd, this.handler, 0, 0,
+                WinEvent.OutOfContext);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing && !this.Disposed)
-            {
                 NativeMethods.UnhookWinEvent(this.hook);
-            }
 
             base.Dispose(disposing);
         }
 
-        protected abstract void Handler(IntPtr hwineventhook, uint eventtype, IntPtr hwnd, int idobject, int idchild, uint dweventthread, uint dwmseventtime);
+        protected abstract void Handler(IntPtr hwineventhook, uint eventtype, IntPtr hwnd, int idobject, int idchild,
+            uint dweventthread, uint dwmseventtime);
     }
 }

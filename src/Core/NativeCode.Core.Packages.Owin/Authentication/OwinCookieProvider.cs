@@ -2,13 +2,11 @@
 {
     using System;
     using System.Web.Security;
-
+    using Core.Platform.Serialization;
+    using Dependencies;
     using Microsoft.Owin;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Packages.Owin.Owin;
-    using NativeCode.Core.Platform.Serialization;
-    using NativeCode.Core.Web.Platform.Security.Cookies;
+    using Owin;
+    using Web.Platform.Security.Cookies;
 
     public class OwinCookieProvider<TData> : CookieProvider<IOwinRequest, IOwinResponse, OwinCookie, TData>
     {
@@ -21,7 +19,8 @@
         {
         }
 
-        public override OwinCookie CreateCookie(string name, TData data, bool persist = true, int timeout = 20, int version = 1)
+        public override OwinCookie CreateCookie(string name, TData data, bool persist = true, int timeout = 20,
+            int version = 1)
         {
             throw new NotImplementedException();
         }
@@ -33,9 +32,7 @@
                 var key = kvp.Key;
 
                 if (key == name)
-                {
                     return new OwinCookie(kvp);
-                }
             }
 
             return new OwinCookie(name, null);

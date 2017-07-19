@@ -1,8 +1,8 @@
 ﻿namespace NativeCode.Web.AspNet.WebApi.Controllers
 {
-    using NativeCode.Core.Data;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Logging;
+    using Core.Data;
+    using Core.Platform;
+    using Core.Platform.Logging;
 
     public abstract class RepositoryController<TEntity> : BaseController
         where TEntity : Entity

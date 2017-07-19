@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics;
     using System.Reflection;
-
     using JetBrains.Annotations;
 
     /// <summary>
@@ -16,7 +15,7 @@
     public sealed class IgnoreDependencyAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IgnoreDependencyAttribute"/> class.
+        /// Initializes a new instance of the <see cref="IgnoreDependencyAttribute" /> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
         /// <param name="inheritable">if set to <c>true</c> [inheritable].</param>
@@ -29,7 +28,7 @@
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="IgnoreDependencyAttribute"/> is inheritable.
+        /// Gets a value indicating whether this <see cref="IgnoreDependencyAttribute" /> is inheritable.
         /// </summary>
         /// <value><c>true</c> if inheritable; otherwise, <c>false</c>.</value>
         public bool Inheritable { get; }
@@ -61,9 +60,8 @@
                 Debug.WriteLine(attribute.Reason);
 
                 if (attribute.Inheritable && attribute.ThrowOnError)
-                {
-                    throw new InvalidOperationException($"Registration for {type.Name} not allowed due to {attribute.Reason}.");
-                }
+                    throw new InvalidOperationException(
+                        $"Registration for {type.Name} not allowed due to {attribute.Reason}.");
 
                 return false;
             }

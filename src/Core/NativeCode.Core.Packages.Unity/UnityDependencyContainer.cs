@@ -1,11 +1,9 @@
 ﻿namespace NativeCode.Core.Packages.Unity
 {
     using System.Threading;
-
+    using Dependencies;
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
-
-    using NativeCode.Core.Dependencies;
 
     public class UnityDependencyContainer : DependencyContainer
     {

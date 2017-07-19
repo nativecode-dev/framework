@@ -1,14 +1,15 @@
 ﻿namespace NativeCode.Tests.Core.Types
 {
     using NativeCode.Core.Platform.Connections;
-
     using Xunit;
 
     public class WhenUsingSqlServerConnectionStrings
     {
-        private const string DefaultConnectionString = "Server=(local); Database=NativeCodeServices; Integrated Security=True; MultipleActiveResultSets=True;";
+        private const string DefaultConnectionString =
+            "Server=(local); Database=NativeCodeServices; Integrated Security=True; MultipleActiveResultSets=True;";
 
-        private const string ExpectedConnectionString = "Server=(local); Database=NativeCodeServices; Integrated Security=True; MultipleActiveResultSets=True";
+        private const string ExpectedConnectionString =
+            "Server=(local); Database=NativeCodeServices; Integrated Security=True; MultipleActiveResultSets=True";
 
         [Fact]
         public void ParseConnectionString()

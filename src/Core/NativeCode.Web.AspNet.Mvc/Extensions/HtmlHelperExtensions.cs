@@ -5,7 +5,8 @@
 
     public static class HtmlHelperExtensions
     {
-        public static MvcHtmlString ActionLinkRoot(this HtmlHelper html, string linkText, string actionName, string controllerName)
+        public static MvcHtmlString ActionLinkRoot(this HtmlHelper html, string linkText, string actionName,
+            string controllerName)
         {
             return html.ActionLink(linkText, actionName, new { Area = string.Empty, Controller = controllerName });
         }

@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Localization.Translation
 {
     using System.Globalization;
-
     using JetBrains.Annotations;
 
     /// <summary>

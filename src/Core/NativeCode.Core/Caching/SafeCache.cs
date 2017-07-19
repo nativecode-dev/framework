@@ -23,16 +23,12 @@ namespace NativeCode.Core.Caching
             T value;
 
             if (this.cached.TryGetValue(key, out value))
-            {
                 return value;
-            }
 
 #pragma warning disable RECS0017 // Possible compare of value type with 'null'
             if (defaultValue != null)
 #pragma warning restore RECS0017 // Possible compare of value type with 'null'
-            {
                 this.Set(key, defaultValue);
-            }
 
             return defaultValue;
         }

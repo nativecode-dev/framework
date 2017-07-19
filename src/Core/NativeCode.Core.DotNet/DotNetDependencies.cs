@@ -1,17 +1,17 @@
 ﻿namespace NativeCode.Core.DotNet
 {
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Enums;
-    using NativeCode.Core.DotNet.Logging;
-    using NativeCode.Core.DotNet.Platform.Connections;
-    using NativeCode.Core.DotNet.Platform.FileSystem;
-    using NativeCode.Core.DotNet.Platform.Security.Authentication;
-    using NativeCode.Core.DotNet.Platform.Security.Authorization;
-    using NativeCode.Core.Platform.Connections;
-    using NativeCode.Core.Platform.FileSystem;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Platform.Security.Authentication;
-    using NativeCode.Core.Platform.Security.Authorization;
+    using Core.Platform.Connections;
+    using Core.Platform.FileSystem;
+    using Core.Platform.Logging;
+    using Core.Platform.Security.Authentication;
+    using Core.Platform.Security.Authorization;
+    using Dependencies;
+    using Dependencies.Enums;
+    using Logging;
+    using Platform.Connections;
+    using Platform.FileSystem;
+    using Platform.Security.Authentication;
+    using Platform.Security.Authorization;
 
     public class DotNetDependencies : DependencyModule
     {

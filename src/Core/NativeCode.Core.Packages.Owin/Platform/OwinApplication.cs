@@ -3,11 +3,9 @@
     using System;
     using System.Security.Principal;
     using System.Threading;
-
+    using Core.Platform;
     using Microsoft.Owin.Hosting;
-
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Settings;
+    using Settings;
 
     public class OwinApplication : Application
     {

@@ -7,14 +7,14 @@
     using System.Linq;
     using System.Web.Configuration;
     using System.Web.Security;
-
-    using NativeCode.Core.Platform.Security;
+    using Core.Platform.Security;
 
     public class WindowsMembershipRoleProvider : WindowsTokenRoleProvider
     {
         private const string PathRoleManager = "system.web/roleManager";
 
-        private static readonly Lazy<RoleManagerSection> MembershipProviderSettingsInstance = new Lazy<RoleManagerSection>(LoadRoleManagerSection);
+        private static readonly Lazy<RoleManagerSection> MembershipProviderSettingsInstance =
+            new Lazy<RoleManagerSection>(LoadRoleManagerSection);
 
         public static RoleManagerSection RoleManagerSection => MembershipProviderSettingsInstance.Value;
 
@@ -23,9 +23,7 @@
             var domain = GetDomainFromSettings();
 
             if (UserLoginName.IsValid(username, UserLoginNameFormat.UserPrincipalName) == false)
-            {
                 return GetGroupsForUser(domain, username).ToArray();
-            }
 
             return base.GetRolesForUser(username);
         }
@@ -49,9 +47,7 @@
                 using (var user = UserPrincipal.FindByIdentity(principal, username))
                 {
                     if (user == null)
-                    {
                         return result;
-                    }
 
                     using (var groups = user.GetAuthorizationGroups())
                     {
@@ -65,7 +61,7 @@
 
         private static RoleManagerSection LoadRoleManagerSection()
         {
-            return (RoleManagerSection)ConfigurationManager.GetSection(PathRoleManager);
+            return (RoleManagerSection) ConfigurationManager.GetSection(PathRoleManager);
         }
     }
 }

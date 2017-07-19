@@ -5,7 +5,7 @@
     public class ApplicationIdentity : IIdentity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationIdentity"/> class.
+        /// Initializes a new instance of the <see cref="ApplicationIdentity" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="type">The type.</param>

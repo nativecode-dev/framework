@@ -13,9 +13,7 @@
             if (disposing && this.Disposed == false && this.disposables.Any())
             {
                 foreach (var disposable in this.disposables)
-                {
                     disposable.Dispose();
-                }
 
                 this.disposables.Clear();
             }
@@ -26,9 +24,7 @@
         protected void EnsureDisposed<TDisposable>(TDisposable disposable) where TDisposable : IDisposable
         {
             if (this.disposables.Contains(disposable) == false)
-            {
                 this.disposables.Add(disposable);
-            }
         }
     }
 }

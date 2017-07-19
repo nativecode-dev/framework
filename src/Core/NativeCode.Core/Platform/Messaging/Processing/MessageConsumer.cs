@@ -6,17 +6,17 @@ namespace NativeCode.Core.Platform.Messaging.Processing
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Platform.Messaging.Queuing;
-    using NativeCode.Core.Platform.Serialization;
-    using NativeCode.Core.Types;
+    using Extensions;
+    using Logging;
+    using Queuing;
+    using Serialization;
+    using Types;
 
     public class MessageConsumer<TMessage> : DisposableManager, IMessageConsumer<TMessage>
         where TMessage : class, new()
     {
-        public MessageConsumer(IMessageProcessor<TMessage> processor, IMessageQueueAdapter adapter, IStringSerializer serializer, ILogger logger)
+        public MessageConsumer(IMessageProcessor<TMessage> processor, IMessageQueueAdapter adapter,
+            IStringSerializer serializer, ILogger logger)
         {
             this.Adapter = adapter;
             this.Logger = logger;
@@ -45,7 +45,6 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                 var tracker = new TaskTracker(provider, cancellationToken);
 
                 while (cancellationToken.IsCancellationRequested == false)
-                {
                     try
                     {
                         tracker.RemoveCompleted(this.HandleTaskRemoved);
@@ -69,30 +68,28 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                         }
 
                         // Process the message we got from the queue.
-                        tracker.Tasks.Add(result, Task.Run(() => this.ProcessMessageAsync(result, cancellationToken), cancellationToken));
+                        tracker.Tasks.Add(result,
+                            Task.Run(() => this.ProcessMessageAsync(result, cancellationToken), cancellationToken));
                     }
                     catch (Exception ex)
                     {
                         this.Logger.Exception(ex);
                     }
-                }
             }
         }
 
-        protected virtual void HandleTaskRemoved(MessageQueueResult result, Task<MessageProcessorResult> task, TaskTracker tracker)
+        protected virtual void HandleTaskRemoved(MessageQueueResult result, Task<MessageProcessorResult> task,
+            TaskTracker tracker)
         {
             if (task.IsCompleted)
-            {
                 tracker.Provider.Acknowledge(result);
-            }
 
             if (task.IsFaulted)
-            {
                 this.Logger.Exception(task.Exception);
-            }
         }
 
-        private async Task<MessageProcessorResult> ProcessMessageAsync(MessageQueueResult result, CancellationToken cancellationToken)
+        private async Task<MessageProcessorResult> ProcessMessageAsync(MessageQueueResult result,
+            CancellationToken cancellationToken)
         {
             try
             {

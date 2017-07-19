@@ -7,8 +7,7 @@
     {
         public CharUnion Char;
 
-        [MarshalAs(UnmanagedType.I2)]
-        public Color Color;
+        [MarshalAs(UnmanagedType.I2)] public Color Color;
 
         public CharInfo(byte ascii, Color color)
         {

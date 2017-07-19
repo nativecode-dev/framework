@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.Platform.Security.Authorization.Exceptions
 {
-    using NativeCode.Core.Exceptions;
+    using Core.Exceptions;
 
     public class AuthorizationAssertionException : FrameworkException
     {

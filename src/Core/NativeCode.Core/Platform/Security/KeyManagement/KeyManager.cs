@@ -2,8 +2,7 @@
 {
     using System;
     using System.IO;
-
-    using NativeCode.Core.Platform.FileSystem;
+    using FileSystem;
 
     public class KeyManager : IKeyManager
     {
@@ -29,9 +28,7 @@
                 var filename = Path.Combine(this.Platform.DataPath, $"{this.Platform.MachineName}.default.key");
 
                 if (this.Files.Exists(filename))
-                {
                     return this.Files.GetText(filename);
-                }
 
                 var key = Guid.NewGuid().ToString();
                 this.Files.SetText(filename, key);

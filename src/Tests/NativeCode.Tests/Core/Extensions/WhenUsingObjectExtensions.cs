@@ -1,9 +1,7 @@
 ﻿namespace NativeCode.Tests.Core.Extensions
 {
     using System;
-
     using NativeCode.Core.Extensions;
-
     using Xunit;
 
     public class WhenUsingObjectExtensions
@@ -40,7 +38,7 @@
             sut.DisposeIfNeeded();
 
             // Assert
-            Assert.True(((Disposable)sut).Disposed);
+            Assert.True(((Disposable) sut).Disposed);
         }
 
         [Fact]

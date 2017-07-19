@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.DotNet.Platform.FileSystem
 {
     using System.IO;
-
-    using NativeCode.Core.Platform.FileSystem;
+    using Core.Platform.FileSystem;
 
     public class DotNetFileSystem : IFileSystem
     {

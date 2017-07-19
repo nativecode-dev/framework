@@ -10,9 +10,7 @@
             var principal = GetPrincipal(page);
 
             if (principal?.Identity != null)
-            {
                 return true;
-            }
 
             return false;
         }
@@ -22,9 +20,7 @@
             var principal = GetPrincipal(page);
 
             if (principal?.Identity != null)
-            {
                 return principal.IsInRole(rolename);
-            }
 
             return false;
         }

@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Platform.Messaging.Queuing
 {
     using System;
-
     using JetBrains.Annotations;
 
     public interface IMessageQueueProvider : IDisposable

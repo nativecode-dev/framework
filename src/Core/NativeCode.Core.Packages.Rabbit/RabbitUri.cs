@@ -2,9 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Types;
+    using Extensions;
+    using Types;
 
     public class RabbitUri
     {
@@ -62,10 +61,10 @@
         public virtual Uri ToUri()
         {
             var builder = new UriBuilder(Scheme, this.Host, this.Port, this.VirtualHost)
-                              {
-                                  Password = this.Credentials.Password,
-                                  UserName = this.Credentials.Login
-                              };
+            {
+                Password = this.Credentials.Password,
+                UserName = this.Credentials.Login
+            };
 
             return builder.Uri;
         }
@@ -73,15 +72,12 @@
         private void ParseOptions(string query)
         {
             if (string.IsNullOrWhiteSpace(query) || query == "?")
-            {
                 return;
-            }
 
             query = query.Remove(0, 1);
             var parts = query.Split("&");
 
             foreach (var part in parts)
-            {
                 if (part.Contains("="))
                 {
                     var kvp = part.Split("=");
@@ -91,7 +87,6 @@
                 {
                     this.options.Add(part, null);
                 }
-            }
         }
     }
 }

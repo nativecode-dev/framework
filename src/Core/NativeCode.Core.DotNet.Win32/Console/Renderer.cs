@@ -3,14 +3,12 @@
     using System;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
-
+    using Core.Extensions;
+    using Enums;
+    using Exceptions;
     using Microsoft.Win32.SafeHandles;
-
-    using NativeCode.Core.DotNet.Win32.Enums;
-    using NativeCode.Core.DotNet.Win32.Exceptions;
-    using NativeCode.Core.DotNet.Win32.Structs;
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Types;
+    using Structs;
+    using Types;
 
     public abstract class Renderer<TContext> : Disposable
         where TContext : RenderContext, new()
@@ -49,13 +47,9 @@
             var handler = this.KeyMapper.GetMapping(key, this.Mode);
 
             if (handler == null)
-            {
                 this.HandleConsoleKey(key, this.Mode);
-            }
             else
-            {
                 handler();
-            }
         }
 
         public void Render()
@@ -65,18 +59,14 @@
             try
             {
                 if (this.Mode == RenderMode.Rendering)
-                {
                     buffer = this.BackBuffer;
-                }
 
                 this.Context.LastRenderStart = DateTimeOffset.UtcNow;
                 this.RenderSetup();
                 this.RenderView(buffer);
 
                 if (this.Mode == RenderMode.Rendering && this.Context.IsDirty)
-                {
                     this.Flip();
-                }
             }
             catch (Exception ex)
             {
@@ -119,12 +109,14 @@
 
         protected void ApplySettings(BufferHandle buffer)
         {
-            var info = new ConsoleCursorInfo { Size = (uint)this.Settings.CursorSize, Visible = this.Settings.CursorVisible };
+            var info = new ConsoleCursorInfo
+            {
+                Size = (uint) this.Settings.CursorSize,
+                Visible = this.Settings.CursorVisible
+            };
 
             if (NativeMethods.SetConsoleCursorInfo(buffer.Handle, ref info) == false)
-            {
                 Debug.WriteLine($"Failed to update cursor settings, error was {Marshal.GetLastWin32Error()}.");
-            }
         }
 
         protected virtual void CursorDown()
@@ -200,9 +192,7 @@
         protected virtual void HandleConsoleKey(ConsoleKeyInfo key, RenderMode mode)
         {
             if (mode == RenderMode.Editor)
-            {
                 this.Write(key);
-            }
         }
 
         protected abstract void RenderComplete();
@@ -216,9 +206,7 @@
             var position = new Coord(this.CursorX, this.CursorY);
 
             if (NativeMethods.SetConsoleCursorPosition(this.ActiveBuffer.Handle, position) == false)
-            {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
         }
 
         protected virtual void Write(ConsoleKeyInfo key)
@@ -247,13 +235,17 @@
             this.KeyMapper.Register("Any.Edit", ConsoleKey.F10, RenderMode.Any, this.EditScreen);
 
             // Editor actions
-            this.KeyMapper.Register("Editor.Cancel", ConsoleKey.Escape, RenderMode.Editor, () => this.SetMode(RenderMode.Display));
-            this.KeyMapper.Register("Editor.Save", ConsoleKey.W, RenderMode.Editor, this.EnterDisplayMode, control: true);
+            this.KeyMapper.Register("Editor.Cancel", ConsoleKey.Escape, RenderMode.Editor,
+                () => this.SetMode(RenderMode.Display));
+            this.KeyMapper.Register("Editor.Save", ConsoleKey.W, RenderMode.Editor, this.EnterDisplayMode,
+                control: true);
         }
 
         private BufferHandle CreateBuffer()
         {
-            var handle = NativeMethods.CreateConsoleScreenBuffer(DefaultFileAccess, DefaultFileShare, IntPtr.Zero, 1, IntPtr.Zero);
+            var handle =
+                NativeMethods.CreateConsoleScreenBuffer(DefaultFileAccess, DefaultFileShare, IntPtr.Zero, 1,
+                    IntPtr.Zero);
             var safehandle = new SafeFileHandle(handle, true);
 
             try

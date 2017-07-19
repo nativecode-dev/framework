@@ -3,10 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
     using Microsoft.Owin;
-
-    using NativeCode.Core.Settings;
+    using Settings;
 
     /// <summary>
     /// Creates a <see cref="JsonSettings" /> instance and stores it in the KeyRequestSettings location

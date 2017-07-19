@@ -5,16 +5,12 @@
     [StructLayout(LayoutKind.Explicit)]
     public struct MouseEventRecord
     {
-        [FieldOffset(0)]
-        public Coord MousePosition;
+        [FieldOffset(0)] public Coord MousePosition;
 
-        [FieldOffset(4)]
-        public uint ButtonState;
+        [FieldOffset(4)] public uint ButtonState;
 
-        [FieldOffset(8)]
-        public ControlKeyState ControlKeyState;
+        [FieldOffset(8)] public ControlKeyState ControlKeyState;
 
-        [FieldOffset(12)]
-        public uint EventFlags;
+        [FieldOffset(12)] public uint EventFlags;
     }
 }

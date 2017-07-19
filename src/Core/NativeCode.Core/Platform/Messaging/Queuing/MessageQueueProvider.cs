@@ -3,9 +3,8 @@
     using System.Collections.Concurrent;
     using System.Diagnostics.CodeAnalysis;
     using System.Text;
-
-    using NativeCode.Core.Platform.Serialization;
-    using NativeCode.Core.Types;
+    using Serialization;
+    using Types;
 
     public class MessageQueueProvider : DisposableManager, IMessageQueueProvider
     {
@@ -44,11 +43,13 @@
         }
     }
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
+        Justification = "Generic type.")]
     public class MessageQueueProvider<TMessage> : MessageQueueProvider, IMessageQueueProvider<TMessage>
         where TMessage : class, new()
     {
-        private readonly ConcurrentDictionary<TMessage, MessageQueueResult> mappings = new ConcurrentDictionary<TMessage, MessageQueueResult>();
+        private readonly ConcurrentDictionary<TMessage, MessageQueueResult> mappings =
+            new ConcurrentDictionary<TMessage, MessageQueueResult>();
 
         public MessageQueueProvider(string name, IStringSerializer serializer)
             : base(name)

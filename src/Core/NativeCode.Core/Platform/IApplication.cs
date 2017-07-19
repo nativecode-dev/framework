@@ -3,10 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Settings;
-    using NativeCode.Core.Types;
+    using Dependencies;
+    using Settings;
+    using Types;
 
     /// <summary>
     /// Provides a contract for an application instance.

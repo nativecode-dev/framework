@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.Dependencies.Attributes
 {
     using System;
-
-    using NativeCode.Core.Dependencies.Enums;
+    using Enums;
 
     /// <summary>
     /// Marks a class as being an implementation dependency.
@@ -12,12 +11,13 @@
     public sealed class DependencyAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyAttribute"/> class.
+        /// Initializes a new instance of the <see cref="DependencyAttribute" /> class.
         /// </summary>
         /// <param name="contract">The contract.</param>
         /// <param name="key">The key.</param>
         /// <param name="lifetime">The lifetime.</param>
-        public DependencyAttribute(Type contract = null, string key = default(string), DependencyLifetime lifetime = DependencyLifetime.Default)
+        public DependencyAttribute(Type contract = null, string key = default(string),
+            DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             this.Contract = contract;
             this.Key = key;
@@ -25,12 +25,13 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyAttribute"/> class.
+        /// Initializes a new instance of the <see cref="DependencyAttribute" /> class.
         /// </summary>
         /// <param name="contract">The contract.</param>
         /// <param name="dependencyKey">The dependency key.</param>
         /// <param name="lifetime">The lifetime.</param>
-        public DependencyAttribute(Type contract, DependencyKey dependencyKey, DependencyLifetime lifetime = DependencyLifetime.Default)
+        public DependencyAttribute(Type contract, DependencyKey dependencyKey,
+            DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             this.Contract = contract;
             this.KeyType = dependencyKey;

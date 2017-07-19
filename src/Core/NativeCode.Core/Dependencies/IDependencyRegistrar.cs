@@ -2,10 +2,8 @@
 {
     using System;
     using System.Reflection;
-
+    using Enums;
     using JetBrains.Annotations;
-
-    using NativeCode.Core.Dependencies.Enums;
 
     /// <summary>
     /// Provides a contract for registering dependencies.
@@ -19,7 +17,8 @@
         /// <param name="key">The key.</param>
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
-        IDependencyRegistrar Register([NotNull] Type type, string key = default(string), DependencyLifetime lifetime = default(DependencyLifetime));
+        IDependencyRegistrar Register([NotNull] Type type, string key = default(string),
+            DependencyLifetime lifetime = default(DependencyLifetime));
 
         /// <summary>
         /// Registers the specified type.
@@ -30,9 +29,9 @@
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
         IDependencyRegistrar Register(
-            [NotNull] Type type, 
-            [NotNull] Type implementation, 
-            string key = default(string), 
+            [NotNull] Type type,
+            [NotNull] Type implementation,
+            string key = default(string),
             DependencyLifetime lifetime = default(DependencyLifetime));
 
         /// <summary>
@@ -42,7 +41,8 @@
         /// <param name="key">The key.</param>
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
-        IDependencyRegistrar Register<T>(string key = default(string), DependencyLifetime lifetime = default(DependencyLifetime));
+        IDependencyRegistrar Register<T>(string key = default(string),
+            DependencyLifetime lifetime = default(DependencyLifetime));
 
         /// <summary>
         /// Registers the specified key.
@@ -52,7 +52,8 @@
         /// <param name="key">The key.</param>
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
-        IDependencyRegistrar Register<T, TImplementation>(string key = default(string), DependencyLifetime lifetime = default(DependencyLifetime))
+        IDependencyRegistrar Register<T, TImplementation>(string key = default(string),
+            DependencyLifetime lifetime = default(DependencyLifetime))
             where TImplementation : T;
 
         /// <summary>
@@ -63,7 +64,8 @@
         /// <param name="key">The key.</param>
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
-        IDependencyRegistrar Register<T, TImplementation>(DependencyKey key, DependencyLifetime lifetime = default(DependencyLifetime))
+        IDependencyRegistrar Register<T, TImplementation>(DependencyKey key,
+            DependencyLifetime lifetime = default(DependencyLifetime))
             where TImplementation : T;
 
         /// <summary>
@@ -82,9 +84,9 @@
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
         IDependencyRegistrar RegisterFactory(
-            [NotNull] Type type, 
-            [NotNull] Func<IDependencyResolver, object> factory, 
-            string key = default(string), 
+            [NotNull] Type type,
+            [NotNull] Func<IDependencyResolver, object> factory,
+            string key = default(string),
             DependencyLifetime lifetime = default(DependencyLifetime));
 
         /// <summary>
@@ -96,8 +98,8 @@
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
         IDependencyRegistrar RegisterFactory<T>(
-            [NotNull] Func<IDependencyResolver, T> factory, 
-            string key = default(string), 
+            [NotNull] Func<IDependencyResolver, T> factory,
+            string key = default(string),
             DependencyLifetime lifetime = default(DependencyLifetime));
 
         /// <summary>
@@ -107,7 +109,8 @@
         /// <param name="instance">The instance.</param>
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
-        IDependencyRegistrar RegisterInstance([NotNull] Type type, [NotNull] object instance, DependencyLifetime lifetime = default(DependencyLifetime));
+        IDependencyRegistrar RegisterInstance([NotNull] Type type, [NotNull] object instance,
+            DependencyLifetime lifetime = default(DependencyLifetime));
 
         /// <summary>
         /// Registers the instance.
@@ -116,6 +119,7 @@
         /// <param name="instance">The instance.</param>
         /// <param name="lifetime">The lifetime.</param>
         /// <returns>IDependencyRegistrar.</returns>
-        IDependencyRegistrar RegisterInstance<T>([NotNull] T instance, DependencyLifetime lifetime = default(DependencyLifetime));
+        IDependencyRegistrar RegisterInstance<T>([NotNull] T instance,
+            DependencyLifetime lifetime = default(DependencyLifetime));
     }
 }

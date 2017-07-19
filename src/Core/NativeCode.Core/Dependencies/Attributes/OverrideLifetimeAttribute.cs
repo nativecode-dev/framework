@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.Dependencies.Attributes
 {
     using System;
-
-    using NativeCode.Core.Dependencies.Enums;
+    using Enums;
 
     /// <summary>
     /// Marks a class as overriding the default registration and specifies a lifetime to be
@@ -14,7 +13,7 @@
     public sealed class OverrideLifetimeAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OverrideLifetimeAttribute"/> class.
+        /// Initializes a new instance of the <see cref="OverrideLifetimeAttribute" /> class.
         /// </summary>
         /// <param name="lifetime">The lifetime.</param>
         public OverrideLifetimeAttribute(DependencyLifetime lifetime)

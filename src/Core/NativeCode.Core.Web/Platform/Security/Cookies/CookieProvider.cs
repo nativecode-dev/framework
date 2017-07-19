@@ -1,8 +1,7 @@
 namespace NativeCode.Core.Web.Platform.Security.Cookies
 {
+    using Core.Platform.Serialization;
     using JetBrains.Annotations;
-
-    using NativeCode.Core.Platform.Serialization;
 
     public abstract class CookieProvider<TRequest, TResponse, TCookie, TData>
     {
@@ -29,7 +28,8 @@ namespace NativeCode.Core.Web.Platform.Security.Cookies
         /// <param name="timeout">The timeout in seconds.</param>
         /// <param name="version">The cookie version.</param>
         /// <returns>Returns a cookie.</returns>
-        public abstract TCookie CreateCookie([NotNull] string name, [NotNull] TData data, bool persist = true, int timeout = 20, int version = 1);
+        public abstract TCookie CreateCookie([NotNull] string name, [NotNull] TData data, bool persist = true,
+            int timeout = 20, int version = 1);
 
         /// <summary>
         /// Gets the cookie.

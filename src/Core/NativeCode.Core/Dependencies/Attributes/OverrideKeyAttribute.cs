@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.Dependencies.Attributes
 {
     using System;
-
-    using NativeCode.Core.Dependencies.Enums;
+    using Enums;
 
     /// <summary>
     /// Marks a class as overriding the default registration and specifies a string key to be
@@ -14,7 +13,7 @@
     public sealed class OverrideKeyAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OverrideKeyAttribute"/> class.
+        /// Initializes a new instance of the <see cref="OverrideKeyAttribute" /> class.
         /// </summary>
         /// <param name="key">The key.</param>
         public OverrideKeyAttribute(DependencyKey key)

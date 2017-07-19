@@ -10,8 +10,8 @@ namespace NativeCode.Core.Platform.Security.Authentication
             this.Result = result;
         }
 
-        public IPrincipal Principal { get; private set; }
+        public IPrincipal Principal { get; }
 
-        public AuthenticationResultType Result { get; private set; }
+        public AuthenticationResultType Result { get; }
     }
 }

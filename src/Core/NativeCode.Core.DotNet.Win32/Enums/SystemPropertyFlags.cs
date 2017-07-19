@@ -5,11 +5,11 @@
     [Flags]
     public enum SystemPropertyFlags
     {
-        None = 0x00, 
+        None = 0x00,
 
-        UpdateIniFile = 0x01, 
+        UpdateIniFile = 0x01,
 
-        SendChange = 0x02, 
+        SendChange = 0x02,
 
         SendWinIniChange = 0x02
     }

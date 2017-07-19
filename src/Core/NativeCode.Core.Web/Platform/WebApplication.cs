@@ -7,11 +7,10 @@
     using System.Reflection;
     using System.Web;
     using System.Web.Compilation;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.DotNet.Platform;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Settings;
+    using Core.Platform;
+    using Dependencies;
+    using DotNet.Platform;
+    using Settings;
 
     public abstract class WebApplication : HttpApplication
     {
@@ -20,7 +19,8 @@
         /// </summary>
         protected IApplication ApplicationProxy { get; private set; }
 
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Replacing base class dispose pattern.")]
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification =
+            "Replacing base class dispose pattern.")]
         public sealed override void Dispose()
         {
             this.Dispose(true);
@@ -46,7 +46,8 @@
         /// <param name="name">The name.</param>
         /// <param name="assemblies">The assemblies.</param>
         /// <param name="modules">The modules.</param>
-        public virtual void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
+        public virtual void Initialize(string name, IEnumerable<Assembly> assemblies,
+            params IDependencyModule[] modules)
         {
             this.ApplicationProxy = this.CreateApplicationProxy();
             this.ApplicationProxy.Initialize(name, assemblies.Where(this.CanIncludeAssembly), modules);

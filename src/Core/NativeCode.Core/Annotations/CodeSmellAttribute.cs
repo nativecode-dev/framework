@@ -11,7 +11,7 @@
     public sealed class CodeSmellAttribute : CodeAnnotationAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeSmellAttribute"/> class.
+        /// Initializes a new instance of the <see cref="CodeSmellAttribute" /> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
         public CodeSmellAttribute(string reason)
@@ -20,7 +20,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeSmellAttribute"/> class.
+        /// Initializes a new instance of the <see cref="CodeSmellAttribute" /> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
         /// <param name="ticket">The ticket.</param>

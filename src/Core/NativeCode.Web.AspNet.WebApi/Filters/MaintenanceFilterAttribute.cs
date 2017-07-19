@@ -9,8 +9,7 @@
     using System.Threading.Tasks;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-
-    using NativeCode.Core.Platform.Maintenance;
+    using Core.Platform.Maintenance;
 
     public class MaintenanceFilterAttribute : ActionFilterAttribute
     {
@@ -27,7 +26,8 @@
             base.OnActionExecuting(actionContext);
         }
 
-        public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
+        public override Task OnActionExecutingAsync(HttpActionContext actionContext,
+            CancellationToken cancellationToken)
         {
             this.ValidateMaintenance(actionContext);
             return base.OnActionExecutingAsync(actionContext, cancellationToken);
@@ -41,7 +41,8 @@
             if (immune == null && providers.Any())
             {
                 var message = providers.Select(provider => $"Maintenance required for {provider.Name}.").ToList();
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.TemporaryRedirect, string.Join(Environment.NewLine, message));
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.TemporaryRedirect,
+                    string.Join(Environment.NewLine, message));
             }
         }
     }

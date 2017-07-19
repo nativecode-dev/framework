@@ -19,50 +19,39 @@
         }
 
         protected override object GetPropertyValue(
-            ControllerContext controllerContext, 
-            ModelBindingContext bindingContext, 
-            PropertyDescriptor propertyDescriptor, 
+            ControllerContext controllerContext,
+            ModelBindingContext bindingContext,
+            PropertyDescriptor propertyDescriptor,
             IModelBinder propertyBinder)
         {
-            return this.BindCommaSeparatedString(propertyDescriptor.PropertyType, propertyDescriptor.Name, bindingContext)
+            return this.BindCommaSeparatedString(propertyDescriptor.PropertyType, propertyDescriptor.Name,
+                       bindingContext)
                    ?? base.GetPropertyValue(controllerContext, bindingContext, propertyDescriptor, propertyBinder);
         }
 
         private object BindCommaSeparatedString(Type type, string name, ModelBindingContext bindingContext)
         {
             if (type.GetInterface(typeof(IEnumerable).Name) == null)
-            {
                 return null;
-            }
 
             var actual = bindingContext.ValueProvider.GetValue(name);
 
             if (actual == null)
-            {
                 return null;
-            }
 
             var valueType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
 
             if (valueType?.GetInterface(typeof(IConvertible).Name) == null)
-            {
                 return null;
-            }
 
-            var list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
+            var list = (IList) Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
 
             foreach (var splitValue in actual.AttemptedValue.Split(','))
-            {
                 if (!string.IsNullOrWhiteSpace(splitValue))
-                {
                     list.Add(Convert.ChangeType(splitValue, valueType));
-                }
-            }
 
             if (type.IsArray)
-            {
                 return ToArrayMethod.MakeGenericMethod(valueType).Invoke(this, new object[] { list });
-            }
 
             return list;
         }

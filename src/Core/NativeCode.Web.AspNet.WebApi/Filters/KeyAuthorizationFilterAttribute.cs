@@ -7,9 +7,8 @@
     using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-
-    using NativeCode.Core.Platform.Security.KeyManagement;
-    using NativeCode.Core.Web;
+    using Core.Platform.Security.KeyManagement;
+    using Core.Web;
 
     public class KeyAuthorizationFilterAttribute : AuthorizationFilterAttribute
     {
@@ -40,9 +39,7 @@
                 var id = context.Request.GetApiKeyId() ?? "default";
 
                 if (string.IsNullOrWhiteSpace(key) == false && key != this.KeyManager.GetKey(id))
-                {
                     context.Response.StatusCode = HttpStatusCode.Unauthorized;
-                }
             }
         }
     }

@@ -8,12 +8,12 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Data;
+    using Platform;
+    using Platform.Connections;
 
-    using NativeCode.Core.Data;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Connections;
-
-    [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Disposable implemented in the base class.")]
+    [SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification =
+        "Disposable implemented in the base class.")]
     public abstract class DbDataContext : DbContext, IDataContext
     {
         private readonly List<Action<DbEntityEntry>> interceptors = new List<Action<DbEntityEntry>>();
@@ -50,9 +50,7 @@
         protected void SetEntity<T>(T entity) where T : class, IEntity
         {
             if (this.ChangeTracker.Entries().Any(e => e.Entity == entity) == false)
-            {
                 this.Set<T>().Add(entity);
-            }
         }
 
         private static void UpdateKeyProperties(DbEntityEntry entry)
@@ -60,9 +58,7 @@
             var entity = entry.Entity as IEntity<Guid>;
 
             if (entity != null && entry.State == EntityState.Added)
-            {
                 entity.Id = Guid.NewGuid();
-            }
         }
 
         private void ProcessInterceptors()
@@ -70,9 +66,7 @@
             foreach (var entry in this.ChangeTracker.Entries())
             {
                 foreach (var interceptor in this.interceptors)
-                {
                     interceptor(entry);
-                }
             }
         }
 

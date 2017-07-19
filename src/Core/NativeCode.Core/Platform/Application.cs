@@ -5,12 +5,11 @@
     using System.Linq;
     using System.Reflection;
     using System.Threading;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Enums;
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Settings;
-    using NativeCode.Core.Types;
+    using Dependencies;
+    using Dependencies.Enums;
+    using Extensions;
+    using Settings;
+    using Types;
 
     /// <summary>
     /// Provides a proxy class so that the <see cref="IApplication" /> interface can be exposed
@@ -37,7 +36,7 @@
 
         public string ApplicationPath { get; protected set; }
 
-        public IPlatform Platform { get; private set; }
+        public IPlatform Platform { get; }
 
         public Settings Settings { get; }
 
@@ -63,7 +62,6 @@
         public void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
             if (Interlocked.CompareExchange(ref counter, 1, 0) == 0)
-            {
                 try
                 {
                     this.Platform.Registrar.RegisterInstance<IApplication>(this, DependencyLifetime.PerApplication);
@@ -81,7 +79,6 @@
                     this.Initialized = false;
                     this.FailInitialization(ex);
                 }
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -93,9 +90,7 @@
         protected void EnsureInitialized()
         {
             if (!this.Initialized)
-            {
                 throw new InvalidOperationException("Application was not initialized.");
-            }
         }
 
         protected virtual void FailInitialization(Exception ex)
@@ -119,9 +114,7 @@
         protected virtual void RegisterAssemblies(IEnumerable<Assembly> assemblies)
         {
             foreach (var assembly in assemblies)
-            {
                 this.Platform.Registrar.RegisterAssembly(assembly);
-            }
         }
 
         protected virtual void RegisterModule(IDependencyModule module)
@@ -132,9 +125,7 @@
         protected virtual void RegisterModules(IEnumerable<IDependencyModule> modules)
         {
             foreach (var module in modules)
-            {
                 this.RegisterModule(module);
-            }
         }
 
         protected virtual void RestoreSettings()

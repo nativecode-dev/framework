@@ -1,12 +1,9 @@
 ﻿namespace NativeCode.Core.Packages.Rabbit
 {
     using System;
-
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Types;
-
+    using Platform.Logging;
     using RabbitMQ.Client;
-    using System.Collections.Generic;
+    using Types;
 
     public class RabbitConnection : Disposable
     {
@@ -179,9 +176,7 @@
             try
             {
                 if (string.IsNullOrWhiteSpace(exchange) == false)
-                {
                     model.ExchangeDeclare(exchange, type, durable);
-                }
 
                 if (string.IsNullOrWhiteSpace(queue))
                 {

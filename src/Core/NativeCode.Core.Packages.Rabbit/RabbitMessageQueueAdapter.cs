@@ -2,18 +2,17 @@
 {
     using System;
     using System.Collections.Concurrent;
-
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Platform.Messaging.Queuing;
-    using NativeCode.Core.Platform.Serialization;
-    using NativeCode.Core.Types;
-
+    using Extensions;
+    using Platform.Logging;
+    using Platform.Messaging.Queuing;
+    using Platform.Serialization;
     using RabbitMQ.Client;
+    using Types;
 
     public class RabbitMessageQueueAdapter : DisposableManager, IMessageQueueAdapter
     {
-        private readonly ConcurrentDictionary<string, RabbitConnection> connections = new ConcurrentDictionary<string, RabbitConnection>();
+        private readonly ConcurrentDictionary<string, RabbitConnection> connections =
+            new ConcurrentDictionary<string, RabbitConnection>();
 
         public RabbitMessageQueueAdapter(ILogger logger, IStringSerializer serializer)
         {
@@ -35,7 +34,8 @@
             return new RabbitMessageQueueProvider(queue, exchange, string.Empty, model);
         }
 
-        public IMessageQueueProvider<TMessage> Connect<TMessage>(Uri uri, MessageQueueType queueType) where TMessage : class, new()
+        public IMessageQueueProvider<TMessage> Connect<TMessage>(Uri uri, MessageQueueType queueType)
+            where TMessage : class, new()
         {
             var messageType = typeof(TMessage);
             var connection = this.GetConnection(uri);
@@ -51,9 +51,7 @@
             if (disposing && this.Disposed == false)
             {
                 foreach (var connection in this.connections.Values)
-                {
                     connection.Dispose();
-                }
 
                 this.connections.Clear();
             }
@@ -86,7 +84,8 @@
             return type.Name.ToLowerScore('.');
         }
 
-        private static IModel GetQueue(RabbitConnection connection, string queueName, string exchangeName, MessageQueueType queueType)
+        private static IModel GetQueue(RabbitConnection connection, string queueName, string exchangeName,
+            MessageQueueType queueType)
         {
             switch (queueType)
             {
@@ -110,7 +109,8 @@
             {
                 case MessageQueueType.Publisher:
                 case MessageQueueType.Subscriber:
-                    return $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:publications";
+                    return
+                        $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:publications";
 
                 default:
                     return $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:inbox";

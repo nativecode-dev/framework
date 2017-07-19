@@ -4,8 +4,7 @@ namespace NativeCode.Core.Platform.Security.Authorization
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Platform.Security.Authorization.Types;
+    using Types;
 
     /// <summary>
     /// Provides a contract to validate authorizations.
@@ -27,7 +26,8 @@ namespace NativeCode.Core.Platform.Security.Authorization
         /// <param name="feature">The feature.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Returns a collection of permissions.</returns>
-        Task<IEnumerable<Permission>> GetFeaturePermissionsAsync(IPrincipal principal, Feature feature, CancellationToken cancellationToken);
+        Task<IEnumerable<Permission>> GetFeaturePermissionsAsync(IPrincipal principal, Feature feature,
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets the collection of features.
@@ -74,7 +74,8 @@ namespace NativeCode.Core.Platform.Security.Authorization
         /// <param name="role">The role.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Returns a collection of permissions.</returns>
-        Task<IEnumerable<Permission>> GetRolePermissionsAsync(IPrincipal principal, Role role, CancellationToken cancellationToken);
+        Task<IEnumerable<Permission>> GetRolePermissionsAsync(IPrincipal principal, Role role,
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets the collection of roles.

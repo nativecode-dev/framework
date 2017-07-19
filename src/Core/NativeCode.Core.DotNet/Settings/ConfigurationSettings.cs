@@ -1,9 +1,8 @@
 ﻿namespace NativeCode.Core.DotNet.Settings
 {
     using System.Configuration;
-
-    using NativeCode.Core.Platform.Connections;
-    using NativeCode.Core.Settings;
+    using Core.Platform.Connections;
+    using Core.Settings;
 
     public class ConfigurationSettings : JsonSettings
     {

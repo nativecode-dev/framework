@@ -3,15 +3,15 @@
     using System;
     using System.Collections.Concurrent;
     using System.Threading;
-
-    using NativeCode.Core.Platform.Logging;
+    using Platform.Logging;
 
     public class CancellationTokenManager : DisposableManager, ICancellationTokenManager
     {
-        private readonly ConcurrentDictionary<string, CancellationTokenSource> tokens = new ConcurrentDictionary<string, CancellationTokenSource>();
+        private readonly ConcurrentDictionary<string, CancellationTokenSource> tokens =
+            new ConcurrentDictionary<string, CancellationTokenSource>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CancellationTokenManager"/> class.
+        /// Initializes a new instance of the <see cref="CancellationTokenManager" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         public CancellationTokenManager(ILogger logger)
@@ -31,9 +31,7 @@
         public void Cancel(bool throwOnCancel)
         {
             foreach (var name in this.tokens.Keys)
-            {
                 this.Cancel(name, throwOnCancel);
-            }
 
             this.tokens.Clear();
         }
@@ -65,9 +63,7 @@
             CancellationToken source;
 
             if (this.TryCreateToken(name, out source))
-            {
                 return source;
-            }
 
             throw new InvalidOperationException($"Failed to create a CancellationToken named {name}.");
         }
@@ -81,9 +77,7 @@
         public bool TryCreateToken(string name, out CancellationToken token)
         {
             if (this.tokens.ContainsKey(name))
-            {
                 return false;
-            }
 
             CancellationTokenSource source = null;
 
@@ -93,9 +87,7 @@
                 token = source.Token;
 
                 if (this.tokens.TryAdd(name, source))
-                {
                     return true;
-                }
 
                 source.Dispose();
             }
@@ -111,13 +103,14 @@
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only
+        /// unmanaged resources.
+        /// </param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.Disposed == false)
-            {
                 this.Cancel(false);
-            }
 
             base.Dispose(disposing);
         }

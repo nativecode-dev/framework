@@ -15,7 +15,8 @@
         /// <param name="password">The password.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Returns a <see cref="AuthenticationResult" />;.</returns>
-        Task<AuthenticationResult> AuthenticateAsync(string login, string password, CancellationToken cancellationToken);
+        Task<AuthenticationResult> AuthenticateAsync(string login, string password,
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Determines whether this instance can handle the specified login.

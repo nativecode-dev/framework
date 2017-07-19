@@ -15,12 +15,12 @@
             this.Width = width;
         }
 
-        public int Height { get; private set; }
+        public int Height { get; }
 
-        public int Left { get; private set; }
+        public int Left { get; }
 
-        public int Top { get; private set; }
+        public int Top { get; }
 
-        public int Width { get; private set; }
+        public int Width { get; }
     }
 }

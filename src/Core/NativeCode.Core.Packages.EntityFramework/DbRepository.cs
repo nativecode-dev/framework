@@ -5,9 +5,8 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Data;
-    using NativeCode.Core.Types;
+    using Data;
+    using Types;
 
     /// <summary>
     /// Provides a base class to manage entities.

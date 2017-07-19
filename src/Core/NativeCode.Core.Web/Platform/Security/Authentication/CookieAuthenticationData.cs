@@ -1,8 +1,8 @@
 ﻿namespace NativeCode.Core.Web.Platform.Security.Authentication
 {
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Settings;
+    using Core.Platform;
+    using Dependencies;
+    using Settings;
 
     public class CookieAuthenticationData : JsonSettings
     {
@@ -20,41 +20,23 @@
 
         public string CustomIdentifier
         {
-            get
-            {
-                return this.GetValue<string>(KeyCustomIdentifier);
-            }
+            get => this.GetValue<string>(KeyCustomIdentifier);
 
-            set
-            {
-                this.SetValue(KeyCustomIdentifier, value);
-            }
+            set => this.SetValue(KeyCustomIdentifier, value);
         }
 
         public string DomainName
         {
-            get
-            {
-                return this.GetValue(KeyDomainName, MachineName);
-            }
+            get => this.GetValue(KeyDomainName, MachineName);
 
-            set
-            {
-                this.SetValue(KeyDomainName, value);
-            }
+            set => this.SetValue(KeyDomainName, value);
         }
 
         public string LoginName
         {
-            get
-            {
-                return this.GetValue<string>(KeyLoginName);
-            }
+            get => this.GetValue<string>(KeyLoginName);
 
-            set
-            {
-                this.SetValue(KeyLoginName, value);
-            }
+            set => this.SetValue(KeyLoginName, value);
         }
     }
 }

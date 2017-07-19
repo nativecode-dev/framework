@@ -3,11 +3,9 @@
     using System;
     using System.Runtime.InteropServices;
     using System.Text;
-
+    using Exceptions;
     using Microsoft.Win32.SafeHandles;
-
-    using NativeCode.Core.DotNet.Win32.Exceptions;
-    using NativeCode.Core.DotNet.Win32.Structs;
+    using Structs;
 
     public static class NativeHelper
     {
@@ -32,19 +30,16 @@
         public static bool ReadConsoleInput(SafeHandle handle, out InputRecord buffer, uint length, out int count)
         {
             if (NativeMethods.ReadConsoleInput(handle, out buffer, length, out count) == false)
-            {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
 
             return true;
         }
 
-        public static bool WriteConsoleOutput(SafeHandle handle, CharInfo[] buffer, Coord size, Coord coord, ref SmallRect rect)
+        public static bool WriteConsoleOutput(SafeHandle handle, CharInfo[] buffer, Coord size, Coord coord,
+            ref SmallRect rect)
         {
             if (NativeMethods.WriteConsoleOutput(handle, buffer, size, coord, ref rect) == false)
-            {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
 
             return true;
         }

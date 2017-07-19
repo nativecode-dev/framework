@@ -4,12 +4,10 @@ namespace NativeCode.Core.Settings
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform.Serialization;
-
+    using Dependencies;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using Platform.Serialization;
 
     public class JsonSettings : Settings
     {
@@ -45,7 +43,7 @@ namespace NativeCode.Core.Settings
             using (var reader = new JsonTextReader(new StreamReader(stream)))
             {
                 var serializer = new JsonSerializer();
-                this.ObjectInstance = (JObject)serializer.Deserialize(reader);
+                this.ObjectInstance = (JObject) serializer.Deserialize(reader);
             }
         }
 
@@ -80,14 +78,12 @@ namespace NativeCode.Core.Settings
 
         protected override T ReadValue<T>(string[] path, T defaultValue = default(T))
         {
-            var current = (JToken)this.ObjectInstance;
+            var current = (JToken) this.ObjectInstance;
 
             foreach (var name in path)
             {
                 if (current?[name] == null)
-                {
                     return defaultValue;
-                }
 
                 current = current[name];
             }
@@ -110,13 +106,9 @@ namespace NativeCode.Core.Settings
                 if (name == terminator)
                 {
                     if (current[name] == null)
-                    {
                         current.Add(name, new JValue(value));
-                    }
                     else if (overwrite)
-                    {
                         current[name] = new JValue(value);
-                    }
 
                     return;
                 }
@@ -127,16 +119,14 @@ namespace NativeCode.Core.Settings
                     current.Add(name, container);
                 }
 
-                current = (JObject)current[name];
+                current = (JObject) current[name];
             }
         }
 
         private static T ReadTokenValue<T>(JToken token, T defaultValue = default(T))
         {
             if (token == null)
-            {
                 return defaultValue;
-            }
 
             return token.ToObject<T>();
         }
@@ -154,9 +144,7 @@ namespace NativeCode.Core.Settings
                 keys.Add(name);
 
                 if (value.Type == JTokenType.Object)
-                {
-                    this.FlattenKeys((JObject)value, keys, name);
-                }
+                    this.FlattenKeys((JObject) value, keys, name);
             }
         }
     }

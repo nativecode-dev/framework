@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using System.Reflection;
-
     using JetBrains.Annotations;
 
     public static class TypeExtensions
@@ -15,9 +14,7 @@
             while (current.BaseType != null)
             {
                 if (current.BaseType == type)
-                {
                     return true;
-                }
 
                 current = current.BaseType.GetTypeInfo();
             }

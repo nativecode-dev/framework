@@ -9,7 +9,7 @@
     public abstract class CodeAnnotationAttribute : Attribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeAnnotationAttribute"/> class.
+        /// Initializes a new instance of the <see cref="CodeAnnotationAttribute" /> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
         protected CodeAnnotationAttribute(string reason)
@@ -18,7 +18,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeAnnotationAttribute"/> class.
+        /// Initializes a new instance of the <see cref="CodeAnnotationAttribute" /> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
         /// <param name="ticket">The ticket.</param>

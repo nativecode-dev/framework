@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Tests
 {
     using System.Collections.Generic;
-
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.Dependencies.Enums;
     using NativeCode.Core.DotNet.Logging;

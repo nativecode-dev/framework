@@ -55,9 +55,7 @@
             int length;
 
             if (int.TryParse(request.GetHeaderValue(ContentLength), out length))
-            {
                 return length;
-            }
 
             return default(int);
         }
@@ -67,12 +65,11 @@
             return request.GetHeaderValue(ContentType);
         }
 
-        public static string GetHeaderValue(this HttpRequestMessage request, string key, string defaultValue = default(string))
+        public static string GetHeaderValue(this HttpRequestMessage request, string key,
+            string defaultValue = default(string))
         {
             if (request.Headers.Contains(key))
-            {
                 return request.Headers.GetValues(key).FirstOrDefault();
-            }
 
             return defaultValue;
         }

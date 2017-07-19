@@ -1,7 +1,7 @@
 ﻿namespace NativeCode.Core.Packages.Owin.Owin
 {
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.DotNet.Platform;
+    using Dependencies;
+    using DotNet.Platform;
 
     public class OwinPlatform : DotNetPlatform
     {

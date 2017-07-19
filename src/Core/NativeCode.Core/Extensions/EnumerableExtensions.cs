@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-
     using JetBrains.Annotations;
 
     public static class EnumerableExtensions
@@ -13,9 +12,7 @@
             var value = collection.ElementAtOrDefault(index);
 
             if (Equals(value, defaultValue) == false)
-            {
-                return (T)value;
-            }
+                return (T) value;
 
             return defaultValue;
         }
@@ -25,14 +22,13 @@
             var value = collection.ElementAtOrDefault(index);
 
             if (Equals(value, defaultValue) == false)
-            {
                 return value;
-            }
 
             return defaultValue;
         }
 
-        public static IEnumerable<T> TakeUntil<T>([NotNull] this IEnumerable<T> collection, CancellationToken cancellationToken)
+        public static IEnumerable<T> TakeUntil<T>([NotNull] this IEnumerable<T> collection,
+            CancellationToken cancellationToken)
         {
             return collection.TakeWhile(x => !cancellationToken.IsCancellationRequested);
         }

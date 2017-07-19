@@ -3,11 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Http.Dependencies;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Types;
-
+    using Core.Dependencies;
+    using Core.Platform.Logging;
+    using Core.Types;
     using IDependencyResolver = System.Web.Http.Dependencies.IDependencyResolver;
 
     public class WebApiDependencyResolver : Disposable, IDependencyResolver
@@ -87,9 +85,7 @@
         protected virtual bool IgnoreDependency(Type type)
         {
             if (type != null && string.IsNullOrWhiteSpace(type.Namespace) == false)
-            {
                 return type.Namespace.StartsWith("System.");
-            }
 
             return false;
         }

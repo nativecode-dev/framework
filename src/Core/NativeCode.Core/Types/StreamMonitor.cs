@@ -69,9 +69,7 @@
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.StreamOwner)
-            {
                 this.source.Dispose();
-            }
 
             base.Dispose(disposing);
         }

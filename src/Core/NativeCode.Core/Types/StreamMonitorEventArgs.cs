@@ -12,7 +12,7 @@
 
         public long Current { get; }
 
-        public decimal Percentage => (decimal)this.Current / this.Total * 100;
+        public decimal Percentage => (decimal) this.Current / this.Total * 100;
 
         public long Total { get; }
     }

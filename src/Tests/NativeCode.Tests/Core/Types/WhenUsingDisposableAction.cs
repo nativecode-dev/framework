@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Tests.Core.Types
 {
     using NativeCode.Core.Types;
-
     using Xunit;
 
     public class WhenUsingDisposableAction

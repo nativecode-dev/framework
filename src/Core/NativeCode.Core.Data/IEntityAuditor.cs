@@ -2,7 +2,6 @@
 {
     using System;
     using System.Security.Principal;
-
     using JetBrains.Annotations;
 
     /// <summary>

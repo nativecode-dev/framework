@@ -36,7 +36,8 @@
         }
     }
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
+        Justification = "Generic type.")]
     public abstract class Entity<TKey> : Entity, IEntity<TKey>
         where TKey : struct
     {

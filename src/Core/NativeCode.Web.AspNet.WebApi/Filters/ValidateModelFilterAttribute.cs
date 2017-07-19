@@ -12,17 +12,14 @@
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             if (this.ValidateModelState(actionContext))
-            {
                 base.OnActionExecuting(actionContext);
-            }
         }
 
-        public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
+        public override Task OnActionExecutingAsync(HttpActionContext actionContext,
+            CancellationToken cancellationToken)
         {
             if (this.ValidateModelState(actionContext))
-            {
                 return Task.FromResult(0);
-            }
 
             return base.OnActionExecutingAsync(actionContext, cancellationToken);
         }

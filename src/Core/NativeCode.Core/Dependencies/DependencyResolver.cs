@@ -8,7 +8,7 @@
     {
         public T Resolve<T>(string key = null)
         {
-            return (T)this.Resolve(typeof(T), key);
+            return (T) this.Resolve(typeof(T), key);
         }
 
         public abstract object Resolve(Type type, string key = null);

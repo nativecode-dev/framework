@@ -2,13 +2,11 @@ namespace NativeCode.Core.DotNet.Win32.Console
 {
     using System;
     using System.Runtime.InteropServices;
-
+    using Exceptions;
     using Microsoft.Win32.SafeHandles;
-
-    using NativeCode.Core.DotNet.Win32.Exceptions;
-    using NativeCode.Core.DotNet.Win32.Structs;
-    using NativeCode.Core.Types;
-    using NativeCode.Core.Types.Structs;
+    using Structs;
+    using Types;
+    using Types.Structs;
 
     public class BufferHandle : Disposable
     {
@@ -43,9 +41,7 @@ namespace NativeCode.Core.DotNet.Win32.Console
             var info = this.GetScreenBufferInfo();
 
             if (info.CursorPosition.Y < info.Window.Bottom)
-            {
                 Console.CursorTop++;
-            }
         }
 
         public void MoveCursorLeft()
@@ -53,9 +49,7 @@ namespace NativeCode.Core.DotNet.Win32.Console
             var info = this.GetScreenBufferInfo();
 
             if (info.CursorPosition.X > info.Window.Left)
-            {
                 Console.CursorLeft--;
-            }
         }
 
         public void MoveCursorRight()
@@ -63,9 +57,7 @@ namespace NativeCode.Core.DotNet.Win32.Console
             var info = this.GetScreenBufferInfo();
 
             if (info.CursorPosition.X < info.Window.Right)
-            {
                 Console.CursorLeft++;
-            }
         }
 
         public void MoveCursorUp()
@@ -73,9 +65,7 @@ namespace NativeCode.Core.DotNet.Win32.Console
             var info = this.GetScreenBufferInfo();
 
             if (info.CursorPosition.Y > info.Window.Top)
-            {
                 Console.CursorTop--;
-            }
         }
 
         public void Write(char character)
@@ -91,7 +81,8 @@ namespace NativeCode.Core.DotNet.Win32.Console
         public void Write(string text, bool moveCursor, Color color)
         {
             var info = this.GetScreenBufferInfo();
-            var rect = new SmallRect(info.CursorPosition.X, info.CursorPosition.Y, info.CursorPosition.X + text.Length, info.CursorPosition.Y + 1);
+            var rect = new SmallRect(info.CursorPosition.X, info.CursorPosition.Y, info.CursorPosition.X + text.Length,
+                info.CursorPosition.Y + 1);
             var size = new Coord(text.Length, 1);
             var origin = new Coord(0, 0);
 
@@ -104,14 +95,10 @@ namespace NativeCode.Core.DotNet.Win32.Console
             }
 
             if (NativeMethods.WriteConsoleOutput(this.Handle, buffer, size, origin, ref rect) == false)
-            {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
 
             if (moveCursor && info.CursorPosition.X < info.Window.Right)
-            {
                 Console.SetCursorPosition(info.CursorPosition.X + 1, info.CursorPosition.Y);
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -130,9 +117,7 @@ namespace NativeCode.Core.DotNet.Win32.Console
             ConsoleScreenBufferInfo info;
 
             if (NativeMethods.GetConsoleScreenBufferInfo(this.Handle, out info) == false)
-            {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
 
             return info;
         }
@@ -145,17 +130,11 @@ namespace NativeCode.Core.DotNet.Win32.Console
             var boundedWidth = this.Settings.ScreenWidth <= Console.LargestWindowWidth;
 
             if (boundedHeight && boundedWidth)
-            {
                 Console.SetWindowSize(this.Settings.ScreenWidth, this.Settings.ScreenHeight);
-            }
             else if (boundedHeight)
-            {
                 Console.SetWindowSize(Console.LargestWindowWidth, this.Settings.ScreenHeight);
-            }
             else if (boundedWidth)
-            {
                 Console.SetWindowSize(this.Settings.ScreenWidth, Console.LargestWindowHeight);
-            }
         }
 
         private void ConfigureBufferHandle()
@@ -166,14 +145,14 @@ namespace NativeCode.Core.DotNet.Win32.Console
 
         private unsafe void ConfigureFont()
         {
-            var current = new ConsoleFontInfoEx { Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>() };
+            var current = new ConsoleFontInfoEx { Size = (uint) Marshal.SizeOf<ConsoleFontInfoEx>() };
             var updated = new ConsoleFontInfoEx
-                              {
-                                  FontFamily = 0,
-                                  FontSize = new Coord(12, 12),
-                                  FontWeight = 0,
-                                  Size = (uint)Marshal.SizeOf<ConsoleFontInfoEx>()
-                              };
+            {
+                FontFamily = 0,
+                FontSize = new Coord(12, 12),
+                FontWeight = 0,
+                Size = (uint) Marshal.SizeOf<ConsoleFontInfoEx>()
+            };
 
             var pointer = new IntPtr(updated.FaceName);
             Marshal.Copy(this.Settings.FontName.ToCharArray(), 0, pointer, this.Settings.FontName.Length);
@@ -182,9 +161,7 @@ namespace NativeCode.Core.DotNet.Win32.Console
             updated.FontWeight = current.FontWeight;
 
             if (NativeMethods.SetCurrentConsoleFontEx(this.Handle, true, ref updated) == false)
-            {
                 throw new NativeMethodException(Marshal.GetLastWin32Error());
-            }
         }
     }
 }

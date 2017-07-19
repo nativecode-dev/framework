@@ -2,9 +2,7 @@
 {
     using System.Linq;
     using System.Threading;
-
     using NativeCode.Core.Extensions;
-
     using Xunit;
 
     public class WhenUsingEnumerableExtensions
@@ -24,9 +22,7 @@
                     count++;
 
                     if (index >= 10)
-                    {
                         cts.Cancel();
-                    }
                 }
 
                 // Asset

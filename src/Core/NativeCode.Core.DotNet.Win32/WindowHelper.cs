@@ -2,10 +2,9 @@
 {
     using System;
     using System.Diagnostics;
-
-    using NativeCode.Core.DotNet.Win32.Enums;
-    using NativeCode.Core.DotNet.Win32.Extensions;
-    using NativeCode.Core.DotNet.Win32.Structs;
+    using Enums;
+    using Extensions;
+    using Structs;
 
     public static class WindowHelper
     {
@@ -116,9 +115,7 @@
             var rect = new SmallRect();
 
             if (NativeMethods.SystemParametersInfo(SystemProperty.GetWorkArea, 0, ref rect, SystemPropertyFlags.None))
-            {
                 return rect;
-            }
 
             return default(SmallRect);
         }
@@ -135,7 +132,7 @@
 
                 NativeMethods.GetWindowThreadProcessId(hwnd, out id);
 
-                var process = Process.GetProcessById((int)id);
+                var process = Process.GetProcessById((int) id);
 
                 return process.MainWindowHandle;
             }
@@ -148,9 +145,7 @@
             SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
-            {
                 return NativeMethods.SetWindowPos(hwnd, IntPtr.Zero, left, top, window.Width(), window.Height(), 0);
-            }
 
             return false;
         }
@@ -160,9 +155,7 @@
             SmallRect window;
 
             if (NativeMethods.GetWindowRect(hwnd, out window))
-            {
                 return NativeMethods.SetWindowPos(hwnd, IntPtr.Zero, window.Left, window.Top, height, width, 0);
-            }
 
             return false;
         }

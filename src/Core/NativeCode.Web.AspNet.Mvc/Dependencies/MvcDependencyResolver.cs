@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Types;
-
+    using Core.Dependencies;
+    using Core.Platform.Logging;
+    using Core.Types;
     using IDependencyResolver = System.Web.Mvc.IDependencyResolver;
 
     public class MvcDependencyResolver : Disposable, IDependencyResolver
@@ -31,9 +29,7 @@
             try
             {
                 if (IsFiltered(serviceType) == false)
-                {
                     return this.container.Resolver.Resolve(serviceType);
-                }
             }
             catch (Exception ex)
             {
@@ -48,9 +44,7 @@
             try
             {
                 if (IsFiltered(serviceType) == false)
-                {
                     return this.container.Resolver.ResolveAll(serviceType);
-                }
             }
             catch (Exception ex)
             {
@@ -74,9 +68,7 @@
         private static bool IsFiltered(Type type)
         {
             if (type != null && string.IsNullOrWhiteSpace(type.Namespace) == false)
-            {
                 return type.Namespace.StartsWith("System.");
-            }
 
             return false;
         }

@@ -2,13 +2,13 @@
 {
     public enum CenteringPosition
     {
-        None = 0, 
+        None = 0,
 
-        Center, 
+        Center,
 
-        CenterBottom, 
+        CenterBottom,
 
-        CenterHorizontally, 
+        CenterHorizontally,
 
         CenterVertically
     }

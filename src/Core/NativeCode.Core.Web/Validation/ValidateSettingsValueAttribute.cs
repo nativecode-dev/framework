@@ -2,9 +2,8 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform;
+    using Core.Platform;
+    using Dependencies;
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class ValidateSettingsValueAttribute : ValidationAttribute
@@ -25,17 +24,13 @@
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null)
-            {
                 return null;
-            }
 
             var application = DependencyLocator.Resolver.Resolve<IApplication>();
             var setting = application.Settings.GetValue<object>(this.Key);
 
             if (setting == null && this.RequireSettingsValue)
-            {
                 return new ValidationResult("Settings value was null and expected it to exist.");
-            }
 
             if (Equals(setting, value) == false)
             {

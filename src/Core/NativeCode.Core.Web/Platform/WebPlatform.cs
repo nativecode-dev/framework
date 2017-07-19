@@ -7,9 +7,8 @@
     using System.Security.Principal;
     using System.Web;
     using System.Web.Compilation;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.DotNet.Platform;
+    using Dependencies;
+    using DotNet.Platform;
 
     public class WebPlatform : DotNetPlatform
     {
@@ -34,9 +33,7 @@
         public override IPrincipal GetCurrentPrincipal()
         {
             if (HttpContext.Current != null)
-            {
                 return HttpContext.Current.User;
-            }
 
             return base.GetCurrentPrincipal();
         }

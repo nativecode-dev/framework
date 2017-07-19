@@ -3,10 +3,9 @@
     using System;
     using System.Diagnostics;
     using System.IO;
-
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Settings;
+    using Core.Platform;
+    using Core.Settings;
+    using Extensions;
 
     public class DotNetApplication : Application
     {
@@ -23,9 +22,7 @@
                 var path = Path.Combine(this.Platform.DataPath, this.GetApplicationName());
 
                 if (Directory.Exists(path) == false)
-                {
                     Directory.CreateDirectory(path);
-                }
 
                 return path;
             }

@@ -3,8 +3,7 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Platform.Messaging.Queuing;
+    using Queuing;
 
     public interface IMessageConsumer<in TMessage> : IDisposable
         where TMessage : class, new()

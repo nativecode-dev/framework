@@ -11,7 +11,7 @@
     public sealed class CodeRefactorAttribute : CodeAnnotationAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeRefactorAttribute"/> class.
+        /// Initializes a new instance of the <see cref="CodeRefactorAttribute" /> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
         public CodeRefactorAttribute(string reason)
@@ -20,7 +20,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeRefactorAttribute"/> class.
+        /// Initializes a new instance of the <see cref="CodeRefactorAttribute" /> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
         /// <param name="ticket">The ticket.</param>

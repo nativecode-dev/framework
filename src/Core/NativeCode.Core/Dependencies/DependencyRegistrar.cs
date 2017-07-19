@@ -2,27 +2,29 @@
 {
     using System;
     using System.Reflection;
-
-    using NativeCode.Core.Dependencies.Attributes;
-    using NativeCode.Core.Dependencies.Enums;
+    using Attributes;
+    using Enums;
 
     public abstract class DependencyRegistrar : IDependencyRegistrar
     {
-        public virtual IDependencyRegistrar Register(Type type, string key = null, DependencyLifetime lifetime = DependencyLifetime.Default)
+        public virtual IDependencyRegistrar Register(Type type, string key = null,
+            DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             this.InternalRegister(type, type, key, lifetime);
 
             return this;
         }
 
-        public virtual IDependencyRegistrar Register<T>(string key = null, DependencyLifetime lifetime = DependencyLifetime.Default)
+        public virtual IDependencyRegistrar Register<T>(string key = null,
+            DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             this.InternalRegister(typeof(T), typeof(T), key, lifetime);
 
             return this;
         }
 
-        public virtual IDependencyRegistrar Register<T, TImplementation>(string key = null, DependencyLifetime lifetime = DependencyLifetime.Default)
+        public virtual IDependencyRegistrar Register<T, TImplementation>(string key = null,
+            DependencyLifetime lifetime = DependencyLifetime.Default)
             where TImplementation : T
         {
             this.InternalRegister(typeof(T), typeof(TImplementation), key, lifetime);
@@ -30,7 +32,8 @@
             return this;
         }
 
-        public IDependencyRegistrar Register<T, TImplementation>(DependencyKey key, DependencyLifetime lifetime = DependencyLifetime.Default)
+        public IDependencyRegistrar Register<T, TImplementation>(DependencyKey key,
+            DependencyLifetime lifetime = DependencyLifetime.Default)
             where TImplementation : T
         {
             this.InternalRegister(typeof(T), typeof(TImplementation), GetKey(key, typeof(TImplementation)), lifetime);
@@ -58,7 +61,8 @@
                         continue;
                     }
 
-                    this.Register(attribute.Contract, type, GetKeyOverrideString(type, attribute.KeyType), attribute.Lifetime);
+                    this.Register(attribute.Contract, type, GetKeyOverrideString(type, attribute.KeyType),
+                        attribute.Lifetime);
                 }
             }
 
@@ -81,14 +85,16 @@
             string key = null,
             DependencyLifetime lifetime = DependencyLifetime.Default);
 
-        public virtual IDependencyRegistrar RegisterInstance<T>(T instance, DependencyLifetime lifetime = default(DependencyLifetime))
+        public virtual IDependencyRegistrar RegisterInstance<T>(T instance,
+            DependencyLifetime lifetime = default(DependencyLifetime))
         {
             this.InternalRegisterInstance(typeof(T), instance, lifetime);
 
             return this;
         }
 
-        public abstract IDependencyRegistrar RegisterInstance(Type type, object instance, DependencyLifetime lifetime = default(DependencyLifetime));
+        public abstract IDependencyRegistrar RegisterInstance(Type type, object instance,
+            DependencyLifetime lifetime = default(DependencyLifetime));
 
         private static string GetKey(DependencyKey key, Type type)
         {
@@ -113,9 +119,7 @@
             var attribute = type.GetTypeInfo().GetCustomAttribute<OverrideKeyAttribute>();
 
             if (attribute != null)
-            {
                 return GetKeyOverrideString(type, attribute.Key);
-            }
 
             return key;
         }
@@ -143,19 +147,17 @@
             var attribute = type.GetTypeInfo().GetCustomAttribute<OverrideLifetimeAttribute>();
 
             if (attribute != null)
-            {
                 return attribute.Lifetime;
-            }
 
             return lifetime;
         }
 
-        private void InternalRegister(Type type, Type implementation, string key = null, DependencyLifetime lifetime = DependencyLifetime.Default)
+        private void InternalRegister(Type type, Type implementation, string key = null,
+            DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             if (IgnoreDependencyAttribute.ValidateType(type) && IgnoreDependencyAttribute.ValidateType(implementation))
-            {
-                this.Register(type, implementation, GetKeyOverride(implementation, key), GetLifetimeOverride(implementation, lifetime));
-            }
+                this.Register(type, implementation, GetKeyOverride(implementation, key),
+                    GetLifetimeOverride(implementation, lifetime));
         }
 
         private void InternalRegisterFactory(
@@ -165,17 +167,14 @@
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             if (IgnoreDependencyAttribute.ValidateType(type))
-            {
                 this.RegisterFactory(type, factory, GetKeyOverride(type, key), GetLifetimeOverride(type, lifetime));
-            }
         }
 
-        private void InternalRegisterInstance(Type type, object instance, DependencyLifetime lifetime = default(DependencyLifetime))
+        private void InternalRegisterInstance(Type type, object instance,
+            DependencyLifetime lifetime = default(DependencyLifetime))
         {
             if (IgnoreDependencyAttribute.ValidateType(type))
-            {
                 this.RegisterInstance(type, instance, lifetime);
-            }
         }
     }
 }

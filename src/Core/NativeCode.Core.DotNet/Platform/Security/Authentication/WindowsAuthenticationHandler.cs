@@ -6,15 +6,14 @@
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Security;
-    using NativeCode.Core.Platform.Security.Authentication;
+    using Core.Platform.Security;
+    using Core.Platform.Security.Authentication;
+    using Extensions;
 
     public class WindowsAuthenticationHandler : IAuthenticationHandler
     {
-        public Task<AuthenticationResult> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
+        public Task<AuthenticationResult> AuthenticateAsync(string login, string password,
+            CancellationToken cancellationToken)
         {
             AuthenticationResultType result;
             var principal = ApplicationPrincipal.Anonymous;
@@ -30,9 +29,7 @@
                         result = AuthenticateUser(user, password);
 
                         if (result == AuthenticationResultType.Authenticated && user != null)
-                        {
                             principal = new WindowsPrincipal(new WindowsIdentity(user.UserPrincipalName));
-                        }
                     }
                 }
             }
@@ -53,29 +50,21 @@
         private static AuthenticationResultType AuthenticateUser(AuthenticablePrincipal user, string password)
         {
             if (user == null)
-            {
                 return AuthenticationResultType.NotFound;
-            }
 
             if (user.IsAccountLockedOut())
-            {
                 return AuthenticationResultType.Locked;
-            }
 
             if (user.AccountExpirationDate != null)
             {
                 var expiration = new DateTimeOffset(user.AccountExpirationDate.Value);
 
                 if (DateTimeOffset.UtcNow < expiration)
-                {
                     return AuthenticationResultType.Expired;
-                }
             }
 
             if (user.Context.ValidateCredentials(user.SamAccountName, password))
-            {
                 return AuthenticationResultType.Authenticated;
-            }
 
             return AuthenticationResultType.Denied;
         }

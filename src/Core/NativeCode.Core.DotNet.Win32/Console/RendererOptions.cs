@@ -1,6 +1,6 @@
 namespace NativeCode.Core.DotNet.Win32.Console
 {
-    using NativeCode.Core.Types.Structs;
+    using Types.Structs;
 
     public class RendererOptions
     {

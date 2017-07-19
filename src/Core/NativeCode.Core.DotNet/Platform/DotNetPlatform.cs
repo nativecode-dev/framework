@@ -6,9 +6,8 @@
     using System.Reflection;
     using System.Security.Principal;
     using System.Threading;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform;
+    using Core.Platform;
+    using Dependencies;
 
     public class DotNetPlatform : Platform
     {
@@ -25,7 +24,9 @@
 
         public override IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter = null)
         {
-            return filter == null ? AppDomain.CurrentDomain.GetAssemblies() : AppDomain.CurrentDomain.GetAssemblies().Where(filter);
+            return filter == null
+                ? AppDomain.CurrentDomain.GetAssemblies()
+                : AppDomain.CurrentDomain.GetAssemblies().Where(filter);
         }
 
         public override IEnumerable<Assembly> GetAssemblies(params string[] prefixes)
@@ -36,9 +37,7 @@
         public override IPrincipal GetCurrentPrincipal()
         {
             if (string.IsNullOrWhiteSpace(Thread.CurrentPrincipal.Identity.Name))
-            {
                 return new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            }
 
             return Thread.CurrentPrincipal;
         }

@@ -3,9 +3,8 @@ namespace NativeCode.Core.Packages.Owin.Owin.Middleware
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Platform;
+    using Core.Platform;
+    using Dependencies;
 
     public class OwinDependencyMiddleware : OwinMiddleware
     {

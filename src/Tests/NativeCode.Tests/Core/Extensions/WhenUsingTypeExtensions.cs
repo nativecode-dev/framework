@@ -1,9 +1,7 @@
 ﻿namespace NativeCode.Tests.Core.Extensions
 {
     using System;
-
     using NativeCode.Core.Extensions;
-
     using Xunit;
 
     public class WhenUsingTypeExtensions

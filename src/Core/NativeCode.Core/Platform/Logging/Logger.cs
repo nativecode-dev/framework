@@ -2,8 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using NativeCode.Core.Extensions;
+    using Extensions;
 
     public class Logger : ILogger
     {
@@ -46,9 +45,7 @@
         private void WriteLogMessage(LogMessageType type, string message)
         {
             foreach (var writer in this.writers)
-            {
                 writer.Write(type, message);
-            }
         }
     }
 }

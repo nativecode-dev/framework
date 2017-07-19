@@ -4,11 +4,10 @@
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Migrations;
     using System.Linq;
-
-    using NativeCode.Core.Platform.Connections;
-    using NativeCode.Core.Platform.Logging;
-    using NativeCode.Core.Platform.Maintenance;
-    using NativeCode.Core.Types;
+    using Platform.Connections;
+    using Platform.Logging;
+    using Platform.Maintenance;
+    using Types;
 
     public class DbMaintenanceProvider<TDataContext> : IMaintenanceProvider
         where TDataContext : DbDataContext
@@ -17,7 +16,8 @@
 
         public DbMaintenanceProvider(IConnectionStringProvider connections, ILogger logger)
         {
-            this.migrations = new LazyFactory<bool>(() => this.PendingMigrations(connections.GetConnectionString<TDataContext>()));
+            this.migrations =
+                new LazyFactory<bool>(() => this.PendingMigrations(connections.GetConnectionString<TDataContext>()));
             this.Logger = logger;
         }
 
@@ -65,14 +65,16 @@
 
             try
             {
-                var configuration = new DbMigrationsConfiguration<TDataContext> { TargetDatabase = new DbConnectionInfo(connectionString, providerName) };
+                var configuration =
+                    new DbMigrationsConfiguration<TDataContext>
+                    {
+                        TargetDatabase = new DbConnectionInfo(connectionString, providerName)
+                    };
                 var migration = new DbMigrator(configuration);
                 var pending = migration.GetPendingMigrations().Any();
 
                 if (pending)
-                {
                     this.EnterMaintenance();
-                }
 
                 return pending;
             }

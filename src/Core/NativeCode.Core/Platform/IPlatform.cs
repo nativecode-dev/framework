@@ -4,10 +4,8 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Security.Principal;
-
+    using Dependencies;
     using JetBrains.Annotations;
-
-    using NativeCode.Core.Dependencies;
 
     /// <summary>
     /// Provides a contract for communicating with the underlying platform.

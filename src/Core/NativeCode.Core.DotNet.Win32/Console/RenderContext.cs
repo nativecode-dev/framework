@@ -2,8 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using NativeCode.Core.Settings;
+    using Settings;
 
     public class RenderContext : JsonSettings
     {
@@ -20,56 +19,32 @@
 
         public bool DisableFlip
         {
-            get
-            {
-                return this.GetMemberValue(false);
-            }
+            get => this.GetMemberValue(false);
 
-            set
-            {
-                this.SetMemberValue(value);
-            }
+            set => this.SetMemberValue(value);
         }
 
         public List<Exception> Exceptions => this.GetMemberValue(this.exceptions);
 
         public bool IsDirty
         {
-            get
-            {
-                return this.GetMemberValue(false);
-            }
+            get => this.GetMemberValue(false);
 
-            set
-            {
-                this.SetMemberValue(value);
-            }
+            set => this.SetMemberValue(value);
         }
 
         public DateTimeOffset LastRenderStart
         {
-            get
-            {
-                return this.GetMemberValue(DateTimeOffset.UtcNow);
-            }
+            get => this.GetMemberValue(DateTimeOffset.UtcNow);
 
-            set
-            {
-                this.SetMemberValue(value);
-            }
+            set => this.SetMemberValue(value);
         }
 
         public DateTimeOffset LastRenderStop
         {
-            get
-            {
-                return this.GetMemberValue(DateTimeOffset.UtcNow);
-            }
+            get => this.GetMemberValue(DateTimeOffset.UtcNow);
 
-            set
-            {
-                this.SetMemberValue(value);
-            }
+            set => this.SetMemberValue(value);
         }
     }
 }

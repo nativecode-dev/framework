@@ -2,7 +2,6 @@
 {
     using System;
     using System.Text;
-
     using JetBrains.Annotations;
 
     public static class GuidExtensions

@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using JetBrains.Annotations;
 
     public static class StringExtensions
@@ -17,9 +16,7 @@
         public static string Dequote([NotNull] this string value)
         {
             if (value.IsQuoted())
-            {
                 return value.Substring(1, value.Length - 2);
-            }
 
             return value;
         }
@@ -27,9 +24,7 @@
         public static string FromBase64String(this string value, Encoding encoding = null)
         {
             if (encoding == null)
-            {
                 encoding = Encoding.UTF8;
-            }
 
             var bytes = Convert.FromBase64String(value);
 
@@ -59,9 +54,7 @@
         public static string Quote([NotNull] this string value)
         {
             if (value.IsDoubleQuoted())
-            {
                 return value;
-            }
 
             return "\"" + value + "\"";
         }
@@ -74,9 +67,7 @@
         public static string SingleQuote([NotNull] this string value)
         {
             if (value.IsSingleQuoted())
-            {
                 return value;
-            }
 
             return "'" + value + "'";
         }
@@ -89,9 +80,7 @@
         public static string ToBase64String(this string value, Encoding encoding = null)
         {
             if (encoding == null)
-            {
                 encoding = Encoding.UTF8;
-            }
 
             var bytes = encoding.GetBytes(value);
 
@@ -112,18 +101,14 @@
                 if (char.IsUpper(character))
                 {
                     if (characters.Any())
-                    {
                         characters.Add(separator);
-                    }
 
                     characters.Add(char.ToLower(character));
                     continue;
                 }
 
                 if (char.IsWhiteSpace(character))
-                {
                     continue;
-                }
 
                 characters.Add(character);
             }

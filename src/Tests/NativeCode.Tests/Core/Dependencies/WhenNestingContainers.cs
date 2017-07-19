@@ -2,7 +2,6 @@
 {
     using NativeCode.Core.Packages.Unity;
     using NativeCode.Core.Types;
-
     using Xunit;
 
     public class WhenNestingContainers

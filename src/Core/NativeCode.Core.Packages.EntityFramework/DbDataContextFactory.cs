@@ -2,13 +2,11 @@
 {
     using System;
     using System.Data.Entity.Infrastructure;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.DotNet.Platform;
-    using NativeCode.Core.DotNet.Platform.Connections;
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Connections;
+    using Dependencies;
+    using DotNet.Platform;
+    using DotNet.Platform.Connections;
+    using Platform;
+    using Platform.Connections;
 
     public abstract class DbContextFactory<TDataContext> : IDbContextFactory<TDataContext>
         where TDataContext : DbDataContext
@@ -34,7 +32,8 @@
             }
         }
 
-        protected abstract TDataContext CreateDataContext(IConnectionStringProvider connectionStringProvider, IPlatform platform);
+        protected abstract TDataContext CreateDataContext(IConnectionStringProvider connectionStringProvider,
+            IPlatform platform);
 
         protected abstract IDependencyContainer CreateDependencyContainer();
 

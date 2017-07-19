@@ -2,11 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using Dependencies;
+    using Dependencies.Exceptions;
     using Microsoft.Practices.Unity;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Exceptions;
 
     public class UnityDependencyResolver : DependencyResolver
     {

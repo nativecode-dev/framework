@@ -5,29 +5,31 @@
     using System.Linq;
     using System.Security.Principal;
     using System.Text.RegularExpressions;
-
+    using Dependencies;
     using JetBrains.Annotations;
-
-    using NativeCode.Core.Dependencies;
 
     public class UserLoginName
     {
-        private const string PatternDomain = @"^(?<name>[a-z][a-z0-9\.-]+)\\(?<domain>(?![\x20\.]+$)([^\\/""[\\]:|<>+=;,?\*@]+))$";
+        private const string PatternDomain =
+            @"^(?<name>[a-z][a-z0-9\.-]+)\\(?<domain>(?![\x20\.]+$)([^\\/""[\\]:|<>+=;,?\*@]+))$";
 
         private const string PatternName = @"^(?<name>[a-z][a-z0-9\.-]+)";
 
         private const string PatternUserPrincipalName = @"^(?<name>[A-Z0-9._%+-]+)@(?<domain>[A-Z0-9.-]+\.[A-Z]{2,})$";
 
-        private static readonly Dictionary<UserLoginNameFormat, Regex> Formats = new Dictionary<UserLoginNameFormat, Regex>();
+        private static readonly Dictionary<UserLoginNameFormat, Regex> Formats =
+            new Dictionary<UserLoginNameFormat, Regex>();
 
         static UserLoginName()
         {
             Formats.Add(UserLoginNameFormat.Domain, new Regex(PatternDomain, RegexOptions.IgnoreCase));
             Formats.Add(UserLoginNameFormat.Name, new Regex(PatternName, RegexOptions.IgnoreCase));
-            Formats.Add(UserLoginNameFormat.UserPrincipalName, new Regex(PatternUserPrincipalName, RegexOptions.IgnoreCase));
+            Formats.Add(UserLoginNameFormat.UserPrincipalName,
+                new Regex(PatternUserPrincipalName, RegexOptions.IgnoreCase));
         }
 
-        private UserLoginName([NotNull] string source, [NotNull] string domain, [NotNull] string login, UserLoginNameFormat format)
+        private UserLoginName([NotNull] string source, [NotNull] string domain, [NotNull] string login,
+            UserLoginNameFormat format)
         {
             this.Domain = domain;
             this.Format = format;
@@ -37,7 +39,7 @@
 
         public string Domain { get; }
 
-        public UserLoginNameFormat Format { get; private set; }
+        public UserLoginNameFormat Format { get; }
 
         public string Login { get; }
 
@@ -74,9 +76,7 @@
             UserLoginName userLoginName;
 
             if (TryParse(source, out userLoginName))
-            {
                 return userLoginName;
-            }
 
             throw new InvalidOperationException($"Could not parse source '{source}' to determine the format.");
         }
@@ -105,15 +105,14 @@
                 var formatter = kvp.Value;
 
                 if (formatter.IsMatch(source))
-                {
                     return kvp;
-                }
             }
 
             throw new InvalidOperationException($"No formatters could be found to match {source}.");
         }
 
-        private static UserLoginName GetUserLoginName([NotNull] string source, [NotNull] Regex regex, UserLoginNameFormat format)
+        private static UserLoginName GetUserLoginName([NotNull] string source, [NotNull] Regex regex,
+            UserLoginNameFormat format)
         {
             var match = regex.Match(source);
 

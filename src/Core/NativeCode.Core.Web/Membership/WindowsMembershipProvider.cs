@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.Web.Membership
 {
     using System.Threading;
-
-    using NativeCode.Core.Platform.Security.Authentication;
+    using Core.Platform.Security.Authentication;
 
     public class WindowsMembershipProvider : BaseMembershipProvider
     {
@@ -13,9 +12,7 @@
                 var response = this.Handler.AuthenticateAsync(username, password, CancellationToken.None).Result;
 
                 if (response != null && response.Result == AuthenticationResultType.Authenticated)
-                {
                     return true;
-                }
             }
 
             return false;

@@ -1,11 +1,9 @@
 namespace NativeCode.Core.Packages.Unity
 {
     using System;
-
+    using Dependencies;
+    using Dependencies.Enums;
     using Microsoft.Practices.Unity;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Enums;
 
     public class UnityDependencyRegistrar : DependencyRegistrar
     {

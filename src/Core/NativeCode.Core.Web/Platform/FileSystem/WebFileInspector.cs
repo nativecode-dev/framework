@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.Web.Platform.FileSystem
 {
     using System.Web;
-
-    using NativeCode.Core.Platform.FileSystem;
+    using Core.Platform.FileSystem;
 
     public class WebFileInspector : FileInspector
     {

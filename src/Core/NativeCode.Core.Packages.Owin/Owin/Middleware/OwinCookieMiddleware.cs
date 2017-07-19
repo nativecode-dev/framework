@@ -3,10 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Extensions;
     using Microsoft.Owin;
-
-    using NativeCode.Core.Packages.Owin.Extensions;
 
     public class OwinCookieMiddleware : OwinMiddleware
     {
@@ -32,10 +30,7 @@
             var cookie = context.Request.GetCookie(this.name);
 
             if (cookie != null)
-            {
-                // TODO: Load principal somehow?
                 return Task.FromResult(0);
-            }
 
             return Task.FromResult(0);
         }

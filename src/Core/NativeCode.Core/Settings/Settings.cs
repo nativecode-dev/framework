@@ -5,10 +5,8 @@
     using System.IO;
     using System.Runtime.CompilerServices;
     using System.Text;
-
+    using Extensions;
     using JetBrains.Annotations;
-
-    using NativeCode.Core.Extensions;
 
     public abstract class Settings
     {
@@ -25,15 +23,9 @@
 
         public object this[string key]
         {
-            get
-            {
-                return this.ReadValue<object>(key);
-            }
+            get => this.ReadValue<object>(key);
 
-            set
-            {
-                this.WriteValue(key, value, true);
-            }
+            set => this.WriteValue(key, value, true);
         }
 
         public T GetValue<T>([NotNull] string name, T defaultValue = default(T), bool saveWhenDefault = false)
@@ -43,17 +35,13 @@
                 var path = name.Split(this.PathSeparator);
 
                 if (saveWhenDefault)
-                {
                     this.WriteValue(path, defaultValue, true);
-                }
 
                 return this.ReadValue(path, defaultValue);
             }
 
             if (saveWhenDefault)
-            {
                 this.WriteValue(name, defaultValue, true);
-            }
 
             return this.ReadValue(name, defaultValue);
         }
@@ -75,7 +63,8 @@
 
         protected abstract IEnumerable<string> GetKeys();
 
-        protected T GetMemberValue<T>(T defaultValue = default(T), [CallerMemberName] string name = null, bool saveWhenDefault = false)
+        protected T GetMemberValue<T>(T defaultValue = default(T), [CallerMemberName] string name = null,
+            bool saveWhenDefault = false)
         {
             var key = this.GetPrefixKey(name);
             return this.GetValue(key, defaultValue, saveWhenDefault);
@@ -84,9 +73,7 @@
         protected string GetPrefixKey(string name)
         {
             if (string.IsNullOrWhiteSpace(this.Prefix))
-            {
                 return name;
-            }
 
             return this.Prefix + "." + name;
         }

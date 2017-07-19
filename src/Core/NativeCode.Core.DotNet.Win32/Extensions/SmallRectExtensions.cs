@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.DotNet.Win32.Extensions
 {
-    using NativeCode.Core.DotNet.Win32.Structs;
+    using Structs;
 
     public static class SmallRectExtensions
     {

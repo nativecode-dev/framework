@@ -5,17 +5,17 @@ namespace NativeCode.Core.Platform.Security
         /// <summary>
         /// Specifies the default login format.
         /// </summary>
-        Default = 0, 
+        Default = 0,
 
         /// <summary>
         /// Specifies to use the NT LANMAN login format.
         /// </summary>
-        Domain = 1, 
+        Domain = 1,
 
         /// <summary>
         /// Specifies to use the login only.
         /// </summary>
-        Name = Default, 
+        Name = Default,
 
         /// <summary>
         /// Specifies to use the ADS compatible UPN.

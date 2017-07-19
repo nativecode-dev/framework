@@ -3,8 +3,7 @@
     using System.Security.Principal;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Platform.Security.Authorization;
+    using Core.Platform.Security.Authorization;
 
     public class HmacSettingsProvider : IHmacSettingsProvider
     {

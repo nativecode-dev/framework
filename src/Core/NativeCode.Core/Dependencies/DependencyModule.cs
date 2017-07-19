@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.Dependencies
 {
-    using NativeCode.Core.Dependencies.Enums;
+    using Enums;
 
     public abstract class DependencyModule : IDependencyModule
     {

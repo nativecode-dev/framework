@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Types
 {
     using System;
-
     using Polly;
 
     public static class Retry

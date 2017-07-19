@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.DotNet.Logging
 {
     using System.Diagnostics;
-
-    using NativeCode.Core.Platform.Logging;
+    using Core.Platform.Logging;
 
     public class TraceLogWriter : ILogWriter
     {

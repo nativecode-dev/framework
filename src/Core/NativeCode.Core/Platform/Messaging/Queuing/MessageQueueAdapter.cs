@@ -2,20 +2,21 @@
 {
     using System;
     using System.Collections.Concurrent;
-
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Types;
+    using Extensions;
+    using Types;
 
     public class MessageQueueAdapter : Disposable, IMessageQueueAdapter
     {
-        private readonly ConcurrentDictionary<string, MessageQueueProvider> queues = new ConcurrentDictionary<string, MessageQueueProvider>();
+        private readonly ConcurrentDictionary<string, MessageQueueProvider> queues =
+            new ConcurrentDictionary<string, MessageQueueProvider>();
 
         public IMessageQueueProvider Connect(Type messageType, Uri uri, MessageQueueType queueType)
         {
             return this.GetMessageQueueProvider(messageType);
         }
 
-        public IMessageQueueProvider<TMessage> Connect<TMessage>(Uri uri, MessageQueueType queueType) where TMessage : class, new()
+        public IMessageQueueProvider<TMessage> Connect<TMessage>(Uri uri, MessageQueueType queueType)
+            where TMessage : class, new()
         {
             return this.GetMessageQueueProvider(typeof(TMessage)) as IMessageQueueProvider<TMessage>;
         }
@@ -25,9 +26,7 @@
             var name = messageType.ToKey();
 
             if (this.queues.ContainsKey(name) == false)
-            {
                 this.queues.AddOrUpdate(name, key => new MessageQueueProvider(name), (k, v) => v);
-            }
 
             return this.queues[name];
         }

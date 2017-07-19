@@ -1,8 +1,7 @@
 namespace NativeCode.Core.Web.Platform.Security.Cookies
 {
     using System.Web;
-
-    using NativeCode.Core.Platform.Serialization;
+    using Core.Platform.Serialization;
 
     public class HttpContextCookieProvider<TData> : CookieProvider<HttpRequest, HttpResponse, HttpCookie, TData>
     {
@@ -15,7 +14,8 @@ namespace NativeCode.Core.Web.Platform.Security.Cookies
         {
         }
 
-        public override HttpCookie CreateCookie(string name, TData data, bool persist = true, int timeout = 20, int version = 1)
+        public override HttpCookie CreateCookie(string name, TData data, bool persist = true, int timeout = 20,
+            int version = 1)
         {
             return new HttpCookie(name, this.Serializer.Serialize(data));
         }

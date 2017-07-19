@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.Dependencies
 {
+    using Enums;
     using JetBrains.Annotations;
-
-    using NativeCode.Core.Dependencies.Enums;
 
     /// <summary>
     /// Provides a contract to encapsulate dependency registrations in

@@ -25,7 +25,8 @@
         /// <param name="key">The key.</param>
         /// <param name="setter">The setter.</param>
         /// <returns>Returns a new entity.</returns>
-        TEntity Create<TEntity, TKey>(TKey key, Action<TEntity> setter) where TEntity : class, IEntity<TKey>, new() where TKey : struct;
+        TEntity Create<TEntity, TKey>(TKey key, Action<TEntity> setter)
+            where TEntity : class, IEntity<TKey>, new() where TKey : struct;
 
         /// <summary>
         /// Seeds the specified entity.

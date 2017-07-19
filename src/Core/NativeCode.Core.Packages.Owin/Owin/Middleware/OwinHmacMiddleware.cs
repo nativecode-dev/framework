@@ -3,11 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Extensions;
-    using NativeCode.Core.Platform.Security.Authorization;
-    using NativeCode.Core.Web;
+    using Core.Extensions;
+    using Core.Platform.Security.Authorization;
+    using Dependencies;
+    using Web;
 
     public class OwinHmacMiddleware : OwinMiddleware
     {
@@ -29,7 +28,8 @@
             var timestamp = this.Request.Headers[HttpHeaders.KeyRequestSignatureTimestamp];
 
             var provider = DependencyLocator.Resolver.Resolve<IHmacSettingsProvider>();
-            var secret = await provider.GetUserSecretAsync(this.Request.User, this.Request.CallCancelled).ConfigureAwait(false);
+            var secret = await provider.GetUserSecretAsync(this.Request.User, this.Request.CallCancelled)
+                .ConfigureAwait(false);
 
             if (StringExtensions.NotEmpty(crypto, length, signature, timestamp))
             {

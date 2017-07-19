@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Platform.Logging
 {
     using System;
-
     using JetBrains.Annotations;
 
     /// <summary>

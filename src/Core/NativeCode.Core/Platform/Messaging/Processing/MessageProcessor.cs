@@ -2,8 +2,7 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-
-    using NativeCode.Core.Platform.Logging;
+    using Logging;
 
     public abstract class MessageProcessor<TMessage> : IMessageProcessor<TMessage>
         where TMessage : class, new()
@@ -15,6 +14,7 @@
 
         protected ILogger Logger { get; }
 
-        public abstract Task<MessageProcessorResult> ProcessMessageAsync(TMessage message, CancellationToken cancellationToken);
+        public abstract Task<MessageProcessorResult> ProcessMessageAsync(TMessage message,
+            CancellationToken cancellationToken);
     }
 }

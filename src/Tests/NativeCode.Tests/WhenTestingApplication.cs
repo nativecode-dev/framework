@@ -12,7 +12,8 @@
         protected WhenTestingApplication()
         {
             this.Application = new DotNetApplication(this.Platform, new JsonSettings());
-            this.Application.Initialize("test-app", CoreDependencies.Instance, DotNetDependencies.Instance, RabbitDependencies.Instance);
+            this.Application.Initialize("test-app", CoreDependencies.Instance, DotNetDependencies.Instance,
+                RabbitDependencies.Instance);
             this.EnsureDisposed(this.Application);
         }
 

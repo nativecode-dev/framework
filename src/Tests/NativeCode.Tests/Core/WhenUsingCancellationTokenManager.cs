@@ -2,10 +2,8 @@
 {
     using System;
     using System.Threading;
-
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Types;
-
     using Xunit;
 
     public class WhenUsingCancellationTokenManager : WhenTestingDependencies

@@ -1,6 +1,6 @@
 ﻿namespace NativeCode.Core.DotNet.Win32.Console
 {
-    using NativeCode.Core.DotNet.Win32.Structs;
+    using Structs;
 
     public struct BufferCell
     {

@@ -23,93 +23,51 @@
 
         public bool AsynchronousProcessing
         {
-            get
-            {
-                return this.GetValue<bool>();
-            }
+            get => this.GetValue<bool>();
 
-            set
-            {
-                this.SetValue(value);
-            }
+            set => this.SetValue(value);
         }
 
         public bool DataSource
         {
-            get
-            {
-                return this.GetValue<bool>();
-            }
+            get => this.GetValue<bool>();
 
-            set
-            {
-                this.SetValue(value);
-            }
+            set => this.SetValue(value);
         }
 
         public bool IntialCatalog
         {
-            get
-            {
-                return this.GetValue<bool>();
-            }
+            get => this.GetValue<bool>();
 
-            set
-            {
-                this.SetValue(value);
-            }
+            set => this.SetValue(value);
         }
 
         public bool IntegratedSecurity
         {
-            get
-            {
-                return this.GetValue<bool>();
-            }
+            get => this.GetValue<bool>();
 
-            set
-            {
-                this.SetValue(value);
-            }
+            set => this.SetValue(value);
         }
 
         public bool MultipleActiveResultSets
         {
-            get
-            {
-                return this.GetValue<bool>();
-            }
+            get => this.GetValue<bool>();
 
-            set
-            {
-                this.SetValue(value);
-            }
+            set => this.SetValue(value);
         }
 
         public bool TrustedConnection
         {
-            get
-            {
-                return this.GetValue<bool>();
-            }
+            get => this.GetValue<bool>();
 
-            set
-            {
-                this.SetValue(value);
-            }
+            set => this.SetValue(value);
         }
 
         public bool UserId
         {
-            get
-            {
-                return this.GetValue<bool>();
-            }
+            get => this.GetValue<bool>();
 
-            set
-            {
-                this.SetValue(value);
-            }
+            set => this.SetValue(value);
         }
     }
 }

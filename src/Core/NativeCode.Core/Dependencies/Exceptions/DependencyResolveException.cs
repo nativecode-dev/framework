@@ -10,7 +10,7 @@
     public class DependencyResolveException : DependencyException
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyResolveException"/> class.
+        /// Initializes a new instance of the <see cref="DependencyResolveException" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         public DependencyResolveException(Type type)
@@ -19,7 +19,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DependencyResolveException"/> class.
+        /// Initializes a new instance of the <see cref="DependencyResolveException" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="innerException">The inner exception.</param>

@@ -4,12 +4,10 @@ namespace NativeCode.Core.Packages.Rabbit
     using System.Collections.Concurrent;
     using System.Diagnostics.CodeAnalysis;
     using System.Text;
-
-    using NativeCode.Core.Platform.Messaging.Queuing;
-    using NativeCode.Core.Platform.Serialization;
-    using NativeCode.Core.Types;
-
+    using Platform.Messaging.Queuing;
+    using Platform.Serialization;
     using RabbitMQ.Client;
+    using Types;
 
     public class RabbitMessageQueueProvider : DisposableManager, IMessageQueueProvider
     {
@@ -36,9 +34,7 @@ namespace NativeCode.Core.Packages.Rabbit
             ulong identifier;
 
             if (ulong.TryParse(result.Identifier, out identifier))
-            {
                 this.Queue.BasicAck(identifier, false);
-            }
         }
 
         public byte[] Consume()
@@ -51,9 +47,7 @@ namespace NativeCode.Core.Packages.Rabbit
             var result = this.Queue.BasicGet(this.QueueName, false);
 
             if (result == null)
-            {
                 return default(MessageQueueResult);
-            }
 
             return new MessageQueueResult(result.DeliveryTag.ToString(), result.Body);
         }
@@ -68,29 +62,28 @@ namespace NativeCode.Core.Packages.Rabbit
             ulong identifier;
 
             if (ulong.TryParse(result.Identifier, out identifier))
-            {
                 this.Queue.BasicReject(identifier, requeue);
-            }
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 this.Queue.QueueUnbind(this.QueueName, this.ExchangeName, this.RouteName);
-            }
 
             base.Dispose(disposing);
         }
     }
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Generic type.")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
+        Justification = "Generic type.")]
     public class RabbitMessageQueueProvider<TMessage> : RabbitMessageQueueProvider, IMessageQueueProvider<TMessage>
         where TMessage : class, new()
     {
-        private readonly ConcurrentDictionary<TMessage, MessageQueueResult> acknowledgables = new ConcurrentDictionary<TMessage, MessageQueueResult>();
+        private readonly ConcurrentDictionary<TMessage, MessageQueueResult> acknowledgables =
+            new ConcurrentDictionary<TMessage, MessageQueueResult>();
 
-        public RabbitMessageQueueProvider(string queue, string exchange, string route, IModel model, IStringSerializer serializer)
+        public RabbitMessageQueueProvider(string queue, string exchange, string route, IModel model,
+            IStringSerializer serializer)
             : base(queue, exchange, route, model)
         {
             this.Serializer = serializer;
@@ -111,9 +104,7 @@ namespace NativeCode.Core.Packages.Rabbit
                 finally
                 {
                     if (this.acknowledgables.TryRemove(message, out result) == false)
-                    {
                         throw new InvalidOperationException("Failed to remove acknowledgement from cache.");
-                    }
                 }
             }
         }
@@ -170,9 +161,7 @@ namespace NativeCode.Core.Packages.Rabbit
                 finally
                 {
                     if (this.acknowledgables.TryRemove(message, out result) == false)
-                    {
                         throw new InvalidOperationException("Failed to remove acknowledgement from cache.");
-                    }
                 }
             }
         }

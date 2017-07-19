@@ -3,21 +3,21 @@
     using System;
     using System.Runtime.InteropServices;
     using System.Text;
-
+    using Enums;
     using Microsoft.Win32.SafeHandles;
-
-    using NativeCode.Core.DotNet.Win32.Enums;
-    using NativeCode.Core.DotNet.Win32.Structs;
+    using Structs;
 
     internal static partial class NativeMethods
     {
         public delegate bool EnumCodePagesProcDelegate(string lpCodePageString);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr CreateConsoleScreenBuffer(EFileAccess access, EFileShare share, IntPtr security, uint flags, IntPtr data);
+        public static extern IntPtr CreateConsoleScreenBuffer(EFileAccess access, EFileShare share, IntPtr security,
+            uint flags, IntPtr data);
 
         [DllImport(Kernel32, SetLastError = true)]
-        public static extern bool EnumSystemCodePages(EnumCodePagesProcDelegate @delegate, [MarshalAs(UnmanagedType.U4)] EnumCodePageFlag flags);
+        public static extern bool EnumSystemCodePages(EnumCodePagesProcDelegate @delegate,
+            [MarshalAs(UnmanagedType.U4)] EnumCodePageFlag flags);
 
         [DllImport(Kernel32, SetLastError = true)]
         public static extern uint GetConsoleCP();
@@ -32,7 +32,8 @@
         public static extern bool GetConsoleScreenBufferInfoEx(SafeHandle hwnd, out ConsoleScreenBufferInfoEx info);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool GetCurrentConsoleFontEx(SafeHandle hwnd, bool maximumWindow, ref ConsoleFontInfoEx info);
+        public static extern bool GetCurrentConsoleFontEx(SafeHandle hwnd, bool maximumWindow,
+            ref ConsoleFontInfoEx info);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetStdHandle(uint stdhandle);
@@ -59,10 +60,12 @@
         public static extern bool SetConsoleWindowInfo(SafeHandle hwnd, bool absolute, [In] ref SmallRect rect);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool SetCurrentConsoleFontEx(SafeHandle hwnd, bool maximumWindow, ref ConsoleFontInfoEx info);
+        public static extern bool SetCurrentConsoleFontEx(SafeHandle hwnd, bool maximumWindow,
+            ref ConsoleFontInfoEx info);
 
         [DllImport(Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool WriteConsoleOutput(SafeHandle hwnd, CharInfo[] buffer, Coord size, Coord coord, ref SmallRect smallRect);
+        public static extern bool WriteConsoleOutput(SafeHandle hwnd, CharInfo[] buffer, Coord size, Coord coord,
+            ref SmallRect smallRect);
 
         #region Helpers
 
@@ -70,7 +73,7 @@
         {
             var codepage = GetConsoleCP();
 
-            return GetEncodingForCodePage((int)codepage);
+            return GetEncodingForCodePage((int) codepage);
         }
 
         public static SafeFileHandle GetStandardInputHandle()

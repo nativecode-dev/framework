@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Packages.Owin.Owin
 {
     using System.Collections.Generic;
-
     using Microsoft.Owin;
 
     public class OwinCookie

@@ -2,8 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
-    using NativeCode.Core.Dependencies;
+    using Dependencies;
 
     /// <summary>
     /// Marks a field or property that is a <c>string</c> as requiring a specific set of complexities.
@@ -13,11 +12,12 @@
     public sealed class StringComplexityAttribute : ValidationAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringComplexityAttribute"/> class.
+        /// Initializes a new instance of the <see cref="StringComplexityAttribute" /> class.
         /// </summary>
         /// <param name="rules">The rules.</param>
         /// <param name="errorMessage">The error message.</param>
-        public StringComplexityAttribute(StringComplexityRules rules, string errorMessage = default(string)) : base(errorMessage)
+        public StringComplexityAttribute(StringComplexityRules rules,
+            string errorMessage = default(string)) : base(errorMessage)
         {
             this.StringComplexityRules = rules;
         }
@@ -37,16 +37,12 @@
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null)
-            {
                 return null;
-            }
 
             var validator = DependencyLocator.Resolver.Resolve<StringComplexityValidator>();
 
             if (validator != null && validator.CanValidate(value))
-            {
                 return validator.Validate(value, validationContext);
-            }
 
             return null;
         }

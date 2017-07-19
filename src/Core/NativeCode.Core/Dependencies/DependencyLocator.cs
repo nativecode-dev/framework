@@ -30,13 +30,9 @@
         public static void SetRootContainer(IDependencyContainer container)
         {
             if (Interlocked.CompareExchange(ref counter, 1, 0) == 0)
-            {
                 RootContainer = container;
-            }
             else
-            {
                 throw new InvalidOperationException("Cannot set the root container more than once.");
-            }
         }
     }
 }

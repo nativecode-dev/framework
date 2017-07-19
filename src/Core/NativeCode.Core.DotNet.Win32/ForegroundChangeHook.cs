@@ -1,8 +1,7 @@
 ﻿namespace NativeCode.Core.DotNet.Win32
 {
     using System;
-
-    using NativeCode.Core.DotNet.Win32.Enums;
+    using Enums;
 
     public class ForegroundChangeHook : HookEvent
     {
@@ -14,7 +13,8 @@
             this.handler = handler;
         }
 
-        protected override void Handler(IntPtr hwineventhook, uint eventtype, IntPtr hwnd, int idobject, int idchild, uint dweventthread, uint dwmseventtime)
+        protected override void Handler(IntPtr hwineventhook, uint eventtype, IntPtr hwnd, int idobject, int idchild,
+            uint dweventthread, uint dwmseventtime)
         {
             this.handler(hwnd);
         }

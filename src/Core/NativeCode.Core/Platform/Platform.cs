@@ -4,10 +4,9 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Security.Principal;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Enums;
-    using NativeCode.Core.Types;
+    using Dependencies;
+    using Dependencies.Enums;
+    using Types;
 
     /// <summary>
     /// Abstract class to manage the underlying platform.
@@ -41,9 +40,7 @@
         public virtual IDependencyContainer CreateDependencyScope(IDependencyContainer parent = null)
         {
             if (parent != null)
-            {
                 return parent.CreateChildContainer();
-            }
 
             return this.Container.CreateChildContainer();
         }
@@ -57,13 +54,11 @@
         protected override void Dispose(bool disposing)
         {
             if (disposing && !this.Disposed)
-            {
                 if (this.Container != null)
                 {
                     this.Container.Dispose();
                     this.Container = null;
                 }
-            }
 
             base.Dispose(disposing);
         }

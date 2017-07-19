@@ -5,17 +5,21 @@
     public class JsonStringSerializer : IStringSerializer
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonStringSerializer"/> class.
+        /// Initializes a new instance of the <see cref="JsonStringSerializer" /> class.
         /// </summary>
         public JsonStringSerializer()
         {
-            this.Settings = new JsonSerializerSettings { Formatting = Formatting.Indented, ContractResolver = new LowerScoreContractResolver() };
+            this.Settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                ContractResolver = new LowerScoreContractResolver()
+            };
         }
 
         /// <summary>
         /// Gets the settings.
         /// </summary>
-        protected JsonSerializerSettings Settings { get; private set; }
+        protected JsonSerializerSettings Settings { get; }
 
         public T Deserialize<T>(string value)
         {

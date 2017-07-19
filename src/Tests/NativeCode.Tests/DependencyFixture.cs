@@ -16,9 +16,7 @@ namespace NativeCode.Tests
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.Disposed == false)
-            {
                 this.Container.Dispose();
-            }
 
             base.Dispose(disposing);
         }

@@ -2,10 +2,10 @@ namespace NativeCode.Core.Web.Platform.Security.Cookies
 {
     using System.Net.Http;
     using System.Web;
+    using Core.Platform.Serialization;
 
-    using NativeCode.Core.Platform.Serialization;
-
-    public class HttpMessageCookieProvider<TData> : CookieProvider<HttpRequestMessage, HttpResponseMessage, HttpCookie, TData>
+    public class HttpMessageCookieProvider<TData> : CookieProvider<HttpRequestMessage, HttpResponseMessage, HttpCookie,
+        TData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpMessageCookieProvider{TData}" /> class.
@@ -16,7 +16,8 @@ namespace NativeCode.Core.Web.Platform.Security.Cookies
         {
         }
 
-        public override HttpCookie CreateCookie(string name, TData data, bool persist = true, int timeout = 20, int version = 1)
+        public override HttpCookie CreateCookie(string name, TData data, bool persist = true, int timeout = 20,
+            int version = 1)
         {
             return new HttpCookie(name, this.Serializer.Serialize(data));
         }
@@ -27,9 +28,7 @@ namespace NativeCode.Core.Web.Platform.Security.Cookies
             var cookie = request.GetRequestCookie();
 
             if (string.IsNullOrWhiteSpace(cookie) == false)
-            {
                 return new HttpCookie(name, cookie);
-            }
 
             return new HttpCookie(name);
         }

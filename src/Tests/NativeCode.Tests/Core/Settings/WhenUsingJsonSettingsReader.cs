@@ -3,14 +3,14 @@
     using System;
     using System.Linq;
     using System.Text;
-
     using NativeCode.Core.Settings;
-
     using Xunit;
 
     public class WhenUsingJsonSettingsReader
     {
-        private const string JsonSample = "{ \"Simple\": \"string\", \"Array\": [0], \"Object\": { \"Number\": 20, \"Child\": { \"Decimal\": 1.20 } } }";
+        private const string JsonSample =
+                "{ \"Simple\": \"string\", \"Array\": [0], \"Object\": { \"Number\": 20, \"Child\": { \"Decimal\": 1.20 } } }"
+            ;
 
         [Fact]
         public void ShouldReadJsonFile()

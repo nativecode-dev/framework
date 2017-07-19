@@ -27,9 +27,7 @@
         public string EnterMaintenance()
         {
             if (Interlocked.CompareExchange(ref state, 1, 1) == 0)
-            {
                 generated = this.GenerateMaintenanceKey();
-            }
 
             return generated;
         }
@@ -37,9 +35,7 @@
         public void ExitMaintenance(string key)
         {
             if (Interlocked.CompareExchange(ref state, 0, 0) == 1 && key == generated)
-            {
                 generated = null;
-            }
         }
 
         protected virtual string GenerateMaintenanceKey()

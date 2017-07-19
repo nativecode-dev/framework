@@ -4,9 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
-
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Platform.Logging;
+    using Core.Platform;
+    using Core.Platform.Logging;
 
     public abstract class BaseController : ApiController
     {
@@ -32,9 +31,7 @@
             if (disposing && this.disposables.Any())
             {
                 foreach (var disposable in this.disposables)
-                {
                     disposable.Dispose();
-                }
 
                 this.disposables.Clear();
             }

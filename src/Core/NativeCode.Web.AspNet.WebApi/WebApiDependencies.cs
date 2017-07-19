@@ -2,11 +2,10 @@
 {
     using System.Net.Http;
     using System.Web.Http.Filters;
-
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Enums;
-    using NativeCode.Web.AspNet.WebApi.Filters;
-    using NativeCode.Web.AspNet.WebApi.Handlers;
+    using Core.Dependencies;
+    using Core.Dependencies.Enums;
+    using Filters;
+    using Handlers;
 
     public class WebApiDependencies : DependencyModule
     {

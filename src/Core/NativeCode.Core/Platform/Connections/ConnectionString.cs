@@ -5,7 +5,6 @@
     using System.Dynamic;
     using System.Linq;
     using System.Runtime.CompilerServices;
-
     using JetBrains.Annotations;
 
     public class ConnectionString : DynamicObject
@@ -35,21 +34,14 @@
 
         public object this[string key]
         {
-            get
-            {
-                return this.members.ContainsKey(key) ? this.members[key] : default(object);
-            }
+            get => this.members.ContainsKey(key) ? this.members[key] : default(object);
 
             set
             {
                 if (this.members.ContainsKey(key))
-                {
                     this.members[key] = value;
-                }
                 else
-                {
                     this.members.Add(key, value);
-                }
             }
         }
 
@@ -61,9 +53,7 @@
         public static implicit operator ConnectionString(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-            {
                 return new ConnectionString();
-            }
 
             return new ConnectionString(value);
         }
@@ -105,13 +95,9 @@
             if (value != null)
             {
                 if (this.members.ContainsKey(binder.Name))
-                {
                     this.members[binder.Name] = value.ToString();
-                }
                 else
-                {
                     this.members.Add(binder.Name, value.ToString());
-                }
 
                 return true;
             }
@@ -121,7 +107,7 @@
 
         protected T GetValue<T>([CallerMemberName] string key = null)
         {
-            return (T)this[this.Resolve(key)];
+            return (T) this[this.Resolve(key)];
         }
 
         protected void Resolver(Func<string, string> resolver)
@@ -145,9 +131,7 @@
                 var value = parts[1].Trim();
 
                 if (!this.members.ContainsKey(key))
-                {
                     this.members.Add(key, value);
-                }
             }
         }
 
@@ -158,9 +142,7 @@
                 var resolved = resolver(key);
 
                 if (!string.IsNullOrWhiteSpace(resolved))
-                {
                     return resolved;
-                }
             }
 
             return key;
