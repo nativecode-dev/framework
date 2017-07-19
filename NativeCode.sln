@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Ow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.DotNet.Win32", "src\Core\NativeCode.Core.DotNet.Win32\NativeCode.Core.DotNet.Win32.csproj", "{AE566659-F4F2-4EB4-A537-8B736DBD876F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tests", ".tests", "{BC966123-4BA8-49EF-9344-EDDB7F3CD6ED}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BC966123-4BA8-49EF-9344-EDDB7F3CD6ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.DotNet", "src\Core\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj", "{EC619B91-B1DA-4893-8AD6-2D8A2D54B853}"
 EndProject
