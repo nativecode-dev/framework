@@ -75,9 +75,9 @@ namespace NativeCode.Core.Packages.Rabbit
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && this.Disposed == false)
+            if (disposing)
             {
-                this.Queue.Close();
+                this.Queue.QueueUnbind(this.QueueName, this.ExchangeName, this.RouteName);
             }
 
             base.Dispose(disposing);

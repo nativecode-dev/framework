@@ -110,10 +110,10 @@
             {
                 case MessageQueueType.Publisher:
                 case MessageQueueType.Subscriber:
-                    return $"{queueName}@{Environment.MachineName.ToLower()}:publications";
+                    return $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:publications";
 
                 default:
-                    return $"{queueName}@{Environment.MachineName.ToLower()}:inbox";
+                    return $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:inbox";
             }
         }
     }

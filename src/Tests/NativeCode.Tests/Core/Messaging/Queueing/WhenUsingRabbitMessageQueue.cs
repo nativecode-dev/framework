@@ -13,7 +13,7 @@
 
     public class WhenUsingRabbitMessageQueue : WhenTestingPlatform
     {
-        public static readonly Uri RabbitConnectionUrl = new Uri("amqp://testuser:p4ssw0rd@localhost/testing");
+        public static readonly Uri RabbitConnectionUrl = new Uri("amqp://testuser:p4ssw0rd@queue.nativecode.com:5672/testing");
 
         public WhenUsingRabbitMessageQueue()
         {
@@ -47,8 +47,8 @@
             using (var providerB = adapter.Connect<SimpleQueueMessage>(RabbitConnectionUrl, MessageQueueType.Transient))
             {
                 // Assert
-                Assert.Equal($"simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerA.QueueName);
-                Assert.Equal($"simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerB.QueueName);
+                Assert.Equal($"transient-simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerA.QueueName);
+                Assert.Equal($"transient-simple.queue.message@{Environment.MachineName.ToLower()}:inbox", providerB.QueueName);
             }
         }
     }

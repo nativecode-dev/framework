@@ -6,6 +6,7 @@
     using NativeCode.Core.Types;
 
     using RabbitMQ.Client;
+    using System.Collections.Generic;
 
     public class RabbitConnection : Disposable
     {
@@ -184,12 +185,12 @@
 
                 if (string.IsNullOrWhiteSpace(queue))
                 {
-                    var queuename = model.QueueDeclare(string.Empty, false, false).QueueName;
+                    var queuename = model.QueueDeclare(string.Empty, false, false, true).QueueName;
                     model.QueueBind(queuename, exchange, string.Empty);
                 }
                 else
                 {
-                    model.QueueDeclare(queue, durable, false, false, null);
+                    model.QueueDeclare(queue, durable, false, false);
                     model.QueueBind(queue, exchange, route);
                 }
 

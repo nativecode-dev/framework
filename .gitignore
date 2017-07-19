@@ -1,5 +1,4 @@
-*.ncrunchsolution
-
+.DS_Store
 packages/
 
 ## Ignore Visual Studio temporary files, build results, and
