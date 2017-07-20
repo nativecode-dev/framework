@@ -15,59 +15,23 @@
             this.Resolver(x => string.Equals(x, "UserId") ? "User Id" : null);
         }
 
-        public SqlServerConnectionString([NotNull] string connectionString)
-            : this()
+        public SqlServerConnectionString([NotNull] string connectionString) : this()
         {
             this.Parse(connectionString);
         }
 
-        public bool AsynchronousProcessing
-        {
-            get => this.GetValue<bool>();
+        public bool AsynchronousProcessing { get { return this.GetValue<bool>(); } set { this.SetValue(value); } }
 
-            set => this.SetValue(value);
-        }
+        public bool DataSource { get { return this.GetValue<bool>(); } set { this.SetValue(value); } }
 
-        public bool DataSource
-        {
-            get => this.GetValue<bool>();
+        public bool IntialCatalog { get { return this.GetValue<bool>(); } set { this.SetValue(value); } }
 
-            set => this.SetValue(value);
-        }
+        public bool IntegratedSecurity { get { return this.GetValue<bool>(); } set { this.SetValue(value); } }
 
-        public bool IntialCatalog
-        {
-            get => this.GetValue<bool>();
+        public bool MultipleActiveResultSets { get { return this.GetValue<bool>(); } set { this.SetValue(value); } }
 
-            set => this.SetValue(value);
-        }
+        public bool TrustedConnection { get { return this.GetValue<bool>(); } set { this.SetValue(value); } }
 
-        public bool IntegratedSecurity
-        {
-            get => this.GetValue<bool>();
-
-            set => this.SetValue(value);
-        }
-
-        public bool MultipleActiveResultSets
-        {
-            get => this.GetValue<bool>();
-
-            set => this.SetValue(value);
-        }
-
-        public bool TrustedConnection
-        {
-            get => this.GetValue<bool>();
-
-            set => this.SetValue(value);
-        }
-
-        public bool UserId
-        {
-            get => this.GetValue<bool>();
-
-            set => this.SetValue(value);
-        }
+        public bool UserId { get { return this.GetValue<bool>(); } set { this.SetValue(value); } }
     }
 }

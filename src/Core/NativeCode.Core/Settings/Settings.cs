@@ -5,8 +5,10 @@
     using System.IO;
     using System.Runtime.CompilerServices;
     using System.Text;
-    using Extensions;
+
     using JetBrains.Annotations;
+
+    using NativeCode.Core.Extensions;
 
     public abstract class Settings
     {
@@ -21,12 +23,7 @@
 
         protected string Prefix { get; set; }
 
-        public object this[string key]
-        {
-            get => this.ReadValue<object>(key);
-
-            set => this.WriteValue(key, value, true);
-        }
+        public object this[string key] { get { return this.ReadValue<object>(key); } set { this.WriteValue(key, value, true); } }
 
         public T GetValue<T>([NotNull] string name, T defaultValue = default(T), bool saveWhenDefault = false)
         {
@@ -63,8 +60,7 @@
 
         protected abstract IEnumerable<string> GetKeys();
 
-        protected T GetMemberValue<T>(T defaultValue = default(T), [CallerMemberName] string name = null,
-            bool saveWhenDefault = false)
+        protected T GetMemberValue<T>(T defaultValue = default(T), [CallerMemberName] string name = null, bool saveWhenDefault = false)
         {
             var key = this.GetPrefixKey(name);
             return this.GetValue(key, defaultValue, saveWhenDefault);

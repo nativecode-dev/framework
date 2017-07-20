@@ -1,14 +1,13 @@
 ﻿namespace NativeCode.Core.DotNet.Win32.Console
 {
-    using Structs;
-    using Types.Structs;
+    using NativeCode.Core.DotNet.Win32.Structs;
+    using NativeCode.Core.Types.Structs;
 
     public class BufferMap
     {
         private readonly BufferCell[] cells;
 
-        public BufferMap(Size size)
-            : this(size.Height, size.Width)
+        public BufferMap(Size size) : this(size.Height, size.Width)
         {
         }
 
@@ -24,12 +23,7 @@
 
         public int Width { get; }
 
-        public BufferCell this[int x, int y]
-        {
-            get => this.cells[this.Index(x, y)];
-
-            set => this.cells[this.Index(x, y)] = value;
-        }
+        public BufferCell this[int x, int y] { get { return this.cells[this.Index(x, y)]; } set { this.cells[this.Index(x, y)] = value; } }
 
         public CharInfo[] GetBuffer(int left, int top, int right, int bottom)
         {

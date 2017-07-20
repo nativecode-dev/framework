@@ -2,7 +2,8 @@
 {
     using System;
     using System.Web.Security;
-    using DotNet.Platform.Security.Authentication;
+
+    using NativeCode.Core.DotNet.Platform.Security.Authentication;
 
     public abstract class BaseMembershipProvider : MembershipProvider
     {
@@ -10,48 +11,40 @@
 
         public override string ApplicationName
         {
-            get => Global.Settings.GetValue("global.membership.application_name", default(string));
-
-            set => Global.Settings.SetValue("global.membership.application_name", value);
+            get { return Global.Settings.GetValue("global.membership.application_name", default(string)); }
+            set { Global.Settings.SetValue("global.membership.application_name", value); }
         }
 
-        public override bool EnablePasswordReset => Global.Settings.GetValue("global.membership.enable_password_reset",
-            false);
+        public override bool EnablePasswordReset => Global.Settings.GetValue("global.membership.enable_password_reset", false);
 
-        public override bool EnablePasswordRetrieval => Global.Settings.GetValue(
-            "global.membership.enable_password_retrieval", false);
+        public override bool EnablePasswordRetrieval => Global.Settings.GetValue("global.membership.enable_password_retrieval", false);
 
-        public override int MaxInvalidPasswordAttempts => Global.Settings.GetValue(
-            "global.membership.max_invalid_password_attempts", 5);
+        public override int MaxInvalidPasswordAttempts => Global.Settings.GetValue("global.membership.max_invalid_password_attempts", 5);
 
-        public override int MinRequiredNonAlphanumericCharacters => Global.Settings.GetValue(
-            "global.minimum_required_non_alphanumeric_character", 0);
+        public override int MinRequiredNonAlphanumericCharacters => Global.Settings.GetValue("global.minimum_required_non_alphanumeric_character", 0);
 
-        public override int MinRequiredPasswordLength => Global.Settings.GetValue(
-            "global.membership.minimum_required_password_length", 6);
+        public override int MinRequiredPasswordLength => Global.Settings.GetValue("global.membership.minimum_required_password_length", 6);
 
-        public override int PasswordAttemptWindow => Global.Settings.GetValue(
-            "global.membership.password_attempt_window", 5);
+        public override int PasswordAttemptWindow => Global.Settings.GetValue("global.membership.password_attempt_window", 5);
 
-        public override MembershipPasswordFormat PasswordFormat
-            => Global.Settings.GetValue("global.membership.password_format", MembershipPasswordFormat.Encrypted);
+        public override MembershipPasswordFormat PasswordFormat => Global.Settings.GetValue(
+            "global.membership.password_format",
+            MembershipPasswordFormat.Encrypted);
 
-        public override string PasswordStrengthRegularExpression
-            => Global.Settings.GetValue("global.membership.password_strength_regular_expression", default(string));
+        public override string PasswordStrengthRegularExpression => Global.Settings.GetValue(
+            "global.membership.password_strength_regular_expression",
+            default(string));
 
-        public override bool RequiresQuestionAndAnswer => Global.Settings.GetValue(
-            "global.membership.require_question_and_answer", false);
+        public override bool RequiresQuestionAndAnswer => Global.Settings.GetValue("global.membership.require_question_and_answer", false);
 
-        public override bool RequiresUniqueEmail => Global.Settings.GetValue("global.membership.requires_unique_email",
-            true);
+        public override bool RequiresUniqueEmail => Global.Settings.GetValue("global.membership.requires_unique_email", true);
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
             throw new NotSupportedException();
         }
 
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password,
-            string newPasswordQuestion, string newPasswordAnswer)
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
         {
             throw new NotSupportedException();
         }
@@ -74,14 +67,12 @@
             throw new NotSupportedException();
         }
 
-        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize,
-            out int totalRecords)
+        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotSupportedException();
         }
 
-        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize,
-            out int totalRecords)
+        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotSupportedException();
         }

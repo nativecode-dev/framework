@@ -2,7 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Settings;
+
+    using NativeCode.Core.Settings;
 
     public class RenderContext : JsonSettings
     {
@@ -12,39 +13,18 @@
         {
         }
 
-        public RenderContext(JsonSettings context)
-            : base(context)
+        public RenderContext(JsonSettings context) : base(context)
         {
         }
 
-        public bool DisableFlip
-        {
-            get => this.GetMemberValue(false);
-
-            set => this.SetMemberValue(value);
-        }
+        public bool DisableFlip { get { return this.GetMemberValue(false); } set { this.SetMemberValue(value); } }
 
         public List<Exception> Exceptions => this.GetMemberValue(this.exceptions);
 
-        public bool IsDirty
-        {
-            get => this.GetMemberValue(false);
+        public bool IsDirty { get { return this.GetMemberValue(false); } set { this.SetMemberValue(value); } }
 
-            set => this.SetMemberValue(value);
-        }
+        public DateTimeOffset LastRenderStart { get { return this.GetMemberValue(DateTimeOffset.UtcNow); } set { this.SetMemberValue(value); } }
 
-        public DateTimeOffset LastRenderStart
-        {
-            get => this.GetMemberValue(DateTimeOffset.UtcNow);
-
-            set => this.SetMemberValue(value);
-        }
-
-        public DateTimeOffset LastRenderStop
-        {
-            get => this.GetMemberValue(DateTimeOffset.UtcNow);
-
-            set => this.SetMemberValue(value);
-        }
+        public DateTimeOffset LastRenderStop { get { return this.GetMemberValue(DateTimeOffset.UtcNow); } set { this.SetMemberValue(value); } }
     }
 }
