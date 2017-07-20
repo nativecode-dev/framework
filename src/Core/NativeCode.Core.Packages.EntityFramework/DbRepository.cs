@@ -15,8 +15,8 @@
     /// <typeparam name="TContext">The type of the t context.</typeparam>
     /// <seealso cref="NativeCode.Core.Data.IRepository{TEntity}" />
     /// <seealso cref="NativeCode.Core.Data.IRepositoryContext{TContext}" />
-    /// <seealso cref="NativeCode.Core.Types.Disposable" />
-    public class DbRepository<TEntity, TContext> : Disposable, IRepository<TEntity>, IRepositoryContext<TContext>
+    /// <seealso cref="NativeCode.Core.Types.DisposableManager" />
+    public class DbRepository<TEntity, TContext> : DisposableManager, IRepository<TEntity>, IRepositoryContext<TContext>
         where TEntity : class, IEntity where TContext : DbContext, IDataContext
     {
         /// <summary>
@@ -26,9 +26,10 @@
         public DbRepository(TContext context)
         {
             this.DataContext = context;
+            this.EnsureDisposed(this.DataContext);
         }
 
-        public TContext DataContext { get; private set; }
+        public TContext DataContext { get; }
 
         public virtual TEntity Find<TKey>(TKey key) where TKey : struct
         {
@@ -48,22 +49,6 @@
         public IQueryable<T> Query<T>(Func<IQueryable<TEntity>, IQueryable<T>> query)
         {
             return query(this.DataContext.Set<TEntity>());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && !this.Disposed)
-            {
-                this.DataContext.Dispose();
-
-                if (this.DataContext != null)
-                {
-                    this.DataContext.Dispose();
-                    this.DataContext = null;
-                }
-            }
-
-            base.Dispose(disposing);
         }
     }
 }

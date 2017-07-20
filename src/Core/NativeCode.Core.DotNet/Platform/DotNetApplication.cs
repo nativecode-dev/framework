@@ -28,7 +28,7 @@
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex.Stringify());
+                Trace.WriteLine(ex.ToExceptionString());
                 throw;
             }
         }

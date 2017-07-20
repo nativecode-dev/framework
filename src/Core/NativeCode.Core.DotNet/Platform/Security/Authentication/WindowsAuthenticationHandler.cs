@@ -35,7 +35,7 @@
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Stringify());
+                Debug.WriteLine(ex.ToExceptionString());
                 result = AuthenticationResultType.Failed;
             }
 

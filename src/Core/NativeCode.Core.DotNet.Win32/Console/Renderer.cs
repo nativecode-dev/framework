@@ -71,7 +71,7 @@
             catch (Exception ex)
             {
                 this.Context.Exceptions.Add(ex);
-                Debug.WriteLine(ex.Stringify());
+                Debug.WriteLine(ex.ToExceptionString());
             }
             finally
             {

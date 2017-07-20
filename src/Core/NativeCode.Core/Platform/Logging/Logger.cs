@@ -29,7 +29,7 @@
 
         public void Exception<TException>(TException exception) where TException : Exception
         {
-            this.WriteLogMessage(LogMessageType.Debug, exception.Stringify());
+            this.WriteLogMessage(LogMessageType.Debug, exception.ToExceptionString());
         }
 
         public void Informational(string message)

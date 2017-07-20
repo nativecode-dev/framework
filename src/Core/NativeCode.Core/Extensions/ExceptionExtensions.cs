@@ -23,7 +23,7 @@
             return builder;
         }
 
-        public static string Stringify<TException>([NotNull] this TException exception, bool includeStackTrace = true)
+        public static string ToExceptionString<TException>([NotNull] this TException exception, bool includeStackTrace = true)
             where TException : Exception
         {
             return exception.CreateExceptionBuilder(includeStackTrace).ToString();

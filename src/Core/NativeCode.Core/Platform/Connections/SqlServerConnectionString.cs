@@ -24,49 +24,42 @@
         public bool AsynchronousProcessing
         {
             get => this.GetValue<bool>();
-
             set => this.SetValue(value);
         }
 
         public bool DataSource
         {
             get => this.GetValue<bool>();
-
             set => this.SetValue(value);
         }
 
         public bool IntialCatalog
         {
             get => this.GetValue<bool>();
-
             set => this.SetValue(value);
         }
 
         public bool IntegratedSecurity
         {
             get => this.GetValue<bool>();
-
             set => this.SetValue(value);
         }
 
         public bool MultipleActiveResultSets
         {
             get => this.GetValue<bool>();
-
             set => this.SetValue(value);
         }
 
         public bool TrustedConnection
         {
             get => this.GetValue<bool>();
-
             set => this.SetValue(value);
         }
 
         public bool UserId
         {
             get => this.GetValue<bool>();
-
             set => this.SetValue(value);
         }
     }
