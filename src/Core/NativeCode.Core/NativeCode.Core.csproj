@@ -1,211 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2BA5C42A-32EC-43DB-9AEC-A9323D354951}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NativeCode.Core</RootNamespace>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>NativeCode.Core</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <PackageId>NativeCode.Core</PackageId>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="Annotations\CodeAnnotationAttribute.cs" />
-    <Compile Include="Annotations\CodeRefactorAttribute.cs" />
-    <Compile Include="Annotations\CodeSmellAttribute.cs" />
-    <Compile Include="Extensions\AssemblyExtensions.cs" />
-    <Compile Include="Extensions\UriExtensions.cs" />
-    <Compile Include="Platform\Application.cs">
-      <DependentUpon>IApplication.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\FileSystem\FileInspector.cs">
-      <DependentUpon>IFileInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\FileSystem\IFileInspector.cs" />
-    <Compile Include="Platform\Logging\NullLogWriter.cs" />
-    <Compile Include="Platform\Messaging\Processing\IMessageConsumer.cs" />
-    <Compile Include="Platform\Messaging\Processing\IMessageProcessor.cs" />
-    <Compile Include="Platform\Messaging\Processing\MessageConsumer.cs">
-      <DependentUpon>IMessageConsumer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\Messaging\Processing\MessageProcessor.cs">
-      <DependentUpon>IMessageProcessor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\Messaging\Processing\MessageProcessorResult.cs" />
-    <Compile Include="Platform\Messaging\Queuing\IMessageQueueAdapter.cs" />
-    <Compile Include="Platform\Messaging\Queuing\IMessageQueueProvider.cs" />
-    <Compile Include="Platform\Messaging\Queuing\MessageQueueAdapter.cs">
-      <DependentUpon>IMessageQueueAdapter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\Messaging\Queuing\MessageQueueProvider.cs">
-      <DependentUpon>IMessageQueueProvider.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\Messaging\Queuing\MessageQueueType.cs" />
-    <Compile Include="Platform\Messaging\Queuing\MessageQueueResult.cs" />
-    <Compile Include="Platform\Connections\SqlServerConnectionString.cs" />
-    <Compile Include="Platform\FileSystem\IFileSystem.cs" />
-    <Compile Include="Platform\Maintenance\IMaintenanceProvider.cs" />
-    <Compile Include="Platform\Maintenance\MaintenanceProvider.cs" />
-    <Compile Include="Platform\Maintenance\MaintenanceIgnoreAttribute.cs" />
-    <Compile Include="Platform\Platform.cs">
-      <DependentUpon>IPlatform.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\Security\Authentication\AuthenticationProvider.cs" />
-    <Compile Include="Platform\Security\Authentication\IAuthenticationProvider.cs" />
-    <Compile Include="Platform\Security\Authorization\Exceptions\AuthorizationAssertionException.cs" />
-    <Compile Include="Platform\Security\Authorization\ISecurityEvaluator.cs" />
-    <Compile Include="Platform\Security\Authorization\ISecurityEvaluatorContext.cs" />
-    <Compile Include="Platform\Security\Authorization\ISecurityStringParser.cs" />
-    <Compile Include="Platform\Security\Authorization\SecurityToken.cs" />
-    <Compile Include="Platform\Security\Authorization\Types\Feature.cs" />
-    <Compile Include="Platform\Security\Authorization\IAuthorizationProvider.cs" />
-    <Compile Include="Platform\Security\Authorization\Types\Permission.cs" />
-    <Compile Include="Platform\Security\Authorization\Types\Role.cs" />
-    <Compile Include="Caching\ICache.cs" />
-    <Compile Include="Caching\SafeCache.cs" />
-    <Compile Include="Dependencies\Attributes\IgnoreDependencyAttribute.cs" />
-    <Compile Include="Dependencies\DependencyContainer.cs">
-      <DependentUpon>IDependencyContainer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dependencies\DependencyLocator.cs" />
-    <Compile Include="Dependencies\DependencyModule.cs">
-      <DependentUpon>IDependencyModule.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dependencies\DependencyRegistrar.cs">
-      <DependentUpon>IDependencyRegistrar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dependencies\DependencyResolver.cs">
-      <DependentUpon>IDependencyResolver.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dependencies\Exceptions\DependencyException.cs" />
-    <Compile Include="Dependencies\Exceptions\DependencyResolveException.cs" />
-    <Compile Include="Dependencies\Fluent\DependencyBuilder.cs" />
-    <Compile Include="Exceptions\FrameworkException.cs" />
-    <Compile Include="Extensions\CharExtensions.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\PrincipalExtensions.cs" />
-    <Compile Include="Extensions\StreamExtensions.cs" />
-    <Compile Include="Extensions\StructExtensions.cs" />
-    <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="Localization\Translation\Attributes\IgnoreTranslateAttribute.cs" />
-    <Compile Include="Localization\Translation\Attributes\TranslateAttribute.cs" />
-    <Compile Include="Localization\Translation\IObjectTranslator.cs" />
-    <Compile Include="Localization\Translation\ObjectTranslator.cs" />
-    <Compile Include="Platform\Security\KeyManagement\KeyManager.cs" />
-    <Compile Include="Platform\Security\KeyManagement\IKeyManager.cs" />
-    <Compile Include="Platform\Serialization\LowerScoreContractResolver.cs" />
-    <Compile Include="Types\CancellationTokenManager.cs">
-      <DependentUpon>ICancellationTokenManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Types\Credentials.cs" />
-    <Compile Include="Types\DisposableManager.cs" />
-    <Compile Include="Types\ICancellationTokenManager.cs" />
-    <Compile Include="Types\LazyFactory.cs" />
-    <Compile Include="Types\Retry.cs" />
-    <Compile Include="Localization\Translation\TranslationProvider.cs">
-      <DependentUpon>ITranslationProvider.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Localization\Translation\Translator.cs">
-      <DependentUpon>ITranslator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Platform\Logging\Logger.cs">
-      <DependentUpon>ILogger.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CoreDependencies.cs" />
-    <Compile Include="Dependencies\Attributes\DependencyAttribute.cs" />
-    <Compile Include="Dependencies\Attributes\OverrideKeyAttribute.cs" />
-    <Compile Include="Dependencies\Attributes\OverrideLifetimeAttribute.cs" />
-    <Compile Include="Dependencies\Enums\DependencyKey.cs" />
-    <Compile Include="Dependencies\Enums\DependencyLifetime.cs" />
-    <Compile Include="Dependencies\Enums\DependencyModulePriority.cs" />
-    <Compile Include="Dependencies\IDependencyContainer.cs" />
-    <Compile Include="Dependencies\IDependencyModule.cs" />
-    <Compile Include="Dependencies\IDependencyRegistrar.cs" />
-    <Compile Include="Dependencies\IDependencyResolver.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\ExceptionExtensions.cs" />
-    <Compile Include="Extensions\GuidExtensions.cs" />
-    <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Platform\IApplication.cs" />
-    <Compile Include="Localization\Translation\ITranslationProvider.cs" />
-    <Compile Include="Localization\Translation\ITranslator.cs" />
-    <Compile Include="Platform\Logging\ILogger.cs" />
-    <Compile Include="Platform\Logging\ILogWriter.cs" />
-    <Compile Include="Platform\Logging\LogMessageType.cs" />
-    <Compile Include="Platform\Security\ApplicationIdentity.cs" />
-    <Compile Include="Platform\IPlatform.cs" />
-    <Compile Include="Platform\Security\ApplicationPrincipal.cs" />
-    <Compile Include="Platform\Security\Authorization\IHmacSettingsProvider.cs" />
-    <Compile Include="Platform\Security\UserLoginName.cs" />
-    <Compile Include="Platform\Security\UserLoginNameFormat.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Platform\Security\Authentication\AuthenticationResult.cs" />
-    <Compile Include="Platform\Security\Authentication\AuthenticationResultType.cs" />
-    <Compile Include="Platform\Security\Authentication\IAuthenticationHandler.cs" />
-    <Compile Include="Platform\Connections\IConnectionStringProvider.cs" />
-    <Compile Include="Platform\Serialization\IStringSerializer.cs" />
-    <Compile Include="Platform\Serialization\JsonStringSerializer.cs" />
-    <Compile Include="Settings\JsonSettings.cs" />
-    <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Platform\Connections\ConnectionString.cs" />
-    <Compile Include="Types\Disposable.cs" />
-    <Compile Include="Types\DisposableAction.cs" />
-    <Compile Include="Types\StreamMonitor.cs" />
-    <Compile Include="Types\StreamMonitorEventArgs.cs" />
-    <Compile Include="Types\Structs\BoundsClamp.cs" />
-    <Compile Include="Types\Structs\Position.cs" />
-    <Compile Include="Types\Structs\Bounds.cs" />
-    <Compile Include="Types\Structs\Size.cs" />
-    <Compile Include="Validation\IObjectValidator.cs" />
-    <Compile Include="Validation\StringComplexityRules.cs" />
-    <Compile Include="Validation\StringComplexityAttribute.cs" />
-    <Compile Include="Validation\StringComplexityValidator.cs" />
+    <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Polly" Version="5.2.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
+    <PackageReference Include="System.Security.Principal" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="NativeCode.Core.nuspec" />
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <PropertyGroup>
-    <NuGetTargetMoniker>.NETStandard,Version=v1.6</NuGetTargetMoniker>
-  </PropertyGroup>
+
 </Project>

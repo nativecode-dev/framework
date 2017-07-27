@@ -10,7 +10,7 @@
 
             try
             {
-                return (T) Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T));
+                return (T) Marshal.PtrToStructure<T>(handle.AddrOfPinnedObject());
             }
             finally
             {
@@ -39,7 +39,7 @@
 
         public static int GetSize<T>() where T : struct
         {
-            return Marshal.SizeOf(typeof(T));
+            return Marshal.SizeOf<T>();
         }
     }
 }

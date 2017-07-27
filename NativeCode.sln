@@ -1,9 +1,8 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core", "src\Core\NativeCode.Core\NativeCode.Core.csproj", "{2BA5C42A-32EC-43DB-9AEC-A9323D354951}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeCode.Core", "src\Core\NativeCode.Core\NativeCode.Core.csproj", "{2BA5C42A-32EC-43DB-9AEC-A9323D354951}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Tests", "src\Tests\NativeCode.Tests\NativeCode.Tests.csproj", "{40D8575D-34A0-4B80-87CA-301BC6E19350}"
 EndProject
@@ -23,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Web.AspNet.Mvc",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Web", "src\Core\NativeCode.Core.Web\NativeCode.Core.Web.csproj", "{DDAD0473-9C03-41C1-9BE5-54F94EF9D324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Data", "src\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj", "{A872F951-9C26-4380-BD6D-ECBCB03E699D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeCode.Core.Data", "src\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj", "{A872F951-9C26-4380-BD6D-ECBCB03E699D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Owin", "src\Core\NativeCode.Core.Packages.Owin\NativeCode.Core.Packages.Owin.csproj", "{0FA3BE6D-A16E-4878-ACA6-E09CECC3646E}"
 EndProject
@@ -40,6 +39,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.EntityFramework", "src\Core\NativeCode.Core.Packages.EntityFramework\NativeCode.Core.Packages.EntityFramework.csproj", "{10015B10-A96F-4477-B00F-FD462D1B20C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Packages.Unity", "src\Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj", "{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Console.Tests", "src\Tests\NativeCode.Console.Tests\NativeCode.Console.Tests.csproj", "{6C3DD658-1F85-4ECE-A437-FCB672FA67F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +96,10 @@ Global
 		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C3DD658-1F85-4ECE-A437-FCB672FA67F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C3DD658-1F85-4ECE-A437-FCB672FA67F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C3DD658-1F85-4ECE-A437-FCB672FA67F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C3DD658-1F85-4ECE-A437-FCB672FA67F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,5 +110,6 @@ Global
 		{6ACFCA6E-573B-4852-AA79-72A43F38CC81} = {E11C5D6A-8678-407A-B178-D39D8FA618F3}
 		{10015B10-A96F-4477-B00F-FD462D1B20C6} = {E11C5D6A-8678-407A-B178-D39D8FA618F3}
 		{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6} = {E11C5D6A-8678-407A-B178-D39D8FA618F3}
+		{6C3DD658-1F85-4ECE-A437-FCB672FA67F7} = {BC966123-4BA8-49EF-9344-EDDB7F3CD6ED}
 	EndGlobalSection
 EndGlobal
