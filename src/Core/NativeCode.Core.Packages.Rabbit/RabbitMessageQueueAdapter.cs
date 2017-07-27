@@ -109,8 +109,7 @@
             {
                 case MessageQueueType.Publisher:
                 case MessageQueueType.Subscriber:
-                    return
-                        $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:publications";
+                    return $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:publications";
 
                 default:
                     return $"{queueType.ToString().ToLower()}-{queueName}@{Environment.MachineName.ToLower()}:inbox";

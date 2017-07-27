@@ -15,8 +15,7 @@
             this.Resolver(x => string.Equals(x, "UserId") ? "User Id" : null);
         }
 
-        public SqlServerConnectionString([NotNull] string connectionString)
-            : this()
+        public SqlServerConnectionString([NotNull] string connectionString) : this()
         {
             this.Parse(connectionString);
         }

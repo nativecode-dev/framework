@@ -5,6 +5,7 @@
     using System.Dynamic;
     using System.Linq;
     using System.Runtime.CompilerServices;
+
     using JetBrains.Annotations;
 
     public class ConnectionString : DynamicObject
@@ -34,8 +35,7 @@
 
         public object this[string key]
         {
-            get => this.members.ContainsKey(key) ? this.members[key] : default(object);
-
+            get { return this.members.ContainsKey(key) ? this.members[key] : default(object); }
             set
             {
                 if (this.members.ContainsKey(key))
@@ -107,7 +107,7 @@
 
         protected T GetValue<T>([CallerMemberName] string key = null)
         {
-            return (T) this[this.Resolve(key)];
+            return (T)this[this.Resolve(key)];
         }
 
         protected void Resolver(Func<string, string> resolver)
