@@ -15,13 +15,14 @@
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.2" />
   </ItemGroup>
-
+<!--
   <ItemGroup>
     <Reference Include="System.ComponentModel.Annotations">
       <HintPath>C:\Users\mpham.NATIVECODE\.nuget\packages\System.ComponentModel.Annotations\4.3.0\ref\netstandard1.4\System.ComponentModel.Annotations.dll</HintPath>
@@ -30,5 +31,5 @@
       <HintPath>C:\Users\mpham.NATIVECODE\.nuget\packages\System.Security.Principal\4.3.0\ref\netstandard1.0\System.Security.Principal.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+-->
 </Project>
