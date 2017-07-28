@@ -21,19 +21,9 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
     <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.2" />
-    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.ComponentModel.Annotations">
-      <HintPath>..\..\..\packages\System.ComponentModel.Annotations\4.3.0\ref\netstandard1.4\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal">
-      <HintPath>..\..\..\packages\System.Security.Principal\4.3.0\ref\netstandard1.0\System.Security.Principal.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@
     using Platform;
     using Platform.Connections;
 
-    public abstract class DbContextFactory<TDataContext> : IDbContextFactory<TDataContext>
+    public abstract class DbDataContextFactory<TDataContext> : IDbContextFactory<TDataContext>
         where TDataContext : DbDataContext
     {
         public TDataContext Create()

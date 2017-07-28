@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,10 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj" />
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj" />
     <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Rabbit\NativeCode.Core.Packages.Rabbit.csproj" />
-    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj" />
     <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj" />
+    <ProjectReference Include="..\Cavern.Core.Data\Cavern.Core.Data.csproj" />
+    <ProjectReference Include="..\Cavern.Core.Models\Cavern.Core.Models.csproj" />
+    <ProjectReference Include="..\Cavern.Core\Cavern.Core.csproj" />
   </ItemGroup>
 
 </Project>
