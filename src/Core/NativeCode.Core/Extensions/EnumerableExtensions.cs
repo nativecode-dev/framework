@@ -7,9 +7,10 @@
 
     public static class EnumerableExtensions
     {
-        public static T Get<T>(this object[] collection, int index, T defaultValue = default(T))
+        [CanBeNull]
+        public static T Get<T>([NotNull] this IEnumerable<object> collection, int index, T defaultValue = default(T))
         {
-            var value = collection.ElementAtOrDefault(index);
+            var value = collection.ElementAt(index);
 
             if (Equals(value, defaultValue) == false)
                 return (T) value;
@@ -17,12 +18,20 @@
             return defaultValue;
         }
 
-        public static T SafeGet<T>(this IEnumerable<T> collection, int index, T defaultValue = default(T))
+        [NotNull]
+        public static T SafeGet<T>([NotNull] this IEnumerable<T> collection, int index, T defaultValue = default(T))
         {
-            var value = collection.ElementAtOrDefault(index);
+            try
+            {
+                var value = collection.ElementAtOrDefault(index);
 
-            if (Equals(value, defaultValue) == false)
-                return value;
+                if (Equals(value, defaultValue) == false)
+                    return value;
+            }
+            catch
+            {
+                return defaultValue;
+            }
 
             return defaultValue;
         }

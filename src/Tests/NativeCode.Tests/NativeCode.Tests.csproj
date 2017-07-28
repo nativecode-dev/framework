@@ -110,27 +110,22 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Core\Dependencies\WhenNestingContainers.cs" />
-    <Compile Include="Core\Extensions\WhenUsingExceptionExtensions.cs" />
-    <Compile Include="Core\Extensions\WhenUsingEnumerableExtensions.cs" />
-    <Compile Include="Core\Extensions\WhenUsingGuidExtensions.cs" />
-    <Compile Include="Core\Extensions\WhenUsingObjectExtensions.cs" />
-    <Compile Include="Core\Extensions\WhenUsingStringExtensions.cs" />
-    <Compile Include="Core\Extensions\WhenUsingStructExtensions.cs" />
-    <Compile Include="Core\Extensions\WhenUsingTypeExtensions.cs" />
-    <Compile Include="Core\Messaging\Queueing\SimpleQueueMessage.cs" />
-    <Compile Include="Core\Messaging\Queueing\WhenUsingRabbitMessageQueue.cs" />
-    <Compile Include="Core\Settings\WhenUsingJsonSettingsReader.cs" />
-    <Compile Include="Core\Types\WhenUsingSqlServerConnectionStrings.cs" />
-    <Compile Include="Core\Types\WhenUsingDisposableAction.cs" />
-    <Compile Include="Core\WhenUsingCancellationTokenManager.cs" />
-    <Compile Include="DependencyFixture.cs" />
+    <Compile Include="Dependencies\WhenNestingContainers.cs" />
+    <Compile Include="Extensions\WhenUsingExceptionExtensions.cs" />
+    <Compile Include="Extensions\WhenUsingEnumerableExtensions.cs" />
+    <Compile Include="Extensions\WhenUsingGuidExtensions.cs" />
+    <Compile Include="Extensions\WhenUsingObjectExtensions.cs" />
+    <Compile Include="Extensions\WhenUsingStringExtensions.cs" />
+    <Compile Include="Extensions\WhenUsingStructExtensions.cs" />
+    <Compile Include="Extensions\WhenUsingTypeExtensions.cs" />
+    <Compile Include="Messaging\Queueing\SimpleQueueMessage.cs" />
+    <Compile Include="Messaging\Queueing\WhenUsingRabbitMessageQueue.cs" />
+    <Compile Include="Settings\WhenUsingJsonSettingsReader.cs" />
+    <Compile Include="Types\WhenUsingSqlServerConnectionStrings.cs" />
+    <Compile Include="Types\WhenUsingDisposableAction.cs" />
+    <Compile Include="WhenUsingCancellationTokenManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WhenTesting.cs" />
-    <Compile Include="WhenTestingApplication.cs" />
-    <Compile Include="WhenTestingDependencies.cs" />
-    <Compile Include="WhenTestingPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
@@ -156,6 +151,10 @@
     <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
       <Name>NativeCode.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NativeCode.Testing\NativeCode.Testing.csproj">
+      <Project>{7ae79c59-1653-47d8-8c57-8488cef73e3c}</Project>
+      <Name>NativeCode.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
