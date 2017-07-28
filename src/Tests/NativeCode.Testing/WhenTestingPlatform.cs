@@ -1,5 +1,6 @@
 ﻿namespace NativeCode.Testing
 {
+    using Core.DotNet.Platform;
     using Core.Platform;
 
     public abstract class WhenTestingPlatform : WhenTestingDependencies

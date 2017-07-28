@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj" />
     <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj" />
   </ItemGroup>
 

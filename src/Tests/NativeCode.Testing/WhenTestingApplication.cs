@@ -1,6 +1,9 @@
 ﻿namespace NativeCode.Testing
 {
     using Core;
+    using Core.DotNet;
+    using Core.DotNet.Platform;
+    using Core.Packages.Rabbit;
     using Core.Platform;
     using Core.Settings;
 

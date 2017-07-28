@@ -153,7 +153,7 @@
       <Name>NativeCode.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\NativeCode.Testing\NativeCode.Testing.csproj">
-      <Project>{7ae79c59-1653-47d8-8c57-8488cef73e3c}</Project>
+      <Project>{7e93c0a1-f2cb-4730-95ab-1e1694d3528b}</Project>
       <Name>NativeCode.Testing</Name>
     </ProjectReference>
   </ItemGroup>

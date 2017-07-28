@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using Core.Dependencies;
     using Core.Dependencies.Enums;
+    using Core.DotNet.Logging;
+    using Core.Packages.Unity;
     using Core.Platform.Logging;
 
     public abstract class WhenTestingDependencies : WhenTesting
