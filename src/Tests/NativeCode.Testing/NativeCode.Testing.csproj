@@ -33,12 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyFixture.cs" />
@@ -52,10 +46,6 @@
     <None Include="NativeCode.Testing.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
-      <Project>{a872f951-9c26-4380-bd6d-ecbcb03e699d}</Project>
-      <Name>NativeCode.Core.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Core\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj">
       <Project>{ec619b91-b1da-4893-8ad6-2d8a2d54b853}</Project>
       <Name>NativeCode.Core.DotNet</Name>
