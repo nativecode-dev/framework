@@ -44,21 +44,32 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILoginService.cs" />
+    <Compile Include="ScraperKernel.cs" />
+    <Compile Include="ScraperService.cs" />
+    <Compile Include="Security\ILoginService.cs" />
     <Compile Include="IService.cs" />
-    <Compile Include="LoginService.cs" />
+    <Compile Include="Security\IUserService.cs" />
+    <Compile Include="Security\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScraperContextService.cs" />
-    <Compile Include="UserService.cs" />
+    <Compile Include="ScraperDataService.cs" />
+    <Compile Include="Security\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
       <Project>{a872f951-9c26-4380-bd6d-ecbcb03e699d}</Project>
       <Name>NativeCode.Core.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj">
+      <Project>{EC619B91-B1DA-4893-8AD6-2D8A2D54B853}</Project>
+      <Name>NativeCode.Core.DotNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.EntityFramework\NativeCode.Core.Packages.EntityFramework.csproj">
       <Project>{10015B10-A96F-4477-B00F-FD462D1B20C6}</Project>
       <Name>NativeCode.Core.Packages.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj">
+      <Project>{1BC8EA4D-9A80-47FC-B393-30101F9DEBC6}</Project>
+      <Name>NativeCode.Core.Packages.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>

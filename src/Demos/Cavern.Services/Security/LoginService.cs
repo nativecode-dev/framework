@@ -1,4 +1,4 @@
-﻿namespace Cavern.Services
+﻿namespace Cavern.Services.Security
 {
     using System;
     using System.Data.Entity;
@@ -14,7 +14,7 @@
     using ApplicationIdentity = NativeCode.Core.Platform.Security.ApplicationIdentity;
 
     [Dependency(typeof(ILoginService))]
-    public class LoginService : ScraperContextService<Login>, ILoginService
+    public class LoginService : ScraperDataService<Login>, ILoginService
     {
         private readonly ICryptographer cryptographer;
 

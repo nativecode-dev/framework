@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,8 +30,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=11.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JetBrains.Annotations.11.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -43,16 +49,14 @@
     <Compile Include="WhenTestingPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="NativeCode.Testing.nuspec" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\NativeCode.Core.DotNet\NativeCode.Core.DotNet.csproj">
       <Project>{ec619b91-b1da-4893-8ad6-2d8a2d54b853}</Project>
       <Name>NativeCode.Core.DotNet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Rabbit\NativeCode.Core.Packages.Rabbit.csproj">
-      <Project>{6acfca6e-573b-4852-aa79-72a43f38cc81}</Project>
-      <Name>NativeCode.Core.Packages.Rabbit</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.Unity\NativeCode.Core.Packages.Unity.csproj">
       <Project>{1bc8ea4d-9a80-47fc-b393-30101f9debc6}</Project>

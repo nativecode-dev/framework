@@ -1,7 +1,6 @@
 ﻿namespace Cavern.Data
 {
     using System.Data.Entity;
-    using NativeCode.Core.Data;
     using NativeCode.Core.Dependencies.Attributes;
     using NativeCode.Core.Packages.EntityFramework;
     using NativeCode.Core.Platform;
@@ -9,9 +8,8 @@
     using Scraping;
     using Security;
 
-    [Dependency(typeof(IDataContext))]
-    [Dependency(typeof(ScraperContext))]
-    public class ScraperContext : DbDataContext
+    [Dependency(typeof(IScraperContext))]
+    public class ScraperContext : DbDataContext, IScraperContext
     {
         public ScraperContext(IConnectionStringProvider provider, IPlatform platform) : base(provider, platform)
         {

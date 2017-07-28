@@ -17,6 +17,7 @@
 
         public WhenUsingRabbitMessageQueue()
         {
+            RabbitDependencies.Instance.RegisterDependencies(this.Container.Registrar);
             this.Container.Registrar.Register<ILogWriter, TraceLogWriter>(DependencyKey.QualifiedName);
             this.Container.Registrar.Register<IStringSerializer, JsonStringSerializer>();
         }

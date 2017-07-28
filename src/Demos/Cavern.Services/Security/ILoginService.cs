@@ -1,4 +1,4 @@
-﻿namespace Cavern.Services
+﻿namespace Cavern.Services.Security
 {
     using System.Threading;
     using System.Threading.Tasks;

@@ -45,6 +45,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IScraperContext.cs" />
     <Compile Include="Scraping\Scraper.cs" />
     <Compile Include="Scraping\ScraperField.cs" />
     <Compile Include="Scraping\ScraperForm.cs" />
