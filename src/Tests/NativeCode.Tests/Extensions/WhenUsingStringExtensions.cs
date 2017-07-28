@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Tests.Core.Extensions
+﻿namespace NativeCode.Tests.Extensions
 {
     using NativeCode.Core.Extensions;
     using Xunit;

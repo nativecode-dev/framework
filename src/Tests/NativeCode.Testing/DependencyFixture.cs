@@ -1,8 +1,7 @@
-namespace NativeCode.Tests
+namespace NativeCode.Testing
 {
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Packages.Unity;
-    using NativeCode.Core.Types;
+    using Core.Dependencies;
+    using Core.Types;
 
     public class DependencyFixture : Disposable
     {

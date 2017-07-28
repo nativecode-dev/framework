@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Tests.Core.Messaging.Queueing
+﻿namespace NativeCode.Tests.Messaging.Queueing
 {
     using System;
     using NativeCode.Core.Dependencies.Enums;
@@ -7,6 +7,7 @@
     using NativeCode.Core.Platform.Logging;
     using NativeCode.Core.Platform.Messaging.Queuing;
     using NativeCode.Core.Platform.Serialization;
+    using Testing;
     using Xunit;
 
     public class WhenUsingRabbitMessageQueue : WhenTestingPlatform

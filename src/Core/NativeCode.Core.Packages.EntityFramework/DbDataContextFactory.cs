@@ -24,7 +24,7 @@
 
                 return this.CreateDataContext(provider, platform);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 container?.Dispose();
                 platform?.Dispose();

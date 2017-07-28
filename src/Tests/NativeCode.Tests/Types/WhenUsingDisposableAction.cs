@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Tests.Core.Types
+﻿namespace NativeCode.Tests.Types
 {
     using NativeCode.Core.Types;
     using Xunit;

@@ -1,11 +1,8 @@
-﻿namespace NativeCode.Tests
+﻿namespace NativeCode.Testing
 {
-    using NativeCode.Core;
-    using NativeCode.Core.DotNet;
-    using NativeCode.Core.DotNet.Platform;
-    using NativeCode.Core.Packages.Rabbit;
-    using NativeCode.Core.Platform;
-    using NativeCode.Core.Settings;
+    using Core;
+    using Core.Platform;
+    using Core.Settings;
 
     public abstract class WhenTestingApplication : WhenTestingPlatform
     {

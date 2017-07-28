@@ -1,4 +1,4 @@
-namespace NativeCode.Tests.Core.Messaging.Queueing
+namespace NativeCode.Tests.Messaging.Queueing
 {
     using System;
 

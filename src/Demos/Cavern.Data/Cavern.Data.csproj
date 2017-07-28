@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D931F81-9BAD-4866-82CB-A5A128A27BFF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cavern.Data</RootNamespace>
+    <AssemblyName>Cavern.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=11.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\JetBrains.Annotations.11.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Scraping\Scraper.cs" />
+    <Compile Include="Scraping\ScraperField.cs" />
+    <Compile Include="Scraping\ScraperForm.cs" />
+    <Compile Include="Scraping\ScraperFormField.cs" />
+    <Compile Include="Scraping\ScraperFormFieldType.cs" />
+    <Compile Include="Scraping\ScraperFormType.cs" />
+    <Compile Include="Scraping\ScraperMapping.cs" />
+    <Compile Include="Scraping\ScraperProfile.cs" />
+    <Compile Include="Scraping\ScraperQuery.cs" />
+    <Compile Include="Scraping\ScraperTask.cs" />
+    <Compile Include="Scraping\ScraperTaskDefinition.cs" />
+    <Compile Include="Scraping\ScraperType.cs" />
+    <Compile Include="Scraping\ScraperValueType.cs" />
+    <Compile Include="Security\Login.cs" />
+    <Compile Include="Security\LoginHistory.cs" />
+    <Compile Include="Security\LoginType.cs" />
+    <Compile Include="Security\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScraperContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Data\NativeCode.Core.Data.csproj">
+      <Project>{a872f951-9c26-4380-bd6d-ecbcb03e699d}</Project>
+      <Name>NativeCode.Core.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\NativeCode.Core.Packages.EntityFramework\NativeCode.Core.Packages.EntityFramework.csproj">
+      <Project>{10015b10-a96f-4477-b00f-fd462d1b20c6}</Project>
+      <Name>NativeCode.Core.Packages.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj">
+      <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
+      <Name>NativeCode.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

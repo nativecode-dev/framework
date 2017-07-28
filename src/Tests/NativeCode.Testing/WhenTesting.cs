@@ -1,6 +1,6 @@
-﻿namespace NativeCode.Tests
+﻿namespace NativeCode.Testing
 {
-    using NativeCode.Core.Types;
+    using Core.Types;
 
     public abstract class WhenTesting : DisposableManager
     {

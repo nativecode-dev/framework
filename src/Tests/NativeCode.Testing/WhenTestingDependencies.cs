@@ -1,11 +1,9 @@
-﻿namespace NativeCode.Tests
+﻿namespace NativeCode.Testing
 {
     using System.Collections.Generic;
-    using NativeCode.Core.Dependencies;
-    using NativeCode.Core.Dependencies.Enums;
-    using NativeCode.Core.DotNet.Logging;
-    using NativeCode.Core.Packages.Unity;
-    using NativeCode.Core.Platform.Logging;
+    using Core.Dependencies;
+    using Core.Dependencies.Enums;
+    using Core.Platform.Logging;
 
     public abstract class WhenTestingDependencies : WhenTesting
     {

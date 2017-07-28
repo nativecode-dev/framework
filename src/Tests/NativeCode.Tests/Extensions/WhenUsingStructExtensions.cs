@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Tests.Core.Extensions
+﻿namespace NativeCode.Tests.Extensions
 {
     using System.Runtime.InteropServices;
     using NativeCode.Core.Extensions;

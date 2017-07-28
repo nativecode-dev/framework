@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Tests.Core.Settings
+﻿namespace NativeCode.Tests.Settings
 {
     using System;
     using System.Linq;

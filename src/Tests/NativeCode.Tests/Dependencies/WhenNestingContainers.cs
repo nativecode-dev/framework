@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Tests.Core.Dependencies
+﻿namespace NativeCode.Tests.Dependencies
 {
     using NativeCode.Core.Packages.Unity;
     using NativeCode.Core.Types;

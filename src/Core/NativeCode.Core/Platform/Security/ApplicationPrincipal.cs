@@ -1,7 +1,9 @@
 ﻿namespace NativeCode.Core.Platform.Security
 {
     using System.Security.Principal;
+    using Dependencies.Attributes;
 
+    [IgnoreDependency("Not designed to be injectible.")]
     public sealed class ApplicationPrincipal : IPrincipal
     {
         /// <summary>
