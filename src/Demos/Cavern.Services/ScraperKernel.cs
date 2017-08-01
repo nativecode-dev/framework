@@ -1,11 +1,12 @@
 ﻿namespace Cavern.Services
 {
+    using JetBrains.Annotations;
     using NativeCode.Core.Platform;
     using NativeCode.Core.Settings;
 
     public class ScraperKernel : Application
     {
-        public ScraperKernel(IPlatform platform) : base(platform, new JsonSettings())
+        public ScraperKernel([NotNull] IPlatform platform) : base(platform, new JsonSettings())
         {
         }
     }

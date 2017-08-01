@@ -1,5 +1,6 @@
 ﻿namespace Cavern.Services
 {
+    using JetBrains.Annotations;
     using NativeCode.Core.Dependencies;
     using NativeCode.Core.DotNet.Platform;
     using NativeCode.Core.Packages.Unity;
@@ -11,6 +12,7 @@
         {
         }
 
+        [NotNull]
         private static IPlatform CreateDefaultPlatform()
         {
             IDependencyContainer container = new UnityDependencyContainer();

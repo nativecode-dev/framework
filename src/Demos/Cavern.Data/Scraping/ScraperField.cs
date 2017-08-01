@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Common;
     using NativeCode.Core.Data;
 
     /// <summary>

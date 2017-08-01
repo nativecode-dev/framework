@@ -51,7 +51,6 @@
     <Compile Include="Security\IUserService.cs" />
     <Compile Include="Security\LoginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScraperDataService.cs" />
     <Compile Include="Security\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +73,10 @@
     <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
       <Name>NativeCode.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cavern.Common\Cavern.Common.csproj">
+      <Project>{d475e2b4-da93-4dc1-9ada-a68e4da7b766}</Project>
+      <Name>Cavern.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Cavern.Data\Cavern.Data.csproj">
       <Project>{2d931f81-9bad-4866-82cb-a5a128a27bff}</Project>

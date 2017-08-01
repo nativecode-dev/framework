@@ -1,4 +1,4 @@
-﻿namespace Cavern.Data.Scraping
+﻿namespace Cavern.Common
 {
     public enum ScraperType
     {

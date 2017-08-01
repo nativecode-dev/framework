@@ -36,8 +36,16 @@
 
         public override IPrincipal GetCurrentPrincipal()
         {
-            if (string.IsNullOrWhiteSpace(Thread.CurrentPrincipal.Identity.Name))
-                return new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            if (string.IsNullOrWhiteSpace(Thread.CurrentPrincipal?.Identity?.Name))
+                try
+                {
+                    return new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                }
+                catch
+                {
+                    // Whelp, let's give up because GetCurrent failed the call.
+                    // We don't need no stinkin' exceptions!
+                }
 
             return Thread.CurrentPrincipal;
         }

@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using Common;
     using Data;
     using Data.Security;
     using NativeCode.Core.Dependencies.Attributes;
@@ -66,9 +67,9 @@
 
             AuthenticationResult result;
 
-            if (cipher.SequenceEqual(user.Login.PasswordHash))
+            if (cipher.Length == user.Login.PasswordHash.Length && cipher.SequenceEqual(user.Login.PasswordHash))
             {
-                var identity = new ApplicationIdentity(username, "password");
+                var identity = new ApplicationIdentity(username, user.Login.LoginType.ToString());
                 var principal = new ApplicationPrincipal(identity);
                 result = new AuthenticationResult(AuthenticationResultType.Authenticated, principal);
             }

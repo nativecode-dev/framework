@@ -46,22 +46,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IScraperContext.cs" />
+    <Compile Include="ScraperDataService.cs" />
     <Compile Include="Scraping\Scraper.cs" />
     <Compile Include="Scraping\ScraperField.cs" />
     <Compile Include="Scraping\ScraperForm.cs" />
     <Compile Include="Scraping\ScraperFormField.cs" />
-    <Compile Include="Scraping\ScraperFormFieldType.cs" />
-    <Compile Include="Scraping\ScraperFormType.cs" />
     <Compile Include="Scraping\ScraperMapping.cs" />
     <Compile Include="Scraping\ScraperProfile.cs" />
     <Compile Include="Scraping\ScraperQuery.cs" />
     <Compile Include="Scraping\ScraperTask.cs" />
     <Compile Include="Scraping\ScraperTaskDefinition.cs" />
-    <Compile Include="Scraping\ScraperType.cs" />
-    <Compile Include="Scraping\ScraperValueType.cs" />
     <Compile Include="Security\Login.cs" />
     <Compile Include="Security\LoginHistory.cs" />
-    <Compile Include="Security\LoginType.cs" />
     <Compile Include="Security\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScraperContext.cs" />
@@ -78,6 +74,10 @@
     <ProjectReference Include="..\..\Core\NativeCode.Core\NativeCode.Core.csproj">
       <Project>{2ba5c42a-32ec-43db-9aec-a9323d354951}</Project>
       <Name>NativeCode.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cavern.Common\Cavern.Common.csproj">
+      <Project>{d475e2b4-da93-4dc1-9ada-a68e4da7b766}</Project>
+      <Name>Cavern.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

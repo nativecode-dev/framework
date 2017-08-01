@@ -1,4 +1,4 @@
-﻿namespace Cavern.Data.Security
+﻿namespace Cavern.Common
 {
     public enum LoginType
     {

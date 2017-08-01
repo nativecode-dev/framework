@@ -1,6 +1,5 @@
-﻿namespace Cavern.Services
+﻿namespace Cavern.Data
 {
-    using Data;
     using NativeCode.Core.Data;
     using NativeCode.Core.Packages.EntityFramework;
 

@@ -2,6 +2,7 @@ namespace Cavern.Data.Scraping
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Common;
     using NativeCode.Core.Data;
 
     public class ScraperFormField : Entity<Guid>

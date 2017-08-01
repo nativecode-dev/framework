@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cavern.Services", "src\Demo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Testing", "src\Tests\NativeCode.Testing\NativeCode.Testing.csproj", "{7E93C0A1-F2CB-4730-95AB-1E1694D3528B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cavern.Common", "src\Demos\Cavern.Common\Cavern.Common.csproj", "{D475E2B4-DA93-4DC1-9ADA-A68E4DA7B766}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +128,10 @@ Global
 		{7E93C0A1-F2CB-4730-95AB-1E1694D3528B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E93C0A1-F2CB-4730-95AB-1E1694D3528B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E93C0A1-F2CB-4730-95AB-1E1694D3528B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D475E2B4-DA93-4DC1-9ADA-A68E4DA7B766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D475E2B4-DA93-4DC1-9ADA-A68E4DA7B766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D475E2B4-DA93-4DC1-9ADA-A68E4DA7B766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D475E2B4-DA93-4DC1-9ADA-A68E4DA7B766}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,5 +147,6 @@ Global
 		{3B8CA957-E34E-4835-B064-57E136565CE1} = {4A2FDE5D-03BD-4AA2-AD2F-03D1AFB6795B}
 		{11347723-DED7-4175-B6D2-9FEFD20A2293} = {4A2FDE5D-03BD-4AA2-AD2F-03D1AFB6795B}
 		{7E93C0A1-F2CB-4730-95AB-1E1694D3528B} = {BC966123-4BA8-49EF-9344-EDDB7F3CD6ED}
+		{D475E2B4-DA93-4DC1-9ADA-A68E4DA7B766} = {4A2FDE5D-03BD-4AA2-AD2F-03D1AFB6795B}
 	EndGlobalSection
 EndGlobal
