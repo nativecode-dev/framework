@@ -51,7 +51,7 @@
     <Compile Include="WhenTestingPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="NativeCode.Testing.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
