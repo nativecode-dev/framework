@@ -1,34 +1,33 @@
 ﻿namespace NativeCode.Tests
 {
     using Core.Localization.Translation;
-    using Core.Platform.Connections;
+    using Core.Localization.Translation.Attributes;
     using Moq;
     using Xunit;
 
     public class WhenUsingObjectTranslator
     {
         [Fact]
-        public void ShouldDoStuff()
+        public void ShouldTranslateStringProperties()
         {
             // Arrange
+            var translatable = new TranslatableObject();
             var translator = new Mock<ITranslator>();
-            translator.Setup(t => t.Translate(It.IsAny<string>())).Verifiable();
-            var connectionString = new SqlServerConnectionString
-            {
-                AsynchronousProcessing = true,
-                DataSource = "(local)",
-                HostName = "(ocal)",
-                IntegratedSecurity = true,
-                MultipleActiveResultSets = true,
-                TrustedConnection = true,
-            };
+            translator.Setup(t => t.Translate(It.IsAny<string>())).Returns(() => "test");
             var objectTranslator = new ObjectTranslator(translator.Object);
 
             // Act
-            objectTranslator.Translate(connectionString);
+            objectTranslator.Translate(translatable);
 
             // Assert
-            translator.VerifyAll();
+            translator.Verify(t => t.Translate(It.IsAny<string>()));
+            Assert.Equal("test", translatable.TranslatableProperty);
+        }
+
+        protected class TranslatableObject
+        {
+            [Translate]
+            public string TranslatableProperty { get; set; } = string.Empty;
         }
     }
 }
