@@ -14,7 +14,7 @@
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>Returns the cached value.</returns>
-        T Get(string key, T defaultValue = default(T));
+        T Get(string key, Func<T> defaultValue = null);
 
         /// <summary>
         /// Gets the value of the specified key.

@@ -35,7 +35,7 @@
 
         protected virtual ObjectTranslatorMapping GetMapping(object instance)
         {
-            return Cache.Get(instance.TypeKey(), new ObjectTranslatorMapping(instance));
+            return Cache.Get(instance.TypeKey(), () => new ObjectTranslatorMapping(instance));
         }
 
         protected void Translate(object instance, ObjectTranslatorContext context)
@@ -45,8 +45,8 @@
 
             var mapping = this.GetMapping(instance);
 
-            if (mapping.HasDecorator || mapping.HasProperties)
-                foreach (var property in mapping.Properties)
+            if (mapping.TranslatableProperties.Any())
+                foreach (var property in mapping.TranslatableProperties)
                     this.TranslateProperty(property, context);
         }
 
@@ -79,42 +79,15 @@
             public ObjectTranslatorMapping(object instance)
             {
                 this.Type = instance.GetType();
+                this.TranslatableProperties = this.Type.GetTranslatableProperties();
                 this.TypeInfo = this.Type.GetTypeInfo();
-                this.Build();
             }
 
-            public bool HasDecorator => this.CanTranslate();
-
-            public bool HasProperties => this.TranslatableProperties.Any();
-
-            public IReadOnlyCollection<PropertyInfo> Properties => this.TranslatableProperties;
-
-            protected List<PropertyInfo> TranslatableProperties { get; } = new List<PropertyInfo>();
+            public IEnumerable<PropertyInfo> TranslatableProperties;
 
             protected Type Type { get; }
 
             protected TypeInfo TypeInfo { get; }
-
-            protected virtual bool CanTranslate()
-            {
-                return this.TypeInfo.GetCustomAttribute<TranslateAttribute>() != null;
-            }
-
-            protected virtual bool CanTranslate(PropertyInfo property)
-            {
-                var type = property.PropertyType.GetTypeInfo();
-                var ignored = type.GetCustomAttribute<IgnoreTranslateAttribute>() != null;
-                var included = type.GetCustomAttribute<TranslateAttribute>() != null;
-
-                return included && ignored == false;
-            }
-
-            private void Build()
-            {
-                foreach (var property in this.Type.GetRuntimeProperties())
-                    if (this.CanTranslate(property))
-                        this.TranslatableProperties.Add(property);
-            }
         }
     }
 }

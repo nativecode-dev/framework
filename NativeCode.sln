@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Packages.EntityF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Tests", "src\NativeCode.Tests\NativeCode.Tests.csproj", "{F4C854DE-3946-4B46-9555-06335B716CA2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{6D58212B-0F15-4929-928B-4BB4BD08B181}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,5 +55,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{C1D7B0BA-A0EF-474C-84D6-D982E18FF04E} = {6D58212B-0F15-4929-928B-4BB4BD08B181}
 	EndGlobalSection
 EndGlobal

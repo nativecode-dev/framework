@@ -32,16 +32,17 @@
         {
             var info = property.PropertyType.GetTypeInfo();
 
+            var classTranslatable = info.DeclaringType.IsClassTranslatable();
             var propertyTranslatable = info.GetCustomAttribute<TranslateAttribute>() != null;
             var propertyIgnored = info.GetCustomAttribute<IgnoreTranslateAttribute>() != null;
 
-            return propertyTranslatable && propertyIgnored == false;
+            return (classTranslatable || propertyTranslatable) && propertyIgnored == false;
         }
 
         public static IEnumerable<PropertyInfo> GetTranslatableProperties(this Type type)
         {
             var properties = from property in type.GetRuntimeProperties()
-                             where property.IsPropertyTranslatableIgnored()
+                             where property.IsPropertyTranslatable()
                              select property;
 
             if (type.IsClassTranslatable())

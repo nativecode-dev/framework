@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>netstandard1.6</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\NativeCode.Core.Data\NativeCode.Core.Data.csproj"/>
-        <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj"/>
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2"/>
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NativeCode.Core.Data\NativeCode.Core.Data.csproj" />
+    <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
+  </ItemGroup>
 </Project>

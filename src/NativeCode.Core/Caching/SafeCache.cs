@@ -18,7 +18,7 @@ namespace NativeCode.Core.Caching
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>Returns the cached value.</returns>
-        public T Get(string key, T defaultValue = default(T))
+        public T Get(string key, Func<T> defaultValue = null)
         {
             T value;
 
@@ -28,9 +28,9 @@ namespace NativeCode.Core.Caching
 #pragma warning disable RECS0017 // Possible compare of value type with 'null'
             if (defaultValue != null)
 #pragma warning restore RECS0017 // Possible compare of value type with 'null'
-                this.Set(key, defaultValue);
+                this.Set(key, defaultValue());
 
-            return defaultValue;
+            return default(T);
         }
 
         /// <summary>
