@@ -6,12 +6,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="Moq" Version="4.7.99" />
     <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.analyzers" Version="0.6.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NativeCode.Core.AspNet\NativeCode.Core.AspNet.csproj" />
-    <ProjectReference Include="..\NativeCode.Core.Data\NativeCode.Core.Data.csproj" />
     <ProjectReference Include="..\NativeCode.Core\NativeCode.Core.csproj" />
-    <ProjectReference Include="..\NativeCode.Packages.EntityFrameworkCore\NativeCode.Packages.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>

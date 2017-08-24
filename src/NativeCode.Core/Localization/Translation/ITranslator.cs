@@ -8,12 +8,29 @@
     /// </summary>
     public interface ITranslator
     {
-        /// <summary>
-        /// Translates the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns>System.String.</returns>
-        string Translate([NotNull] string key);
+		/// <summary>
+		/// Translates the specified key using the provided format.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="parameters">The parameters.</param>
+		/// <returns>System.String.</returns>
+		string TranslateFormat([NotNull] string key, params object[] parameters);
+
+		/// <summary>
+		/// Translates the specified key using the provided format.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="cultureInfo">The culture information.</param>
+		/// <param name="parameters">The parameters.</param>
+		/// <returns>System.String.</returns>
+		string TranslateFormat([NotNull] string key, [NotNull] CultureInfo cultureInfo, params object[] parameters);
+
+		/// <summary>
+		/// Translates the specified key.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <returns>System.String.</returns>
+		string TranslateKey([NotNull] string key);
 
         /// <summary>
         /// Translates the specified key.
@@ -21,24 +38,7 @@
         /// <param name="key">The key.</param>
         /// <param name="cultureInfo">The culture information.</param>
         /// <returns>System.String.</returns>
-        string Translate([NotNull] string key, [NotNull] CultureInfo cultureInfo);
-
-        /// <summary>
-        /// Translates the specified key using the provided format.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>System.String.</returns>
-        string TranslateFormat([NotNull] string key, params object[] parameters);
-
-        /// <summary>
-        /// Translates the specified key using the provided format.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="cultureInfo">The culture information.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns>System.String.</returns>
-        string TranslateFormat([NotNull] string key, [NotNull] CultureInfo cultureInfo, params object[] parameters);
+        string TranslateKey([NotNull] string key, [NotNull] CultureInfo cultureInfo);
 
         /// <summary>
         /// Translates the specified string and replaces any translation tokens.

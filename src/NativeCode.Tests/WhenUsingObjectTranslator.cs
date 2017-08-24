@@ -13,14 +13,15 @@
             // Arrange
             var translatable = new TranslatableObject();
             var translator = new Mock<ITranslator>();
-            translator.Setup(t => t.Translate(It.IsAny<string>())).Returns(() => "test");
-            var objectTranslator = new ObjectTranslator(translator.Object);
+            var setup = translator.Setup(t => t.TranslateString(It.IsAny<string>())).Returns(() => "test");
+			setup.Verifiable();
+			var sut = new ObjectTranslator(translator.Object);
 
-            // Act
-            objectTranslator.Translate(translatable);
+			// Act
+			sut.Translate(translatable);
 
             // Assert
-            translator.Verify(t => t.Translate(It.IsAny<string>()));
+            translator.Verify(t => t.TranslateString(It.IsAny<string>()));
             Assert.Equal("test", translatable.TranslatableProperty);
         }
 

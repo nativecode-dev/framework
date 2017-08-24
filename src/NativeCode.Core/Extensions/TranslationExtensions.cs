@@ -30,11 +30,9 @@
 
         public static bool IsPropertyTranslatable(this PropertyInfo property)
         {
-            var info = property.PropertyType.GetTypeInfo();
-
-            var classTranslatable = info.DeclaringType.IsClassTranslatable();
-            var propertyTranslatable = info.GetCustomAttribute<TranslateAttribute>() != null;
-            var propertyIgnored = info.GetCustomAttribute<IgnoreTranslateAttribute>() != null;
+            var classTranslatable = property.DeclaringType.IsClassTranslatable();
+            var propertyTranslatable = property.GetCustomAttribute<TranslateAttribute>() != null;
+            var propertyIgnored = property.GetCustomAttribute<IgnoreTranslateAttribute>() != null;
 
             return (classTranslatable || propertyTranslatable) && propertyIgnored == false;
         }

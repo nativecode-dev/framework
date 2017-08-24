@@ -1,5 +1,7 @@
 ﻿namespace NativeCode.Core.Localization.Translation
 {
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Provides a contract to translate object string properties.
     /// </summary>
@@ -9,13 +11,13 @@
         /// Translates the specified instance.
         /// </summary>
         /// <param name="instance">The instance.</param>
-        void Translate(object instance);
+        void Translate([NotNull] object instance);
 
         /// <summary>
         /// Translates the specified instance.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="instance">The instance.</param>
-        void Translate<T>(T instance);
+        void Translate<T>([NotNull] T instance);
     }
 }
