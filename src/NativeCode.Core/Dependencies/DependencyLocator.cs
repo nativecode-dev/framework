@@ -8,19 +8,19 @@
     /// </summary>
     public static class DependencyLocator
     {
+        private static IDependencyContainer root;
+
         private static int counter;
 
-        /// <summary>
-        /// Gets the root container.
-        /// </summary>
-        /// <value>The root container.</value>
-        public static IDependencyContainer RootContainer { get; private set; }
+        public static IDependencyResolver CreateResolver()
+        {
+            return DependencyLocator.root.CreateResolver();
+        }
 
-        /// <summary>
-        /// Gets the resolver.
-        /// </summary>
-        /// <value>The resolver.</value>
-        public static IDependencyResolver Resolver => RootContainer.Resolver;
+        public static IDependencyContainer GetContainer()
+        {
+            return DependencyLocator.root.CreateChildContainer();
+        }
 
         /// <summary>
         /// Sets the root container.
@@ -29,10 +29,14 @@
         /// <exception cref="System.InvalidOperationException">Cannot set the root container more than once.</exception>
         public static void SetRootContainer(IDependencyContainer container)
         {
-            if (Interlocked.CompareExchange(ref counter, 1, 0) == 0)
-                RootContainer = container;
+            if (Interlocked.CompareExchange(ref DependencyLocator.counter, 1, 0) == 0)
+            {
+                DependencyLocator.root = container;
+            }
             else
+            {
                 throw new InvalidOperationException("Cannot set the root container more than once.");
+            }
         }
     }
 }

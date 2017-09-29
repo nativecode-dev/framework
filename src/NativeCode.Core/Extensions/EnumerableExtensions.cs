@@ -12,8 +12,10 @@
         {
             var value = collection.ElementAt(index);
 
-            if (Equals(value, defaultValue) == false)
+            if (object.Equals(value, defaultValue) == false)
+            {
                 return (T) value;
+            }
 
             return defaultValue;
         }
@@ -25,8 +27,10 @@
             {
                 var value = collection.ElementAtOrDefault(index);
 
-                if (Equals(value, defaultValue) == false)
+                if (object.Equals(value, defaultValue) == false)
+                {
                     return value;
+                }
             }
             catch
             {

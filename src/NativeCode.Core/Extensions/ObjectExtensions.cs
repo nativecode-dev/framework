@@ -13,13 +13,17 @@
         public static void Ensure([NotNull] this object instance, Type type)
         {
             if (instance.Not(type))
+            {
                 throw new InvalidCastException();
+            }
         }
 
         public static bool Is(this object instance, Type type)
         {
             if (instance == null)
+            {
                 return false;
+            }
 
             return instance.GetType() == type;
         }

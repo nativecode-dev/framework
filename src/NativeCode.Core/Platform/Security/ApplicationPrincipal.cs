@@ -1,61 +1,63 @@
 ﻿namespace NativeCode.Core.Platform.Security
 {
+    using System.Collections.Generic;
+    using System.Security.Claims;
     using System.Security.Principal;
     using Dependencies.Attributes;
 
-    [IgnoreDependency("Not designed to be injectible.")]
-    public sealed class ApplicationPrincipal : IPrincipal
+    [IgnoreDependency]
+    public sealed class ApplicationPrincipal : ClaimsPrincipal
     {
         /// <summary>
         /// Default anonymouse user.
         /// </summary>
-        public static readonly IPrincipal Anonymous = new ApplicationPrincipal(new AnonymousIdentity());
+        public static readonly ClaimsPrincipal Anonymous = ApplicationPrincipal.CreateAnonymousUser();
 
         /// <summary>
         /// Default system user.
         /// </summary>
-        public static readonly IPrincipal System = new ApplicationPrincipal(new SystemIdentity());
+        public static readonly ClaimsPrincipal System = ApplicationPrincipal.CreateSystemUser();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationPrincipal" /> class.
         /// </summary>
         /// <param name="identity">The identity.</param>
-        public ApplicationPrincipal(IIdentity identity)
+        public ApplicationPrincipal(IIdentity identity) : base(identity)
         {
-            this.Identity = identity;
         }
 
-        /// <summary>
-        /// Gets the identity of the current principal.
-        /// </summary>
-        public IIdentity Identity { get; }
-
-        /// <summary>
-        /// Determines whether the current principal belongs to the specified role.
-        /// </summary>
-        /// <param name="role">The name of the role for which to check membership.</param>
-        /// <returns>true if the current principal is a member of the specified role; otherwise, false.</returns>
-        public bool IsInRole(string role)
+        private static ClaimsPrincipal CreateAnonymousUser()
         {
-            return false;
+            var claims = new[] { new Claim("system:anonymous", "anonymous") };
+            return new ApplicationPrincipal(new AnonymousIdentity(claims));
         }
 
-        private class AnonymousIdentity : IIdentity
+        private static ClaimsPrincipal CreateSystemUser()
         {
-            public string AuthenticationType { get; } = null;
-
-            public bool IsAuthenticated { get; } = true;
-
-            public string Name { get; } = "anonymous@localhost";
+            var claims = new[] { new Claim("system:system", "system") };
+            return new ApplicationPrincipal(new SystemIdentity(claims));
         }
 
-        private class SystemIdentity : IIdentity
+        private class AnonymousIdentity : ClaimsIdentity
         {
-            public string AuthenticationType { get; } = null;
+            public AnonymousIdentity(IEnumerable<Claim> claims) : base(claims)
+            {
+            }
 
-            public bool IsAuthenticated { get; } = true;
+            public override bool IsAuthenticated => true;
 
-            public string Name { get; } = "system@localhost";
+            public override string Name => "anonymous@localhost";
+        }
+
+        private class SystemIdentity : ClaimsIdentity
+        {
+            public SystemIdentity(IEnumerable<Claim> claims) : base(claims)
+            {
+            }
+
+            public override bool IsAuthenticated => true;
+
+            public override string Name => "system@localhost";
         }
     }
 }

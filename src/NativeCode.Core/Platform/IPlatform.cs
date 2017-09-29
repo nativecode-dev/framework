@@ -32,16 +32,6 @@
         string MachineName { get; }
 
         /// <summary>
-        /// Gets the registrar.
-        /// </summary>
-        IDependencyRegistrar Registrar { get; }
-
-        /// <summary>
-        /// Gets the resolver.
-        /// </summary>
-        IDependencyResolver Resolver { get; }
-
-        /// <summary>
         /// Gets the current user <see cref="IPrincipal" />.
         /// </summary>
         /// <remarks>
@@ -53,9 +43,8 @@
         /// <summary>
         /// Creates a child dependency scope.
         /// </summary>
-        /// <param name="parent">The parent.</param>
         /// <returns>Returns a new <see cref="IDependencyContainer" />.</returns>
-        IDependencyContainer CreateDependencyScope(IDependencyContainer parent = default(IDependencyContainer));
+        IDependencyContainer CreateDependencyScope();
 
         /// <summary>
         /// Gets the assemblies.

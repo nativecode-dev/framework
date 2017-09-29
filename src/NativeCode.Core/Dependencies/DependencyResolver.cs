@@ -3,13 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Types;
 
-    public abstract class DependencyResolver : IDependencyResolver
+    public abstract class DependencyResolver : Disposable, IDependencyResolver
     {
         public T Resolve<T>(string key = null)
         {
             return (T) this.Resolve(typeof(T), key);
         }
+
+        public abstract IDependencyResolver CreateChildResolver();
 
         public abstract object Resolve(Type type, string key = null);
 

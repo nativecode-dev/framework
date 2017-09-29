@@ -15,7 +15,7 @@ namespace NativeCode.Core.Platform.Security
         /// <summary>
         /// Specifies to use the login only.
         /// </summary>
-        Name = Default,
+        Name = UserLoginNameFormat.Default,
 
         /// <summary>
         /// Specifies to use the ADS compatible UPN.

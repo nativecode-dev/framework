@@ -18,6 +18,11 @@
             return new ApplicationScope(this.container.CreateChildContainer());
         }
 
+        public IDependencyResolver CreateResolver()
+        {
+            return this.container.CreateResolver();
+        }
+
         public IUserScope CreateUserScope(IPrincipal principal)
         {
             var scope = new UserScope(this, principal);
@@ -37,7 +42,9 @@
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.Disposed == false)
+            {
                 this.container.Dispose();
+            }
 
             base.Dispose(disposing);
         }

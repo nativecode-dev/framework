@@ -15,15 +15,11 @@
         IDependencyRegistrar Registrar { get; }
 
         /// <summary>
-        /// Gets the resolver.
-        /// </summary>
-        /// <value>The resolver.</value>
-        IDependencyResolver Resolver { get; }
-
-        /// <summary>
         /// Creates the child container.
         /// </summary>
         /// <returns>IDependencyContainer.</returns>
         IDependencyContainer CreateChildContainer();
+
+        IDependencyResolver CreateResolver();
     }
 }

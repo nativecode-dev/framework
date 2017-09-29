@@ -6,11 +6,11 @@
     {
         public abstract IDependencyRegistrar Registrar { get; }
 
-        public abstract IDependencyResolver Resolver { get; }
-
         protected bool Disposed { get; private set; }
 
         public abstract IDependencyContainer CreateChildContainer();
+
+        public abstract IDependencyResolver CreateResolver();
 
         public void Dispose()
         {

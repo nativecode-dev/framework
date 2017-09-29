@@ -15,10 +15,16 @@
             var aggregate = exception as AggregateException;
 
             if (aggregate != null)
+            {
                 foreach (var ex in aggregate.InnerExceptions)
-                    WriteException(builder, ex, includeStackTrace);
+                {
+                    ExceptionExtensions.WriteException(builder, ex, includeStackTrace);
+                }
+            }
             else
-                WriteException(builder, exception, includeStackTrace);
+            {
+                ExceptionExtensions.WriteException(builder, exception, includeStackTrace);
+            }
 
             return builder;
         }
@@ -38,7 +44,9 @@
                 builder.AppendLine(current.Message);
 
                 if (includeStackTrace)
+                {
                     builder.AppendLine(current.StackTrace);
+                }
 
                 if (current.InnerException != null)
                 {

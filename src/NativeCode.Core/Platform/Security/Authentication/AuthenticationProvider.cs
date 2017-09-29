@@ -25,7 +25,9 @@
             CancellationToken cancellationToken)
         {
             foreach (var handler in this.Handlers.Where(h => h.CanHandle(login)))
+            {
                 return handler.AuthenticateAsync(login, password, cancellationToken);
+            }
 
             return Task.FromResult(new AuthenticationResult(AuthenticationResultType.Failed));
         }

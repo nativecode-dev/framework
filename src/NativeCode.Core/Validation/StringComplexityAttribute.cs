@@ -37,14 +37,21 @@
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null)
+            {
                 return null;
+            }
 
-            var validator = DependencyLocator.Resolver.Resolve<StringComplexityValidator>();
+            using (var resolver = DependencyLocator.CreateResolver())
+            {
+                var validator = resolver.Resolve<StringComplexityValidator>();
 
-            if (validator != null && validator.CanValidate(value))
-                return validator.Validate(value, validationContext);
+                if (validator != null && validator.CanValidate(value))
+                {
+                    return validator.Validate(value, validationContext);
+                }
 
-            return null;
+                return null;
+            }
         }
     }
 }

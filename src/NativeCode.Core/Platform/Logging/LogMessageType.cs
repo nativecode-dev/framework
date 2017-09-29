@@ -25,7 +25,7 @@
         /// <summary>
         /// Specifies an informational message type.
         /// </summary>
-        Informational = Default,
+        Informational = LogMessageType.Default,
 
         /// <summary>
         /// Specifies a warning message type.

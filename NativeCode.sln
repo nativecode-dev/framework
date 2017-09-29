@@ -1,10 +1,11 @@
-﻿Microsoft Visual Studio Solution File, Format Version 15.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core", "src\NativeCode.Core\NativeCode.Core.csproj", "{2BA5C42A-32EC-43DB-9AEC-A9323D354951}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeCode.Core", "src\NativeCode.Core\NativeCode.Core.csproj", "{2BA5C42A-32EC-43DB-9AEC-A9323D354951}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{0BE504AC-1561-4870-87C8-210B467708EB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{0BE504AC-1561-4870-87C8-210B467708EB}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		CodeAnalysis.ruleset = CodeAnalysis.ruleset
@@ -14,15 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{0BE504
 		sonar-project.properties = sonar-project.properties
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Data", "src\NativeCode.Core.Data\NativeCode.Core.Data.csproj", "{A872F951-9C26-4380-BD6D-ECBCB03E699D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeCode.Tests", "tests\NativeCode.Tests\NativeCode.Tests.csproj", "{DA450CA6-1536-4DBB-98FB-BDE60EEC0EA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.AspNet", "src\NativeCode.Core.AspNet\NativeCode.Core.AspNet.csproj", "{69F218EB-AD93-4BC5-A710-34E1B9552DF1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Packages.EntityFrameworkCore", "src\NativeCode.Packages.EntityFrameworkCore\NativeCode.Packages.EntityFrameworkCore.csproj", "{C1D7B0BA-A0EF-474C-84D6-D982E18FF04E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Tests", "src\NativeCode.Tests\NativeCode.Tests.csproj", "{F4C854DE-3946-4B46-9555-06335B716CA2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{6D58212B-0F15-4929-928B-4BB4BD08B181}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeCode.Core.Web", "src\NativeCode.Core.Web\NativeCode.Core.Web.csproj", "{126CF736-9C46-46BC-AFEB-ABEA846DD459}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,27 +29,19 @@ Global
 		{2BA5C42A-32EC-43DB-9AEC-A9323D354951}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BA5C42A-32EC-43DB-9AEC-A9323D354951}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BA5C42A-32EC-43DB-9AEC-A9323D354951}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A872F951-9C26-4380-BD6D-ECBCB03E699D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A872F951-9C26-4380-BD6D-ECBCB03E699D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A872F951-9C26-4380-BD6D-ECBCB03E699D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A872F951-9C26-4380-BD6D-ECBCB03E699D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69F218EB-AD93-4BC5-A710-34E1B9552DF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69F218EB-AD93-4BC5-A710-34E1B9552DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69F218EB-AD93-4BC5-A710-34E1B9552DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69F218EB-AD93-4BC5-A710-34E1B9552DF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1D7B0BA-A0EF-474C-84D6-D982E18FF04E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1D7B0BA-A0EF-474C-84D6-D982E18FF04E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1D7B0BA-A0EF-474C-84D6-D982E18FF04E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1D7B0BA-A0EF-474C-84D6-D982E18FF04E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4C854DE-3946-4B46-9555-06335B716CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4C854DE-3946-4B46-9555-06335B716CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4C854DE-3946-4B46-9555-06335B716CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4C854DE-3946-4B46-9555-06335B716CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA450CA6-1536-4DBB-98FB-BDE60EEC0EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA450CA6-1536-4DBB-98FB-BDE60EEC0EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA450CA6-1536-4DBB-98FB-BDE60EEC0EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA450CA6-1536-4DBB-98FB-BDE60EEC0EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126CF736-9C46-46BC-AFEB-ABEA846DD459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126CF736-9C46-46BC-AFEB-ABEA846DD459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126CF736-9C46-46BC-AFEB-ABEA846DD459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126CF736-9C46-46BC-AFEB-ABEA846DD459}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{C1D7B0BA-A0EF-474C-84D6-D982E18FF04E} = {6D58212B-0F15-4929-928B-4BB4BD08B181}
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {20CAF8D9-E684-474A-99EB-4EE8D77EAA09}
 	EndGlobalSection
 EndGlobal

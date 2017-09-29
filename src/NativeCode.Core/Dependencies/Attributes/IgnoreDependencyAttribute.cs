@@ -17,6 +17,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="IgnoreDependencyAttribute" /> class.
         /// </summary>
+        public IgnoreDependencyAttribute() : this("Do not register as dependency.")
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IgnoreDependencyAttribute" /> class.
+        /// </summary>
         /// <param name="reason">The reason.</param>
         /// <param name="inheritable">if set to <c>true</c> [inheritable].</param>
         /// <param name="throwOnError">if set to <c>true</c> [throw on error].</param>
@@ -60,8 +67,10 @@
                 Debug.WriteLine(attribute.Reason);
 
                 if (attribute.Inheritable && attribute.ThrowOnError)
+                {
                     throw new InvalidOperationException(
                         $"Registration for {type.Name} not allowed due to {attribute.Reason}.");
+                }
 
                 return false;
             }

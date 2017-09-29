@@ -10,7 +10,9 @@
             var attribute = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
 
             if (attribute != null)
+            {
                 return attribute.Version;
+            }
 
             return string.Empty;
         }
@@ -20,7 +22,9 @@
             var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
 
             if (attribute != null)
+            {
                 return attribute.InformationalVersion;
+            }
 
             return string.Empty;
         }
@@ -30,7 +34,9 @@
             var attribute = assembly.GetCustomAttribute<AssemblyVersionAttribute>();
 
             if (attribute != null)
+            {
                 return attribute.Version;
+            }
 
             return string.Empty;
         }

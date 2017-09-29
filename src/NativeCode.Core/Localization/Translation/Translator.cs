@@ -6,20 +6,20 @@
     {
         private readonly ITranslationProvider provider;
 
-		public Translator(ITranslationProvider provider)
-		{
-			this.provider = provider;
-		}
+        public Translator(ITranslationProvider provider)
+        {
+            this.provider = provider;
+        }
 
-		public string TranslateFormat(string key, params object[] parameters)
-		{
-			return this.TranslateFormat(key, CultureInfo.CurrentUICulture, parameters);
-		}
+        public string TranslateFormat(string key, params object[] parameters)
+        {
+            return this.TranslateFormat(key, CultureInfo.CurrentUICulture, parameters);
+        }
 
-		public string TranslateFormat(string key, CultureInfo cultureInfo, params object[] parameters)
-		{
-			return string.Format(this.provider.GetString(key, cultureInfo), parameters);
-		}
+        public string TranslateFormat(string key, CultureInfo cultureInfo, params object[] parameters)
+        {
+            return string.Format(this.provider.GetString(key, cultureInfo), parameters);
+        }
 
         public string TranslateKey(string key)
         {

@@ -1,15 +1,15 @@
 ﻿namespace NativeCode.Core.Platform
 {
+    using Dependencies;
+    using Dependencies.Attributes;
+    using Extensions;
+    using Settings;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
-    using Dependencies;
-    using Dependencies.Attributes;
-    using Dependencies.Enums;
-    using Extensions;
-    using Settings;
+    using Microsoft.Extensions.DependencyInjection;
     using Types;
 
     /// <summary>
@@ -17,7 +17,7 @@
     /// by types that must be derived, i.e. HttpApplication.
     /// </summary>
     /// <seealso cref="NativeCode.Core.Platform.IApplication{TSetting}" />
-    [IgnoreDependency("Ue new operator.")]
+    [IgnoreDependency("Use new operator.")]
     public abstract class Application<TSettings> : DisposableManager, IApplication<TSettings> where TSettings : Settings
     {
         /// <summary>
@@ -54,10 +54,6 @@
 
         protected bool Initialized { get; private set; }
 
-        protected IDependencyRegistrar Registrar => this.Platform.Registrar;
-
-        protected IDependencyResolver Resolver => this.Platform.Resolver;
-
         public virtual string GetApplicationName()
         {
             return this.GetType().Name.Replace("Application", string.Empty);
@@ -68,23 +64,20 @@
             return this.GetType().GetTypeInfo().Assembly.GetVersion();
         }
 
-        public void Initialize(string name, params IDependencyModule[] modules)
+        public void Initialize(IDependencyRegistrar registrar, params IDependencyModule[] modules)
         {
-            this.Initialize(name, Enumerable.Empty<Assembly>(), modules);
+            this.Initialize(registrar, Enumerable.Empty<Assembly>(), modules);
         }
 
-        public void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
+        public void Initialize(IDependencyRegistrar registrar, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
         {
             if (Interlocked.CompareExchange(ref this.counter, 1, 0) == 0)
+            {
                 try
                 {
-                    this.Registrar.RegisterInstance<IApplication>(this, DependencyLifetime.PerApplication);
-                    this.Registrar.RegisterInstance<IApplication<TSettings>>(this, DependencyLifetime.PerApplication);
-
                     this.RestoreSettings();
                     this.PreInitialization();
-                    this.RegisterAssemblies(assemblies);
-                    this.RegisterModules(modules);
+                    this.RegisterDependencies(registrar);
                     this.PostInitialization();
 
                     this.Initialized = true;
@@ -94,6 +87,7 @@
                     this.Initialized = false;
                     this.FailInitialization(ex);
                 }
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -105,7 +99,9 @@
         protected void EnsureInitialized()
         {
             if (this.Initialized == false)
+            {
                 throw new InvalidOperationException("Application was not initialized.");
+            }
         }
 
         protected virtual void FailInitialization(Exception ex)
@@ -118,29 +114,25 @@
 
         protected virtual void PostInitialization()
         {
-            this.CancellationTokens = this.Resolver.Resolve<ICancellationTokenManager>();
-            this.EnsureDisposed(this.CancellationTokens);
+            using (var resolver = this.Scope.CreateResolver())
+            {
+                this.CancellationTokens = resolver.Resolve<ICancellationTokenManager>();
+                this.EnsureDisposed(this.CancellationTokens);
+            }
         }
 
         protected virtual void PreInitialization()
         {
         }
 
-        protected virtual void RegisterAssemblies(IEnumerable<Assembly> assemblies)
+        protected virtual void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            foreach (var assembly in assemblies)
-                this.Registrar.RegisterAssembly(assembly);
-        }
+            var dependencies = DependencyScanner.Scan(this.Platform.GetAssemblies());
 
-        protected virtual void RegisterModule(IDependencyModule module)
-        {
-            module.RegisterDependencies(this.Registrar);
-        }
-
-        protected virtual void RegisterModules(IEnumerable<IDependencyModule> modules)
-        {
-            foreach (var module in modules)
-                this.RegisterModule(module);
+            foreach (var dependency in dependencies)
+            {
+                registrar.Register(dependency.Contract, dependency.Implementation, dependency.KeyValue, dependency.Lifetime);
+            }
         }
 
         protected virtual void RestoreSettings()

@@ -26,7 +26,9 @@
             var name = messageType.ToKey();
 
             if (this.queues.ContainsKey(name) == false)
+            {
                 this.queues.AddOrUpdate(name, key => new MessageQueueProvider(name), (k, v) => v);
+            }
 
             return this.queues[name];
         }

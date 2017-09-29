@@ -15,7 +15,7 @@
         /// <summary>
         /// Specifies the authentication was denied.
         /// </summary>
-        Denied = Default,
+        Denied = AuthenticationResultType.Default,
 
         /// <summary>
         /// Specifies the authentication has expired.

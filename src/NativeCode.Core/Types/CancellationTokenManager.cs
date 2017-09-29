@@ -31,7 +31,9 @@
         public void Cancel(bool throwOnCancel)
         {
             foreach (var name in this.tokens.Keys)
+            {
                 this.Cancel(name, throwOnCancel);
+            }
 
             this.tokens.Clear();
         }
@@ -63,7 +65,9 @@
             CancellationToken source;
 
             if (this.TryCreateToken(name, out source))
+            {
                 return source;
+            }
 
             throw new InvalidOperationException($"Failed to create a CancellationToken named {name}.");
         }
@@ -77,7 +81,9 @@
         public bool TryCreateToken(string name, out CancellationToken token)
         {
             if (this.tokens.ContainsKey(name))
+            {
                 return false;
+            }
 
             CancellationTokenSource source = null;
 
@@ -87,7 +93,9 @@
                 token = source.Token;
 
                 if (this.tokens.TryAdd(name, source))
+                {
                     return true;
+                }
 
                 source.Dispose();
             }
@@ -110,7 +118,9 @@
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.Disposed == false)
+            {
                 this.Cancel(false);
+            }
 
             base.Dispose(disposing);
         }

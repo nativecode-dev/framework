@@ -5,7 +5,7 @@
     public class AuthorizationAssertionException : FrameworkException
     {
         public AuthorizationAssertionException(string requirements)
-            : base(CreateExceptionMessage(requirements))
+            : base(AuthorizationAssertionException.CreateExceptionMessage(requirements))
         {
         }
 

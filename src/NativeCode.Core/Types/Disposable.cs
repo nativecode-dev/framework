@@ -15,7 +15,9 @@
         protected virtual void Dispose(bool disposing)
         {
             if (disposing && this.Disposed == false)
+            {
                 this.Disposed = true;
+            }
         }
     }
 }

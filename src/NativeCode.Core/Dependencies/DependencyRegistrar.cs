@@ -1,9 +1,10 @@
 ﻿namespace NativeCode.Core.Dependencies
 {
-    using System;
-    using System.Reflection;
     using Attributes;
     using Enums;
+    using Extensions;
+    using System;
+    using System.Reflection;
 
     public abstract class DependencyRegistrar : IDependencyRegistrar
     {
@@ -36,16 +37,30 @@
             DependencyLifetime lifetime = DependencyLifetime.Default)
             where TImplementation : T
         {
-            this.InternalRegister(typeof(T), typeof(TImplementation), GetKey(key, typeof(TImplementation)), lifetime);
+            this.InternalRegister(typeof(T), typeof(TImplementation), DependencyRegistrar.GetKey(key, typeof(TImplementation)), lifetime);
 
             return this;
         }
 
-        public abstract IDependencyRegistrar Register(
+        public virtual IDependencyRegistrar Register(
             Type type,
             Type implementation,
             string key = null,
-            DependencyLifetime lifetime = DependencyLifetime.Default);
+            DependencyLifetime lifetime = DependencyLifetime.Default)
+        {
+            var dependency = new DependencyDescription
+            {
+                Contract = type,
+                Implementation = implementation,
+                Key = key.IsEmpty() ? DependencyKey.None : DependencyKey.Name,
+                KeyValue = key,
+                Lifetime = lifetime
+            };
+
+            return this.Register(dependency);
+        }
+
+        public abstract IDependencyRegistrar Register(DependencyDescription dependency);
 
         public IDependencyRegistrar RegisterAssembly(Assembly assembly)
         {
@@ -61,7 +76,7 @@
                         continue;
                     }
 
-                    this.Register(attribute.Contract, type, GetKeyOverrideString(type, attribute.KeyType),
+                    this.Register(attribute.Contract, type, DependencyRegistrar.GetKeyOverrideString(type, attribute.KeyType),
                         attribute.Lifetime);
                 }
             }
@@ -79,11 +94,24 @@
             return this;
         }
 
-        public abstract IDependencyRegistrar RegisterFactory(
+        public virtual IDependencyRegistrar RegisterFactory(
             Type type,
             Func<IDependencyResolver, object> factory,
             string key = null,
-            DependencyLifetime lifetime = DependencyLifetime.Default);
+            DependencyLifetime lifetime = DependencyLifetime.Default)
+        {
+            var dependency = new DependencyDescription
+            {
+                Contract = type,
+                Key = key.IsEmpty() ? DependencyKey.None : DependencyKey.Name,
+                KeyValue = key,
+                Lifetime = lifetime
+            };
+
+            return this.RegisterFactory(dependency, factory);
+        }
+
+        public abstract IDependencyRegistrar RegisterFactory(DependencyDescription dependency, Func<IDependencyResolver, object> factory);
 
         public virtual IDependencyRegistrar RegisterInstance<T>(T instance,
             DependencyLifetime lifetime = default(DependencyLifetime))
@@ -93,8 +121,20 @@
             return this;
         }
 
-        public abstract IDependencyRegistrar RegisterInstance(Type type, object instance,
-            DependencyLifetime lifetime = default(DependencyLifetime));
+        public virtual IDependencyRegistrar RegisterInstance(Type type, object instance,
+            DependencyLifetime lifetime = default(DependencyLifetime))
+        {
+            var dependency = new DependencyDescription
+            {
+                Contract = type,
+                Key = DependencyKey.None,
+                Lifetime = lifetime
+            };
+
+            return this.RegisterInstance(dependency);
+        }
+
+        public abstract IDependencyRegistrar RegisterInstance(DependencyDescription dependency, object instance);
 
         private static string GetKey(DependencyKey key, Type type)
         {
@@ -119,7 +159,9 @@
             var attribute = type.GetTypeInfo().GetCustomAttribute<OverrideKeyAttribute>();
 
             if (attribute != null)
-                return GetKeyOverrideString(type, attribute.Key);
+            {
+                return DependencyRegistrar.GetKeyOverrideString(type, attribute.Key);
+            }
 
             return key;
         }
@@ -147,7 +189,9 @@
             var attribute = type.GetTypeInfo().GetCustomAttribute<OverrideLifetimeAttribute>();
 
             if (attribute != null)
+            {
                 return attribute.Lifetime;
+            }
 
             return lifetime;
         }
@@ -156,8 +200,10 @@
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             if (IgnoreDependencyAttribute.ValidateType(type) && IgnoreDependencyAttribute.ValidateType(implementation))
-                this.Register(type, implementation, GetKeyOverride(implementation, key),
-                    GetLifetimeOverride(implementation, lifetime));
+            {
+                this.Register(type, implementation, DependencyRegistrar.GetKeyOverride(implementation, key),
+                    DependencyRegistrar.GetLifetimeOverride(implementation, lifetime));
+            }
         }
 
         private void InternalRegisterFactory(
@@ -167,14 +213,18 @@
             DependencyLifetime lifetime = DependencyLifetime.Default)
         {
             if (IgnoreDependencyAttribute.ValidateType(type))
-                this.RegisterFactory(type, factory, GetKeyOverride(type, key), GetLifetimeOverride(type, lifetime));
+            {
+                this.RegisterFactory(type, factory, DependencyRegistrar.GetKeyOverride(type, key),
+                    DependencyRegistrar.GetLifetimeOverride(type, lifetime));
+            }
         }
 
-        private void InternalRegisterInstance(Type type, object instance,
-            DependencyLifetime lifetime = default(DependencyLifetime))
+        private void InternalRegisterInstance(Type type, object instance, DependencyLifetime lifetime = default(DependencyLifetime))
         {
             if (IgnoreDependencyAttribute.ValidateType(type))
+            {
                 this.RegisterInstance(type, instance, lifetime);
+            }
         }
     }
 }

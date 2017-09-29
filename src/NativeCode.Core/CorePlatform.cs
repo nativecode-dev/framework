@@ -1,14 +1,13 @@
-namespace NativeCode.Core.AspNet
+﻿namespace NativeCode.Core
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
     using Dependencies;
-    using Platform;
 
-    public class AspNetPlatform : Platform
+    public class CorePlatform<TSettings> : Platform.Platform where TSettings : Settings.Settings
     {
-        public AspNetPlatform(IDependencyContainer container) : base(container)
+        public CorePlatform(IDependencyContainer container) : base(container)
         {
         }
 

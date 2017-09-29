@@ -8,8 +8,10 @@
     /// Provides a contract to resolve dependencies.
     /// </summary>
     /// <seealso cref="System.IServiceProvider" />
-    public interface IDependencyResolver : IServiceProvider
+    public interface IDependencyResolver : IDisposable, IServiceProvider
     {
+        IDependencyResolver CreateChildResolver();
+
         /// <summary>
         /// Resolves the specified type.
         /// </summary>

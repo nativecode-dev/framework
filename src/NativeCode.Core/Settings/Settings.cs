@@ -34,13 +34,17 @@
                 var path = name.Split(this.PathSeparator);
 
                 if (saveWhenDefault)
+                {
                     this.WriteValue(path, defaultValue, true);
+                }
 
                 return this.ReadValue(path, defaultValue);
             }
 
             if (saveWhenDefault)
+            {
                 this.WriteValue(name, defaultValue, true);
+            }
 
             return this.ReadValue(name, defaultValue);
         }
@@ -72,7 +76,9 @@
         protected string GetPrefixKey(string name)
         {
             if (string.IsNullOrWhiteSpace(this.Prefix))
+            {
                 return name;
+            }
 
             return $"{this.Prefix}.{name}";
         }

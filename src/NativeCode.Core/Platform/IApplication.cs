@@ -52,17 +52,17 @@
         /// <summary>
         /// Initializes the specified application.
         /// </summary>
-        /// <param name="name">The name.</param>
+        /// <param name="registrar">The registrar.</param>
         /// <param name="modules">The modules.</param>
-        void Initialize(string name, params IDependencyModule[] modules);
+        void Initialize(IDependencyRegistrar registrar, params IDependencyModule[] modules);
 
         /// <summary>
         /// Initializes the specified application.
         /// </summary>
-        /// <param name="name">The name.</param>
+        /// <param name="registrar">The registrar.</param>
         /// <param name="assemblies">The assemblies.</param>
         /// <param name="modules">The modules.</param>
-        void Initialize(string name, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules);
+        void Initialize(IDependencyRegistrar registrar, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules);
     }
 
     /// <summary>

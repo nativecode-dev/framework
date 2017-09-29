@@ -10,6 +10,6 @@
 
         Transient = 3,
 
-        WorkQueue = Default
+        WorkQueue = MessageQueueType.Default
     }
 }

@@ -18,7 +18,7 @@ namespace NativeCode.Core.Dependencies.Enums
         /// <summary>
         /// Indicates that each resolve will create a new instance.
         /// </summary>
-        PerCall = Default,
+        PerCall = DependencyLifetime.Default,
 
         /// <summary>
         /// Indicates that each child container will create its own instance.

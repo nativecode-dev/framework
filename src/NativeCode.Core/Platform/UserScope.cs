@@ -18,7 +18,9 @@
         protected override void Dispose(bool disposing)
         {
             if (disposing && this.Disposed == false)
+            {
                 this.Scope.Dispose();
+            }
 
             base.Dispose(disposing);
         }

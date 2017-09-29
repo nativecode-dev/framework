@@ -22,10 +22,10 @@
 
         static UserLoginName()
         {
-            Formats.Add(UserLoginNameFormat.Domain, new Regex(PatternDomain, RegexOptions.IgnoreCase));
-            Formats.Add(UserLoginNameFormat.Name, new Regex(PatternName, RegexOptions.IgnoreCase));
-            Formats.Add(UserLoginNameFormat.UserPrincipalName,
-                new Regex(PatternUserPrincipalName, RegexOptions.IgnoreCase));
+            UserLoginName.Formats.Add(UserLoginNameFormat.Domain, new Regex(UserLoginName.PatternDomain, RegexOptions.IgnoreCase));
+            UserLoginName.Formats.Add(UserLoginNameFormat.Name, new Regex(UserLoginName.PatternName, RegexOptions.IgnoreCase));
+            UserLoginName.Formats.Add(UserLoginNameFormat.UserPrincipalName,
+                new Regex(UserLoginName.PatternUserPrincipalName, RegexOptions.IgnoreCase));
         }
 
         private UserLoginName([NotNull] string source, [NotNull] string domain, [NotNull] string login,
@@ -47,36 +47,38 @@
 
         public static UserLoginNameFormat GetLoginNameFormat([NotNull] string username)
         {
-            return (from kvp in Formats where kvp.Value.IsMatch(username) select kvp.Key).FirstOrDefault();
+            return (from kvp in UserLoginName.Formats where kvp.Value.IsMatch(username) select kvp.Key).FirstOrDefault();
         }
 
         public static bool IsValid([NotNull] string source)
         {
-            return Formats.Values.Any(x => x.IsMatch(source));
+            return UserLoginName.Formats.Values.Any(x => x.IsMatch(source));
         }
 
         public static bool IsValid([NotNull] string source, UserLoginNameFormat format)
         {
-            var formatter = Formats[format];
+            var formatter = UserLoginName.Formats[format];
             return formatter.IsMatch(source);
         }
 
         public static bool IsValid([NotNull] IPrincipal principal)
         {
-            return IsValid(principal.Identity);
+            return UserLoginName.IsValid(principal.Identity);
         }
 
         public static bool IsValid([NotNull] IIdentity identity)
         {
-            return IsValid(identity.Name);
+            return UserLoginName.IsValid(identity.Name);
         }
 
         public static UserLoginName Parse([NotNull] string source)
         {
             UserLoginName userLoginName;
 
-            if (TryParse(source, out userLoginName))
+            if (UserLoginName.TryParse(source, out userLoginName))
+            {
                 return userLoginName;
+            }
 
             throw new InvalidOperationException($"Could not parse source '{source}' to determine the format.");
         }
@@ -89,23 +91,25 @@
                 return false;
             }
 
-            var formatter = GetFormatter(source);
+            var formatter = UserLoginName.GetFormatter(source);
             var format = formatter.Key;
             var regex = formatter.Value;
 
-            userLoginName = GetUserLoginName(source, regex, format);
+            userLoginName = UserLoginName.GetUserLoginName(source, regex, format);
 
             return userLoginName != null;
         }
 
         private static KeyValuePair<UserLoginNameFormat, Regex> GetFormatter([NotNull] string source)
         {
-            foreach (var kvp in Formats)
+            foreach (var kvp in UserLoginName.Formats)
             {
                 var formatter = kvp.Value;
 
                 if (formatter.IsMatch(source))
+                {
                     return kvp;
+                }
             }
 
             throw new InvalidOperationException($"No formatters could be found to match {source}.");
@@ -123,8 +127,12 @@
 
                 if (string.IsNullOrWhiteSpace(domain))
                 {
-                    var application = DependencyLocator.Resolver.Resolve<IApplication>();
-                    domain = application.SettingsObject.GetValue<string>("Global.DefaultDomain");
+                    using (var scope = DependencyLocator.GetContainer())
+                    using (var resolver = scope.CreateResolver())
+                    {
+                        var application = resolver.Resolve<IApplication>();
+                        domain = application.SettingsObject.GetValue<string>("Global.DefaultDomain");
+                    }
                 }
 
                 return new UserLoginName(source, domain, login, format);

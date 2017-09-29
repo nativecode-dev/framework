@@ -20,7 +20,9 @@
         protected override void Dispose(bool disposing)
         {
             if (!this.Disposed)
+            {
                 this.finalizer();
+            }
 
             base.Dispose(disposing);
         }

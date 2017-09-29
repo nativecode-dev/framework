@@ -35,20 +35,24 @@
 
         protected virtual ObjectTranslatorMapping GetMapping([NotNull] object instance)
         {
-            return Cache.Get(instance.TypeKey(), () => new ObjectTranslatorMapping(instance));
+            return ObjectTranslator.Cache.Get(instance.TypeKey(), () => new ObjectTranslatorMapping(instance));
         }
 
         protected void Translate([NotNull] object instance, [NotNull] ObjectTranslatorContext context)
         {
             if (context.Resolved(instance) == false)
+            {
                 context.Mark(instance);
+            }
 
             var mapping = this.GetMapping(instance);
 
             if (mapping.TranslatableProperties.Any())
             {
                 foreach (var property in mapping.TranslatableProperties)
+                {
                     this.TranslateProperty(property, mapping);
+                }
             }
         }
 
@@ -57,7 +61,9 @@
             var type = property.PropertyType;
 
             if (type == typeof(string))
+            {
                 this.Translator.TranslateString((string) property.GetValue(mapping.Instance));
+            }
         }
 
         protected class ObjectTranslatorContext
@@ -67,7 +73,9 @@
             public void Mark([NotNull] object instance)
             {
                 if (this.references.Contains(instance) == false)
+                {
                     this.references.Add(instance);
+                }
             }
 
             public bool Resolved([NotNull] object instance)
@@ -88,8 +96,7 @@
 
             public object Instance { get; }
 
-            [NotNull]
-            public IEnumerable<PropertyInfo> TranslatableProperties;
+            [NotNull] public IEnumerable<PropertyInfo> TranslatableProperties;
 
             protected Type Type { get; }
 

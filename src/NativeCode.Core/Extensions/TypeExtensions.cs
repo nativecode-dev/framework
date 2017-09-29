@@ -7,6 +7,16 @@
 
     public static class TypeExtensions
     {
+        public static bool HasAttribute<T>([NotNull] this Type source) where T : Attribute
+        {
+            return source.GetCustomAttribute<T>() != null;
+        }
+
+        public static bool HasAttribute<T>([NotNull] this Type source, out T attribute) where T : Attribute
+        {
+            return (attribute = source.GetCustomAttribute<T>()) != null;
+        }
+
         public static bool HasBaseClass([NotNull] this Type source, [NotNull] Type type)
         {
             var current = source.GetTypeInfo();
@@ -14,7 +24,9 @@
             while (current.BaseType != null)
             {
                 if (current.BaseType == type)
+                {
                     return true;
+                }
 
                 current = current.BaseType.GetTypeInfo();
             }

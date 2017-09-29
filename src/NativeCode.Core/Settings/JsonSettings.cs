@@ -1,18 +1,19 @@
 namespace NativeCode.Core.Settings
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using Dependencies;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Platform.Serialization;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     public class JsonSettings : Settings
     {
-        public JsonSettings()
+        private readonly IStringSerializer serializer;
+
+        public JsonSettings(IStringSerializer serializer)
         {
+            this.serializer = serializer;
             this.ObjectInstance = new JObject();
         }
 
@@ -25,8 +26,7 @@ namespace NativeCode.Core.Settings
 
         public void Deserialize(string content)
         {
-            var serializer = DependencyLocator.Resolver.Resolve<IStringSerializer>();
-            this.ObjectInstance = serializer.Deserialize<JObject>(content);
+            this.ObjectInstance = this.serializer.Deserialize<JObject>(content);
         }
 
         public override void Load(string content, Encoding encoding)
@@ -42,8 +42,8 @@ namespace NativeCode.Core.Settings
         {
             using (var reader = new JsonTextReader(new StreamReader(stream)))
             {
-                var serializer = new JsonSerializer();
-                this.ObjectInstance = (JObject) serializer.Deserialize(reader);
+                var json = new JsonSerializer();
+                this.ObjectInstance = (JObject) json.Deserialize(reader);
             }
         }
 
@@ -51,15 +51,14 @@ namespace NativeCode.Core.Settings
         {
             using (var writer = new JsonTextWriter(new StreamWriter(stream)))
             {
-                var serializer = new JsonSerializer();
-                serializer.Serialize(writer, this.ObjectInstance);
+                var json = new JsonSerializer();
+                json.Serialize(writer, this.ObjectInstance);
             }
         }
 
         public string Serialize()
         {
-            var serializer = DependencyLocator.Resolver.Resolve<IStringSerializer>();
-            return serializer.Serialize(this.ObjectInstance);
+            return this.serializer.Serialize(this.ObjectInstance);
         }
 
         protected override IEnumerable<string> GetKeys()
@@ -82,12 +81,14 @@ namespace NativeCode.Core.Settings
             foreach (var name in path)
             {
                 if (current?[name] == null)
+                {
                     return defaultValue;
+                }
 
                 current = current[name];
             }
 
-            return ReadTokenValue(current, defaultValue);
+            return JsonSettings.ReadTokenValue(current, defaultValue);
         }
 
         protected override void WriteValue<T>(string name, T value, bool overwrite)
@@ -105,9 +106,13 @@ namespace NativeCode.Core.Settings
                 if (name == terminator)
                 {
                     if (current[name] == null)
+                    {
                         current.Add(name, new JValue(value));
+                    }
                     else if (overwrite)
+                    {
                         current[name] = new JValue(value);
+                    }
 
                     return;
                 }
@@ -125,25 +130,29 @@ namespace NativeCode.Core.Settings
         private static T ReadTokenValue<T>(JToken token, T defaultValue = default(T))
         {
             if (token == null)
+            {
                 return defaultValue;
+            }
 
             return token.ToObject<T>();
         }
 
         private void FlattenKeys(JObject container, ICollection<string> keys, string path = default(string))
         {
-            Func<string, string, string> build = (p, k) => p == null ? k : string.Join(this.PathSeparator, p, k);
+            string FlattenName(string p, string k) => p == null ? k : string.Join(this.PathSeparator, p, k);
 
             foreach (var child in container)
             {
                 var key = child.Key;
                 var value = child.Value;
 
-                var name = build(path, key);
+                var name = FlattenName(path, key);
                 keys.Add(name);
 
                 if (value.Type == JTokenType.Object)
+                {
                     this.FlattenKeys((JObject) value, keys, name);
+                }
             }
         }
     }

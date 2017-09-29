@@ -12,7 +12,7 @@
         /// <summary>
         /// Gets a value indicating whether this <see cref="IMaintenanceProvider" /> is in maintenance.
         /// </summary>
-        public bool Active => state != 0;
+        public bool Active => MaintenanceProvider.state != 0;
 
         /// <summary>
         /// Gets the name.
@@ -22,20 +22,24 @@
         /// <summary>
         /// Gets the maintenance key.
         /// </summary>
-        public string MaintenanceKey => generated;
+        public string MaintenanceKey => MaintenanceProvider.generated;
 
         public string EnterMaintenance()
         {
-            if (Interlocked.CompareExchange(ref state, 1, 1) == 0)
-                generated = this.GenerateMaintenanceKey();
+            if (Interlocked.CompareExchange(ref MaintenanceProvider.state, 1, 1) == 0)
+            {
+                MaintenanceProvider.generated = this.GenerateMaintenanceKey();
+            }
 
-            return generated;
+            return MaintenanceProvider.generated;
         }
 
         public void ExitMaintenance(string key)
         {
-            if (Interlocked.CompareExchange(ref state, 0, 0) == 1 && key == generated)
-                generated = null;
+            if (Interlocked.CompareExchange(ref MaintenanceProvider.state, 0, 0) == 1 && key == MaintenanceProvider.generated)
+            {
+                MaintenanceProvider.generated = null;
+            }
         }
 
         protected virtual string GenerateMaintenanceKey()

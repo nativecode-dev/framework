@@ -1,13 +1,13 @@
-﻿using System.Globalization;
-using System.Resources;
-using JetBrains.Annotations;
-
-namespace NativeCode.Core.Localization.Translation
+﻿namespace NativeCode.Core.Localization.Translation
 {
+    using System.Globalization;
+    using System.Resources;
+    using JetBrains.Annotations;
+
     public class ResourceTranslatorProvider : ITranslationProvider
     {
         private readonly ResourceManager resourceManager;
-        
+
         public ResourceTranslatorProvider(ResourceManager resourceManager)
         {
             this.resourceManager = resourceManager;

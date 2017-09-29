@@ -37,6 +37,7 @@ namespace NativeCode.Core.Validation
         /// <summary>
         /// Indicates that all of the requirements should be used.
         /// </summary>
-        RequireAll = RequireAlpha | RequireCasing | RequireNumeric | RequireSymbols
+        RequireAll = StringComplexityRules.RequireAlpha | StringComplexityRules.RequireCasing | StringComplexityRules.RequireNumeric |
+                     StringComplexityRules.RequireSymbols
     }
 }

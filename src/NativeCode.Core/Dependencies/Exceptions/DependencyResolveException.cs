@@ -24,7 +24,7 @@
         /// <param name="type">The type.</param>
         /// <param name="innerException">The inner exception.</param>
         public DependencyResolveException(Type type, Exception innerException)
-            : base(CreateExceptionMessage(type), innerException)
+            : base(DependencyResolveException.CreateExceptionMessage(type), innerException)
         {
         }
 

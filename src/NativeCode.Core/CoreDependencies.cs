@@ -19,12 +19,12 @@
 
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
-            RegisterLocalization(registrar);
-            RegisterLogging(registrar);
-            RegisterPlatform(registrar);
-            RegisterQueueing(registrar);
-            RegisterSerialization(registrar);
-            RegisterValidation(registrar);
+            CoreDependencies.RegisterLocalization(registrar);
+            CoreDependencies.RegisterLogging(registrar);
+            CoreDependencies.RegisterPlatform(registrar);
+            CoreDependencies.RegisterQueueing(registrar);
+            CoreDependencies.RegisterSerialization(registrar);
+            CoreDependencies.RegisterValidation(registrar);
         }
 
         private static void RegisterLocalization(IDependencyRegistrar registrar)

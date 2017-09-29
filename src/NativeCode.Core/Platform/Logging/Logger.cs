@@ -53,7 +53,9 @@
             log.Tags.AddRange(tags);
 
             foreach (var writer in this.writers)
+            {
                 writer.Write(log);
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace NativeCode.Core.Extensions
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using JetBrains.Annotations;
@@ -16,15 +15,29 @@
         public static string Dequote([NotNull] this string value)
         {
             if (value.IsQuoted())
+            {
                 return value.Substring(1, value.Length - 2);
+            }
 
             return value;
+        }
+
+        public static bool IsEmpty([CanBeNull] this string value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+
+            return string.IsNullOrWhiteSpace(value);
         }
 
         public static string FromBase64String(this string value, Encoding encoding = null)
         {
             if (encoding == null)
+            {
                 encoding = Encoding.UTF8;
+            }
 
             var bytes = Convert.FromBase64String(value);
 
@@ -54,9 +67,11 @@
         public static string Quote([NotNull] this string value)
         {
             if (value.IsDoubleQuoted())
+            {
                 return value;
+            }
 
-            return "\"" + value + "\"";
+            return $"\"{value}\"";
         }
 
         public static string Replace(this string value, string replacement, params string[] characters)
@@ -67,9 +82,11 @@
         public static string SingleQuote([NotNull] this string value)
         {
             if (value.IsSingleQuoted())
+            {
                 return value;
+            }
 
-            return "'" + value + "'";
+            return $"'{value}'";
         }
 
         public static string[] Split(this string value, string separator)
@@ -80,7 +97,9 @@
         public static string ToBase64String(this string value, Encoding encoding = null)
         {
             if (encoding == null)
+            {
                 encoding = Encoding.UTF8;
+            }
 
             var bytes = encoding.GetBytes(value);
 
@@ -90,30 +109,6 @@
         public static string TrimNewLines(this string value, string replacement = "")
         {
             return value.Replace(Environment.NewLine, replacement);
-        }
-
-        public static string ToLowerScore(this string value, char separator = '_')
-        {
-            var characters = new List<char>();
-
-            foreach (var character in value.ToCharArray())
-            {
-                if (char.IsUpper(character))
-                {
-                    if (characters.Any())
-                        characters.Add(separator);
-
-                    characters.Add(char.ToLower(character));
-                    continue;
-                }
-
-                if (char.IsWhiteSpace(character))
-                    continue;
-
-                characters.Add(character);
-            }
-
-            return string.Join(string.Empty, characters);
         }
     }
 }

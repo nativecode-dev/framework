@@ -67,21 +67,27 @@
             set
             {
                 if (this.members.ContainsKey(key))
+                {
                     this.members[key] = value;
+                }
                 else
+                {
                     this.members.Add(key, value);
+                }
             }
         }
 
         public static implicit operator string(ConnectionString instance)
         {
-            return Equals(instance, null) ? null : instance.ToString();
+            return object.Equals(instance, null) ? null : instance.ToString();
         }
 
         public static implicit operator ConnectionString(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
+            {
                 return new ConnectionString();
+            }
 
             return new ConnectionString(value);
         }
@@ -128,9 +134,13 @@
             if (value != null)
             {
                 if (this.members.ContainsKey(binder.Name))
+                {
                     this.members[binder.Name] = value.ToString();
+                }
                 else
+                {
                     this.members.Add(binder.Name, value.ToString());
+                }
 
                 return true;
             }
@@ -164,7 +174,9 @@
                 var value = parts[1].Trim();
 
                 if (!this.members.ContainsKey(key))
+                {
                     this.members.Add(key, value);
+                }
             }
         }
 
@@ -175,7 +187,9 @@
                 var resolved = resolver(key);
 
                 if (!string.IsNullOrWhiteSpace(resolved))
+                {
                     return resolved;
+                }
             }
 
             return key;

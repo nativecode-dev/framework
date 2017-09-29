@@ -45,6 +45,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                 var tracker = new TaskTracker(provider, cancellationToken);
 
                 while (cancellationToken.IsCancellationRequested == false)
+                {
                     try
                     {
                         tracker.RemoveCompleted(this.HandleTaskRemoved);
@@ -75,6 +76,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                     {
                         this.Logger.Exception(ex);
                     }
+                }
             }
         }
 
@@ -82,10 +84,14 @@ namespace NativeCode.Core.Platform.Messaging.Processing
             TaskTracker tracker)
         {
             if (task.IsCompleted)
+            {
                 tracker.Provider.Acknowledge(result);
+            }
 
             if (task.IsFaulted)
+            {
                 this.Logger.Exception(task.Exception);
+            }
         }
 
         private async Task<MessageProcessorResult> ProcessMessageAsync(MessageQueueResult result,

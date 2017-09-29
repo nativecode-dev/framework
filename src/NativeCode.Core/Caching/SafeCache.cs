@@ -23,7 +23,9 @@ namespace NativeCode.Core.Caching
             T value;
 
             if (this.cached.TryGetValue(key, out value))
+            {
                 return value;
+            }
 
             value = defaultValue();
             this.Set(key, value);
