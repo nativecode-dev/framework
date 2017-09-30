@@ -18,10 +18,19 @@
             return this.cache.GetOrCreateAsync(id, entry =>
             {
                 IHub hub = new Hub(id);
+                entry.RegisterPostEvictionCallback(HubManager.HubEvicted);
                 entry.SlidingExpiration = TimeSpan.FromHours(2);
                 entry.Value = hub;
                 return Task.FromResult(hub);
             });
+        }
+
+        private static void HubEvicted(object key, object value, EvictionReason reason, object state)
+        {
+            if (value is IHub hub)
+            {
+                hub.Dispose();
+            }
         }
     }
 }

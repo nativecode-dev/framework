@@ -40,7 +40,7 @@
             {
                 return null;
             }
-
+            
             using (var resolver = DependencyLocator.CreateResolver())
             {
                 var validator = resolver.Resolve<StringComplexityValidator>();

@@ -15,22 +15,20 @@
 
     public class WebSocketConnection : Disposable
     {
-        private readonly IHub hub;
-
         private readonly IStringSerializer serializer;
 
-        public WebSocketConnection(HttpContext context, WebSocket socket, IHub hub)
+        protected internal WebSocketConnection(HttpContext context, WebSocket socket, IHub hub)
         {
-            this.hub = hub;
-
             this.Context = context;
-            this.HubId = hub.HubId;
+            this.Hub = hub;
             this.WebSocket = socket;
 
             this.serializer = context.RequestServices.GetService<IStringSerializer>();
         }
+        
+        public IHub Hub { get; }
 
-        public Guid HubId { get; }
+        public Guid HubId => this.Hub.HubId;
 
         public bool IsReadable => this.Token.IsCancellationRequested == false && this.WebSocket.State == WebSocketState.Open;
 
@@ -42,6 +40,7 @@
 
         protected override void ReleaseManaged()
         {
+            this.Hub.Remove(this);
             this.WebSocket.Dispose();
         }
 

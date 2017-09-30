@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Http;
     using Types;
 
-    public interface IHub
+    public interface IHub : IDisposable
     {
         Guid HubId { get; }
 

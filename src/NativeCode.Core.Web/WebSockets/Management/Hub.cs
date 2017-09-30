@@ -1,13 +1,14 @@
 ﻿namespace NativeCode.Core.Web.WebSockets.Management
 {
+    using Microsoft.AspNetCore.Http;
+    using Reliability;
     using System;
     using System.Collections.Concurrent;
     using System.Net.WebSockets;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
     using Types;
 
-    internal class Hub : IHub
+    internal class Hub : Disposable, IHub
     {
         private readonly ConcurrentDictionary<Guid, WebSocketConnection> connections;
 
@@ -39,6 +40,16 @@
             }
 
             return Task.CompletedTask;
+        }
+
+        protected override void ReleaseManaged()
+        {
+            foreach (var connection in this.connections.Values)
+            {
+                connection.Dispose();
+            }
+            
+            this.connections.Clear();
         }
     }
 }

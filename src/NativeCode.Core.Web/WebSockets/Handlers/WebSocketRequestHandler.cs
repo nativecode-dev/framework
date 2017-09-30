@@ -3,9 +3,9 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Commands;
+    using Core.Extensions;
     using MediatR;
     using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json.Linq;
     using Platform.Serialization;
     using Types;
 
@@ -13,17 +13,20 @@
     {
         private readonly ILogger logger;
 
-        private readonly IStringSerializer serializer;
+        private readonly IObjectSerializer objects;
 
-        public WebSocketRequestHandler(ILoggerFactory factory, IStringSerializer serializer)
+        private readonly IStringSerializer strings;
+
+        public WebSocketRequestHandler(ILoggerFactory factory, IObjectSerializer objects, IStringSerializer strings)
         {
             this.logger = factory.CreateLogger<WebSocketRequestHandler>();
-            this.serializer = serializer;
+            this.objects = objects;
+            this.strings = strings;
         }
 
         public virtual Task<WebSocketResponse> Handle(WebSocketServerMessage message, CancellationToken cancellationToken)
         {
-            this.logger.LogInformation(this.serializer.Serialize(message));
+            this.logger.JsonInfo(message, this.strings);
 
             var command = new Command
             {
@@ -34,7 +37,9 @@
                 }
             };
 
-            return message.CreateResponseTask(JObject.FromObject(command));
+            var response = this.objects.Structure(command);
+            this.logger.JsonInfo(message, this.strings);
+            return message.CreateResponseTask(response);
         }
     }
 }
