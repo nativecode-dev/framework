@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>WebSockets</title>
+    <script>
+        const socket = new WebSocket('ws://localhost:5000/ws');
+        socket.onopen = () => {
+            const request = {
+                data: {}
+            };
+
+            socket.send(JSON.stringify(request));
+
+            socket.onmessage = (message) => {
+                console.log(message.data);
+            };
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

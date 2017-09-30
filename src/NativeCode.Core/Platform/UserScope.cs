@@ -1,7 +1,7 @@
 ﻿namespace NativeCode.Core.Platform
 {
     using System.Security.Principal;
-    using Types;
+    using Reliability;
 
     internal class UserScope : Disposable, IUserScope
     {
@@ -15,14 +15,9 @@
 
         public IApplicationScope Scope { get; }
 
-        protected override void Dispose(bool disposing)
+        protected override void ReleaseManaged()
         {
-            if (disposing && this.Disposed == false)
-            {
-                this.Scope.Dispose();
-            }
-
-            base.Dispose(disposing);
+            this.Scope.Dispose();
         }
     }
 }

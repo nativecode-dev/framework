@@ -5,7 +5,7 @@
     using System.Reflection;
     using Dependencies;
 
-    public class CorePlatform<TSettings> : Platform.Platform where TSettings : Settings.Settings
+    public class CorePlatform : Platform.Platform
     {
         public CorePlatform(IDependencyContainer container) : base(container)
         {

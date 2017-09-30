@@ -1,16 +1,12 @@
 ﻿namespace NativeCode.Core
 {
     using Dependencies;
-    using Dependencies.Enums;
     using Localization.Translation;
     using Platform.Connections;
-    using Platform.Logging;
-    using Platform.Maintenance;
     using Platform.Messaging.Queuing;
-    using Platform.Security.Authentication;
     using Platform.Security.KeyManagement;
     using Platform.Serialization;
-    using Types;
+    using Reliability;
     using Validation;
 
     public class CoreDependencies : DependencyModule
@@ -20,7 +16,6 @@
         public override void RegisterDependencies(IDependencyRegistrar registrar)
         {
             CoreDependencies.RegisterLocalization(registrar);
-            CoreDependencies.RegisterLogging(registrar);
             CoreDependencies.RegisterPlatform(registrar);
             CoreDependencies.RegisterQueueing(registrar);
             CoreDependencies.RegisterSerialization(registrar);
@@ -33,24 +28,13 @@
             registrar.Register<ITranslationProvider, TranslationProvider>();
         }
 
-        private static void RegisterLogging(IDependencyRegistrar registrar)
-        {
-            registrar.Register<ILogger, Logger>();
-            registrar.Register<ILogWriter, NullLogWriter>(DependencyKey.QualifiedName);
-
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<ILogWriter>());
-        }
-
         private static void RegisterPlatform(IDependencyRegistrar registrar)
         {
             registrar.Register<ICancellationTokenManager, CancellationTokenManager>();
-            registrar.Register<IKeyManager, KeyManager>();
             registrar.Register<IConnectionStringProvider, SettingsConnectionStringProvider>();
+            registrar.Register<IKeyManager, KeyManager>();
 
             registrar.Register<SettingsConnectionStringProvider>();
-
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<IAuthenticationHandler>());
-            registrar.RegisterFactory(resolver => resolver.ResolveAll<IMaintenanceProvider>());
         }
 
         private static void RegisterQueueing(IDependencyRegistrar registrar)

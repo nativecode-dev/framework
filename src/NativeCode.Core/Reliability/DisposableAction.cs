@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Types
+﻿namespace NativeCode.Core.Reliability
 {
     using System;
 
@@ -17,14 +17,9 @@
             initializer();
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ReleaseManaged()
         {
-            if (!this.Disposed)
-            {
-                this.finalizer();
-            }
-
-            base.Dispose(disposing);
+            this.finalizer();
         }
     }
 }

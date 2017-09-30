@@ -1,6 +1,7 @@
 ﻿namespace NativeCode.Core.Platform.Serialization
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     public class JsonStringSerializer : IStringSerializer
     {
@@ -11,8 +12,11 @@
         {
             this.Settings = new JsonSerializerSettings
             {
-                Formatting = Formatting.Indented,
-                ContractResolver = new LowerScoreContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                DateParseHandling = DateParseHandling.DateTimeOffset,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                Formatting = Formatting.Indented
             };
         }
 
@@ -23,12 +27,12 @@
 
         public T Deserialize<T>(string value)
         {
-            return JsonConvert.DeserializeObject<T>(value);
+            return JsonConvert.DeserializeObject<T>(value, this.Settings);
         }
 
         public string Serialize<T>(T instance)
         {
-            return JsonConvert.SerializeObject(instance);
+            return JsonConvert.SerializeObject(instance, this.Settings);
         }
     }
 }

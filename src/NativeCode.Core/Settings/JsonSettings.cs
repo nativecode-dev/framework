@@ -1,11 +1,11 @@
 namespace NativeCode.Core.Settings
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Platform.Serialization;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using Platform.Serialization;
 
     public class JsonSettings : Settings
     {
@@ -139,7 +139,10 @@ namespace NativeCode.Core.Settings
 
         private void FlattenKeys(JObject container, ICollection<string> keys, string path = default(string))
         {
-            string FlattenName(string p, string k) => p == null ? k : string.Join(this.PathSeparator, p, k);
+            string FlattenName(string p, string k)
+            {
+                return p == null ? k : string.Join(this.PathSeparator, p, k);
+            }
 
             foreach (var child in container)
             {

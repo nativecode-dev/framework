@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Types;
+    using Reliability;
 
-    public abstract class DependencyResolver : Disposable, IDependencyResolver
+    public abstract class DependencyResolver : DisposableManager, IDependencyResolver
     {
         public T Resolve<T>(string key = null)
         {

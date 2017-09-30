@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Types
+﻿namespace NativeCode.Core.Reliability
 {
     using System;
 
@@ -17,7 +17,10 @@
             if (disposing && this.Disposed == false)
             {
                 this.Disposed = true;
+                this.ReleaseManaged();
             }
         }
+
+        protected abstract void ReleaseManaged();
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace NativeCode.Core.Extensions
 {
     using System.IO;
-    using Types;
+    using Reliability;
 
     public static class StreamExtensions
     {

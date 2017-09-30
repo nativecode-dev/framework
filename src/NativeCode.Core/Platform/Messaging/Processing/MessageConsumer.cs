@@ -1,25 +1,25 @@
 namespace NativeCode.Core.Platform.Messaging.Processing
 {
+    using Extensions;
+    using Microsoft.Extensions.Logging;
+    using Queuing;
+    using Reliability;
+    using Serialization;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using Extensions;
-    using Logging;
-    using Queuing;
-    using Serialization;
-    using Types;
 
     public class MessageConsumer<TMessage> : DisposableManager, IMessageConsumer<TMessage>
         where TMessage : class, new()
     {
         public MessageConsumer(IMessageProcessor<TMessage> processor, IMessageQueueAdapter adapter,
-            IStringSerializer serializer, ILogger logger)
+            IStringSerializer serializer, ILoggerFactory factory)
         {
             this.Adapter = adapter;
-            this.Logger = logger;
+            this.Logger = factory.CreateLogger<MessageConsumer<TMessage>>();
             this.Processor = processor;
             this.Serializer = serializer;
         }
@@ -54,7 +54,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                         // pause for a bit to allow processing to potentially complete.
                         if (tracker.Tasks.Count >= this.Concurrency)
                         {
-                            await Task.Delay(this.ThrottleMaxConcurrency, cancellationToken);
+                            await Task.Delay(this.ThrottleMaxConcurrency, cancellationToken).NoCapture();
                             continue;
                         }
 
@@ -64,7 +64,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                         // to allow new messages to arrive.
                         if (result.Body == null)
                         {
-                            await Task.Delay(this.ThrottleEmptyQueue, cancellationToken);
+                            await Task.Delay(this.ThrottleEmptyQueue, cancellationToken).NoCapture();
                             continue;
                         }
 
@@ -102,7 +102,7 @@ namespace NativeCode.Core.Platform.Messaging.Processing
                 var contents = Encoding.UTF8.GetString(result.Body, 0, result.Body.Length);
                 var message = this.Serializer.Deserialize<TMessage>(contents);
 
-                return await this.Processor.ProcessMessageAsync(message, cancellationToken);
+                return await this.Processor.ProcessMessageAsync(message, cancellationToken).NoCapture();
             }
             catch (Exception ex)
             {

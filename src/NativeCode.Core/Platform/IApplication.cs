@@ -1,11 +1,9 @@
 ﻿namespace NativeCode.Core.Platform
 {
     using System;
-    using System.Collections.Generic;
-    using System.Reflection;
     using Dependencies;
+    using Reliability;
     using Settings;
-    using Types;
 
     /// <summary>
     /// Provides a contract for an application instance.
@@ -37,6 +35,8 @@
         /// </summary>
         ICancellationTokenManager CancellationTokens { get; }
 
+        void Configure(params IDependencyModule[] modules);
+
         /// <summary>
         /// Gets the name of the application.
         /// </summary>
@@ -52,17 +52,7 @@
         /// <summary>
         /// Initializes the specified application.
         /// </summary>
-        /// <param name="registrar">The registrar.</param>
-        /// <param name="modules">The modules.</param>
-        void Initialize(IDependencyRegistrar registrar, params IDependencyModule[] modules);
-
-        /// <summary>
-        /// Initializes the specified application.
-        /// </summary>
-        /// <param name="registrar">The registrar.</param>
-        /// <param name="assemblies">The assemblies.</param>
-        /// <param name="modules">The modules.</param>
-        void Initialize(IDependencyRegistrar registrar, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules);
+        void Initialize();
     }
 
     /// <summary>

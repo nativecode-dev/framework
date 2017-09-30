@@ -60,7 +60,7 @@
         /// <exception cref="System.InvalidOperationException"></exception>
         public static bool ValidateType([NotNull] Type type)
         {
-            var attribute = type?.GetTypeInfo().GetCustomAttribute<IgnoreDependencyAttribute>(true);
+            var attribute = type.GetTypeInfo().GetCustomAttribute<IgnoreDependencyAttribute>(true);
 
             if (attribute != null)
             {

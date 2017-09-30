@@ -2,14 +2,14 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Logging;
+    using Microsoft.Extensions.Logging;
 
     public abstract class MessageProcessor<TMessage> : IMessageProcessor<TMessage>
         where TMessage : class, new()
     {
-        protected MessageProcessor(ILogger logger)
+        protected MessageProcessor(ILoggerFactory factory)
         {
-            this.Logger = logger;
+            this.Logger = factory.CreateLogger<MessageProcessor<TMessage>>();
         }
 
         protected ILogger Logger { get; }

@@ -1,25 +1,23 @@
 ﻿namespace NativeCode.Core.Platform
 {
-    using Dependencies;
-    using Dependencies.Attributes;
-    using Extensions;
-    using Settings;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using System.Threading;
-    using Microsoft.Extensions.DependencyInjection;
-    using Types;
+    using Dependencies;
+    using Extensions;
+    using Reliability;
+    using Settings;
 
     /// <summary>
     /// Provides a proxy class so that the <see cref="IApplication{TSettings}" /> interface can be exposed
     /// by types that must be derived, i.e. HttpApplication.
     /// </summary>
     /// <seealso cref="NativeCode.Core.Platform.IApplication{TSetting}" />
-    [IgnoreDependency("Use new operator.")]
     public abstract class Application<TSettings> : DisposableManager, IApplication<TSettings> where TSettings : Settings
     {
+        private readonly IDependencyContainer container;
+
         /// <summary>
         /// Counter for keeping track of registration of this instance with DI.
         /// </summary>
@@ -29,15 +27,16 @@
         /// Initializes a new instance of the <see cref="Application{TSettings}" /> class.
         /// </summary>
         /// <param name="platform">The platform.</param>
-        /// <param name="settings">The settings.</param>
-        protected Application(IPlatform platform, TSettings settings)
+        /// <param name="container">The container.</param>
+        protected Application(IPlatform platform, IDependencyContainer container)
         {
+            this.container = container;
+
             this.ApplicationPath = platform.DataPath;
             this.Platform = platform;
-            this.Scope = new ApplicationScope(this.Platform.CreateDependencyScope());
-            this.Settings = settings;
+            this.Scope = new ApplicationScope(container);
 
-            this.EnsureDisposed(this.Platform);
+            this.DeferDispose(this.Platform);
         }
 
         public string ApplicationPath { get; protected set; }
@@ -46,7 +45,7 @@
 
         public IApplicationScope Scope { get; }
 
-        public TSettings Settings { get; }
+        public TSettings Settings { get; private set; }
 
         public Settings SettingsObject => this.Settings;
 
@@ -64,20 +63,20 @@
             return this.GetType().GetTypeInfo().Assembly.GetVersion();
         }
 
-        public void Initialize(IDependencyRegistrar registrar, params IDependencyModule[] modules)
+        public void Configure(params IDependencyModule[] modules)
         {
-            this.Initialize(registrar, Enumerable.Empty<Assembly>(), modules);
+            this.RegisterAssemblies();
+            this.RegisterModules(modules);
         }
 
-        public void Initialize(IDependencyRegistrar registrar, IEnumerable<Assembly> assemblies, params IDependencyModule[] modules)
+        public void Initialize()
         {
             if (Interlocked.CompareExchange(ref this.counter, 1, 0) == 0)
             {
                 try
                 {
-                    this.RestoreSettings();
                     this.PreInitialization();
-                    this.RegisterDependencies(registrar);
+                    this.RestoreSettings();
                     this.PostInitialization();
 
                     this.Initialized = true;
@@ -117,7 +116,7 @@
             using (var resolver = this.Scope.CreateResolver())
             {
                 this.CancellationTokens = resolver.Resolve<ICancellationTokenManager>();
-                this.EnsureDisposed(this.CancellationTokens);
+                this.DeferDispose(this.CancellationTokens);
             }
         }
 
@@ -125,18 +124,30 @@
         {
         }
 
-        protected virtual void RegisterDependencies(IDependencyRegistrar registrar)
+        protected virtual void RegisterAssemblies()
         {
             var dependencies = DependencyScanner.Scan(this.Platform.GetAssemblies());
 
             foreach (var dependency in dependencies)
             {
-                registrar.Register(dependency.Contract, dependency.Implementation, dependency.KeyValue, dependency.Lifetime);
+                this.container.Registrar.Register(dependency.Contract, dependency.Implementation, dependency.KeyValue, dependency.Lifetime);
+            }
+        }
+
+        protected virtual void RegisterModules(IEnumerable<IDependencyModule> modules)
+        {
+            foreach (var module in modules)
+            {
+                module.RegisterDependencies(this.container.Registrar);
             }
         }
 
         protected virtual void RestoreSettings()
         {
+            using (var resolver = this.Scope.CreateResolver())
+            {
+                this.Settings = resolver.Resolve<TSettings>();
+            }
         }
     }
 }

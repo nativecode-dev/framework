@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Concurrent;
     using Extensions;
-    using Types;
+    using Reliability;
 
     public class MessageQueueAdapter : Disposable, IMessageQueueAdapter
     {
@@ -31,6 +31,14 @@
             }
 
             return this.queues[name];
+        }
+
+        protected override void ReleaseManaged()
+        {
+            foreach (var queue in this.queues.Values)
+            {
+                queue.Dispose();
+            }
         }
     }
 }

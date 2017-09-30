@@ -15,10 +15,14 @@
             this.provider = provider;
         }
 
+        private CoreDependencyResolver(IServiceScope scope) : this(scope.ServiceProvider)
+        {
+            this.DeferDispose(scope);
+        }
+
         public override IDependencyResolver CreateChildResolver()
         {
-            var scope = this.provider.CreateScope();
-            return new CoreDependencyResolver(scope.ServiceProvider);
+            return new CoreDependencyResolver(this.provider.CreateScope());
         }
 
         public override object Resolve(Type type, string key = null)

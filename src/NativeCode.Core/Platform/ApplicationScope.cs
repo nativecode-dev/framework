@@ -2,7 +2,7 @@
 {
     using System.Security.Principal;
     using Dependencies;
-    using Types;
+    using Reliability;
 
     internal class ApplicationScope : DisposableManager, IApplicationScope
     {
@@ -10,7 +10,7 @@
 
         public ApplicationScope(IDependencyContainer container)
         {
-            this.container = container.CreateChildContainer();
+            this.container = container;
         }
 
         public virtual IApplicationScope CreateChildScope()
@@ -29,7 +29,7 @@
 
             try
             {
-                this.EnsureDisposed(scope);
+                this.DeferDispose(scope);
                 return scope;
             }
             catch

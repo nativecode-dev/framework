@@ -1,11 +1,12 @@
 ﻿namespace NativeCode.Core.Dependencies
 {
+    using System;
+    using System.Reflection;
     using Attributes;
     using Enums;
     using Extensions;
-    using System;
-    using System.Reflection;
 
+    [IgnoreDependency]
     public abstract class DependencyRegistrar : IDependencyRegistrar
     {
         public virtual IDependencyRegistrar Register(Type type, string key = null,

@@ -1,26 +1,40 @@
 ﻿namespace NativeCode.Core.Dependencies
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Attributes;
-    using Enums;
+    using Extensions;
     using Microsoft.Extensions.DependencyInjection;
 
     [IgnoreDependency]
     public class CoreDependencyRegistrar : DependencyRegistrar
     {
+        private readonly DependencyKeyTracker tracker;
+
         private readonly IServiceCollection services;
 
         public CoreDependencyRegistrar(IServiceCollection services)
         {
             this.services = services;
+            this.tracker = new DependencyKeyTracker();
         }
 
         public override IDependencyRegistrar Register(DependencyDescription dependency)
         {
-            var descriptor = new ServiceDescriptor(dependency.Contract, dependency.Implementation,
-                CoreDependencyRegistrar.GetLifetime(dependency.Lifetime));
+            ServiceDescriptor descriptor;
+
+            if (dependency.KeyValue.IsEmpty() && this.tracker.HasKey(dependency.Contract) == false)
+            {
+                descriptor = new ServiceDescriptor(dependency.Contract, dependency.Implementation, dependency.Lifetime.Convert());
+            }
+            else
+            {
+                descriptor = this.RegisterNamed(dependency);
+            }
 
             this.services.Add(descriptor);
+
             return this;
         }
 
@@ -32,7 +46,7 @@
                 return factory(resolver);
             }
 
-            var descriptor = new ServiceDescriptor(dependency.Contract, Callback, CoreDependencyRegistrar.GetLifetime(dependency.Lifetime));
+            var descriptor = new ServiceDescriptor(dependency.Contract, Callback, dependency.Lifetime.Convert());
 
             this.services.Add(descriptor);
             return this;
@@ -46,19 +60,29 @@
             return this;
         }
 
-        private static ServiceLifetime GetLifetime(DependencyLifetime lifetime)
+        private ServiceDescriptor RegisterNamed(DependencyDescription dependency)
         {
-            switch (lifetime)
+            if (this.tracker.HasKey(dependency.Contract) == false)
             {
-                case DependencyLifetime.PerApplication:
-                    return ServiceLifetime.Singleton;
+                var enumerable = typeof(IEnumerable<>).MakeGenericType(dependency.Contract);
+                var descriptor = new ServiceDescriptor(enumerable, provider => this.Resolve(provider, dependency.Contract),
+                    dependency.Lifetime.Convert());
 
-                case DependencyLifetime.PerContainer:
-                    return ServiceLifetime.Scoped;
-
-                default:
-                    return ServiceLifetime.Transient;
+                this.services.Add(descriptor);
             }
+
+            if (this.tracker.TryAdd(dependency) == false)
+            {
+                throw new InvalidOperationException($"Failed to add dependency: {dependency}.");
+            }
+
+            return new ServiceDescriptor(dependency.Contract, dependency.Implementation, dependency.Lifetime.Convert());
+        }
+
+        private IEnumerable<object> Resolve(IServiceProvider provider, Type contract)
+        {
+            return this.tracker.GetDependencies(contract)
+                .Select(dependency => provider.GetService(dependency.Implementation));
         }
     }
 }

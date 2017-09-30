@@ -6,14 +6,13 @@
     using System.Reflection;
     using System.Security.Principal;
     using Dependencies;
-    using Dependencies.Enums;
+    using Reliability;
     using Security;
-    using Types;
 
     /// <summary>
     /// Abstract class to manage the underlying platform.
     /// </summary>
-    /// <seealso cref="NativeCode.Core.Types.Disposable" />
+    /// <seealso cref="Disposable" />
     /// <seealso cref="NativeCode.Core.Platform.IPlatform" />
     public abstract class Platform : Disposable, IPlatform
     {
@@ -26,7 +25,7 @@
             this.Container = container;
             this.User = ApplicationPrincipal.System;
 
-            container.Registrar.RegisterInstance<IPlatform>(this, DependencyLifetime.PerApplication);
+            DependencyLocator.SetRootContainer(container);
         }
 
         public virtual string BinariesPath => AppDomain.CurrentDomain.BaseDirectory;
@@ -61,18 +60,9 @@
             return this.GetAssemblies(assembly => prefixes.Any(prefix => assembly.FullName.StartsWith(prefix)));
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ReleaseManaged()
         {
-            if (disposing && !this.Disposed)
-            {
-                if (this.Container != null)
-                {
-                    this.Container.Dispose();
-                    this.Container = null;
-                }
-            }
-
-            base.Dispose(disposing);
+            this.Container.Dispose();
         }
 
         protected abstract IEnumerable<Assembly> GetAssemblies();

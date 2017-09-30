@@ -14,23 +14,24 @@
             this.Registrar = new CoreDependencyRegistrar(services);
         }
 
-        private CoreDependencyContainer()
+        private CoreDependencyContainer(IDependencyResolver resolver)
         {
+            this.resolver = resolver;
         }
 
         public override IDependencyRegistrar Registrar { get; }
 
         public override IDependencyContainer CreateChildContainer()
         {
-            return new CoreDependencyContainer();
+            return new CoreDependencyContainer(this.resolver.CreateChildResolver());
         }
 
         public override IDependencyResolver CreateResolver()
         {
-            return this.resolver.CreateChildResolver();
+            return this.resolver;
         }
 
-        public IServiceProvider Finalize(IServiceProvider provider)
+        public IServiceProvider Build(IServiceProvider provider)
         {
             return this.resolver = new CoreDependencyResolver(provider);
         }

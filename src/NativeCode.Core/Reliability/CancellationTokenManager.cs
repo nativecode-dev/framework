@@ -1,9 +1,10 @@
-﻿namespace NativeCode.Core.Types
+﻿namespace NativeCode.Core.Reliability
 {
     using System;
     using System.Collections.Concurrent;
     using System.Threading;
-    using Platform.Logging;
+    using Extensions;
+    using Microsoft.Extensions.Logging;
 
     public class CancellationTokenManager : DisposableManager, ICancellationTokenManager
     {
@@ -13,10 +14,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="CancellationTokenManager" /> class.
         /// </summary>
-        /// <param name="logger">The logger.</param>
-        public CancellationTokenManager(ILogger logger)
+        /// <param name="factory">The factory.</param>
+        public CancellationTokenManager(ILoggerFactory factory)
         {
-            this.Logger = logger;
+            this.Logger = factory.CreateLogger<CancellationTokenManager>();
         }
 
         /// <summary>

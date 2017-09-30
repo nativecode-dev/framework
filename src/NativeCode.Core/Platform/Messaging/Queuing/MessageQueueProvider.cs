@@ -3,8 +3,8 @@
     using System.Collections.Concurrent;
     using System.Diagnostics.CodeAnalysis;
     using System.Text;
+    using Reliability;
     using Serialization;
-    using Types;
 
     public class MessageQueueProvider : DisposableManager, IMessageQueueProvider
     {
