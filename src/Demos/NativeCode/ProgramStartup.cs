@@ -30,14 +30,14 @@
             app.UseStaticFiles();
         }
 
-        protected override void InitializeApplication(IApplication<ProgramSettings> application)
-        {
-            application.Initialize();
-        }
-
         protected override void ConfigureApplication(IApplication<ProgramSettings> application)
         {
             application.Configure(CoreDependencies.Instance, CoreWebDependencies.Instance);
+        }
+
+        protected override void InitializeApplication(IApplication<ProgramSettings> application)
+        {
+            application.Initialize();
         }
     }
 }
