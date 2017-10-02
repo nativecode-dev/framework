@@ -38,12 +38,12 @@
 
         public IEnumerable<Task> Broadcast<T>(T data, CancellationToken token)
         {
-            return this.connections.Values.Select(socket => socket.SendAsync(data, token));
+            return this.connections.Values.Select(socket => socket.Send(data, token));
         }
 
         public IEnumerable<Task> BroadcastText(string data, CancellationToken token)
         {
-            return this.connections.Values.Select(socket => socket.SendTextAsync(data, token));
+            return this.connections.Values.Select(socket => socket.SendText(data, token));
         }
 
         public Task Remove(WebSocketConnection connection)

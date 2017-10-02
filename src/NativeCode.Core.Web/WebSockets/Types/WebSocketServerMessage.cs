@@ -3,15 +3,17 @@
     using System.Threading.Tasks;
     using Newtonsoft.Json.Linq;
 
-    public class WebSocketServerMessage : WebSocketRequest
+    public class WebSocketServerMessage
     {
-        internal WebSocketServerMessage(WebSocketConnection connection, WebSocketRequest request)
+        private WebSocketServerMessage(WebSocketConnection connection, WebSocketRequest request)
         {
             this.Connection = connection;
             this.Request = request;
         }
 
         public WebSocketConnection Connection { get; }
+
+        public JObject Data => this.Request?.Data;
 
         public WebSocketRequest Request { get; }
 
@@ -33,6 +35,11 @@
         public Task<WebSocketResponse> CreateResponseTask(JObject data)
         {
             return Task.FromResult(this.CreateResponse(data));
+        }
+
+        public static WebSocketServerMessage Bind(WebSocketConnection connection, WebSocketRequest request)
+        {
+            return new WebSocketServerMessage(connection, request);
         }
     }
 }

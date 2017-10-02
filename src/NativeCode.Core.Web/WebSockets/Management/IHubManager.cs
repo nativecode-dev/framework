@@ -3,8 +3,12 @@
     using System;
     using System.Threading.Tasks;
 
-    public interface IHubManager
+    public interface IHubManager : IDisposable
     {
-        Task<IHub> GetHub(Guid id);
+        Task<IHub> CreateHub(Guid id);
+
+        Task<IHub> GetOrCreateHub(Guid id);
+
+        Task<bool> HubExists(Guid id);
     }
 }

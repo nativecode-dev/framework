@@ -1,17 +1,17 @@
 ﻿namespace NativeCode.Core.Web.WebSockets.Types
 {
-    using System;
-    using System.IO;
-    using System.Net.WebSockets;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Core.Extensions;
     using Management;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Platform.Serialization;
     using Reliability;
+    using System;
+    using System.IO;
+    using System.Net.WebSockets;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public class WebSocketConnection : Disposable
     {
@@ -25,7 +25,7 @@
 
             this.serializer = context.RequestServices.GetService<IStringSerializer>();
         }
-        
+
         public IHub Hub { get; }
 
         public Guid HubId => this.Hub.HubId;
@@ -38,36 +38,9 @@
 
         protected HttpContext Context { get; }
 
-        protected override void ReleaseManaged()
+        public async Task<T> GetNext<T>(CancellationToken token)
         {
-            this.Hub.Remove(this);
-            this.WebSocket.Dispose();
-        }
-
-        public Task SendAsync<T>(T data, CancellationToken token)
-        {
-            var json = this.serializer.Serialize(data);
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                return Task.CompletedTask;
-            }
-
-            return this.SendTextAsync(json, token);
-        }
-
-        public Task SendTextAsync(string data, CancellationToken token)
-        {
-            var bytes = Encoding.UTF8.GetBytes(data);
-            var buffer = new ArraySegment<byte>(bytes);
-
-            // NOTE: We have to set endOfMessage to true!
-            return this.WebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, token);
-        }
-
-        public async Task<T> GetNextAsync<T>(CancellationToken token)
-        {
-            var json = await this.GetNextTextAsync(token).NoCapture();
+            var json = await this.GetNextText(token).NoCapture();
 
             if (string.IsNullOrWhiteSpace(json))
             {
@@ -77,11 +50,12 @@
             return this.serializer.Deserialize<T>(json);
         }
 
-        public async Task<string> GetNextTextAsync(CancellationToken token)
+        public async Task<Stream> GetNextStream(CancellationToken token)
         {
-            var buffer = new ArraySegment<byte>(new byte[8192]);
+            var buffer = new ArraySegment<byte>(new byte[Common.Streams.BufferSize]);
+            var stream = new MemoryStream();
 
-            using (var stream = new MemoryStream())
+            try
             {
                 WebSocketReceiveResult result;
 
@@ -92,18 +66,71 @@
                 }
                 while (result.EndOfMessage == false);
 
-                if (result.MessageType != WebSocketMessageType.Text)
-                {
-                    return default(string);
-                }
-
                 stream.Seek(0, SeekOrigin.Begin);
 
+                var tempStream = stream;
+                stream = null;
+
+                return tempStream;
+            }
+            catch
+            {
+                stream?.Dispose();
+                throw;
+            }
+        }
+
+        public async Task<string> GetNextText(CancellationToken token)
+        {
+            var buffer = new ArraySegment<byte>(new byte[8192]);
+
+            using (var stream = await this.GetNextStream(token).NoCapture())
+            {
                 using (var reader = new StreamReader(stream, Encoding.UTF8, true, buffer.Array.Length, true))
                 {
                     return await reader.ReadToEndAsync().NoCapture();
                 }
             }
+        }
+
+        public Task Send<T>(T data, CancellationToken token)
+        {
+            var json = this.serializer.Serialize(data);
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return Task.CompletedTask;
+            }
+
+            return this.SendText(json, token);
+        }
+
+        public async Task SendBinary(Stream stream, CancellationToken token)
+        {
+            var buffer = new ArraySegment<byte>();
+
+            do
+            {
+                await stream
+                    .ReadAsync(buffer.Array, buffer.Offset, Common.Streams.BufferSize, token)
+                    .NoCapture();
+            }
+            while (stream.Position < stream.Length);
+        }
+
+        public Task SendText(string data, CancellationToken token)
+        {
+            var bytes = Encoding.UTF8.GetBytes(data);
+            var buffer = new ArraySegment<byte>(bytes);
+
+            // NOTE: We have to set endOfMessage to true!
+            return this.WebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, token);
+        }
+
+        protected override void ReleaseManaged()
+        {
+            this.Hub.Remove(this);
+            this.WebSocket.Dispose();
         }
     }
 }

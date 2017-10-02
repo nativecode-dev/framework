@@ -2,10 +2,9 @@
 {
     using System;
     using System.Runtime.Serialization;
-    using MediatR;
 
     [DataContract]
-    public class WebSocketRequest : WebSocketMessage, IRequest<WebSocketResponse>
+    public class WebSocketRequest : WebSocketMessage
     {
         [DataMember]
         public Guid HubId { get; set; }
