@@ -8,13 +8,9 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using WebSockets;
     using WebSockets.Management;
-    using WebSockets.Types;
 
     public static class WebSocketExtensions
     {
@@ -107,18 +103,6 @@
             {
                 await hub.Remove(connection).NoCapture();
             }
-        }
-
-        public static IEnumerable<Task> Broadcast<T>(this IEnumerable<WebSocketConnection> sockets, T data,
-            CancellationToken token)
-        {
-            return sockets.Select(socket => socket.SendAsync(data, token));
-        }
-
-        public static IEnumerable<Task> BroadcastText(this IEnumerable<WebSocketConnection> sockets, string data,
-            CancellationToken token)
-        {
-            return sockets.Select(socket => socket.SendTextAsync(data, token));
         }
     }
 }

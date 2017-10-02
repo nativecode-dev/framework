@@ -4,7 +4,10 @@
     using Reliability;
     using System;
     using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net.WebSockets;
+    using System.Threading;
     using System.Threading.Tasks;
     using Types;
 
@@ -30,6 +33,17 @@
             }
 
             throw new InvalidOperationException("Failed to add connection.");
+        }
+
+
+        public IEnumerable<Task> Broadcast<T>(T data, CancellationToken token)
+        {
+            return this.connections.Values.Select(socket => socket.SendAsync(data, token));
+        }
+
+        public IEnumerable<Task> BroadcastText(string data, CancellationToken token)
+        {
+            return this.connections.Values.Select(socket => socket.SendTextAsync(data, token));
         }
 
         public Task Remove(WebSocketConnection connection)
