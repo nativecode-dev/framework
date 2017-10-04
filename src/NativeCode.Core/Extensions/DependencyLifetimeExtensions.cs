@@ -20,7 +20,7 @@
             }
         }
 
-        public DependencyLifetime Convert(this ServiceLifetime lifetime)
+        public static DependencyLifetime Convert(this ServiceLifetime lifetime)
         {
             switch (lifetime)
             {
@@ -30,7 +30,7 @@
                 case ServiceLifetime.Scoped:
                     return DependencyLifetime.PerContainer;
 
-                case ServiceLifetime.Transient:
+                default:
                     return DependencyLifetime.PerCall;
             }
         }
