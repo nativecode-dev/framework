@@ -38,12 +38,14 @@
         /// Most platforms will likely use this property to represent the current user of the
         /// process and not the application, hence why it lives on <see cref="IPlatform" />.
         /// </remarks>
+        [NotNull]
         IPrincipal User { get; }
 
         /// <summary>
         /// Creates a child dependency scope.
         /// </summary>
         /// <returns>Returns a new <see cref="IDependencyContainer" />.</returns>
+        [NotNull]
         IDependencyContainer CreateDependencyScope();
 
         /// <summary>
@@ -51,6 +53,7 @@
         /// </summary>
         /// <param name="filter">The filter.</param>
         /// <returns>Returns a collection of <see cref="Assembly" />.</returns>
+        [NotNull]
         IEnumerable<Assembly> GetAssemblies(Func<Assembly, bool> filter);
 
         /// <summary>
@@ -58,6 +61,7 @@
         /// </summary>
         /// <param name="prefixes">The prefixes.</param>
         /// <returns>Returns a collection of <see cref="Assembly" />.</returns>
+        [NotNull]
         IEnumerable<Assembly> GetAssemblies(params string[] prefixes);
     }
 }

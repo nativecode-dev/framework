@@ -6,6 +6,7 @@
 
     public static class ExceptionExtensions
     {
+        [NotNull]
         public static StringBuilder CreateExceptionBuilder<TException>([NotNull] this TException exception,
             bool includeStackTrace = true)
             where TException : Exception
@@ -29,6 +30,7 @@
             return builder;
         }
 
+        [NotNull]
         public static string ToExceptionString<TException>([NotNull] this TException exception, bool includeStackTrace = true)
             where TException : Exception
         {

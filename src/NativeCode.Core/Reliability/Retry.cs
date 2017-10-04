@@ -1,4 +1,4 @@
-﻿namespace NativeCode.Core.Types
+﻿namespace NativeCode.Core.Reliability
 {
     using System;
     using Polly;

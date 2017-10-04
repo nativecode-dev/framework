@@ -14,6 +14,7 @@
             return Guid.Parse(encoding.GetString(bytes, 0, bytes.Length));
         }
 
+        [NotNull]
         public static string ToBase64String(this Guid value, Encoding encoding = null)
         {
             encoding = encoding ?? Encoding.UTF8;

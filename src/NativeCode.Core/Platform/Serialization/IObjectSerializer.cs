@@ -5,8 +5,10 @@
 
     public interface IObjectSerializer
     {
+        [NotNull]
         T Destructure<T>([NotNull] JObject json);
 
+        [NotNull]
         JObject Structure<T>([NotNull] T value);
     }
 }

@@ -12,6 +12,7 @@
             return values.Any(string.IsNullOrWhiteSpace);
         }
 
+        [NotNull]
         public static string Dequote([NotNull] this string value)
         {
             if (value.IsQuoted())
@@ -32,7 +33,8 @@
             return string.IsNullOrWhiteSpace(value);
         }
 
-        public static string FromBase64String(this string value, Encoding encoding = null)
+        [NotNull]
+        public static string FromBase64String([NotNull] this string value, Encoding encoding = null)
         {
             if (encoding == null)
             {
@@ -64,6 +66,7 @@
             return values.All(x => !string.IsNullOrWhiteSpace(x));
         }
 
+        [NotNull]
         public static string Quote([NotNull] this string value)
         {
             if (value.IsDoubleQuoted())
@@ -74,11 +77,13 @@
             return $"\"{value}\"";
         }
 
-        public static string Replace(this string value, string replacement, params string[] characters)
+        [NotNull]
+        public static string Replace([NotNull] this string value, [NotNull] string replacement, params string[] characters)
         {
             return characters.Aggregate(value, (current, character) => current.Replace(character, replacement));
         }
 
+        [NotNull]
         public static string SingleQuote([NotNull] this string value)
         {
             if (value.IsSingleQuoted())
@@ -89,12 +94,14 @@
             return $"'{value}'";
         }
 
-        public static string[] Split(this string value, string separator)
+        [NotNull]
+        public static string[] Split([NotNull] this string value, [NotNull] string separator)
         {
             return value.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static string ToBase64String(this string value, Encoding encoding = null)
+        [NotNull]
+        public static string ToBase64String([NotNull] this string value, Encoding encoding = null)
         {
             if (encoding == null)
             {
@@ -106,7 +113,8 @@
             return Convert.ToBase64String(bytes);
         }
 
-        public static string TrimNewLines(this string value, string replacement = "")
+        [NotNull]
+        public static string TrimNewLines([NotNull] this string value, string replacement = "")
         {
             return value.Replace(Environment.NewLine, replacement);
         }

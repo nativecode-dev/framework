@@ -1,9 +1,13 @@
 ﻿namespace NativeCode.Core.Platform.Security
 {
+    using JetBrains.Annotations;
+
     public interface IHasher
     {
-        byte[] Hash(byte[] data);
+        [NotNull]
+        byte[] Hash([NotNull] byte[] data);
 
-        string Hash(string data);
+        [NotNull]
+        string Hash([NotNull] string data);
     }
 }

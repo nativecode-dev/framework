@@ -3,13 +3,17 @@
     using System;
     using System.Security.Principal;
     using Dependencies;
+    using JetBrains.Annotations;
 
     public interface IApplicationScope : IDisposable
     {
+        [NotNull]
         IApplicationScope CreateChildScope();
 
+        [NotNull]
         IDependencyResolver CreateResolver();
 
-        IUserScope CreateUserScope(IPrincipal principal);
+        [NotNull]
+        IUserScope CreateUserScope([NotNull] IPrincipal principal);
     }
 }

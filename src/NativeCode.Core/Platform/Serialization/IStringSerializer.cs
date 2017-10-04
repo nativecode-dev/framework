@@ -13,6 +13,7 @@
         /// <typeparam name="T">The object type.</typeparam>
         /// <param name="value">The value.</param>
         /// <returns>Returns deserialized object.</returns>
+        [NotNull]
         T Deserialize<T>([NotNull] string value);
 
         /// <summary>
@@ -21,6 +22,7 @@
         /// <typeparam name="T">The object type.</typeparam>
         /// <param name="instance">The instance.</param>
         /// <returns>Returns a serialized string representation.</returns>
+        [NotNull]
         string Serialize<T>([NotNull] T instance);
     }
 }

@@ -1,16 +1,19 @@
 ﻿namespace NativeCode.Core.Extensions
 {
     using System.IO;
+    using JetBrains.Annotations;
     using Reliability;
 
     public static class StreamExtensions
     {
-        public static StreamMonitor Monitor(this Stream stream)
+        [NotNull]
+        public static StreamMonitor Monitor([NotNull] this Stream stream)
         {
             return new StreamMonitor(stream);
         }
 
-        public static StreamMonitor Monitor(this Stream stream, long length)
+        [NotNull]
+        public static StreamMonitor Monitor([NotNull] this Stream stream, long length)
         {
             return new StreamMonitor(stream, length);
         }

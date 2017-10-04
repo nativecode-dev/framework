@@ -19,5 +19,20 @@
                     return ServiceLifetime.Transient;
             }
         }
+
+        public DependencyLifetime Convert(this ServiceLifetime lifetime)
+        {
+            switch (lifetime)
+            {
+                case ServiceLifetime.Singleton:
+                    return DependencyLifetime.PerApplication;
+
+                case ServiceLifetime.Scoped:
+                    return DependencyLifetime.PerContainer;
+
+                case ServiceLifetime.Transient:
+                    return DependencyLifetime.PerCall;
+            }
+        }
     }
 }

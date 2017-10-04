@@ -5,6 +5,7 @@
 
     public interface IMessageQueueProvider : IDisposable
     {
+        [NotNull]
         string QueueName { get; }
 
         void Acknowledge(MessageQueueResult result);
@@ -22,14 +23,16 @@
     public interface IMessageQueueProvider<TMessage> : IMessageQueueProvider
         where TMessage : class, new()
     {
-        void AcknowledgeMessage(TMessage message);
+        void AcknowledgeMessage([NotNull] TMessage message);
 
+        [CanBeNull]
         TMessage ConsumeMessage();
 
+        [CanBeNull]
         TMessage NextMessage();
 
-        void PublishMessage(TMessage message);
+        void PublishMessage([NotNull] TMessage message);
 
-        void RejectMessage(TMessage message, bool requeue);
+        void RejectMessage([NotNull] TMessage message, bool requeue);
     }
 }

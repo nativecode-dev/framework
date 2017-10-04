@@ -1,5 +1,7 @@
 ﻿namespace NativeCode.Core.Platform.Maintenance
 {
+    using JetBrains.Annotations;
+
     /// <summary>
     /// Provides a contract to manage maintenance state.
     /// </summary>
@@ -13,18 +15,20 @@
         /// <summary>
         /// Gets the name.
         /// </summary>
+        [NotNull]
         string Name { get; }
 
         /// <summary>
         /// Enters maintenance mode.
         /// </summary>
         /// <returns>Returns maintenance key.</returns>
+        [NotNull]
         string EnterMaintenance();
 
         /// <summary>
         /// Exits maintenance mode.
         /// </summary>
         /// <param name="key">The key.</param>
-        void ExitMaintenance(string key);
+        void ExitMaintenance([NotNull] string key);
     }
 }

@@ -5,6 +5,7 @@
 
     public static class UriExtensions
     {
+        [CanBeNull]
         public static string Login([NotNull] this Uri source)
         {
             if (string.IsNullOrWhiteSpace(source.UserInfo))
@@ -20,6 +21,7 @@
             return source.UserInfo;
         }
 
+        [CanBeNull]
         public static string Password([NotNull] this Uri source)
         {
             if (string.IsNullOrWhiteSpace(source.UserInfo))

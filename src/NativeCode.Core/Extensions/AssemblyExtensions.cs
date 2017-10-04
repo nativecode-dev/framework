@@ -9,36 +9,21 @@
         {
             var attribute = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
 
-            if (attribute != null)
-            {
-                return attribute.Version;
-            }
-
-            return string.Empty;
+            return attribute != null ? attribute.Version : string.Empty;
         }
 
         public static string GetAssemblyInformationalVersion(this Assembly assembly)
         {
             var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
 
-            if (attribute != null)
-            {
-                return attribute.InformationalVersion;
-            }
-
-            return string.Empty;
+            return attribute != null ? attribute.InformationalVersion : string.Empty;
         }
 
         public static string GetAssemblyVersion(this Assembly assembly)
         {
             var attribute = assembly.GetCustomAttribute<AssemblyVersionAttribute>();
 
-            if (attribute != null)
-            {
-                return attribute.Version;
-            }
-
-            return string.Empty;
+            return attribute != null ? attribute.Version : string.Empty;
         }
 
         public static string GetVersion(this Assembly assembly)

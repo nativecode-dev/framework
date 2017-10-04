@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading;
+    using JetBrains.Annotations;
 
     /// <summary>
     /// Provides a contract to manage <see cref="CancellationToken" />s.
@@ -20,14 +21,14 @@
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="throwOnCancel">if set to <c>true</c> throw on cancel.</param>
-        void Cancel(string name, bool throwOnCancel);
+        void Cancel([NotNull] string name, bool throwOnCancel);
 
         /// <summary>
         /// Creates a new <see cref="CancellationToken" /> with a name.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns>Returns a new <see cref="CancellationToken" />.</returns>
-        CancellationToken CreateToken(string name);
+        CancellationToken CreateToken([NotNull] string name);
 
         /// <summary>
         /// Tries to create a new <see cref="CancellationToken" />.
@@ -35,6 +36,6 @@
         /// <param name="name">The name.</param>
         /// <param name="token">The token.</param>
         /// <returns><c>true</c> if token was created, <c>false</c> otherwise.</returns>
-        bool TryCreateToken(string name, out CancellationToken token);
+        bool TryCreateToken([NotNull] string name, out CancellationToken token);
     }
 }

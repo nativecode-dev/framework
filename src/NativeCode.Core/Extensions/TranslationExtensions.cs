@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using JetBrains.Annotations;
     using Localization.Translation.Attributes;
 
     public static class TranslationExtensions
     {
-        public static bool IsClassTranslatable(this Type type)
+        public static bool IsClassTranslatable([NotNull] this Type type)
         {
             var info = type.GetTypeInfo();
 
@@ -23,12 +24,12 @@
             return classTranslatable && classIgnored == false;
         }
 
-        public static bool IsPropertyTranslatableIgnored(this PropertyInfo property)
+        public static bool IsPropertyTranslatableIgnored([NotNull] this PropertyInfo property)
         {
             return property.IsPropertyTranslatable() == false;
         }
 
-        public static bool IsPropertyTranslatable(this PropertyInfo property)
+        public static bool IsPropertyTranslatable([NotNull] this PropertyInfo property)
         {
             var classTranslatable = property.DeclaringType.IsClassTranslatable();
             var propertyTranslatable = property.GetCustomAttribute<TranslateAttribute>() != null;
@@ -37,7 +38,8 @@
             return (classTranslatable || propertyTranslatable) && propertyIgnored == false;
         }
 
-        public static IEnumerable<PropertyInfo> GetTranslatableProperties(this Type type)
+        [NotNull]
+        public static IEnumerable<PropertyInfo> GetTranslatableProperties([NotNull] this Type type)
         {
             var properties = from property in type.GetRuntimeProperties()
                              where property.IsPropertyTranslatable()

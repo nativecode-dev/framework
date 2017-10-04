@@ -16,6 +16,8 @@
     /// <seealso cref="NativeCode.Core.Platform.IApplication{TSetting}" />
     public abstract class Application<TSettings> : DisposableManager, IApplication<TSettings> where TSettings : Settings
     {
+        private const string ApplicationToken = "Application";
+        
         private readonly IDependencyContainer container;
 
         /// <summary>
@@ -55,7 +57,7 @@
 
         public virtual string GetApplicationName()
         {
-            return this.GetType().Name.Replace("Application", string.Empty);
+            return this.GetType().Name.Replace(Application<TSettings>.ApplicationToken, string.Empty);
         }
 
         public virtual string GetApplicationVersion()

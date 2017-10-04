@@ -1,10 +1,11 @@
 ﻿namespace NativeCode.Core.Extensions
 {
     using System.Runtime.InteropServices;
+    using JetBrains.Annotations;
 
     public static class StructExtensions
     {
-        public static T FromBytes<T>(byte[] bytes) where T : struct
+        public static T FromBytes<T>([NotNull] byte[] bytes) where T : struct
         {
             var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
 
@@ -18,6 +19,7 @@
             }
         }
 
+        [NotNull]
         public static byte[] GetBytes<T>(this T value) where T : struct
         {
             var length = Marshal.SizeOf(value);

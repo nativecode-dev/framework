@@ -20,9 +20,7 @@ namespace NativeCode.Core.Caching
         /// <returns>Returns the cached value.</returns>
         public T Get(string key, Func<T> defaultValue)
         {
-            T value;
-
-            if (this.cached.TryGetValue(key, out value))
+            if (this.cached.TryGetValue(key, out var value))
             {
                 return value;
             }

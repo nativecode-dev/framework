@@ -119,8 +119,8 @@ namespace NativeCode.Core.Settings
 
                 if (current[name] == null)
                 {
-                    var container = new JObject();
-                    current.Add(name, container);
+                    var jobject = new JObject();
+                    current.Add(name, jobject);
                 }
 
                 current = (JObject) current[name];

@@ -15,6 +15,7 @@
             return principal.Identity.IsAuthenticated;
         }
 
+        [NotNull]
         public static string Name([CanBeNull] this IPrincipal principal)
         {
             if (principal?.Identity != null)

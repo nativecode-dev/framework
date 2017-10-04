@@ -49,11 +49,13 @@
             return source.HasInterface(typeof(T));
         }
 
+        [NotNull]
         public static string ToKey([NotNull] this Type source)
         {
             return source.ToKey(x => x.AssemblyQualifiedName);
         }
 
+        [NotNull]
         public static string ToKey([NotNull] this Type source, [NotNull] Func<Type, string> selector)
         {
             return selector(source);

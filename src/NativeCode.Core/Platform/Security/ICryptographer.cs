@@ -1,15 +1,20 @@
 ﻿namespace NativeCode.Core.Platform.Security
 {
     using System;
+    using JetBrains.Annotations;
 
     public interface ICryptographer : IDisposable
     {
-        byte[] Decrypt(byte[] cipherText, byte[] secret);
+        [NotNull]
+        byte[] Decrypt([NotNull] byte[] cipherText, [NotNull] byte[] secret);
 
-        string Decrypt(string cipherText, string secret);
+        [NotNull]
+        string Decrypt([NotNull] string cipherText, [NotNull] string secret);
 
-        byte[] Encrypt(byte[] plainText, byte[] secret);
+        [NotNull]
+        byte[] Encrypt([NotNull] byte[] plainText, [NotNull] byte[] secret);
 
-        string Encrypt(string plainText, string secret);
+        [NotNull]
+        string Encrypt([NotNull] string plainText, [NotNull] string secret);
     }
 }

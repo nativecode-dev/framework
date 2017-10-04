@@ -2,10 +2,12 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using JetBrains.Annotations;
 
     public interface IMessageProcessor<in TMessage>
         where TMessage : class, new()
     {
-        Task<MessageProcessorResult> ProcessMessageAsync(TMessage message, CancellationToken cancellationToken);
+        Task<MessageProcessorResult> ProcessMessageAsync([NotNull] TMessage message,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }

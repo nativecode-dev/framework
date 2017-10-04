@@ -1,9 +1,13 @@
 ﻿namespace NativeCode.Core.Platform.Security
 {
+    using JetBrains.Annotations;
+
     public interface ISecretsProvider
     {
-        byte[] GetSecret(string name, string token);
+        [NotNull]
+        byte[] GetSecret([NotNull] string name, [NotNull] string token);
 
-        string GetSecretString(string name, string token);
+        [NotNull]
+        string GetSecretString([NotNull] string name, [NotNull] string token);
     }
 }

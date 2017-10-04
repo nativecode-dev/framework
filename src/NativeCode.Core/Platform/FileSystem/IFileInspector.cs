@@ -4,6 +4,7 @@
 
     public interface IFileInspector
     {
+        [NotNull]
         string GetMimeTypeFromFileName([NotNull] string filename);
     }
 }

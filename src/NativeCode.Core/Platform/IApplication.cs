@@ -2,6 +2,7 @@
 {
     using System;
     using Dependencies;
+    using JetBrains.Annotations;
     using Reliability;
     using Settings;
 
@@ -13,26 +14,31 @@
         /// <summary>
         /// Gets the application path.
         /// </summary>
+        [NotNull]
         string ApplicationPath { get; }
 
         /// <summary>
         /// Gets the platform.
         /// </summary>
+        [NotNull]
         IPlatform Platform { get; }
 
         /// <summary>
         /// Gets the root application scope.
         /// </summary>
+        [NotNull]
         IApplicationScope Scope { get; }
 
         /// <summary>
         /// Gets the settings.
         /// </summary>
+        [NotNull]
         Settings SettingsObject { get; }
 
         /// <summary>
         /// Gets the token manager.
         /// </summary>
+        [NotNull]
         ICancellationTokenManager CancellationTokens { get; }
 
         void Configure(params IDependencyModule[] modules);
@@ -63,6 +69,7 @@
         /// <summary>
         /// Gets the settings.
         /// </summary>
+        [NotNull]
         TSettings Settings { get; }
     }
 }

@@ -40,6 +40,7 @@
             return defaultValue;
         }
 
+        [NotNull]
         public static IEnumerable<T> TakeUntil<T>([NotNull] this IEnumerable<T> collection,
             CancellationToken cancellationToken)
         {
